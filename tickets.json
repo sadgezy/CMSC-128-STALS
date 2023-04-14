@@ -1,0 +1,70 @@
+[{
+  "_id": {
+    "$oid": "64367c076495cfdc3795731b"
+  },
+  "user_id": {
+    "$oid": "6437e747fe3f89a27b315954"
+  },
+  "date_submitted": {
+    "$date": {
+      "$numberLong": "1679405556000"
+    }
+  },
+  "tags": [
+    "website",
+    "other users"
+  ],
+  "description": "My name Artour Babaev. Sorry bad englandsky. I grow up in small farm to have make potatoes. Father say 'Arthour, potato harvest is bad. Need you to have play professional DOTO2 in Amerikanski for make money for head-scarf for babushka.' I bring honor to komrade and babushka. Plz no copy pasteschniko",
+  "resolved": false
+},{
+  "_id": {
+    "$oid": "6437f480fe3f89a27b315969"
+  },
+  "user_id": {
+    "$oid": "6437e747fe3f89a27b315954"
+  },
+  "date_submitted": {
+    "$date": {
+      "$numberLong": "1678830554342"
+    }
+  },
+  "tags": [
+    "accomodation"
+  ],
+  "description": "Hello I am Michael James. I would like to report Potato Farm Dorm since the picture they included are my property. I think it may be a scam.",
+  "resolved": false
+},{
+  "_id": {
+    "$oid": "64380677fe3f89a27b3159c7"
+  },
+  "user_id": {
+    "$oid": "6437e2f6fe3f89a27b315950"
+  },
+  "date_submitted": {
+    "$date": {
+      "$numberLong": "1678830554342"
+    }
+  },
+  "tags": [
+    "website"
+  ],
+  "description": "I cannot add more accomodations.",
+  "resolved": true
+},{
+  "_id": {
+    "$oid": "643806cafe3f89a27b3159c8"
+  },
+  "user_id": {
+    "$oid": "6437e494fe3f89a27b315952"
+  },
+  "date_submitted": {
+    "$date": {
+      "$numberLong": "1678830554342"
+    }
+  },
+  "tags": [
+    "website"
+  ],
+  "description": "Di ko makita iba kong bahay na nilista.",
+  "resolved": true
+}]

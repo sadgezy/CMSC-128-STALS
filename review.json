@@ -1,0 +1,109 @@
+[{
+  "_id": {
+    "$oid": "64380b2cfe3f89a27b3159ce"
+  },
+  "userID": {
+    "$oid": "6437e672fe3f89a27b315953"
+  },
+  "accommodationID": {
+    "$oid": "6437ee4afe3f89a27b31595f"
+  },
+  "dateSubmited": {
+    "$date": {
+      "$numberLong": "980956800000"
+    }
+  },
+  "title": "Sampaguita helped me graduate.",
+  "rating": 5,
+  "body": "They are true with their advocacy of empowering women through education. During hell weeks, they would cook extra for anyone who wants to eat at night. The owner is also really understanding with the financial problems of some of the tenants."
+},{
+  "_id": {
+    "$oid": "64380ca6fe3f89a27b3159d1"
+  },
+  "userID": {
+    "$oid": "6437e747fe3f89a27b315954"
+  },
+  "accommodationID": {
+    "$oid": "6437ee4afe3f89a27b31595f"
+  },
+  "dateSubmited": {
+    "$date": {
+      "$numberLong": "980956800000"
+    }
+  },
+  "title": "Sampaguita? More like Rose.",
+  "rating": 0,
+  "body": "They kicked me out for being the most beautiful person there. Don't even try applying since they would poison you with their thorns-like words."
+},{
+  "_id": {
+    "$oid": "64380d79fe3f89a27b3159d6"
+  },
+  "userID": {
+    "$oid": "6437e747fe3f89a27b315954"
+  },
+  "accommodationID": {
+    "$oid": "6437f05dfe3f89a27b315960"
+  },
+  "dateSubmited": {
+    "$date": {
+      "$numberLong": "980956800000"
+    }
+  },
+  "title": "Ayos dito sa Perly Shell!!!",
+  "rating": 5,
+  "body": "They are true sa kanilang Professionals Only pagdating sa tenants. Sa sobrang ganda ng service, may pasweldo pa sila sa pinaka poging tenants. Ez money! #motivation"
+},{
+  "_id": {
+    "$oid": "64380e1cfe3f89a27b3159dd"
+  },
+  "userID": {
+    "$oid": "6437e747fe3f89a27b315954"
+  },
+  "accommodationID": {
+    "$oid": "6437ecf0fe3f89a27b31595e"
+  },
+  "dateSubmited": {
+    "$date": {
+      "$numberLong": "980956800000"
+    }
+  },
+  "title": "Kaya pala Lapu-Lapu...",
+  "rating": 0,
+  "body": "Sa sobrang lapit sa palengke amoy lapu-lapu na yung lugar. Sa sobrang lakas, maamoy lang ni Magellan ang lugar, babalik na agad siya sa Espanya."
+},{
+  "_id": {
+    "$oid": "64380e4bfe3f89a27b3159de"
+  },
+  "userID": {
+    "$oid": "6437e747fe3f89a27b315954"
+  },
+  "accommodationID": {
+    "$oid": "6437f190fe3f89a27b315961"
+  },
+  "dateSubmited": {
+    "$date": {
+      "$numberLong": "980956800000"
+    }
+  },
+  "title": "No comment. Di ko afford.",
+  "rating": 3,
+  "body": "Check the title."
+},{
+  "_id": {
+    "$oid": "64380f08fe3f89a27b3159df"
+  },
+  "userID": {
+    "$oid": "6437e747fe3f89a27b315954"
+  },
+  "accommodationID": {
+    "$oid": "6437eb61fe3f89a27b31595d"
+  },
+  "dateSubmited": {
+    "$date": {
+      "$numberLong": "980956800000"
+    }
+  },
+  "title": "GlobeAtHome",
+  "rating": 5,
+  "body": "Hi! We hope the coming Holy Week gives you time to reflect and recharge with your loved ones.If you have plans to travel or just staying at home, remember to be careful in posting your activities online, as this might make it easy for scammers to monitor your whereabouts. As you spend this time with your family and friends, please stock up on health essentials and continue to keep safe by observing the minimum public health standards. Stay connected during the holiday by registering to your favorite promos ahead of time via the GlobeOne app."
+}]
