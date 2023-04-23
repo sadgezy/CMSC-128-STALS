@@ -15,6 +15,7 @@
   },
   "title": "Sampaguita helped me graduate.",
   "rating": 5,
+  "archived": false,
   "body": "They are true with their advocacy of empowering women through education. During hell weeks, they would cook extra for anyone who wants to eat at night. The owner is also really understanding with the financial problems of some of the tenants."
 },{
   "_id": {
@@ -33,6 +34,7 @@
   },
   "title": "Sampaguita? More like Rose.",
   "rating": 0,
+  "archived": false,
   "body": "They kicked me out for being the most beautiful person there. Don't even try applying since they would poison you with their thorns-like words."
 },{
   "_id": {
@@ -51,6 +53,7 @@
   },
   "title": "Ayos dito sa Perly Shell!!!",
   "rating": 5,
+  "archived": false,
   "body": "They are true sa kanilang Professionals Only pagdating sa tenants. Sa sobrang ganda ng service, may pasweldo pa sila sa pinaka poging tenants. Ez money! #motivation"
 },{
   "_id": {
@@ -69,6 +72,7 @@
   },
   "title": "Kaya pala Lapu-Lapu...",
   "rating": 0,
+  "archived": false,
   "body": "Sa sobrang lapit sa palengke amoy lapu-lapu na yung lugar. Sa sobrang lakas, maamoy lang ni Magellan ang lugar, babalik na agad siya sa Espanya."
 },{
   "_id": {
@@ -87,6 +91,7 @@
   },
   "title": "No comment. Di ko afford.",
   "rating": 3,
+  "archived": false,
   "body": "Check the title."
 },{
   "_id": {
@@ -105,5 +110,6 @@
   },
   "title": "GlobeAtHome",
   "rating": 5,
+  "archived": false,
   "body": "Hi! We hope the coming Holy Week gives you time to reflect and recharge with your loved ones.If you have plans to travel or just staying at home, remember to be careful in posting your activities online, as this might make it easy for scammers to monitor your whereabouts. As you spend this time with your family and friends, please stock up on health essentials and continue to keep safe by observing the minimum public health standards. Stay connected during the holiday by registering to your favorite promos ahead of time via the GlobeOne app."
 }]

@@ -38,7 +38,8 @@
       "$oid": "64380f08fe3f89a27b3159df"
     }
   ],
-  "verified": true
+  "verified": true,
+  "archived": false
 },{
   "_id": {
     "$oid": "6437ecf0fe3f89a27b31595e"
@@ -80,7 +81,8 @@
       "$oid": "64380e1cfe3f89a27b3159dd"
     }
   ],
-  "verified": false
+  "verified": false,
+  "archived": false
 },{
   "_id": {
     "$oid": "6437ee4afe3f89a27b31595f"
@@ -125,7 +127,8 @@
       "$oid": "64380ca6fe3f89a27b3159d1"
     }
   ],
-  "verified": true
+  "verified": true,
+  "archived": false
 },{
   "_id": {
     "$oid": "6437f05dfe3f89a27b315960"
@@ -167,7 +170,8 @@
       "$oid": "64380d79fe3f89a27b3159d6"
     }
   ],
-  "verified": true
+  "verified": true,
+  "archived": false
 },{
   "_id": {
     "$oid": "6437f190fe3f89a27b315961"
@@ -207,5 +211,6 @@
       "$oid": "64380e4bfe3f89a27b3159de"
     }
   ],
-  "verified": true
+  "verified": true,
+  "archived": false
 }]

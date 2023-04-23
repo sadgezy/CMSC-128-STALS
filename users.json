@@ -20,6 +20,12 @@
     "id_picture": "https://drive.google.com/file/d/1_D0ykufx01a0Wk4oK15B73yuXzZ0Dkzt/view?usp=sharing",
     "id_number": "P123456"
   },
+  "archived": false,
+  "tickets": [
+    {
+      "$oid": "64380677fe3f89a27b3159c7"
+    }
+  ],
   "user_type": {
     "type": "owner",
     "accommodations": [
@@ -50,6 +56,8 @@
     "id_picture": "https://drive.google.com/file/d/1ILz9Nn3yLWKxsm7sBvw70epmWeuE_Ut5/view?usp=sharing",
     "id_number": "N03-12-123456"
   },
+  "archived": false,
+  "tickets": [],
   "user_type": {
     "type": "owner",
     "accommodations": [
@@ -80,6 +88,12 @@
     "id_picture": "https://drive.google.com/file/d/11cTaBTzNjCm9RMLY47mfQE2zT7_hKZyr/view?usp=sharing",
     "id_number": "P123333"
   },
+  "archived": false,
+  "tickets": [
+    {
+      "$oid": "643806cafe3f89a27b3159c8"
+    }
+  ],
   "user_type": {
     "type": "owner",
     "accommodations": [
@@ -116,6 +130,8 @@
     "id_picture": "https://drive.google.com/file/d/1m04MV8mLhuhrSU7J0SJdfP5a6xEKH-WX/view",
     "id_number": "P0912846"
   },
+  "archived": false,
+  "tickets": [],
   "user_type": {
     "class": "others",
     "reviews": [
@@ -146,12 +162,21 @@
     "phone_no": "09993211111",
     "email": "shoot3pt@gmail.com"
   },
+  "archived": false,
   "verified": false,
   "id_verification": {
     "id_type": "passport",
     "id_picture": "https://drive.google.com/file/d/1FxUy9TOtFORwBewBrAP6Gr-jz5gdoxBT/view?usp=sharing",
     "id_number": "P1111111"
   },
+  "tickets": [
+    {
+      "$oid": "64367c076495cfdc3795731b"
+    },
+    {
+      "$oid": "6437f480fe3f89a27b315969"
+    }
+  ],
   "user_type": {
     "type": "user",
     "class": "others",
@@ -206,6 +231,7 @@
     "phone_no": "09999999999",
     "email": "goatmeeeh@gmail.com"
   },
+  "archived": false,
   "verified": true,
   "user_type": {
     "type": "user",
@@ -236,6 +262,7 @@
     "phone_no": "09174886878",
     "email": "rogerF2@gmail.com"
   },
+  "archived": false,
   "verified": true,
   "user_type": {
     "type": "user",
