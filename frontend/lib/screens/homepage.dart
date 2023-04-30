@@ -3,7 +3,7 @@ import '../classes.dart';
 
 // COMPONENTS
 import '../components/accom_card.dart';
-import '../components/search_bar.dart';
+import '../components/search_bar.dart' as sb;
 
 class UnregisteredHomepage extends StatefulWidget {
   const UnregisteredHomepage({Key? key}) : super(key: key);
@@ -45,7 +45,7 @@ class _UnregisteredHomepageState extends State<UnregisteredHomepage> {
               },
             ),
             // search bar at the top of the homepage
-            title: SearchBar(
+            title: sb.SearchBar(
               hintText: 'Search',
               onChanged: (value) {
                 /* PUT SEARCH FUNCTION HERE */

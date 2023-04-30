@@ -3,9 +3,18 @@ import 'package:stals_frontend/screens/signin.dart';
 import 'package:stals_frontend/screens/signup.dart';
 import 'package:stals_frontend/screens/homepage.dart';
 import 'package:stals_frontend/screens/signup_info.dart';
+import 'package:provider/provider.dart';
+import 'package:stals_frontend/providers/token_provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: ((context) => TokenProvider())),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -64,7 +73,11 @@ class _MyHomePageState extends State<MyHomePage> {
         ListTile(
           title: const Text('Logout'),
           trailing: const Icon(Icons.logout),
-          onTap: () {},
+          onTap: () {
+            Provider.of<TokenProvider>(context, listen: false).removeToken("DO NOT REMOVE THIS PARAM");
+            
+            print("Logged out");
+          },
         ),
       ])),
       appBar: AppBar(

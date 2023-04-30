@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'signup_info.dart';
+import 'package:provider/provider.dart';
+import 'package:stals_frontend/providers/token_provider.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -47,25 +49,31 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
     );
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              "You are\na/an",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 70, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 75),
-            _buildButton("Owner"),
-            _buildButton("Customer"),
-            const SizedBox(height: 100),
-            backButton
-          ],
+    if (Provider.of<TokenProvider>(context, listen: false).getCurrToken == "") {
+      return Scaffold(
+        backgroundColor: Colors.white,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              const Text(
+                "You are\na/an",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 70, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 75),
+              _buildButton("Owner"),
+              _buildButton("Customer"),
+              const SizedBox(height: 100),
+              backButton
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    }
+    else {
+      return Center(child: Text("You are logged in"),);
+    }
+    
   }
 }
