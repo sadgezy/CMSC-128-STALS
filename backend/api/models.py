@@ -86,10 +86,30 @@ class Admin(models_django.Model):
     password = models_django.CharField(max_length=255)
     def str(self):
         return self.username
+    
+
+class ReviewManager(models_django.Manager):
+    def create_review(self,dateSubmited,title,rating,archived,body):
+        # email=self.normalize_email(email)
+
+        review=self.model(
+            #_id=_id,
+            dateSubmited=dateSubmited,
+            title=title,
+            rating=rating,
+            archived=archived,
+            body=body,
+        )
+
+        # I think it says in the docs that this isn't necessary when you're using a manager 
+        review.save()
+
+        return review
 
 class Review(models_django.Model):
-    _id = models_djongo.ObjectIdField()
-    userID = models_djongo.ForeignKey(User, on_delete=models_djongo.CASCADE)
+    # commented until functional
+    # _id = models_djongo.ObjectIdField()
+    # userID = models_djongo.ForeignKey(User, on_delete=models_djongo.CASCADE)
     # accomodationID = models.ForeignKey(Accommodation, on_delete=models.CASCADE)
     dateSubmited = models_django.DateTimeField()
     title = models_django.CharField(max_length=255)
@@ -97,3 +117,126 @@ class Review(models_django.Model):
     archived = models_django.BooleanField()
     body = models_django.TextField()
 
+    objects = ReviewManager()
+
+    def __str__(self):
+        return self.title
+
+    
+
+
+# class Location(models.Model):
+#     exact = models.CharField(max_length=255)
+#     approx = models.CharField(max_length=255)
+
+# class PriceRange(models.Model):
+#     lower_bound = models.IntegerField()
+#     upper_bound = models.IntegerField()
+
+# class OwnershipProof(models.Model):
+#     proof_type = models.CharField(max_length=255)
+#     proof_number = models.CharField(max_length=255)
+#     proof_picture = models.URLField()
+
+# These two are supposed to be in arrayfield in accommodation
+# class Utility(models_django.Model):
+#     name = models_django.CharField(max_length=255)
+#     accommodation = models_django.ForeignKey('Accommodation', on_delete=models_django.CASCADE, related_name='utilities')
+
+# class Photo(models_django.Model):
+#     url = models_django.URLField()
+#     accommodation = models_django.ForeignKey('Accommodation', on_delete=models_django.CASCADE, related_name='photos')
+
+# class Review(models_django.Model):
+#     # commented until functional
+#     # _id = models_djongo.ObjectIdField()
+#     # userID = models_django.ForeignKey('User', on_delete=models_django.CASCADE)
+#     # accommodationID = models_django.ForeignKey('Accommodation', on_delete=models_django.CASCADE)
+#     dateSubmited = models_django.DateTimeField()
+#     title = models_django.CharField(max_length=255)
+#     rating = models_django.IntegerField()
+#     archived = models_django.BooleanField()
+#     body = models_django.TextField()
+
+
+class AccommodationManager(models_django.Manager):
+    def create_accommodation(self,name,exact,approx,accommodation_type,tenant_type,lower_bound,upper_bound,capacity,description,proof_type,proof_number,proof_picture,verified,archived):
+        # email=self.normalize_email(email)
+
+        accommodation=self.model(
+            name = name,
+            exact = exact,
+            approx = approx,
+            accommodation_type = accommodation_type,
+            tenant_type = tenant_type,
+            lower_bound = lower_bound,
+            upper_bound = upper_bound,
+            capacity = capacity,
+            description = description,
+            proof_type = proof_type,
+            proof_number = proof_number,
+            proof_picture = proof_picture,
+            verified = verified,
+            archived = archived,
+        )
+
+        # I think it says in the docs that this isn't necessary when you're using a manager 
+        accommodation.save()
+
+        return accommodation
+
+class Accommodation(models_django.Model):
+    # commented until functional
+    # _id = models_djongo.ObjectIdField()
+    # owner = models_django.ForeignKey('User', on_delete=models_django.CASCADE)
+    name = models_django.CharField(max_length=255)
+    # location = models.OneToOneField(Location, on_delete=models.CASCADE)
+    exact = models_django.CharField(max_length=255)
+    approx = models_django.CharField(max_length=255)
+    accommodation_type = models_django.CharField(max_length=255)
+    tenant_type = models_django.CharField(max_length=255)
+    # price_range = models.OneToOneField(PriceRange, on_delete=models.CASCADE)
+    lower_bound = models_django.IntegerField()
+    upper_bound = models_django.IntegerField()
+    capacity = models_django.PositiveIntegerField()
+    description = models_django.TextField()
+    # ownership_proof = models.OneToOneField(OwnershipProof, on_delete=models.CASCADE)\
+    proof_type = models_django.CharField(max_length=255)
+    proof_number = models_django.CharField(max_length=255)
+    proof_picture = models_django.URLField()
+    verified = models_django.BooleanField()
+    archived = models_django.BooleanField()
+
+    objects = AccommodationManager()
+
+    def __str__(self):
+        return self.title
+
+class TicketManager(models_django.Manager):
+    def create_ticket(self,date_submitted,description,resolved):
+        # email=self.normalize_email(email)
+
+        ticket=self.model(
+            date_submitted=date_submitted,
+            description=description,
+            resolved=resolved,
+        )
+
+        # I think it says in the docs that this isn't necessary when you're using a manager 
+        ticket.save()
+
+        return ticket
+
+class Ticket(models_django.Model):
+    # commented until functional
+    # _id = models_djongo.ObjectIdField()
+    # user_id = models_django.ForeignKey('User', on_delete=models_django.CASCADE)
+    date_submitted = models_django.DateTimeField(auto_now_add=True)
+    # tags = models_djongo.ArrayField(models_django.CharField(max_length=255))
+    description = models_django.TextField()
+    resolved = models_django.BooleanField()
+
+    objects = TicketManager()
+
+    def __str__(self):
+        return self.title
