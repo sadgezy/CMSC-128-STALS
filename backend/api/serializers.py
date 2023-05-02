@@ -52,6 +52,16 @@ class userSerializer(serializers.ModelSerializer):
         model = User
         fields = '__all__'
 
+class ticketSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ticket
+        fields = '__all__'
+
+class accommodationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Accommodation
+        fields = '__all__'
+
 class reviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
