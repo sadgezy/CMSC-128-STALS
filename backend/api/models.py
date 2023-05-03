@@ -56,7 +56,7 @@ class CustomUserManager(BaseUserManager):
         return user
 
 class User(AbstractUser):
-    #_id = models_djongo.ObjectIdField()
+    _id = models_djongo.ObjectIdField()
     email=models_django.CharField(max_length=80,unique=True)
     first_name = models_djongo.CharField(max_length=100)
     last_name = models_django.CharField(max_length=100)
@@ -210,7 +210,7 @@ class Accommodation(models_django.Model):
     objects = AccommodationManager()
 
     def __str__(self):
-        return self.title
+        return self.name
 
 class TicketManager(models_django.Manager):
     def create_ticket(self,date_submitted,description,resolved):
@@ -239,4 +239,4 @@ class Ticket(models_django.Model):
     objects = TicketManager()
 
     def __str__(self):
-        return self.title
+        return self.description
