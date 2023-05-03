@@ -97,6 +97,18 @@ def getreviewdetails(request):
     serializer = reviewSerializer(review, many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def getticketdetails(request):
+    ticket = Ticket.objects.all()
+    serializer = ticketSerializer(ticket, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getaccommodationdetails(request):
+    accommodation = Accommodation.objects.all()
+    serializer = accommodationSerializer(accommodation, many=True)
+    return Response(serializer.data)
+
 
 # not working as intended
 @api_view(['PUT'])
