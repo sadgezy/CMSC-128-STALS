@@ -10,6 +10,7 @@ class AccomCard extends StatefulWidget {
     - Accom description
     - Accom rating
   */
+
   const AccomCard({Key? key, required this.details}) : super(key: key);
   final AccomCardDetails details;
 
@@ -37,7 +38,12 @@ class _AccomCardState extends State<AccomCard> {
       ),
       // InkWell so card has onTap property
       child: InkWell(
-        onTap: () {/* OPEN THE ACCOM PAGE HERE */},
+        onTap: () {
+          // For now, redirect to sign up page.
+          if (!widget.details.isSigned) {
+            Navigator.pushNamed(context, '/signup');
+          }
+        },
         child: Row(
           children: [
             // 2 Sized boxes to split the card in half
@@ -52,8 +58,8 @@ class _AccomCardState extends State<AccomCard> {
                     topLeft: Radius.circular(15),
                     bottomLeft: Radius.circular(15)),
                 child: FittedBox(
-                  child: Image.asset(widget.details.getImage()),
                   fit: BoxFit.fill,
+                  child: Image.asset(widget.details.getImage()),
                 ),
               ),
             ),
@@ -69,7 +75,7 @@ class _AccomCardState extends State<AccomCard> {
                       widget.details.getName(),
                       style: const TextStyle(
                           fontSize: UIParameter.FONT_HEADING_SIZE,
-                          fontFamily: 'SFProDisplayRegular',
+                          fontFamily: UIParameter.FONT_REGULAR,
                           // w600 is semibold
                           fontWeight: FontWeight.w600),
                     ),
@@ -81,7 +87,7 @@ class _AccomCardState extends State<AccomCard> {
                         widget.details.getDescription(),
                         style: const TextStyle(
                             fontSize: UIParameter.FONT_BODY_SIZE,
-                            fontFamily: 'SFProDisplayRegular'),
+                            fontFamily: UIParameter.FONT_REGULAR),
                       ),
                     ),
                     RatingBar.builder(
