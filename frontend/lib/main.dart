@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stals_frontend/screens/signin.dart';
 import 'package:stals_frontend/screens/signup.dart';
+import 'package:stals_frontend/screens/signup_info.dart';
 import 'package:stals_frontend/screens/homepage.dart';
 import 'package:stals_frontend/screens/homepage_signed.dart';
 import 'package:stals_frontend/screens/accomm.dart';
