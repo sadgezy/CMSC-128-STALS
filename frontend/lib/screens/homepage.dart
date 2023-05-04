@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../classes.dart';
-
+import '../UI_parameters.dart' as UIParameter;
 // COMPONENTS
 import '../components/accom_card.dart';
 import '../components/search_bar.dart' as sb;

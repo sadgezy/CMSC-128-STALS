@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:stals_frontend/screens/signin.dart';
 import 'package:stals_frontend/screens/signup.dart';
 import 'package:stals_frontend/screens/homepage.dart';
-import 'package:stals_frontend/screens/signup_info.dart';
+import 'package:stals_frontend/screens/homepage_signed.dart';
+import 'package:stals_frontend/screens/accomm.dart';
 import 'package:provider/provider.dart';
 import 'package:stals_frontend/providers/token_provider.dart';
 
@@ -31,7 +33,14 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => const SignUpPage(),
         '/homepage': (context) => const UnregisteredHomepage(),
         '/signup_info': (context) => SignUpForm(),
+        '/signed_homepage': (context) => const RegisteredHomepage(),
+        '/accomm': (context) => const AccommPage()
       },
+      theme: ThemeData(
+        fontFamily: 'SFProDisplayRegular',
+        //primarySwatch: MaterialColor(Color(0xff19535F), swatch),
+        //accentColor: Color(0xff0B7A75),
+      ),
     );
   }
 }
@@ -71,11 +80,26 @@ class _MyHomePageState extends State<MyHomePage> {
           },
         ),
         ListTile(
+          title: const Text('Registered Homepage'),
+          trailing: const Icon(Icons.home),
+          onTap: () {
+            Navigator.pushNamed(context, '/signed_homepage');
+          },
+        ),
+        ListTile(
+          title: const Text('Accommodation'),
+          trailing: const Icon(Icons.construction),
+          onTap: () {
+            Navigator.pushNamed(context, '/accomm');
+          },
+        ),
+        ListTile(
           title: const Text('Logout'),
           trailing: const Icon(Icons.logout),
           onTap: () {
-            Provider.of<TokenProvider>(context, listen: false).removeToken("DO NOT REMOVE THIS PARAM");
-            
+            Provider.of<TokenProvider>(context, listen: false)
+                .removeToken("DO NOT REMOVE THIS PARAM");
+
             print("Logged out");
           },
         ),
