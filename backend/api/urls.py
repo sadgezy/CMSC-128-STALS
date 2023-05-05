@@ -12,7 +12,8 @@ urlpatterns = [
     path('reviewdetails/', views.getreviewdetails),
     path('ticketdetails/', views.getticketdetails),
     # path('accommodationdetails/', views.getaccommodationdetails),
-
+    
+    path('editprofile/<str:pk>/', views.editProfile),
     path('deleteuser/<str:pk>/', views.deleteuser),
     path('unverifyuser/<str:pk>/', views.adminunverifyuser),
     path('verifyuser/<str:pk>/', views.adminverifyuser),

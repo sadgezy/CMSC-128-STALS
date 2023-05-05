@@ -46,6 +46,20 @@ def login(request):
     else:
         return Response(data={"message": "Invalid email or password"})
     
+@api_view(['PUT'])
+def editProfile(request, pk):
+
+    user = User.objects.get(pk=ObjectId(pk))
+    user.first_name = request.data['first_name']
+    user.last_name = request.data['last_name']
+    user.middle_initial = request.data['middle_initial']
+    user.suffix = request.data['suffix']
+    user.phone_no = request.data['phone_no']
+    user.username = request.data['username'] # Set the is_verified field to True
+    user.save()
+
+    return Response(data={"message": "Successfully edited user profile"})
+    
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def check_authenticated(request):
