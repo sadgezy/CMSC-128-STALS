@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:stals_frontend/screens/admin_dashboard.dart';
 import 'package:stals_frontend/screens/signin.dart';
 import 'package:stals_frontend/screens/signup.dart';
-import 'package:stals_frontend/screens/signup_info.dart';
 import 'package:stals_frontend/screens/homepage.dart';
 import 'package:stals_frontend/screens/homepage_signed.dart';
 import 'package:stals_frontend/screens/accomm.dart';
+import 'package:stals_frontend/screens/add_accomm.dart';
+import 'package:stals_frontend/screens/signup_info.dart';
 import 'package:provider/provider.dart';
 import 'package:stals_frontend/providers/token_provider.dart';
 
@@ -35,7 +37,9 @@ class MyApp extends StatelessWidget {
         '/homepage': (context) => const UnregisteredHomepage(),
         '/signup_info': (context) => SignUpForm(),
         '/signed_homepage': (context) => const RegisteredHomepage(),
-        '/accomm': (context) => const AccommPage()
+        '/accomm': (context) => const AccommPage(),
+        '/admin': (context) => const AdminDashBoard(),
+        '/add_accomm': (context) => const AddAccommPage(),
       },
       theme: ThemeData(
         fontFamily: 'SFProDisplayRegular',
@@ -92,6 +96,20 @@ class _MyHomePageState extends State<MyHomePage> {
           trailing: const Icon(Icons.construction),
           onTap: () {
             Navigator.pushNamed(context, '/accomm');
+          },
+        ),
+        ListTile(
+          title: const Text('Admin Dashboard'),
+          trailing: const Icon(Icons.admin_panel_settings),
+          onTap: () {
+            Navigator.pushNamed(context, '/admin');
+          },
+        ),
+        ListTile(
+          title: const Text('Add Accommodation'),
+          trailing: const Icon(Icons.house),
+          onTap: () {
+            Navigator.pushNamed(context, '/add_accomm');
           },
         ),
         ListTile(
