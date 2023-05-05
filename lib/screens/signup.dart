@@ -23,9 +23,9 @@ class _SignUpPageState extends State<SignUpPage> {
         child: Text(btnText, style: const TextStyle(fontSize: 18)),
         onPressed: () {
           if (btnText == "Owner") {
-            Navigator.pushNamed(context, '/signup_info');
+            Navigator.pushNamed(context, '/signup_info', arguments: {"type": "Owner"});
           } else if (btnText == "Customer") {
-            Navigator.pushNamed(context, '/signup_info');
+            Navigator.pushNamed(context, '/signup_info', arguments: {"type": "User"});
           }
         },
       ),

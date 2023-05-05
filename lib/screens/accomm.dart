@@ -63,10 +63,10 @@ class _AccommPageState extends State<AccommPage> {
             ]),
           ],
         ),
-        const Column(
+        Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: const [
             FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(

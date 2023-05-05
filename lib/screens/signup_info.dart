@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class SignUpForm extends StatefulWidget {
   @override
   _SignUpFormState createState() => _SignUpFormState();
+  
 }
-
+//TODO: Use TextEditingController
 class _SignUpFormState extends State<SignUpForm> {
   String _firstName = '';
   String _lastName = '';
@@ -14,9 +17,12 @@ class _SignUpFormState extends State<SignUpForm> {
   String _password = '';
   String _email = '';
   String _phone = '';
+  
 
   @override
   Widget build(BuildContext context) {
+    final args = (ModalRoute.of(context)?.settings.arguments ?? <String, String>{}) as Map;
+    final type = args['type'];
     return Scaffold(
       appBar: AppBar(
         title: Text('Sign Up'),
@@ -58,7 +64,8 @@ class _SignUpFormState extends State<SignUpForm> {
                   value: 'Mrs.',
                 ),
               ],
-              onChanged: (value) => _suffix = value,
+              onChanged: (value) => _suffix =
+                  value, //TODO: Change from DropDownButtonFormField to TextFormField. Mr, Ms, and Mrs are not suffixes. Ex: Jr, II
             ),
             TextFormField(
               decoration: InputDecoration(
@@ -87,8 +94,24 @@ class _SignUpFormState extends State<SignUpForm> {
             ),
             MaterialButton(
               child: Text('Sign Up'),
-              onPressed: () {
-                // TODO: Sign up the user.
+              onPressed: () async {
+                //TODO: Sign up the user.
+                String url = "http://127.0.0.1:8000/signup/";
+                final response = await json.decode((await http
+                        .post(Uri.parse(url), body: {
+                  'first_name': _firstName,
+                  'last_name': _lastName,
+                  'middle_initial': _middleInitials,
+                  'suffix': _suffix,
+                  'username': _username,
+                  'password': _password,
+                  'email': _email,
+                  'phone_no': _phone,
+                  'type': type,
+                }))
+                    .body);
+
+                print(response);
               },
             ),
           ],
