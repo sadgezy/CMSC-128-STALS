@@ -28,7 +28,7 @@
   ],
   "user_type": {
     "type": "owner",
-    "accommodations": [
+    "establishments": [
       {
         "$oid": "6437eb61fe3f89a27b31595d"
       }
@@ -60,7 +60,7 @@
   "tickets": [],
   "user_type": {
     "type": "owner",
-    "accommodations": [
+    "establishments": [
       {
         "$oid": "6437f190fe3f89a27b315961"
       }
@@ -96,7 +96,7 @@
   ],
   "user_type": {
     "type": "owner",
-    "accommodations": [
+    "establishments": [
       {
         "$oid": "6437ecf0fe3f89a27b31595e"
       },

@@ -5,7 +5,7 @@
   "userID": {
     "$oid": "6437e672fe3f89a27b315953"
   },
-  "accommodationID": {
+  "establishmentID": {
     "$oid": "6437ee4afe3f89a27b31595f"
   },
   "dateSubmited": {
@@ -24,7 +24,7 @@
   "userID": {
     "$oid": "6437e747fe3f89a27b315954"
   },
-  "accommodationID": {
+  "establishmentID": {
     "$oid": "6437ee4afe3f89a27b31595f"
   },
   "dateSubmited": {
@@ -43,7 +43,7 @@
   "userID": {
     "$oid": "6437e747fe3f89a27b315954"
   },
-  "accommodationID": {
+  "establishmentID": {
     "$oid": "6437f05dfe3f89a27b315960"
   },
   "dateSubmited": {
@@ -62,7 +62,7 @@
   "userID": {
     "$oid": "6437e747fe3f89a27b315954"
   },
-  "accommodationID": {
+  "establishmentID": {
     "$oid": "6437ecf0fe3f89a27b31595e"
   },
   "dateSubmited": {
@@ -81,7 +81,7 @@
   "userID": {
     "$oid": "6437e747fe3f89a27b315954"
   },
-  "accommodationID": {
+  "establishmentID": {
     "$oid": "6437f190fe3f89a27b315961"
   },
   "dateSubmited": {
@@ -100,7 +100,7 @@
   "userID": {
     "$oid": "6437e747fe3f89a27b315954"
   },
-  "accommodationID": {
+  "establishmentID": {
     "$oid": "6437eb61fe3f89a27b31595d"
   },
   "dateSubmited": {
