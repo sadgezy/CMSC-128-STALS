@@ -2,14 +2,10 @@
   "_id": {
     "$oid": "6437eb61fe3f89a27b31595d"
   },
-  "owner": {
-    "$oid": "6437e2f6fe3f89a27b315950"
-  },
+  "owner": "6437e2f6fe3f89a27b315950",
   "name": "Potato Farm Dorm",
-  "location": {
-    "exact": "11 L Street, Brgy. M, Los Banos",
-    "approx": "Within Campus"
-  },
+  "location_exact": "11 L Street, Brgy. M, Los Banos",
+  "location_approx": "Within Campus",
   "establishment_type": "Dormitory",
   "tenant_type": "Any. Prefer CEAT students.",
   "utilities": [
@@ -23,44 +19,28 @@
     "https://drive.google.com/file/d/1Ag1BjgTis7j_CA7UlJ7vcczOTyoF35bS/view?usp=sharing",
     "https://drive.google.com/file/d/1M_85ZwkGhK1LgrxUlkLaAt5jUMUhBn5C/view?usp=sharing"
   ],
-  "ownership_proof": {
-    "proof_type": "Business Permit",
-    "proof_number": "123213123",
-    "proof_picture": "https://drive.google.com/file/d/1ZI80TYmed8EXDfkgDtmyukYICwgPQUYf/view?usp=sharing"
-  },
+  "proof_type": "Business Permit",
+  "proof_number": "123213123",
+  "proof_picture": "https://drive.google.com/file/d/1ZI80TYmed8EXDfkgDtmyukYICwgPQUYf/view?usp=sharing",
   "reviews": [
-    {
-      "$oid": "64380f08fe3f89a27b3159df"
-    }
+    "64380f08fe3f89a27b3159df"
   ],
   "verified": true,
   "archived": false,
   "accommodations": [
-    {
-      "$oid": "6453b057a33b163e617be30b"
-    },
-    {
-      "$oid": "6453c76fa33b163e617be31d"
-    },
-    {
-      "$oid": "6453c78fa33b163e617be31e"
-    },
-    {
-      "$oid": "6453c80ba33b163e617be31f"
-    }
+    "6453b057a33b163e617be30b",
+    "6453c76fa33b163e617be31d",
+    "6453c78fa33b163e617be31e",
+    "6453c80ba33b163e617be31f"
   ]
 },{
   "_id": {
     "$oid": "6437ecf0fe3f89a27b31595e"
   },
-  "owner": {
-    "$oid": "6437e494fe3f89a27b315952"
-  },
+  "owner": "6437e494fe3f89a27b315952",
   "name": "Lapu-Lapu Apartments",
-  "location": {
-    "exact": "Lot 3-7, Brgy. Lapu-Lapu, Los Banos",
-    "approx": "Beyond Junction"
-  },
+  "location_exact": "Lot 3-7, Brgy. Lapu-Lapu, Los Banos",
+  "location_approx": "Beyond Junction",
   "establishment_type": "Apartments",
   "tenant_type": "Any",
   "utilities": [
@@ -75,44 +55,28 @@
     "https://drive.google.com/file/d/1_m74U7E-bs8CCgNU7FhxD-fPKP2qLxtp/view?usp=sharing",
     "https://drive.google.com/file/d/1aDv5e0wb99-m5qNdhb1beTxba3ytxfpd/view?usp=sharing"
   ],
-  "ownership_proof": {
-    "proof_type": "deed",
-    "proof_number": "3455133",
-    "proof_picture": "https://drive.google.com/file/d/1vZXTubiMH2SE5BuOrQ6lj6M8sI89Ivyj/view?usp=sharing"
-  },
+  "proof_type": "deed",
+  "proof_number": "3455133",
+  "proof_picture": "https://drive.google.com/file/d/1vZXTubiMH2SE5BuOrQ6lj6M8sI89Ivyj/view?usp=sharing",
   "reviews": [
-    {
-      "$oid": "64380e1cfe3f89a27b3159dd"
-    }
+    "64380e1cfe3f89a27b3159dd"
   ],
   "verified": false,
   "archived": false,
   "accommodations": [
-    {
-      "$oid": "6453c9b0a33b163e617be320"
-    },
-    {
-      "$oid": "6453ca66a33b163e617be321"
-    },
-    {
-      "$oid": "6453ca75a33b163e617be322"
-    },
-    {
-      "$oid": "6453ca8ba33b163e617be323"
-    }
+    "6453c9b0a33b163e617be320",
+    "6453ca66a33b163e617be321",
+    "6453ca75a33b163e617be322",
+    "6453ca8ba33b163e617be323"
   ]
 },{
   "_id": {
     "$oid": "6437ee4afe3f89a27b31595f"
   },
-  "owner": {
-    "$oid": "6437e494fe3f89a27b315952"
-  },
+  "owner": "6437e494fe3f89a27b315952",
   "name": "Sampaguita Female Boarding House",
-  "location": {
-    "exact": "Unit 32, Mt. Everest Street, Umali Subd, Los Banos",
-    "approx": "Umali Subd"
-  },
+  "location_exact": "Unit 32, Mt. Everest Street, Umali Subd, Los Banos",
+  "location_approx": "Umali Subd",
   "establishment_type": "Boarding House",
   "tenant_type": "Female Only",
   "utilities": [
@@ -127,38 +91,26 @@
     "https://drive.google.com/file/d/1Ke_DPl9wfxlh7TbiRvZiTi85oawJ9gJR/view?usp=sharing",
     "https://drive.google.com/file/d/1W0Na5TFicuk96N-R5_r6TWL4jG3sDCpc/view?usp=sharing"
   ],
-  "ownership_proof": {
-    "proof_type": "Barangay Certificate",
-    "proof_number": "B33-4542",
-    "proof_picture": "https://drive.google.com/file/d/1oTsButBVcYls8EW92sWk3i30h5q9CXSW/view?usp=sharing"
-  },
+  "proof_type": "Barangay Certificate",
+  "proof_number": "B33-4542",
+  "proof_picture": "https://drive.google.com/file/d/1oTsButBVcYls8EW92sWk3i30h5q9CXSW/view?usp=sharing",
   "reviews": [
-    {
-      "$oid": "64380b2cfe3f89a27b3159ce"
-    },
-    {
-      "$oid": "64380ca6fe3f89a27b3159d1"
-    }
+    "64380b2cfe3f89a27b3159ce",
+    "64380ca6fe3f89a27b3159d1"
   ],
   "verified": true,
   "archived": false,
   "accommodations": [
-    {
-      "$oid": "6453caeda33b163e617be324"
-    }
+    "6453caeda33b163e617be324"
   ]
 },{
   "_id": {
     "$oid": "6437f05dfe3f89a27b315960"
   },
-  "owner": {
-    "$oid": "6437e494fe3f89a27b315952"
-  },
+  "owner": "6437e494fe3f89a27b315952",
   "name": "Perly Shell",
-  "location": {
-    "exact": "Blk 23 Ocean Drive, Los Banos",
-    "approx": "Agapita"
-  },
+  "location_exact": "Blk 23 Ocean Drive, Los Banos",
+  "location_approx": "Agapita",
   "establishment_type": "Apartment",
   "tenant_type": "Working Professional Only",
   "utilities": [
@@ -173,38 +125,26 @@
     "https://drive.google.com/file/d/1UTvep31Z-D2xpdrKmykZNS4VU7J5iRTH/view?usp=sharing",
     "https://drive.google.com/file/d/1qwWdIfRAXYKnj-JavxaIIjkKMn4PrhxC/view?usp=sharing"
   ],
-  "ownership_proof": {
-    "proof_type": "Business Permit",
-    "proof_number": "554422",
-    "proof_picture": "https://drive.google.com/file/d/1xY5Am4F-6WoanUA8-WWWPYj9w-9lZPkB/view?usp=sharing"
-  },
+  "proof_type": "Business Permit",
+  "proof_number": "554422",
+  "proof_picture": "https://drive.google.com/file/d/1xY5Am4F-6WoanUA8-WWWPYj9w-9lZPkB/view?usp=sharing",
   "reviews": [
-    {
-      "$oid": "64380d79fe3f89a27b3159d6"
-    }
+    "64380d79fe3f89a27b3159d6"
   ],
   "verified": true,
   "archived": false,
   "accommodations": [
-    {
-      "$oid": "6453cce7a33b163e617be325"
-    },
-    {
-      "$oid": "6453cd10a33b163e617be326"
-    }
+    "6453cce7a33b163e617be325",
+    "6453cd10a33b163e617be326"
   ]
 },{
   "_id": {
     "$oid": "6437f190fe3f89a27b315961"
   },
-  "owner": {
-    "$oid": "6437e3f4fe3f89a27b315951"
-  },
+  "owner": "6437e3f4fe3f89a27b315951",
   "name": "House for Rent",
-  "location": {
-    "exact": "9 Lot 2 Martinez Compound, Los Banos",
-    "approx": "Beyond Junction"
-  },
+  "location_exact": "9 Lot 2 Martinez Compound, Los Banos",
+  "location_approx": "Beyond Junction",
   "establishment_type": "House",
   "tenant_type": "Any. Prefer Family.",
   "utilities": [
@@ -217,21 +157,15 @@
     "https://drive.google.com/file/d/1DlD-7CjyQuGlUw-HL7RngW9PTLCWBDtF/view?usp=sharing",
     "https://drive.google.com/file/d/1leBATV3bxx1iR0GNaMcSDYUFlr1D1EHA/view?usp=sharing"
   ],
-  "ownership_proof": {
-    "proof_type": "Barangay Certificate",
-    "proof_number": "B33-0001",
-    "proof_picture": "https://drive.google.com/file/d/1rDsbYN9UOeUWBU3mXFeiHDOHMfIkzAjO/view?usp=sharing"
-  },
+  "proof_type": "Barangay Certificate",
+  "proof_number": "B33-0001",
+  "proof_picture": "https://drive.google.com/file/d/1rDsbYN9UOeUWBU3mXFeiHDOHMfIkzAjO/view?usp=sharing",
   "reviews": [
-    {
-      "$oid": "64380e4bfe3f89a27b3159de"
-    }
+    "64380e4bfe3f89a27b3159de"
   ],
   "verified": true,
   "archived": false,
   "accommodations": [
-    {
-      "$oid": "6453ce0ba33b163e617be327"
-    }
+    "6453ce0ba33b163e617be327"
   ]
 }]

@@ -2,9 +2,7 @@
   "_id": {
     "$oid": "64367c076495cfdc3795731b"
   },
-  "user_id": {
-    "$oid": "6437e747fe3f89a27b315954"
-  },
+  "user_id": "6437e747fe3f89a27b315954",
   "date_submitted": {
     "$date": {
       "$numberLong": "1679405556000"
@@ -20,9 +18,7 @@
   "_id": {
     "$oid": "6437f480fe3f89a27b315969"
   },
-  "user_id": {
-    "$oid": "6437e747fe3f89a27b315954"
-  },
+  "user_id": "6437e747fe3f89a27b315954",
   "date_submitted": {
     "$date": {
       "$numberLong": "1678830554342"
@@ -37,9 +33,7 @@
   "_id": {
     "$oid": "64380677fe3f89a27b3159c7"
   },
-  "user_id": {
-    "$oid": "6437e2f6fe3f89a27b315950"
-  },
+  "user_id": "6437e2f6fe3f89a27b315950",
   "date_submitted": {
     "$date": {
       "$numberLong": "1678830554342"
@@ -54,9 +48,7 @@
   "_id": {
     "$oid": "643806cafe3f89a27b3159c8"
   },
-  "user_id": {
-    "$oid": "6437e494fe3f89a27b315952"
-  },
+  "user_id": "6437e494fe3f89a27b315952",
   "date_submitted": {
     "$date": {
       "$numberLong": "1678830554342"

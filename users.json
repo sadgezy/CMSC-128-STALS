@@ -2,276 +2,187 @@
   "_id": {
     "$oid": "6437e2f6fe3f89a27b315950"
   },
-  "name": {
-    "first_name": "Dexter Martin",
-    "last_name": "Salvador",
-    "middle_initial": "C",
-    "suffix": ""
-  },
+  "first_name": "Dexter Martin",
+  "last_name": "Salvador",
+  "middle_initial": "C",
+  "suffix": "",
   "username": "cmdSa",
   "password": "4321",
-  "contact_details": {
-    "phone_no": "09123456789",
-    "email": "cdmSa@gmail.com"
-  },
+  "phone_no": "09123456789",
+  "email": "cdmSa@gmail.com",
   "verified": true,
-  "id_verification": {
-    "id_type": "passport",
-    "id_picture": "https://drive.google.com/file/d/1_D0ykufx01a0Wk4oK15B73yuXzZ0Dkzt/view?usp=sharing",
-    "id_number": "P123456"
-  },
+  "id_type": "passport",
+  "id_picture": "https://drive.google.com/file/d/1_D0ykufx01a0Wk4oK15B73yuXzZ0Dkzt/view?usp=sharing",
+  "id_number": "P123456",
   "archived": false,
   "tickets": [
-    {
-      "$oid": "64380677fe3f89a27b3159c7"
-    }
+    "64380677fe3f89a27b3159c7"
   ],
-  "user_type": {
-    "type": "owner",
+  "user_type": "owner",
+  "class": "user",
     "establishments": [
-      {
-        "$oid": "6437eb61fe3f89a27b31595d"
-      }
+      "6437eb61fe3f89a27b31595d"
     ]
-  }
 },{
   "_id": {
     "$oid": "6437e3f4fe3f89a27b315951"
   },
-  "name": {
-    "first_name": "Tyler",
-    "last_name": "Batungbakal",
-    "middle_initial": "T",
-    "suffix": "III"
-  },
+  "first_name": "Tyler",
+  "last_name": "Batungbakal",
+  "middle_initial": "T",
+  "suffix": "III",
   "username": "bakal_ako",
   "password": "3525",
-  "contact_details": {
-    "phone_no": "09171112222",
-    "email": "bakalMan@yahoo.com"
-  },
+  "phone_no": "09171112222",
+  "email": "bakalMan@yahoo.com",
   "verified": true,
-  "id_verification": {
-    "id_type": "drivers_license",
-    "id_picture": "https://drive.google.com/file/d/1ILz9Nn3yLWKxsm7sBvw70epmWeuE_Ut5/view?usp=sharing",
-    "id_number": "N03-12-123456"
-  },
+  "id_type": "drivers_license",
+  "id_picture": "https://drive.google.com/file/d/1ILz9Nn3yLWKxsm7sBvw70epmWeuE_Ut5/view?usp=sharing",
+  "id_number": "N03-12-123456",
   "archived": false,
   "tickets": [],
-  "user_type": {
-    "type": "owner",
-    "establishments": [
-      {
-        "$oid": "6437f190fe3f89a27b315961"
-      }
-    ]
-  }
+  "user_type": "owner",
+  "class": "",
+  "establishments": [
+    "6437f190fe3f89a27b315961"
+  ],
+  "reviews": [],
+  "favorites": []
 },{
   "_id": {
     "$oid": "6437e494fe3f89a27b315952"
   },
-  "name": {
-    "first_name": "Kiara Mae",
-    "last_name": "Lopez",
-    "middle_initial": "R",
-    "suffix": ""
-  },
+  "first_name": "Kiara Mae",
+  "last_name": "Lopez",
+  "middle_initial": "R",
+  "suffix": "",
   "username": "KML_LosBanos",
   "password": "2344",
-  "contact_details": {
-    "phone_no": "09172513333",
-    "email": "KMLBanos@gmail.com"
-  },
+  "phone_no": "09172513333",
+  "email": "KMLBanos@gmail.com",
   "verified": true,
-  "id_verification": {
-    "id_type": "passport",
-    "id_picture": "https://drive.google.com/file/d/11cTaBTzNjCm9RMLY47mfQE2zT7_hKZyr/view?usp=sharing",
-    "id_number": "P123333"
-  },
+  "id_type": "passport",
+  "id_picture": "https://drive.google.com/file/d/11cTaBTzNjCm9RMLY47mfQE2zT7_hKZyr/view?usp=sharing",
+  "id_number": "P123333",
   "archived": false,
   "tickets": [
-    {
-      "$oid": "643806cafe3f89a27b3159c8"
-    }
+    "643806cafe3f89a27b3159c8"
   ],
-  "user_type": {
-    "type": "owner",
-    "establishments": [
-      {
-        "$oid": "6437ecf0fe3f89a27b31595e"
-      },
-      {
-        "$oid": "6437ee4afe3f89a27b31595f"
-      },
-      {
-        "$oid": "6437f05dfe3f89a27b315960"
-      }
-    ]
-  }
+  "user_type": "owner",
+  "class": "",
+  "establishments": [
+    "6437ecf0fe3f89a27b31595e",
+    "6437ee4afe3f89a27b31595f",
+    "6437f05dfe3f89a27b315960"
+  ],
+  "reviews": [],
+  "favorites": []
 },{
   "_id": {
     "$oid": "6437e672fe3f89a27b315953"
   },
-  "name": {
-    "first_name": "Marie",
-    "last_name": "Madrigal",
-    "middle_initial": "L",
-    "suffix": ""
-  },
+  "first_name": "Marie",
+  "last_name": "Madrigal",
+  "middle_initial": "L",
+  "suffix": "",
   "username": "mads_marie",
   "password": "multilevelmarketing",
-  "contact_details": {
-    "phone_no": "09991231111",
-    "email": "mlmscheme@gmail.com"
-  },
+  "phone_no": "09991231111",
+  "email": "mlmscheme@gmail.com",
   "verified": true,
-  "id_verification": {
-    "id_type": "passport",
-    "id_picture": "https://drive.google.com/file/d/1m04MV8mLhuhrSU7J0SJdfP5a6xEKH-WX/view",
-    "id_number": "P0912846"
-  },
+  "id_type": "passport",
+  "id_picture": "https://drive.google.com/file/d/1m04MV8mLhuhrSU7J0SJdfP5a6xEKH-WX/view",
+  "id_number": "P0912846",
   "archived": false,
   "tickets": [],
-  "user_type": {
-    "class": "others",
-    "reviews": [
-      {
-        "$oid": "64380b2cfe3f89a27b3159ce"
-      }
-    ],
-    "favorites": [
-      {
-        "$oid": "6437ee4afe3f89a27b31595f"
-      }
-    ],
-    "type": "user"
-  }
+  "user_type": "user",
+  "class": "others",
+  "establishments": [],
+  "reviews": [
+    "64380b2cfe3f89a27b3159ce"
+  ],
+  "favorites": [
+    "6437ee4afe3f89a27b31595f"
+  ]
 },{
   "_id": {
     "$oid": "6437e747fe3f89a27b315954"
   },
-  "name": {
-    "first_name": "Michael James",
-    "last_name": "Bartolome",
-    "middle_initial": "Z",
-    "suffix": "Jr"
-  },
+  "first_name": "Michael James",
+  "last_name": "Bartolome",
+  "middle_initial": "Z",
+  "suffix": "Jr",
   "username": "mj24",
   "password": "kobeBryant24",
-  "contact_details": {
-    "phone_no": "09993211111",
-    "email": "shoot3pt@gmail.com"
-  },
+  "phone_no": "09993211111",
+  "email": "shoot3pt@gmail.com",
   "archived": false,
   "verified": false,
-  "id_verification": {
-    "id_type": "passport",
-    "id_picture": "https://drive.google.com/file/d/1FxUy9TOtFORwBewBrAP6Gr-jz5gdoxBT/view?usp=sharing",
-    "id_number": "P1111111"
-  },
+  "id_type": "passport",
+  "id_picture": "https://drive.google.com/file/d/1FxUy9TOtFORwBewBrAP6Gr-jz5gdoxBT/view?usp=sharing",
+  "id_number": "P1111111",
   "tickets": [
-    {
-      "$oid": "64367c076495cfdc3795731b"
-    },
-    {
-      "$oid": "6437f480fe3f89a27b315969"
-    }
+    "64367c076495cfdc3795731b",
+    "6437f480fe3f89a27b315969"
   ],
-  "user_type": {
-    "type": "user",
-    "class": "others",
-    "reviews": [
-      {
-        "$oid": "64380ca6fe3f89a27b3159d1"
-      },
-      {
-        "$oid": "64380d79fe3f89a27b3159d6"
-      },
-      {
-        "$oid": "64380e1cfe3f89a27b3159dd"
-      },
-      {
-        "$oid": "64380e4bfe3f89a27b3159de"
-      },
-      {
-        "$oid": "64380f08fe3f89a27b3159df"
-      }
-    ],
-    "favorites": [
-      {
-        "$oid": "6437eb61fe3f89a27b31595d"
-      },
-      {
-        "$oid": "6437f190fe3f89a27b315961"
-      },
-      {
-        "$oid": "6437ee4afe3f89a27b31595f"
-      },
-      {
-        "$oid": "6437ecf0fe3f89a27b31595e"
-      },
-      {
-        "$oid": "6437f05dfe3f89a27b315960"
-      }
-    ]
-  }
+  "user_type": "user",
+  "class": "others",
+  "establishments": [],
+  "reviews": [
+    "64380ca6fe3f89a27b3159d1",
+    "64380d79fe3f89a27b3159d6",
+    "64380e1cfe3f89a27b3159dd",
+    "64380e4bfe3f89a27b3159de",
+    "64380f08fe3f89a27b3159df"
+  ],
+  "favorites": [
+    "6437eb61fe3f89a27b31595d",
+    "6437f190fe3f89a27b315961",
+    "6437ee4afe3f89a27b31595f",
+    "6437ecf0fe3f89a27b31595e",
+    "6437f05dfe3f89a27b315960"
+  ]
 },{
   "_id": {
     "$oid": "6437e851fe3f89a27b315955"
   },
-  "name": {
-    "first_name": "Lionel",
-    "last_name": "Umali",
-    "middle_initial": "Q",
-    "suffix": ""
-  },
+  "first_name": "Lionel",
+  "last_name": "Umali",
+  "middle_initial": "Q",
+  "suffix": "",
   "username": "leo_qumali",
   "password": "campNouIsHome",
-  "contact_details": {
-    "phone_no": "09999999999",
-    "email": "goatmeeeh@gmail.com"
-  },
+  "phone_no": "09999999999",
+  "email": "goatmeeeh@gmail.com",
   "archived": false,
   "verified": true,
-  "user_type": {
-    "type": "user",
-    "class": "edu_UP",
-    "reviews": [],
-    "favorites": [
-      {
-        "$oid": "6437f190fe3f89a27b315961"
-      },
-      {
-        "$oid": "6437eb61fe3f89a27b31595d"
-      }
-    ]
-  }
+  "user_type": "user",
+  "class": "edu_UP",
+  "establishments": [],
+  "reviews": [],
+  "favorites": [
+    "6437f190fe3f89a27b315961",
+    "6437eb61fe3f89a27b31595d"
+  ]
 },{
   "_id": {
     "$oid": "6437e8c1fe3f89a27b315956"
   },
-  "name": {
-    "first_name": "Roger Nadal",
-    "last_name": "Fajardo",
-    "middle_initial": "N",
-    "suffix": "II"
-  },
+  "first_name": "Roger Nadal",
+  "last_name": "Fajardo",
+  "middle_initial": "N",
+  "suffix": "II",
   "username": "rogerroger",
   "password": "FarFajardo",
-  "contact_details": {
-    "phone_no": "09174886878",
-    "email": "rogerF2@gmail.com"
-  },
+  "phone_no": "09174886878",
+  "email": "rogerF2@gmail.com",
   "archived": false,
   "verified": true,
-  "user_type": {
-    "type": "user",
-    "class": "edu_nonUP",
-    "reviews": [],
-    "favorites": [
-      {
-        "$oid": "6437ecf0fe3f89a27b31595e"
-      }
-    ]
-  }
+  "user_type": "user",
+  "class": "edu_nonUP",
+  "establishments": [],
+  "reviews": [],
+  "favorites": [
+    "6437ecf0fe3f89a27b31595e"
+  ]
 }]
