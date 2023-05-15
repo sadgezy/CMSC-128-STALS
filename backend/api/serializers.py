@@ -97,5 +97,5 @@ class AccommodationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Accommodation
         #fields = ('id', 'name', 'description', 'location', 'price_per_night', 'max_guests', 'date_created', 'date_updated')
-        fields = ('_id', 'name', 'description', 'price', 'archived')
+        fields = '__all__'
         

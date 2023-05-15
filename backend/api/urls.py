@@ -23,4 +23,5 @@ urlpatterns = [
     path('create-accommodation/', views.create_accommodation),
     path('delete-accommodation/<str:pk>/', views.delete_accommodation),
     path('archive-accommodation/<str:pk>/', views.archive_accommodation),
+    path('verify-accommodation/<str:pk>/', views.verify_accommodation),
 ]

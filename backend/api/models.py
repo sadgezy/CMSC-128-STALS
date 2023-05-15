@@ -89,12 +89,12 @@ class Admin(models_django.Model):
     
 
 class ReviewManager(models_django.Manager):
-    def create_review(self,dateSubmited,title,rating,archived,body):
+    def create_review(self,dateSubmitted,title,rating,archived,body):
         # email=self.normalize_email(email)
 
         review=self.model(
             #_id=_id,
-            dateSubmited=dateSubmited,
+            dateSubmitted=dateSubmitted,
             title=title,
             rating=rating,
             archived=archived,
@@ -111,7 +111,7 @@ class Review(models_django.Model):
     # _id = models_djongo.ObjectIdField()
     # userID = models_djongo.ForeignKey(User, on_delete=models_djongo.CASCADE)
     # accomodationID = models.ForeignKey(Accommodation, on_delete=models.CASCADE)
-    dateSubmited = models_django.DateTimeField()
+    dateSubmitted = models_django.DateTimeField()
     title = models_django.CharField(max_length=255)
     rating = models_django.IntegerField()
     archived = models_django.BooleanField()
@@ -121,42 +121,6 @@ class Review(models_django.Model):
 
     def __str__(self):
         return self.title
-
-    
-
-
-# class Location(models.Model):
-#     exact = models.CharField(max_length=255)
-#     approx = models.CharField(max_length=255)
-
-# class PriceRange(models.Model):
-#     lower_bound = models.IntegerField()
-#     upper_bound = models.IntegerField()
-
-# class OwnershipProof(models.Model):
-#     proof_type = models.CharField(max_length=255)
-#     proof_number = models.CharField(max_length=255)
-#     proof_picture = models.URLField()
-
-# These two are supposed to be in arrayfield in accommodation
-# class Utility(models_django.Model):
-#     name = models_django.CharField(max_length=255)
-#     accommodation = models_django.ForeignKey('Accommodation', on_delete=models_django.CASCADE, related_name='utilities')
-
-# class Photo(models_django.Model):
-#     url = models_django.URLField()
-#     accommodation = models_django.ForeignKey('Accommodation', on_delete=models_django.CASCADE, related_name='photos')
-
-# class Review(models_django.Model):
-#     # commented until functional
-#     # _id = models_djongo.ObjectIdField()
-#     # userID = models_django.ForeignKey('User', on_delete=models_django.CASCADE)
-#     # accommodationID = models_django.ForeignKey('Accommodation', on_delete=models_django.CASCADE)
-#     dateSubmited = models_django.DateTimeField()
-#     title = models_django.CharField(max_length=255)
-#     rating = models_django.IntegerField()
-#     archived = models_django.BooleanField()
-#     body = models_django.TextField()
 
 
 class AccommodationManager(models_django.Manager):
@@ -192,17 +156,14 @@ class Accommodation(models_django.Model):
     # owner = models_django.ForeignKey('User', on_delete=models_django.CASCADE)
     _id = models_djongo.ObjectIdField()
     name = models_django.CharField(max_length=255)
-    # location = models.OneToOneField(Location, on_delete=models.CASCADE)
     exact = models_django.CharField(max_length=255)
     approx = models_django.CharField(max_length=255)
     accommodation_type = models_django.CharField(max_length=255)
     tenant_type = models_django.CharField(max_length=255)
-    # price_range = models.OneToOneField(PriceRange, on_delete=models.CASCADE)
     lower_bound = models_django.IntegerField()
     upper_bound = models_django.IntegerField()
     capacity = models_django.PositiveIntegerField()
     description = models_django.TextField()
-    # ownership_proof = models.OneToOneField(OwnershipProof, on_delete=models.CASCADE)\
     price = models_django.DecimalField(max_digits=8, decimal_places=2)
     proof_type = models_django.CharField(max_length=255)
     proof_number = models_django.CharField(max_length=255)
@@ -244,3 +205,39 @@ class Ticket(models_django.Model):
     def __str__(self):
         return self.description
     
+
+
+
+
+# class Location(models.Model):
+#     exact = models.CharField(max_length=255)
+#     approx = models.CharField(max_length=255)
+
+# class PriceRange(models.Model):
+#     lower_bound = models.IntegerField()
+#     upper_bound = models.IntegerField()
+
+# class OwnershipProof(models.Model):
+#     proof_type = models.CharField(max_length=255)
+#     proof_number = models.CharField(max_length=255)
+#     proof_picture = models.URLField()
+
+# These two are supposed to be in arrayfield in accommodation
+# class Utility(models_django.Model):
+#     name = models_django.CharField(max_length=255)
+#     accommodation = models_django.ForeignKey('Accommodation', on_delete=models_django.CASCADE, related_name='utilities')
+
+# class Photo(models_django.Model):
+#     url = models_django.URLField()
+#     accommodation = models_django.ForeignKey('Accommodation', on_delete=models_django.CASCADE, related_name='photos')
+
+# class Review(models_django.Model):
+#     # commented until functional
+#     # _id = models_djongo.ObjectIdField()
+#     # userID = models_django.ForeignKey('User', on_delete=models_django.CASCADE)
+#     # accommodationID = models_django.ForeignKey('Accommodation', on_delete=models_django.CASCADE)
+#     dateSubmitted = models_django.DateTimeField()
+#     title = models_django.CharField(max_length=255)
+#     rating = models_django.IntegerField()
+#     archived = models_django.BooleanField()
+#     body = models_django.TextField()

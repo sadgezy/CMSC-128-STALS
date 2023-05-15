@@ -8,6 +8,7 @@ from .models import *
 from http import HTTPStatus
 from rest_framework.authtoken.models import Token
 from bson import ObjectId
+from decimal import Decimal
 from rest_framework import status
 
 # Create your views here.
@@ -227,23 +228,30 @@ def delete_accommodation(request, pk):
     return Response(data={"message": "Successfully deleted accommodation"})
 
 
-#--------------------------------------------------------------
-#delete and move to different db na lang (?)                    #still doesnt work
-@api_view(['PATCH'])                                            #PUT  
-def archive_accommodation(request, pk):
-    
+@api_view(['PUT'])
+def verify_accommodation(request, pk):
+
+    accom = Accommodation.objects.get(pk=ObjectId(pk))
+    accom.price = Decimal(str(accom.price))
+    accom.verified = True
+    accom.save()
+
+    return Response(data={"message": "Successfully verified accommodation"})
+
+@api_view(['PUT'])
+def archive_accommodation(request, pk):   
+
     try:
         accommodation = Accommodation.objects.get(pk=ObjectId(pk))
-
-        accommodation.is_archived = True
-        accommodation.save()
-
-        serializer = AccommodationSerializer(accommodation)
-        return Response(serializer.data)
-
     except Accommodation.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
+         return Response(status=status.HTTP_404_NOT_FOUND)
+        
     
-    #accommodation = Accommodation.objects.get(pk=pk)
-#--------------------------------------------------------------
+    accommodation.price = Decimal(str(accommodation.price))
+
+    accommodation.archived = True
+    accommodation.save()
+
+    #serializer = AccommodationSerializer(accommodation)
+    #return Response(serializer.data)
+    return Response(data={"message": "Successfully archived accommodation"})
