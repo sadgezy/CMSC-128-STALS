@@ -2,11 +2,8 @@ from django.db import models as models_django
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from djongo import models as models_djongo
-# from django_mongodb_engine.fields import ObjectIdField
 
 # Create your models here.
-
-isMigrate = False
 
 class CustomUserManager(BaseUserManager):
     def create_user(self,email,first_name,last_name,middle_initial,suffix,phone_no,username,verified,id_type,id_picture,id_number,archived,tickets,type,accommodations,password,**extra_fields):
@@ -111,7 +108,7 @@ class ReviewManager(models_django.Manager):
 
 class Review(models_django.Model):
     # commented until functional
-    _id = models_djongo.ObjectIdField()
+    # _id = models_djongo.ObjectIdField()
     # userID = models_djongo.ForeignKey(User, on_delete=models_djongo.CASCADE)
     # accomodationID = models.ForeignKey(Accommodation, on_delete=models.CASCADE)
     dateSubmited = models_django.DateTimeField()
@@ -128,48 +125,18 @@ class Review(models_django.Model):
     
 
 
-class Location(models_django.Model):
-    id = models_djongo.ObjectIdField()
-    exact = models_django.CharField(max_length=255)
-    approx = models_django.CharField(max_length=255)
-    accommodation = models_django.ForeignKey('Accommodation', on_delete=models_django.CASCADE,related_name='locations')
-    class Meta:
-        abstract = isMigrate 
+# class Location(models.Model):
+#     exact = models.CharField(max_length=255)
+#     approx = models.CharField(max_length=255)
 
-class PriceRange(models_django.Model):
-    id = models_djongo.ObjectIdField()
-    lower_bound = models_django.IntegerField()
-    upper_bound = models_django.IntegerField()
-    accommodation = models_django.ForeignKey('Accommodation', on_delete=models_django.CASCADE,related_name='pricerange')
+# class PriceRange(models.Model):
+#     lower_bound = models.IntegerField()
+#     upper_bound = models.IntegerField()
 
-    class Meta:
-        abstract = isMigrate 
-
-class OwnershipProof(models_django.Model):
-    id = models_djongo.ObjectIdField()
-    proof_type = models_django.CharField(max_length=255)
-    proof_number = models_django.CharField(max_length=255)
-    proof_picture = models_django.URLField()
-    accommodation = models_django.ForeignKey('Accommodation', on_delete=models_django.CASCADE,related_name='ownershipproof')
-
-    class Meta:
-        abstract = isMigrate 
-
-class Photos(models_django.Model):
-    id = models_djongo.ObjectIdField()
-    link = models_django.URLField()
-    # accommodation = models_django.ForeignKey('Accommodation',on_delete=models_django.RESTRICT,related_name='photos')
-
-    def __str__(self):
-        return self.link
-
-
-class Utilities(models_django.Model):
-    id = models_djongo.ObjectIdField()
-    utility = models_django.CharField(max_length=100)
-    # accommodation = models_django.ForeignKey('Accommodation',on_delete=models_django.RESTRICT,related_name='utilities')
-    # accommodation = models_django.ForeignKey('Accommodation', on_delete=models_django.CASCADE,related_name='utilities')
-
+# class OwnershipProof(models.Model):
+#     proof_type = models.CharField(max_length=255)
+#     proof_number = models.CharField(max_length=255)
+#     proof_picture = models.URLField()
 
 # These two are supposed to be in arrayfield in accommodation
 # class Utility(models_django.Model):
@@ -192,55 +159,54 @@ class Utilities(models_django.Model):
 #     body = models_django.TextField()
 
 
-# class AccommodationManager(models_django.Manager):
-#     def create_accommodation(self,owner,name,exact,approx,accommodation_type,tenant_type,lower_bound,upper_bound,capacity,description,proof_type,proof_number,proof_picture,verified,archived):
-#         # email=self.normalize_email(email)
-
-#         accommodation=self.model(
-#             owner = owner,
-#             name = name,
-#             exact = exact,
-#             approx = approx,
-#             accommodation_type = accommodation_type,
-#             tenant_type = tenant_type,
-#             lower_bound = lower_bound,
-#             upper_bound = upper_bound,
-#             capacity = capacity,
-#             description = description,
-#             proof_type = proof_type,
-#             proof_number = proof_number,
-#             proof_picture = proof_picture,
-#             verified = verified,
-#             archived = archived,
-#         )
-
-#         # I think it says in the docs that this isn't necessary when you're using a manager 
-#         accommodation.save()
-
-#         return accommodation
-
 class AccommodationManager(models_django.Manager):
-    def create_accommodation(self, **kwargs):
-        accommodation = self.create(**kwargs)
+    def create_accommodation(self,name,exact,approx,accommodation_type,tenant_type,lower_bound,upper_bound,capacity,description,proof_type,proof_number,proof_picture,verified,archived):
+        # email=self.normalize_email(email)
 
+        accommodation=self.model(
+            name = name,
+            exact = exact,
+            approx = approx,
+            accommodation_type = accommodation_type,
+            tenant_type = tenant_type,
+            lower_bound = lower_bound,
+            upper_bound = upper_bound,
+            capacity = capacity,
+            description = description,
+            proof_type = proof_type,
+            proof_number = proof_number,
+            proof_picture = proof_picture,
+            verified = verified,
+            archived = archived,
+        )
+
+        # I think it says in the docs that this isn't necessary when you're using a manager 
         accommodation.save()
+
         return accommodation
 
+
 class Accommodation(models_django.Model):
-    _id = models_django.CharField(max_length=50)
-    owner = models_django.CharField(max_length=50)
-    name = models_django.CharField(max_length=100)
-    location = models_djongo.ForeignKey(Location, on_delete=models_djongo.CASCADE,related_name='accommodations')
-    accommodation_type = models_django.CharField(max_length=100)
-    tenant_type = models_django.CharField(max_length=100)
-    price_range = models_djongo.ForeignKey(PriceRange, on_delete=models_djongo.CASCADE,related_name='accommodations')
-    capacity = models_django.IntegerField()
-    utilities = models_djongo.ArrayField(model_container=Utilities)
+    # commented until functional
+    # _id = models_djongo.ObjectIdField()
+    # owner = models_django.ForeignKey('User', on_delete=models_django.CASCADE)
+    _id = models_djongo.ObjectIdField()
+    name = models_django.CharField(max_length=255)
+    # location = models.OneToOneField(Location, on_delete=models.CASCADE)
+    exact = models_django.CharField(max_length=255)
+    approx = models_django.CharField(max_length=255)
+    accommodation_type = models_django.CharField(max_length=255)
+    tenant_type = models_django.CharField(max_length=255)
+    # price_range = models.OneToOneField(PriceRange, on_delete=models.CASCADE)
+    lower_bound = models_django.IntegerField()
+    upper_bound = models_django.IntegerField()
+    capacity = models_django.PositiveIntegerField()
     description = models_django.TextField()
-    photos = models_djongo.ArrayField(model_container=Photos)
-    # photos = models_djongo.ManyToManyField(Photos, related_name=)
-    ownership_proof = models_djongo.ForeignKey(OwnershipProof,null=True,on_delete=models_djongo.CASCADE,related_name='accommodations')
-    reviews = models_djongo.ArrayField(model_container=Review)
+    # ownership_proof = models.OneToOneField(OwnershipProof, on_delete=models.CASCADE)\
+    price = models_django.DecimalField(max_digits=8, decimal_places=2)
+    proof_type = models_django.CharField(max_length=255)
+    proof_number = models_django.CharField(max_length=255)
+    proof_picture = models_django.URLField()
     verified = models_django.BooleanField()
     archived = models_django.BooleanField()
 
@@ -248,34 +214,6 @@ class Accommodation(models_django.Model):
 
     def __str__(self):
         return self.name
-    
-# class Accommodation(models_django.Model):
-#     # commented until functional
-#     # _id = models_djongo.ObjectIdField()
-#     owner = models_django.ForeignKey('User', on_delete=models_django.CASCADE)
-#     name = models_django.CharField(max_length=255)
-#     # location = models.OneToOneField(Location, on_delete=models.CASCADE)
-#     exact = models_django.CharField(max_length=255)
-#     approx = models_django.CharField(max_length=255)
-#     accommodation_type = models_django.CharField(max_length=255)
-#     tenant_type = models_django.CharField(max_length=255)
-#     # price_range = models.OneToOneField(PriceRange, on_delete=models.CASCADE)
-#     lower_bound = models_django.IntegerField()
-#     upper_bound = models_django.IntegerField()
-#     capacity = models_django.PositiveIntegerField()
-#     # utilities = ArrayField(models_django.CharField(max_length=255))
-#     description = models_django.TextField()
-#     # ownership_proof = models.OneToOneField(OwnershipProof, on_delete=models.CASCADE)\
-#     proof_type = models_django.CharField(max_length=255)
-#     proof_number = models_django.CharField(max_length=255)
-#     proof_picture = models_django.URLField()
-#     verified = models_django.BooleanField()
-#     archived = models_django.BooleanField()
-
-#     objects = AccommodationManager()
-
-#     def __str__(self):
-#         return self.name
 
 class TicketManager(models_django.Manager):
     def create_ticket(self,date_submitted,description,resolved):
@@ -305,3 +243,4 @@ class Ticket(models_django.Model):
 
     def __str__(self):
         return self.description
+    
