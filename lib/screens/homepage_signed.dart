@@ -4,7 +4,7 @@ import '../UI_parameters.dart' as UIParameter;
 
 // COMPONENTS
 import '../components/accom_card.dart';
-import '../components/search_bar.dart' as sb;
+import '../components/search_bar.dart';
 import '../components/filter_drawer.dart';
 
 class RegisteredHomepage extends StatefulWidget {
@@ -183,7 +183,7 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
               },
             ),
             // search bar at the top of the homepage
-            title: sb.SearchBar(
+            title: SearchBar(
               hintText: 'Search',
               onChanged: (value) {
                 /* PUT SEARCH FUNCTION HERE */

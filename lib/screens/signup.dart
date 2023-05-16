@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'signup_info.dart';
-import 'package:provider/provider.dart';
-import 'package:stals_frontend/providers/token_provider.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -22,11 +19,8 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
         child: Text(btnText, style: const TextStyle(fontSize: 18)),
         onPressed: () {
-          if (btnText == "Owner") {
-            Navigator.pushNamed(context, '/signup_info', arguments: {"type": "Owner"});
-          } else if (btnText == "Customer") {
-            Navigator.pushNamed(context, '/signup_info', arguments: {"type": "User"});
-          }
+          // if(btnText == "Owner"){navigate}
+          // else if (btnText == "Customer"){navigate}
         },
       ),
     );
@@ -49,10 +43,10 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
     );
 
-    if (Provider.of<TokenProvider>(context, listen: false).getCurrToken == "") {
-      return Scaffold(
-        backgroundColor: Colors.white,
-        body: Center(
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
+        child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -69,11 +63,7 @@ class _SignUpPageState extends State<SignUpPage> {
             ],
           ),
         ),
-      );
-    }
-    else {
-      return Center(child: Text("You are logged in"),);
-    }
-    
+      ),
+    );
   }
 }

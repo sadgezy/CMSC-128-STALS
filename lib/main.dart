@@ -1,25 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stals_frontend/screens/admin_dashboard.dart';
+import 'package:stals_frontend/screens/admin_view_users.dart';
 import 'package:stals_frontend/screens/signin.dart';
 import 'package:stals_frontend/screens/signup.dart';
 import 'package:stals_frontend/screens/homepage.dart';
 import 'package:stals_frontend/screens/homepage_signed.dart';
 import 'package:stals_frontend/screens/accomm.dart';
-import 'package:stals_frontend/screens/add_accomm.dart';
-import 'package:stals_frontend/screens/signup_info.dart';
-import 'package:provider/provider.dart';
-import 'package:stals_frontend/providers/token_provider.dart';
+import 'package:stals_frontend/screens/view_manage_accomms.dart';
 
 void main() {
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: ((context) => TokenProvider())),
-      ],
-      child: MyApp(),
-    ),
-  );
+  runApp(const MyApp());
+  // Make app full screen
+  // SystemChrome.setEnabledSystemUIMode(
+  //     SystemUiMode.immersiveSticky);
 }
 
 class MyApp extends StatelessWidget {
@@ -35,11 +29,11 @@ class MyApp extends StatelessWidget {
         '/signin': (context) => const SignInPage(),
         '/signup': (context) => const SignUpPage(),
         '/homepage': (context) => const UnregisteredHomepage(),
-        '/signup_info': (context) => SignUpForm(),
         '/signed_homepage': (context) => const RegisteredHomepage(),
         '/accomm': (context) => const AccommPage(),
         '/admin': (context) => const AdminDashBoard(),
-        '/add_accomm': (context) => const AddAccommPage(),
+        '/view_owned_accomms': (context) => const ViewOwnedAccomms(),
+        '/admin/view_users': (context) => const ViewUsersPage(),
       },
       theme: ThemeData(
         fontFamily: 'SFProDisplayRegular',
@@ -100,27 +94,29 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         ListTile(
           title: const Text('Admin Dashboard'),
-          trailing: const Icon(Icons.admin_panel_settings),
+          trailing: const Icon(Icons.construction),
           onTap: () {
             Navigator.pushNamed(context, '/admin');
           },
         ),
         ListTile(
-          title: const Text('Add Accommodation'),
-          trailing: const Icon(Icons.house),
+          title: const Text('View Owned Accommodations'),
+          trailing: const Icon(Icons.construction),
           onTap: () {
-            Navigator.pushNamed(context, '/add_accomm');
+            Navigator.pushNamed(context, '/view_owned_accomms');
+          },
+        ),
+        ListTile(
+          title: const Text('Admin View Users Page'),
+          trailing: const Icon(Icons.construction),
+          onTap: () {
+            Navigator.pushNamed(context, '/admin/view_users');
           },
         ),
         ListTile(
           title: const Text('Logout'),
           trailing: const Icon(Icons.logout),
-          onTap: () {
-            Provider.of<TokenProvider>(context, listen: false)
-                .removeToken("DO NOT REMOVE THIS PARAM");
-
-            print("Logged out");
-          },
+          onTap: () {},
         ),
       ])),
       appBar: AppBar(

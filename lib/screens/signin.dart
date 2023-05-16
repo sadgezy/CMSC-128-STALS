@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:stals_frontend/screens/signup.dart';
-import 'package:provider/provider.dart';
-import 'package:stals_frontend/providers/token_provider.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -12,13 +8,13 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
+  final GlobalKey<FormState> emailKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> passKey = GlobalKey<FormState>();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<FormState> emailKey = GlobalKey<FormState>();
-    final GlobalKey<FormState> passKey = GlobalKey<FormState>();
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
-
     final email = Form(
         key: emailKey,
         child: TextFormField(
@@ -30,8 +26,13 @@ class _SignInPageState extends State<SignInPage> {
             return null;
           },
           decoration: const InputDecoration(
-            border: OutlineInputBorder(),
-            contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(18)),
+                borderSide:
+                    const BorderSide(width: 0, style: BorderStyle.none)),
+            filled: true,
+            fillColor: Colors.white,
+            contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 18),
             labelText: 'E-mail',
           ),
         ));
@@ -48,8 +49,13 @@ class _SignInPageState extends State<SignInPage> {
           },
           obscureText: true,
           decoration: const InputDecoration(
-            border: OutlineInputBorder(),
-            contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(18)),
+                borderSide:
+                    const BorderSide(width: 0, style: BorderStyle.none)),
+            filled: true,
+            fillColor: Colors.white,
+            contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 18),
             labelText: 'Password',
           ),
         ));
@@ -57,14 +63,7 @@ class _SignInPageState extends State<SignInPage> {
     final loginButton = Padding(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: ElevatedButton(
-        onPressed: () async {
-          print("LOGGING IN");
-          String url = "http://127.0.0.1:8000/login/";
-          final response = await json.decode((await http.post(Uri.parse(url), body: {'email': emailController.text, 'password': passwordController.text})).body);
-          String token = response['token'];
-          Provider.of<TokenProvider>(context, listen: false).setToken(token);
-          setState(() {});
-        },
+        onPressed: () {},
         style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(18),
@@ -90,7 +89,7 @@ class _SignInPageState extends State<SignInPage> {
         );
       },
       child: const Text(
-        'Make an Account!',
+        'Make an account!',
         style: TextStyle(color: Color.fromARGB(255, 25, 83, 95)),
       ),
     ));
@@ -115,7 +114,7 @@ class _SignInPageState extends State<SignInPage> {
       child: Column(
         children: [
           email,
-          const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+          const Padding(padding: EdgeInsets.symmetric(vertical: 8)),
           password,
           const Padding(padding: EdgeInsets.symmetric(vertical: 15)),
           loginButton,
@@ -123,49 +122,58 @@ class _SignInPageState extends State<SignInPage> {
           const Text(
             "No account yet?",
             textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 12, color: Color.fromARGB(255, 240, 243, 245)),
+            style:
+                TextStyle(fontSize: 12, color: Color.fromARGB(255, 31, 36, 33)),
           ),
-          const Padding(padding: EdgeInsets.symmetric(vertical: 3)),
+          const Padding(padding: EdgeInsets.symmetric(vertical: 2)),
           signupButton
         ],
       ),
     );
 
-    if (Provider.of<TokenProvider>(context, listen: false).getCurrToken == "") {
-      return Scaffold(
-          body: Container(
-        decoration: const BoxDecoration(
-            gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Color.fromARGB(255, 240, 243, 245),
-            Color.fromARGB(255, 25, 83, 95)
-          ],
-          stops: [0.35, 0.95],
-        )),
-        child: Center(
-          child: ListView(
-            shrinkWrap: true,
-            padding: const EdgeInsets.only(left: 40.0, right: 40.0),
-            children: <Widget>[
-              const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
-              const Text(
-                "Welcome Back!",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
-              ),
-              const Padding(padding: EdgeInsets.symmetric(vertical: 30)),
-              loginFields
-            ],
+    return Scaffold(
+        body: SingleChildScrollView(
+            child: Column(
+      children: [
+        const Padding(padding: EdgeInsets.symmetric(vertical: 70)),
+        SizedBox(
+            child:
+                Image.asset('assets/images/stals_logo2.png', fit: BoxFit.fill)),
+        const Padding(
+          padding: EdgeInsets.only(left: 45, top: 20),
+          child: Align(
+            alignment: Alignment.topLeft,
+            child: Text(
+              "Welcome Back",
+              style: TextStyle(
+                  fontSize: 28,
+                  // fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 31, 36, 33)),
+            ),
           ),
         ),
-      ));
-    }
-    else {
-      return Center(child: Text("You are logged in"),);
-    }
-    
+        ListView(
+          shrinkWrap: true,
+          padding: const EdgeInsets.only(left: 40.0, right: 40.0),
+          children: <Widget>[
+            // Image.asset('assets/images/stals_logo.png', fit: BoxFit.fill),
+            const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+            loginFields
+          ],
+        ),
+      ],
+    ))
+        // decoration: const BoxDecoration(
+        //     gradient: LinearGradient(
+        //   begin: Alignment.topCenter,
+        //   end: Alignment.bottomCenter,
+        //   colors: [
+        //     Color.fromARGB(255, 240, 243, 245),
+        //     Color.fromARGB(255, 25, 83, 95)
+        //   ],
+        //   stops: [0.35, 0.95],
+        // )),
+
+        );
   }
 }
