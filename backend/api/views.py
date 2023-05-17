@@ -12,60 +12,6 @@ from decimal import Decimal
 from rest_framework import status
 
 # Create your views here.
-@api_view(['POST'])
-def signup(request):
-    print(request.user)
-    
-    serializer = SignUpSerializer(data=request.data, many=False)
-    
-    if serializer.is_valid():
-        serializer.save()
-
-        response = {"message": "User Created Successfully", "data": serializer.data}
-
-        return Response(data=response, status=HTTPStatus.CREATED)
-
-    return Response(data=serializer.errors, status=HTTPStatus.BAD_REQUEST)
-
-@api_view(['POST'])
-def login(request):
-    email = request.data['email']
-    password = request.data['password']
-
-    user=authenticate(email=email, password=password)
-  
-    if user is not None:
-        #Token.objects.create(user=user)
-        response = {
-            "message": "Login Succesful",
-            "token": user.auth_token.key
-        }
-        print("Login Successful")
-
-        return Response(data=response, status=HTTPStatus.OK)
-
-    else:
-        return Response(data={"message": "Invalid email or password"})
-    
-@api_view(['PUT'])
-def editProfile(request, pk):
-
-    user = User.objects.get(pk=ObjectId(pk))
-    user.first_name = request.data['first_name']
-    user.last_name = request.data['last_name']
-    user.middle_initial = request.data['middle_initial']
-    user.suffix = request.data['suffix']
-    user.phone_no = request.data['phone_no']
-    user.username = request.data['username'] # Set the is_verified field to True
-    user.save()
-
-    return Response(data={"message": "Successfully edited user profile"})
-    
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def check_authenticated(request):
-
-    return Response(data={"message":"isAuthenticated"})
 
 @api_view(['GET'])
 def getRoutes(request):
@@ -128,34 +74,12 @@ def getRoutes(request):
     ]
     return Response(routes)
 
+#ADMIN ACTIONS
+
 @api_view(['GET'])
 def getadmindetails(request):
     notes = User.objects.filter(type="admin").values()
     return Response(notes)
-
-@api_view(['GET'])
-def getuserdetails(request):
-    user = User.objects.filter(type="user")
-    serializer = userSerializer(user, many=True)
-    return Response(serializer.data)
-
-@api_view(['GET'])
-def getreviewdetails(request):
-    review = Review.objects.all()
-    serializer = reviewSerializer(review, many=True)
-    return Response(serializer.data)
-
-@api_view(['GET'])
-def getticketdetails(request):
-    ticket = Ticket.objects.all()
-    serializer = ticketSerializer(ticket, many=True)
-    return Response(serializer.data)
-
-# @api_view(['GET'])
-# def getaccommodationdetails(request):
-#     accommodation = Accommodation.objects.all()
-#     serializer = accommodationSerializer(accommodation, many=True)
-#     return Response(serializer.data)
 
 @api_view(['PUT'])
 def adminverifyuser(request, pk):
@@ -180,78 +104,177 @@ def deleteuser(request, pk):
     
     return Response(data={"message": "Successfully deleted user"})
 
-####################################################################
+#USER ACTIONS
+
+@api_view(['POST'])
+def signup(request):
+    print(request.user)
+    
+    serializer = SignUpSerializer(data=request.data, many=False)
+    
+    if serializer.is_valid():
+        serializer.save()
+
+        response = {"message": "User Created Successfully", "data": serializer.data}
+
+        return Response(data=response, status=HTTPStatus.CREATED)
+
+    return Response(data=serializer.errors, status=HTTPStatus.BAD_REQUEST)
+
+@api_view(['POST'])
+def login(request):
+    email = request.data['email']
+    password = request.data['password']
+
+    user=authenticate(email=email, password=password)
+  
+    if user is not None:
+        #Token.objects.create(user=user)
+        response = {
+            "message": "Login Succesful",
+            "token": user.auth_token.key
+        }
+        print("Login Successful")
+
+        return Response(data=response, status=HTTPStatus.OK)
+
+    else:
+        return Response(data={"message": "Invalid email or password"})
+    
+@api_view(['PUT'])
+def editProfile(request, pk):
+
+    user = User.objects.get(pk=ObjectId(pk))
+    user.first_name = request.data['first_name']
+    user.last_name = request.data['last_name']
+    user.middle_initial = request.data['middle_initial']
+    user.suffix = request.data['suffix']
+    user.phone_no = request.data['phone_no']
+    user.username = request.data['username'] # Set the is_verified field to True
+    user.save()
+
+    return Response(data={"message": "Successfully edited user profile"})
+    
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def check_authenticated(request):
+
+    return Response(data={"message":"isAuthenticated"})
+
 
 @api_view(['GET'])
-def view_all_accommodation(request):
-    accommodations = Accommodation.objects.all()
-    serializer = AccommodationSerializer(accommodations, many=True)
+def getuserdetails(request):
+    user = User.objects.filter(type="user")
+    serializer = userSerializer(user, many=True)
+    return Response(serializer.data)
+
+
+# @api_view(['GET'])
+# def getestablishmentdetails(request):
+#     establishment = establishment.objects.all()
+#     serializer = establishmentSerializer(establishment, many=True)
+#     return Response(serializer.data)
+
+
+####################################################################
+# ESTABLISHMENT ACTIONS
+
+@api_view(['GET'])
+def view_all_establishment(request):
+    establishments = Establishment.objects.all()
+    serializer = EstablishmentSerializer(establishments, many=True)
     return Response(serializer.data)
 
 
 @api_view(['GET'])
-def view_accommodation(request, pk):
+def view_establishment(request, pk):
     try:
-        accommodation = Accommodation.objects.get(pk=ObjectId(pk))
-    except Accommodation.DoesNotExist:
+        establishment = establishment.objects.get(pk=ObjectId(pk))
+    except establishment.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
-    serializer = AccommodationSerializer(accommodation)
+    serializer = EstablishmentSerializer(establishment)
     return Response(serializer.data)
 
 
 @api_view(['POST'])
-def create_accommodation(request):
+def create_establishment(request):
 
-    serializer = AccommodationSerializer(data=request.data)
+    serializer = EstablishmentSerializer(data=request.data)
 
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=201)
     
-    return Response(data={"message": "Successfully created accommodation"})
+    return Response(data={"message": "Successfully created establishment"})
 
 
 @api_view(['DELETE'])
-def delete_accommodation(request, pk):
+def delete_establishment(request, pk):
     print("HELLO")
     try:
-        accommodation = Accommodation.objects.get(pk=ObjectId(pk))
-    except Accommodation.DoesNotExist:
+        establishment = establishment.objects.get(pk=ObjectId(pk))
+    except establishment.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     
-    #if request.user != accommodation.owner:
+    #if request.user != establishment.owner:
     #    return Response({'error': '?'}, status=status.HTTP_401_UNAUTHORIZED)
 
-    accommodation.delete()
+    establishment.delete()
 
-    return Response(data={"message": "Successfully deleted accommodation"})
+    return Response(data={"message": "Successfully deleted establishment"})
 
 
 @api_view(['PUT'])
-def verify_accommodation(request, pk):
+def verify_establishment(request, pk):
 
-    accom = Accommodation.objects.get(pk=ObjectId(pk))
+    accom = Establishment.objects.get(pk=ObjectId(pk))
     accom.price = Decimal(str(accom.price))
     accom.verified = True
     accom.save()
 
-    return Response(data={"message": "Successfully verified accommodation"})
+    return Response(data={"message": "Successfully verified establishment"})
 
 @api_view(['PUT'])
-def archive_accommodation(request, pk):   
+def archive_establishment(request, pk):   
 
     try:
-        accommodation = Accommodation.objects.get(pk=ObjectId(pk))
-    except Accommodation.DoesNotExist:
+        stablishment = Establishment.objects.get(pk=ObjectId(pk))
+    except Establishment.DoesNotExist:
          return Response(status=status.HTTP_404_NOT_FOUND)
         
     
-    accommodation.price = Decimal(str(accommodation.price))
+    Establishment.price = Decimal(str(Establishment.price))
 
-    accommodation.archived = True
-    accommodation.save()
+    Establishment.archived = True
+    Establishment.save()
 
-    #serializer = AccommodationSerializer(accommodation)
+    #serializer = establishmentSerializer(establishment)
     #return Response(serializer.data)
-    return Response(data={"message": "Successfully archived accommodation"})
+    return Response(data={"message": "Successfully archived establishment"})
+
+# ROOM ACTIONS
+
+# TICKET ACTIONS
+
+# REVIEW ACTIONS
+
+# takes the list of reviews and requests them
+@api_view(['GET'])
+def getreviewdetails(request):
+    review = Review.objects.all()
+    serializer = reviewSerializer(review, many=True)
+    return Response(serializer.data)
+
+#writereview
+
+#deletereview(on admin)
+
+#writeticket
+
+#flagticket(on admin) 
+@api_view(['GET'])
+def getticketdetails(request):
+    ticket = Ticket.objects.all()
+    serializer = ticketSerializer(ticket, many=True)
+    return Response(serializer.data)

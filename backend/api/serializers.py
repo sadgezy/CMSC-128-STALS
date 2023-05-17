@@ -7,25 +7,27 @@ import re
 
 class SignUpSerializer(serializers.ModelSerializer):
     email = serializers.CharField(max_length=80)
+    username=serializers.CharField(max_length=45)
     password = serializers.CharField(min_length=8, write_only=True)
     first_name = serializers.CharField(max_length=100)
     last_name = serializers.CharField(max_length=100)
     middle_initial = serializers.CharField(max_length=1, required=False)
     suffix = serializers.CharField(max_length=10, required=False)
     phone_no = serializers.CharField(max_length=15)
-    username=serializers.CharField(max_length=45)
     verified = serializers.BooleanField(default=False)
     id_type = serializers.CharField(max_length=50, required=False)
     id_picture = serializers.URLField(required=False)
     id_number = serializers.CharField(max_length=50, required=False)
     archived = serializers.BooleanField(default=False)
     tickets = serializers.JSONField(default=list)
-    type = serializers.CharField(max_length=50)
-    accommodations = serializers.JSONField(default=list)
+    user_type = serializers.CharField(max_length=50)
+    establishments = serializers.JSONField(default=list)
+    reviews = serializers.JSONField(default=list)
+    favorites = serializers.JSONField(default=list) 
 
     class Meta:
         model = User
-        fields = ["email", "username", "password","first_name","last_name","middle_initial","suffix","phone_no","verified","id_type","id_picture","id_number", "archived", "tickets", "type", "accommodations"]
+        fields = '__all__'
 
     def validate(self, attrs):
         email = attrs["email"]
@@ -37,7 +39,8 @@ class SignUpSerializer(serializers.ModelSerializer):
         if not re.match(email_pattern, email):
              raise ValidationError("Invalid email format!")
         
-        for i in User.objects.filter(type="user"):
+        #we don't need to filter for user_type, one use and they're done
+        for i in User.objects.all():
             if i.email == email:
                  raise ValidationError("Email has already been used")
             if i.username == username:
@@ -79,7 +82,7 @@ class ticketSerializer(serializers.ModelSerializer):
 
 # class accommodationSerializer(serializers.ModelSerializer):
 #     class Meta:
-#         model = Accommodation
+#         model = Establishment
 #         fields = '__all__'
 
 class reviewSerializer(serializers.ModelSerializer):
@@ -91,11 +94,18 @@ class ObjectIdField(serializers.Field):
     def to_representation(self, value):
         return str(value)
 
-class AccommodationSerializer(serializers.ModelSerializer):
+class EstablishmentSerializer(serializers.ModelSerializer):
     #id = ObjectIdField(read_only=True)
 
     class Meta:
-        model = Accommodation
+        model = Establishment
         #fields = ('id', 'name', 'description', 'location', 'price_per_night', 'max_guests', 'date_created', 'date_updated')
         fields = '__all__'
         
+class RoomSerializer(serializers.ModelSerializer):
+    #id = ObjectIdField(read_only=True)
+
+    class Meta:
+        model = Room
+        #fields = ('id', 'name', 'description', 'location', 'price_per_night', 'max_guests', 'date_created', 'date_updated')
+        fields = '__all__'
