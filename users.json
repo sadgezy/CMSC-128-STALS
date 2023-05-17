@@ -22,7 +22,9 @@
   "class": "user",
     "establishments": [
       "6437eb61fe3f89a27b31595d"
-    ]
+    ],
+  "reviews": [],
+  "favorites": []
 },{
   "_id": {
     "$oid": "6437e3f4fe3f89a27b315951"
