@@ -130,11 +130,12 @@ class Review(models_django.Model):
 
 
 class EstablishmentManager(models_django.Manager):
-    def create_establishment(self,name,location_exact,location_approx,establishment_type,tenant_type,description,utilities,photos,proof_type,proof_number,proof_picture,verified,archived):
+    def create_establishment(self,name,owner,location_exact,location_approx,establishment_type,tenant_type,description,utilities,photos,proof_type,proof_number,proof_picture,reviews,verified,archived,accommodations):
         # email=self.normalize_email(email)
 
         establishment=self.model(
             name = name,
+            owner = owner,
             location_exact = location_exact,
             location_approx = location_approx,
             establishment_type = establishment_type,
@@ -145,8 +146,10 @@ class EstablishmentManager(models_django.Manager):
             proof_type = proof_type,
             proof_number = proof_number,
             proof_picture = proof_picture,
+            reviews = reviews,
             verified = verified,
             archived = archived,
+            accommodations = accommodations
         )
 
         # I think it says in the docs that this isn't necessary when you're using a manager 
@@ -174,8 +177,10 @@ class Establishment(models_django.Model):
     proof_type = models_django.CharField(max_length=255)
     proof_number = models_django.CharField(max_length=255)
     proof_picture = models_django.URLField()
+    reviews = models_djongo.JSONField(default=list)
     verified = models_django.BooleanField(default=False)
     archived = models_django.BooleanField(default=False)
+    accommodations = models_djongo.JSONField(default=list)
 
     objects = EstablishmentManager()
 
