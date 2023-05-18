@@ -358,6 +358,33 @@ def delete_room(request, pk):
 
 # TICKET ACTIONS
 
+@api_view(['GET'])
+def getticketdetails(request):
+    ticket = Ticket.objects.all()
+    serializer = ticketSerializer(ticket, many=True)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def report_establishment(request): #can be used for other types of tickets
+    serializer = ticketSerializer(data=request.data)
+
+    if serializer.is_valid():
+        try:
+            serializer.save()
+            user = User.objects.get(pk=ObjectId(serializer.data['user_id']))
+            estab = Establishment.objects.get(pk=ObjectId(serializer.data['establishment_id']))
+        except User.DoesNotExist or Establishment.DoesNotExist:
+            ticket = Ticket.objects.get(pk=ObjectId(serializer.data['_id']))
+            ticket.delete()
+            return Response(data={"message": "User or establishment not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        user.tickets.append(serializer.data['_id'])
+        user.save()
+
+        return Response(serializer.data, status=201)
+
+    return Response(data={"message": "Failed creating ticket"})
+
 # REVIEW ACTIONS
 
 # takes the list of reviews and requests them
@@ -371,11 +398,4 @@ def getreviewdetails(request):
 
 #deletereview(on admin)
 
-#writeticket
 
-#flagticket(on admin) 
-@api_view(['GET'])
-def getticketdetails(request):
-    ticket = Ticket.objects.all()
-    serializer = ticketSerializer(ticket, many=True)
-    return Response(serializer.data)

@@ -25,6 +25,7 @@ urlpatterns = [
     path('verify-establishment/<str:pk>/', views.verify_establishment), 
     path('archive-establishment/<str:pk>/', views.archive_establishment),
     path('unarchive-establishment/<str:pk>/', views.unarchive_establishment),
+    path('report-establishment/', views.report_establishment),
 
     path('add-room/', views.add_room_to_establishment), 
     path('edit-room/<str:pk>/', views.edit_room), 
