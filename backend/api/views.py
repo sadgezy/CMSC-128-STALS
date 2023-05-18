@@ -10,6 +10,7 @@ from rest_framework.authtoken.models import Token
 from bson import ObjectId
 from decimal import Decimal
 from rest_framework import status
+import json
 
 # Create your views here.
 
@@ -218,6 +219,14 @@ def delete_establishment(request, pk):
     
     #if request.user != establishment.owner:
     #    return Response({'error': '?'}, status=status.HTTP_401_UNAUTHORIZED)
+    estab_json = EstablishmentSerializer(establishment)
+    estab_json_accom = eval(estab_json.data['accommodations'])
+    for i in estab_json_accom:
+        try:
+            room = Room.objects.get(pk=ObjectId(i))
+            room.delete()
+        except:
+            return Response(data={"message":"Failure deleting a room"})
 
     establishment.delete()
 
@@ -302,6 +311,25 @@ def edit_room(request, pk):
     estab.save()
 
     return Response(data={"message": "Successfully edited room"})
+
+@api_view(['DELETE'])
+def delete_room(request, pk):
+    try:
+        room = Room.objects.get(pk=ObjectId(pk))
+    except Room.DoesNotExist:
+        return Response(data={"message": "Room not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    room_serial = RoomSerializer(room)
+    estab = Establishment.objects.get(pk=ObjectId(room_serial.data['establishment_id']))
+
+    estab.accommodations.remove(room_serial.data["_id"])
+    estab.save()
+    #if request.user != establishment.owner:
+    #    return Response({'error': '?'}, status=status.HTTP_401_UNAUTHORIZED)
+
+    room.delete()
+
+    return Response(data={"message": "Successfully deleted room"})
 
 # TICKET ACTIONS
 
