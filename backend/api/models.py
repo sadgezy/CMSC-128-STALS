@@ -95,11 +95,13 @@ class Admin(models_django.Model):
     
 
 class ReviewManager(models_django.Manager):
-    def create_review(self,dateSubmitted,title,rating,archived,body):
+    def create_review(self,userID,establishmentID,dateSubmitted,title,rating,archived,body):
         # email=self.normalize_email(email)
 
         review=self.model(
-            #_id=_id,
+            # _id=_id,
+            userID=userID,
+            establishmentID=establishmentID,
             dateSubmitted=dateSubmitted,
             title=title,
             rating=rating,
@@ -114,10 +116,10 @@ class ReviewManager(models_django.Manager):
 
 class Review(models_django.Model):
     # commented until functional
-    # _id = models_djongo.ObjectIdField()
+    _id = models_djongo.ObjectIdField()
     userID = models_django.CharField(max_length=25)
-    accomodationID = models_django.CharField(max_length=25)
-    dateSubmitted = models_django.DateTimeField()
+    establishmentID = models_django.CharField(max_length=25)
+    dateSubmited = models_django.DateTimeField(auto_now_add=True)
     title = models_django.CharField(max_length=255)
     rating = models_django.IntegerField()
     archived = models_django.BooleanField(default=False)
@@ -134,14 +136,14 @@ class EstablishmentManager(models_django.Manager):
         # email=self.normalize_email(email)
 
         establishment=self.model(
-            name = name,
             owner = owner,
+            name = name,
             location_exact = location_exact,
             location_approx = location_approx,
             establishment_type = establishment_type,
             tenant_type = tenant_type,
-            description = description,
             utilities = utilities,
+            description = description,
             photos = photos,
             proof_type = proof_type,
             proof_number = proof_number,
@@ -165,14 +167,14 @@ class Establishment(models_django.Model):
     # utilities 
     # photos
     _id = models_djongo.ObjectIdField()
-    name = models_django.CharField(max_length=255)
     owner = models_django.CharField(max_length=25)
+    name = models_django.CharField(max_length=255)
     location_exact = models_django.CharField(max_length=255)
     location_approx = models_django.CharField(max_length=255)
     establishment_type = models_django.CharField(max_length=255)
     tenant_type = models_django.CharField(max_length=255)
-    description = models_django.TextField()
     utilities = models_djongo.JSONField(default=list)
+    description = models_django.TextField()
     photos = models_djongo.JSONField(default=list)
     proof_type = models_django.CharField(max_length=255)
     proof_number = models_django.CharField(max_length=255)
@@ -203,7 +205,7 @@ class TicketManager(models_django.Manager):
         return ticket
 
 class Ticket(models_django.Model):
-    # _id = models_djongo.ObjectIdField()
+    _id = models_djongo.ObjectIdField()
     user_id = models_django.CharField(max_length=25)
     date_submitted = models_django.DateTimeField(auto_now_add=True)
     tags = models_djongo.JSONField(default=list)

@@ -79,8 +79,10 @@ def getRoutes(request):
 
 @api_view(['GET'])
 def getadmindetails(request):
-    notes = User.objects.filter(type="admin").values()
-    return Response(notes)
+    admin = User.objects.filter(user_type="admin")
+    serializer = userSerializer(admin, many=True)
+    return Response(serializer.data)
+
 
 @api_view(['PUT'])
 def adminverifyuser(request, pk):
@@ -154,7 +156,7 @@ def editProfile(request, pk):
     user.username = request.data['username'] # Set the is_verified field to True
     user.save()
 
-    return Response(data={"message": "Successfully edited user profile"})
+    return Response(data={"message": "Successfully edited user profile"}) 
     
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -165,7 +167,7 @@ def check_authenticated(request):
 
 @api_view(['GET'])
 def getuserdetails(request):
-    user = User.objects.filter(type="user")
+    user = User.objects.filter(user_type="user")
     serializer = userSerializer(user, many=True)
     return Response(serializer.data)
 
@@ -190,9 +192,9 @@ def view_all_establishment(request):
 @api_view(['GET'])
 def view_establishment(request, pk):
     try:
-        establishment = establishment.objects.get(pk=ObjectId(pk))
-    except establishment.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        establishment = Establishment.objects.get(pk=ObjectId(pk))
+    except Establishment.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND, data={"message": "Establishment not found"})
     serializer = EstablishmentSerializer(establishment)
     return Response(serializer.data)
 
@@ -203,9 +205,16 @@ def create_establishment(request):
     serializer = EstablishmentSerializer(data=request.data)
 
     if serializer.is_valid():
-        serializer.save()
+        try:
+            serializer.save()
+            owner = User.objects.get(pk=ObjectId(serializer.data['owner']))
+        except User.DoesNotExist:
+            estab = Establishment.objects.get(pk=ObjectId(serializer.data['_id']))
+            estab.delete()
+            return Response(data={"message": "Owner not found"}, status=status.HTTP_404_NOT_FOUND)
+
         return Response(serializer.data, status=201)
-    
+
     return Response(data={"message": "Failed creating establishment"})
 
 
@@ -275,13 +284,29 @@ def archive_establishment(request, pk):
 
     return Response(data={"message": "Successfully archived establishment"})
 
+@api_view(['PUT'])
+def unarchive_establishment(request, pk):   
+
+    try:
+        accom = Establishment.objects.get(pk=ObjectId(pk))
+    except Establishment.DoesNotExist:
+         return Response(data={"message": "Establishment not found"}, status=status.HTTP_404_NOT_FOUND)
+        
+    
+    #Establishment.price = Decimal(str(Establishment.price))
+
+    accom.archived = False
+    accom.save()
+
+    return Response(data={"message": "Successfully unarchived establishment"})
+
 # ROOM ACTIONS
 
 @api_view(['POST'])
 def add_room_to_establishment(request):
 
     serializer = RoomSerializer(data=request.data)
-
+    
     if serializer.is_valid():
         try:
             serializer.save()
