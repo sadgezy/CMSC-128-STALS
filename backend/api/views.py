@@ -223,6 +223,19 @@ def delete_establishment(request, pk):
 
     return Response(data={"message": "Successfully deleted establishment"})
 
+@api_view(['PUT'])
+def edit_establishment(request, pk):
+
+    estab = Establishment.objects.get(pk=ObjectId(pk))
+    estab.name = request.data['name']
+    estab.location_exact = request.data['location_exact']
+    estab.location_approx = request.data['location_approx']
+    estab.establishment_type = request.data['establishment_type']
+    estab.tenant_type = request.data['tenant_type']
+    estab.description = request.data['description']
+    estab.save()
+
+    return Response(data={"message": "Successfully edited establishment"})
 
 @api_view(['PUT'])
 def verify_establishment(request, pk):
@@ -277,6 +290,18 @@ def add_room_to_establishment(request):
         return Response(data={"message": "Successfully added room to establishment"}, status=201)
     
     return Response(data={"message": "Failed adding room to establishment"})
+
+@api_view(['PUT'])
+def edit_room(request, pk):
+
+    estab = Room.objects.get(pk=ObjectId(pk))
+    estab.availability = request.data['availability']
+    estab.price_lower = request.data['price_lower']
+    estab.price_upper = request.data['price_upper']
+    estab.capacity = request.data['capacity']
+    estab.save()
+
+    return Response(data={"message": "Successfully edited room"})
 
 # TICKET ACTIONS
 
