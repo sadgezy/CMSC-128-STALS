@@ -230,7 +230,7 @@ class RoomManager(models_django.Manager):
         return room
     
 class Room(models_django.Model):
-    # _id = models_djongo.ObjectIdField()
+    _id = models_djongo.ObjectIdField()
     availability = models_django.BooleanField()
     price_lower = models_django.IntegerField()
     price_upper = models_django.IntegerField()

@@ -205,7 +205,7 @@ def create_establishment(request):
         serializer.save()
         return Response(serializer.data, status=201)
     
-    return Response(data={"message": "Successfully created establishment"})
+    return Response(data={"message": "Failed creating establishment"})
 
 
 @api_view(['DELETE'])
@@ -254,6 +254,29 @@ def archive_establishment(request, pk):
     return Response(data={"message": "Successfully archived establishment"})
 
 # ROOM ACTIONS
+
+@api_view(['POST'])
+def add_room_to_establishment(request):
+
+    serializer = RoomSerializer(data=request.data)
+
+    if serializer.is_valid():
+        try:
+            serializer.save()
+            estab = Establishment.objects.get(pk=ObjectId(serializer.data['establishment_id']))
+        except Establishment.DoesNotExist:
+            room = Room.objects.get(pk=ObjectId(serializer.data['_id']))
+            room.delete()
+            return Response(data={"message": "Establishment not found"}, status=status.HTTP_404_NOT_FOUND)
+        
+        estab.accommodations.append(serializer.data['_id'])
+        estab.save()
+
+        #serializer2 = EstablishmentSerializer(estab)
+        #return Response(data={"message": "Successfully added room to establishment", "room": serializer.data, "establishment": serializer2.data})
+        return Response(data={"message": "Successfully added room to establishment"}, status=201)
+    
+    return Response(data={"message": "Failed adding room to establishment"})
 
 # TICKET ACTIONS
 
