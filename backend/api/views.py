@@ -398,4 +398,54 @@ def getreviewdetails(request):
 
 #deletereview(on admin)
 
+@api_view(['GET'])
+def search_room(request):
+    establishment_id = request.GET.get('establishment_id')
+    availability = request.GET.get('availability')
+    price_lower = request.GET.get('price_lower')
+    price_upper = request.GET.get('price_upper')
+    capacity = request.GET.get('capacity')
+
+    rooms = Room.objects.all()
+
+    if establishment_id:
+        rooms = rooms.filter(establishment_id=establishment_id)
+
+    #! does not work yet
+    # if availability is not None:
+        
+    #     availability = bool(availability)  
+    #     rooms = rooms.filter(availability=availability)
+
+    # if availability is not None:
+    #     if (availability == 'true'):
+    #         availability = True
+    #     elif (availability == 'false'):
+    #         availability = False
+
+    #     rooms = rooms.filter(availability=availability)
+
+    if availability is not None:
+        if availability == 'true':
+            availability = True
+        elif availability == 'false':
+            availability = False
+
+        print("Availability:", availability)  # Print the value of availability
+
+        rooms = rooms.filter(availability=availability)
+
+    if price_lower:
+        rooms = rooms.filter(price_lower=price_lower)
+    if price_upper:
+        rooms = rooms.filter(price_upper=price_upper)
+    if capacity:
+        rooms = rooms.filter(capacity=capacity)
+
+    if not rooms:
+        return Response({"message": "No rooms found that matches the search criteria."}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = RoomSerializer(rooms, many=True)
+    return Response(serializer.data)
+
 
