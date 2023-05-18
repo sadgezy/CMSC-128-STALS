@@ -6,7 +6,7 @@
   "price_lower": 5000,
   "price_upper": 5000,
   "capacity": 4,
-  "estabID": "6437eb61fe3f89a27b31595d"
+  "establishment_id": "6437eb61fe3f89a27b31595d"
 },{
   "_id": {
     "$oid": "6453c76fa33b163e617be31d"
@@ -15,7 +15,7 @@
   "price_lower": 15000,
   "price_upper": 15000,
   "capacity": 10,
-  "estabID": "6437eb61fe3f89a27b31595d"
+  "establishment_id": "6437eb61fe3f89a27b31595d"
 },{
   "_id": {
     "$oid": "6453c78fa33b163e617be31e"
@@ -24,7 +24,7 @@
   "price_lower": 4000,
   "price_upper": 4000,
   "capacity": 2,
-  "estabID": "6437eb61fe3f89a27b31595d"
+  "establishment_id": "6437eb61fe3f89a27b31595d"
 },{
   "_id": {
     "$oid": "6453c80ba33b163e617be31f"
@@ -33,7 +33,7 @@
   "price_lower": 6000,
   "price_upper": 6000,
   "capacity": 1,
-  "estabID": "6437eb61fe3f89a27b31595d"
+  "establishment_id": "6437eb61fe3f89a27b31595d"
 },{
   "_id": {
     "$oid": "6453c9b0a33b163e617be320"
@@ -42,7 +42,7 @@
   "price_lower": 6000,
   "price_upper": 7500,
   "capacity": 2,
-  "estabID": "6437ecf0fe3f89a27b31595e"
+  "establishment_id": "6437ecf0fe3f89a27b31595e"
 },{
   "_id": {
     "$oid": "6453ca66a33b163e617be321"
@@ -51,7 +51,7 @@
   "price_lower": 10000,
   "price_upper": 10000,
   "capacity": 3,
-  "estabID": "6437ecf0fe3f89a27b31595e"
+  "establishment_id": "6437ecf0fe3f89a27b31595e"
 },{
   "_id": {
     "$oid": "6453ca75a33b163e617be322"
@@ -60,7 +60,7 @@
   "price_lower": 14000,
   "price_upper": 15000,
   "capacity": 2,
-  "estabID": "6437ecf0fe3f89a27b31595e"
+  "establishment_id": "6437ecf0fe3f89a27b31595e"
 },{
   "_id": {
     "$oid": "6453ca8ba33b163e617be323"
@@ -69,7 +69,7 @@
   "price_lower": 15000,
   "price_upper": 15000,
   "capacity": 5,
-  "estabID": "6437ecf0fe3f89a27b31595e"
+  "establishment_id": "6437ecf0fe3f89a27b31595e"
 },{
   "_id": {
     "$oid": "6453caeda33b163e617be324"
@@ -78,7 +78,7 @@
   "price_lower": 1000,
   "price_upper": 1000,
   "capacity": 1,
-  "estabID": "6437ee4afe3f89a27b31595f"
+  "establishment_id": "6437ee4afe3f89a27b31595f"
 },{
   "_id": {
     "$oid": "6453cce7a33b163e617be325"
@@ -87,7 +87,7 @@
   "price_lower": 15000,
   "price_upper": 15000,
   "capacity": 1,
-  "estabID": "6437f05dfe3f89a27b315960"
+  "establishment_id": "6437f05dfe3f89a27b315960"
 },{
   "_id": {
     "$oid": "6453cd10a33b163e617be326"
@@ -96,7 +96,7 @@
   "price_lower": 20000,
   "price_upper": 20000,
   "capacity": 2,
-  "estabID": "6437f05dfe3f89a27b315960"
+  "establishment_id": "6437f05dfe3f89a27b315960"
 },{
   "_id": {
     "$oid": "6453ce0ba33b163e617be327"
@@ -105,5 +105,5 @@
   "price_lower": 30000,
   "price_upper": 30000,
   "capacity": 8,
-  "estabID": "6437f190fe3f89a27b315961"
+  "establishment_id": "6437f190fe3f89a27b315961"
 }]
