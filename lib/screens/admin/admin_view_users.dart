@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../UI_parameters.dart' as UIParameter;
+import '../../UI_parameters.dart' as UIParameter;
 
 class ViewUsersPage extends StatefulWidget {
   const ViewUsersPage({super.key});

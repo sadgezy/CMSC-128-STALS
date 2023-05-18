@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import '../classes.dart';
-import '../UI_parameters.dart' as UIParameter;
+import '../../classes.dart';
+import '../../UI_parameters.dart' as UIParameter;
 
 // COMPONENTS
-import '../components/accom_card.dart';
-import '../components/search_bar.dart';
-import '../components/filter_drawer.dart';
+import '../../components/accom_card.dart';
+// import '../components/search_bar.dart';
+import '../../components/filter_drawer.dart';
 
 class RegisteredHomepage extends StatefulWidget {
   const RegisteredHomepage({Key? key}) : super(key: key);

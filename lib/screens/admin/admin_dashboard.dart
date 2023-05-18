@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../UI_parameters.dart' as UIParameter;
-import '../components/search_bar.dart';
+import '../../UI_parameters.dart' as UIParameter;
+import '../../components/search_bar.dart';
 
 class AdminDashBoard extends StatefulWidget {
   const AdminDashBoard({super.key});
