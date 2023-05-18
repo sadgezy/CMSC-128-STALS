@@ -210,11 +210,10 @@ def create_establishment(request):
 
 @api_view(['DELETE'])
 def delete_establishment(request, pk):
-    print("HELLO")
     try:
-        establishment = establishment.objects.get(pk=ObjectId(pk))
-    except establishment.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        establishment = Establishment.objects.get(pk=ObjectId(pk))
+    except Establishment.DoesNotExist:
+        return Response(data={"message": "Establishment not found"}, status=status.HTTP_404_NOT_FOUND)
 
     
     #if request.user != establishment.owner:
@@ -228,8 +227,11 @@ def delete_establishment(request, pk):
 @api_view(['PUT'])
 def verify_establishment(request, pk):
 
-    accom = Establishment.objects.get(pk=ObjectId(pk))
-    accom.price = Decimal(str(accom.price))
+    try:
+        accom = Establishment.objects.get(pk=ObjectId(pk))
+    except Establishment.DoesNotExist:
+         return Response(data={"message": "Establishment not found"}, status=status.HTTP_404_NOT_FOUND)
+    
     accom.verified = True
     accom.save()
 
@@ -239,18 +241,16 @@ def verify_establishment(request, pk):
 def archive_establishment(request, pk):   
 
     try:
-        stablishment = Establishment.objects.get(pk=ObjectId(pk))
+        accom = Establishment.objects.get(pk=ObjectId(pk))
     except Establishment.DoesNotExist:
-         return Response(status=status.HTTP_404_NOT_FOUND)
+         return Response(data={"message": "Establishment not found"}, status=status.HTTP_404_NOT_FOUND)
         
     
-    Establishment.price = Decimal(str(Establishment.price))
+    #Establishment.price = Decimal(str(Establishment.price))
 
-    Establishment.archived = True
-    Establishment.save()
+    accom.archived = True
+    accom.save()
 
-    #serializer = establishmentSerializer(establishment)
-    #return Response(serializer.data)
     return Response(data={"message": "Successfully archived establishment"})
 
 # ROOM ACTIONS

@@ -80,11 +80,6 @@ class ticketSerializer(serializers.ModelSerializer):
         model = Ticket
         fields = '__all__'
 
-# class accommodationSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Establishment
-#         fields = '__all__'
-
 class reviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
@@ -95,17 +90,11 @@ class ObjectIdField(serializers.Field):
         return str(value)
 
 class EstablishmentSerializer(serializers.ModelSerializer):
-    #id = ObjectIdField(read_only=True)
-
     class Meta:
         model = Establishment
-        #fields = ('id', 'name', 'description', 'location', 'price_per_night', 'max_guests', 'date_created', 'date_updated')
         fields = '__all__'
         
 class RoomSerializer(serializers.ModelSerializer):
-    #id = ObjectIdField(read_only=True)
-
     class Meta:
         model = Room
-        #fields = ('id', 'name', 'description', 'location', 'price_per_night', 'max_guests', 'date_created', 'date_updated')
         fields = '__all__'
