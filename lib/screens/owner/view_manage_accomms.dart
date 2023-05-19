@@ -4,8 +4,6 @@ import '../../UI_parameters.dart' as UIParameter;
 
 // COMPONENTS
 import '../../components/accom_card.dart';
-import '../../components/search_bar.dart';
-import '../../components/filter_drawer.dart';
 
 class ViewOwnedAccomms extends StatefulWidget {
   const ViewOwnedAccomms({Key? key}) : super(key: key);
@@ -21,13 +19,6 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
   Widget build(BuildContext context) {
     var accom = AccomCardDetails("jk23fvgw23", "Centtro Residences",
         "Example Description", "assets/images/room_stock.jpg", 3, true);
-    var accom2 = AccomCardDetails(
-        'test1234',
-        'Casa Del Mar',
-        'Casa Del Mar is located at Sapphire street.',
-        "assets/images/room_stock.jpg",
-        5,
-        true);
 
     return Scaffold(
         key: scaffoldKey,

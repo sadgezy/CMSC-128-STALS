@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 // FOR CLASSES
 
 class RandomText {

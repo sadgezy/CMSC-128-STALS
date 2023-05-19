@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:stals_frontend/components/pending_accom_card.dart';
 import 'package:stals_frontend/screens/admin/admin_dashboard.dart';
 import 'package:stals_frontend/screens/admin/admin_view_pending_approved.dart';
 import 'package:stals_frontend/screens/admin/admin_view_archived.dart';
-import 'package:stals_frontend/screens/registered_user/homepage_signed.dart';
-import '../../classes.dart';
 import '../../UI_parameters.dart' as UIParameter;
-import '../../components/accom_card.dart';
 
 class AdminViewAccommodations extends StatefulWidget {
   const AdminViewAccommodations({Key? key}) : super(key: key);

@@ -14,7 +14,7 @@ class AdminViewPendingApproved extends StatefulWidget {
 
 class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  int _selectedIndex = 1;
+  // int _selectedIndex = 1;
 
   @override
   Widget build(BuildContext context) {

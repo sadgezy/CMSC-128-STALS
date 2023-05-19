@@ -14,7 +14,7 @@ class ViewArchivedAccommodations extends StatefulWidget {
 class _ViewArchivedAccommodationsState
     extends State<ViewArchivedAccommodations> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  int _selectedIndex = 2;
+  // int _selectedIndex = 2;
 
   @override
   Widget build(BuildContext context) {

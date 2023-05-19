@@ -1,4 +1,4 @@
-#Fri May 12 10:28:02 PST 2023
-base.0=/Users/chr1s/Desktop/stals_frontend/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
-path.0=classes.dex
+#Fri May 19 17:25:42 SGT 2023
+base.0=D\:\\CS 128\\CMSC-128-STALS\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
 renamed.0=classes.dex
+path.0=classes.dex
