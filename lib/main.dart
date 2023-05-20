@@ -11,12 +11,18 @@ import 'package:stals_frontend/screens/registered_user/homepage_signed.dart';
 import 'package:stals_frontend/screens/accomm.dart';
 import 'package:stals_frontend/screens/owner/view_manage_accomms.dart';
 import 'package:stals_frontend/screens/signup_info.dart';
+import 'package:provider/provider.dart';
+import 'package:stals_frontend/providers/token_provider.dart';
 
 void main() {
-  runApp(const MyApp());
-  // Make app full screen
-  // SystemChrome.setEnabledSystemUIMode(
-  //     SystemUiMode.immersiveSticky);
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: ((context) => TokenProvider())),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
