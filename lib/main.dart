@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stals_frontend/screens/admin/admin_dashboard.dart';
+import 'package:stals_frontend/screens/admin/admin_view_accommodations.dart';
+import 'package:stals_frontend/screens/admin/admin_view_pending_approved.dart';
 import 'package:stals_frontend/screens/admin/admin_view_users.dart';
 import 'package:stals_frontend/screens/signin.dart';
 import 'package:stals_frontend/screens/signup.dart';
@@ -8,6 +10,7 @@ import 'package:stals_frontend/screens/homepage.dart';
 import 'package:stals_frontend/screens/registered_user/homepage_signed.dart';
 import 'package:stals_frontend/screens/accomm.dart';
 import 'package:stals_frontend/screens/owner/view_manage_accomms.dart';
+import 'package:stals_frontend/screens/signup_info.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,12 +31,14 @@ class MyApp extends StatelessWidget {
         '/': (context) => const MyHomePage(title: 'CMSC 128'),
         '/signin': (context) => const SignInPage(),
         '/signup': (context) => const SignUpPage(),
+        '/signup_info': (context) => SignUpForm(),
         '/homepage': (context) => const UnregisteredHomepage(),
         '/signed_homepage': (context) => const RegisteredHomepage(),
         '/accomm': (context) => const AccommPage(),
         '/admin': (context) => const AdminDashBoard(),
         '/view_owned_accomms': (context) => const ViewOwnedAccomms(),
         '/admin/view_users': (context) => const ViewUsersPage(),
+        '/admin/view_accomms': (context) => const AdminViewAccommodations(),
       },
       theme: ThemeData(
         fontFamily: 'SFProDisplayRegular',
@@ -111,6 +116,13 @@ class _MyHomePageState extends State<MyHomePage> {
           trailing: const Icon(Icons.construction),
           onTap: () {
             Navigator.pushNamed(context, '/admin/view_users');
+          },
+        ),
+        ListTile(
+          title: const Text('Admin View Users Page'),
+          trailing: const Icon(Icons.construction),
+          onTap: () {
+            Navigator.pushNamed(context, '/admin/view_accomms');
           },
         ),
         ListTile(
