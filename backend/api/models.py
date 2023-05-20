@@ -190,11 +190,14 @@ class Establishment(models_django.Model):
         return self.name
 
 class TicketManager(models_django.Manager):
-    def create_ticket(self,date_submitted,description,resolved):
+    def create_ticket(self,user_id,establishment_id,date_submitted,tags,description,resolved):
         # email=self.normalize_email(email)
 
         ticket=self.model(
+            user_id = user_id,
+            establishment_id = establishment_id,
             date_submitted=date_submitted,
+            tags = tags,
             description=description,
             resolved=resolved,
         )
@@ -207,6 +210,7 @@ class TicketManager(models_django.Manager):
 class Ticket(models_django.Model):
     _id = models_djongo.ObjectIdField()
     user_id = models_django.CharField(max_length=25)
+    establishment_id = models_django.CharField(max_length=25)
     date_submitted = models_django.DateTimeField(auto_now_add=True)
     tags = models_djongo.JSONField(default=list)
     description = models_django.TextField()

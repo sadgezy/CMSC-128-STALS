@@ -9,6 +9,7 @@ urlpatterns = [
 
     path('admin-details/', views.getadmindetails),
     path('user-details/', views.getuserdetails),
+    path('get-one-user/', views.get_one_user),
     path('review-details/', views.getreviewdetails),
     path('ticket-details/', views.getticketdetails),
     # path('establishmentdetails/', views.getestablishmentdetails),
@@ -25,9 +26,12 @@ urlpatterns = [
     path('verify-establishment/<str:pk>/', views.verify_establishment), 
     path('archive-establishment/<str:pk>/', views.archive_establishment),
     path('unarchive-establishment/<str:pk>/', views.unarchive_establishment),
+    path('report-establishment/', views.report_establishment),
 
     path('add-room/', views.add_room_to_establishment), 
     path('edit-room/<str:pk>/', views.edit_room), 
     path('delete-room/<str:pk>/', views.delete_room),
+
+    path('search-room/', views.search_room),
     
  ]

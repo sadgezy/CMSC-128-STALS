@@ -134,7 +134,7 @@ def login(request):
     if user is not None:
         #Token.objects.create(user=user)
         response = {
-            "message": "Login Succesful",
+            "message": "Login Successful",
             "token": user.auth_token.key
         }
         print("Login Successful")
@@ -169,6 +169,12 @@ def check_authenticated(request):
 def getuserdetails(request):
     user = User.objects.filter(user_type="user")
     serializer = userSerializer(user, many=True)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def get_one_user(request):
+    user = User.objects.filter(email=request.data['email'])
+    serializer = LimitedUserSerializer(user, many=True)
     return Response(serializer.data)
 
 
@@ -358,6 +364,33 @@ def delete_room(request, pk):
 
 # TICKET ACTIONS
 
+@api_view(['GET'])
+def getticketdetails(request):
+    ticket = Ticket.objects.all()
+    serializer = ticketSerializer(ticket, many=True)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def report_establishment(request): #can be used for other types of tickets
+    serializer = ticketSerializer(data=request.data)
+
+    if serializer.is_valid():
+        try:
+            serializer.save()
+            user = User.objects.get(pk=ObjectId(serializer.data['user_id']))
+            estab = Establishment.objects.get(pk=ObjectId(serializer.data['establishment_id']))
+        except User.DoesNotExist or Establishment.DoesNotExist:
+            ticket = Ticket.objects.get(pk=ObjectId(serializer.data['_id']))
+            ticket.delete()
+            return Response(data={"message": "User or establishment not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        user.tickets.append(serializer.data['_id'])
+        user.save()
+
+        return Response(serializer.data, status=201)
+
+    return Response(data={"message": "Failed creating ticket"})
+
 # REVIEW ACTIONS
 
 # takes the list of reviews and requests them
@@ -371,13 +404,54 @@ def getreviewdetails(request):
 
 #deletereview(on admin)
 
-#writeticket
-
-#flagticket(on admin) 
 @api_view(['GET'])
-def getticketdetails(request):
-    ticket = Ticket.objects.all()
-    serializer = ticketSerializer(ticket, many=True)
+def search_room(request):
+    establishment_id = request.GET.get('establishment_id')
+    availability = request.GET.get('availability')
+    price_lower = request.GET.get('price_lower')
+    price_upper = request.GET.get('price_upper')
+    capacity = request.GET.get('capacity')
+
+    rooms = Room.objects.all()
+
+    if establishment_id:
+        rooms = rooms.filter(establishment_id=establishment_id)
+
+    #! does not work yet
+    # if availability is not None:
+        
+    #     availability = bool(availability)  
+    #     rooms = rooms.filter(availability=availability)
+
+    # if availability is not None:
+    #     if (availability == 'true'):
+    #         availability = True
+    #     elif (availability == 'false'):
+    #         availability = False
+
+    #     rooms = rooms.filter(availability=availability)
+
+    if availability is not None:
+        if availability == 'true':
+            availability = True
+        elif availability == 'false':
+            availability = False
+
+        print("Availability:", availability)  # Print the value of availability
+
+        rooms = rooms.filter(availability=availability)
+
+    if price_lower:
+        rooms = rooms.filter(price_lower=price_lower)
+    if price_upper:
+        rooms = rooms.filter(price_upper=price_upper)
+    if capacity:
+        rooms = rooms.filter(capacity=capacity)
+
+    if not rooms:
+        return Response({"message": "No rooms found that matches the search criteria."}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = RoomSerializer(rooms, many=True)
     return Response(serializer.data)
 
 
