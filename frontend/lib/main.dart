@@ -134,7 +134,12 @@ class _MyHomePageState extends State<MyHomePage> {
         ListTile(
           title: const Text('Logout'),
           trailing: const Icon(Icons.logout),
-          onTap: () {},
+          onTap: () {
+            Provider.of<TokenProvider>(context, listen: false)
+                .removeToken("DO NOT REMOVE THIS PARAM");
+
+            print("Logged out");
+          },
         ),
       ])),
       appBar: AppBar(

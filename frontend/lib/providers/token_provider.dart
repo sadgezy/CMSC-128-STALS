@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class TokenProvider with ChangeNotifier {
   String _token = "";
 
-  String get getCurrToken {
+  String get currToken {
     return _token;
   }
 

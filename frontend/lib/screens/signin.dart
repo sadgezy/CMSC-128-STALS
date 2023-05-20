@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:stals_frontend/screens/signup.dart';
+import 'package:provider/provider.dart';
+import 'package:stals_frontend/providers/token_provider.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -63,7 +67,19 @@ class _SignInPageState extends State<SignInPage> {
     final loginButton = Padding(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () async {
+          print("LOGGING IN");
+          String url = "http://127.0.0.1:8000/login/";
+          final response = await json.decode((await http.post(Uri.parse(url),
+                  body: {
+                'email': emailController.text,
+                'password': passwordController.text
+              }))
+              .body);
+          String token = response['token'];
+          Provider.of<TokenProvider>(context, listen: false).setToken(token);
+          setState(() {});
+        },
         style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(18),
@@ -131,49 +147,53 @@ class _SignInPageState extends State<SignInPage> {
       ),
     );
 
-    return Scaffold(
-        body: SingleChildScrollView(
-            child: Column(
-      children: [
-        const Padding(padding: EdgeInsets.symmetric(vertical: 70)),
-        SizedBox(
-            child:
-                Image.asset('assets/images/stals_logo2.png', fit: BoxFit.fill)),
-        const Padding(
-          padding: EdgeInsets.only(left: 45, top: 20),
-          child: Align(
-            alignment: Alignment.topLeft,
-            child: Text(
-              "Welcome Back",
-              style: TextStyle(
-                  fontSize: 28,
-                  // fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 31, 36, 33)),
+    if (Provider.of<TokenProvider>(context, listen: false).currToken == "") {
+      return Scaffold(
+          body: SingleChildScrollView(
+              child: Column(
+        children: [
+          const Padding(padding: EdgeInsets.symmetric(vertical: 70)),
+          SizedBox(
+              child: Image.asset('assets/images/stals_logo2.png',
+                  fit: BoxFit.fill)),
+          const Padding(
+            padding: EdgeInsets.only(left: 45, top: 20),
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                "Welcome Back",
+                style: TextStyle(
+                    fontSize: 28,
+                    // fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 31, 36, 33)),
+              ),
             ),
           ),
-        ),
-        ListView(
-          shrinkWrap: true,
-          padding: const EdgeInsets.only(left: 40.0, right: 40.0),
-          children: <Widget>[
-            // Image.asset('assets/images/stals_logo.png', fit: BoxFit.fill),
-            const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
-            loginFields
-          ],
-        ),
-      ],
-    ))
-        // decoration: const BoxDecoration(
-        //     gradient: LinearGradient(
-        //   begin: Alignment.topCenter,
-        //   end: Alignment.bottomCenter,
-        //   colors: [
-        //     Color.fromARGB(255, 240, 243, 245),
-        //     Color.fromARGB(255, 25, 83, 95)
-        //   ],
-        //   stops: [0.35, 0.95],
-        // )),
+          ListView(
+            shrinkWrap: true,
+            padding: const EdgeInsets.only(left: 40.0, right: 40.0),
+            children: <Widget>[
+              // Image.asset('assets/images/stals_logo.png', fit: BoxFit.fill),
+              const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+              loginFields
+            ],
+          ),
+        ],
+      ))
+          // decoration: const BoxDecoration(
+          //     gradient: LinearGradient(
+          //   begin: Alignment.topCenter,
+          //   end: Alignment.bottomCenter,
+          //   colors: [
+          //     Color.fromARGB(255, 240, 243, 245),
+          //     Color.fromARGB(255, 25, 83, 95)
+          //   ],
+          //   stops: [0.35, 0.95],
+          // )),
 
-        );
+          );
+    } else {
+      return Center(child: Text("You are logged in"),);
+    }
   }
 }
