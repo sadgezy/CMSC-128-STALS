@@ -13,12 +13,14 @@ import 'package:stals_frontend/screens/owner/view_manage_accomms.dart';
 import 'package:stals_frontend/screens/signup_info.dart';
 import 'package:provider/provider.dart';
 import 'package:stals_frontend/providers/token_provider.dart';
+import 'package:stals_frontend/providers/user_provider.dart';
 
 void main() {
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: ((context) => TokenProvider())),
+        ChangeNotifierProvider(create: ((context) => UserProvider())),
       ],
       child: MyApp(),
     ),
@@ -125,7 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
           },
         ),
         ListTile(
-          title: const Text('Admin View Users Page'),
+          title: const Text('Admin View Accommodations Page'),
           trailing: const Icon(Icons.construction),
           onTap: () {
             Navigator.pushNamed(context, '/admin/view_accomms');
@@ -134,7 +136,14 @@ class _MyHomePageState extends State<MyHomePage> {
         ListTile(
           title: const Text('Logout'),
           trailing: const Icon(Icons.logout),
-          onTap: () {},
+          onTap: () {
+            Provider.of<TokenProvider>(context, listen: false)
+                .removeToken("DO NOT REMOVE THIS PARAM");
+            Provider.of<UserProvider>(context, listen: false)
+                .removeUser("DO NOT REMOVE THIS PARAM");
+
+            print("Logged out");
+          },
         ),
       ])),
       appBar: AppBar(

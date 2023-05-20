@@ -50,7 +50,7 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
     );
 
-    if (Provider.of<TokenProvider>(context, listen: false).getCurrToken == "") {
+    if (Provider.of<TokenProvider>(context, listen: false).currToken == "") {
       return Scaffold(
         backgroundColor: Colors.white,
         body: Center(
