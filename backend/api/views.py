@@ -134,7 +134,7 @@ def login(request):
     if user is not None:
         #Token.objects.create(user=user)
         response = {
-            "message": "Login Succesful",
+            "message": "Login Successful",
             "token": user.auth_token.key
         }
         print("Login Successful")
