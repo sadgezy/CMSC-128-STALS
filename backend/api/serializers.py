@@ -75,6 +75,11 @@ class userSerializer(serializers.ModelSerializer):
         model = User
         fields = '__all__'
 
+class LimitedUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('_id', 'email', 'username', 'user_type')
+
 class ticketSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ticket
