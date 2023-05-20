@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stals_frontend/screens/signup.dart';
 import 'package:provider/provider.dart';
 import 'package:stals_frontend/providers/token_provider.dart';
+import 'package:stals_frontend/providers/user_provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -76,9 +77,19 @@ class _SignInPageState extends State<SignInPage> {
                 'password': passwordController.text
               }))
               .body);
-          String token = response['token'];
-          Provider.of<TokenProvider>(context, listen: false).setToken(token);
-          setState(() {});
+          if (response['message'] == "Login Successful") {
+            String token = response['token'];
+            Provider.of<TokenProvider>(context, listen: false).setToken(token);
+            setState(() {});
+            String url = "http://127.0.0.1:8000/get-one-user/";
+            final response2 = await json.decode((await http.post(Uri.parse(url),
+                    body: {
+                  'email': emailController.text,
+                }))
+                .body);
+            Provider.of<UserProvider>(context, listen: false).setUser(response2[0]["_id"], response2[0]["email"], response2[0]["username"], response2[0]["user_type"]);
+          }
+          
         },
         style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
@@ -193,6 +204,7 @@ class _SignInPageState extends State<SignInPage> {
 
           );
     } else {
+      print(Provider.of<UserProvider>(context, listen: false).userInfo);
       return Center(child: Text("You are logged in"),);
     }
   }
