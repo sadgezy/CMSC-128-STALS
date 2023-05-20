@@ -379,3 +379,5 @@ def getticketdetails(request):
     ticket = Ticket.objects.all()
     serializer = ticketSerializer(ticket, many=True)
     return Response(serializer.data)
+
+
