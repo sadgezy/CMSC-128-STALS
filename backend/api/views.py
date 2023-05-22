@@ -404,54 +404,98 @@ def getreviewdetails(request):
 
 #deletereview(on admin)
 
-@api_view(['GET'])
+#----------------------------------------------------------------------------------------------
+@api_view(['POST'])
 def search_room(request):
-    establishment_id = request.GET.get('establishment_id')
-    availability = request.GET.get('availability')
-    price_lower = request.GET.get('price_lower')
-    price_upper = request.GET.get('price_upper')
-    capacity = request.GET.get('capacity')
+    establishment_id = request.data.get('establishment_id')
+    availability = request.data.get('availability')
+    price_lower = request.data.get('price_lower')
+    price_upper = request.data.get('price_upper')
+    capacity = request.data.get('capacity')
 
     rooms = Room.objects.all()
 
     if establishment_id:
         rooms = rooms.filter(establishment_id=establishment_id)
-
-    #! does not work yet
-    # if availability is not None:
-        
-    #     availability = bool(availability)  
-    #     rooms = rooms.filter(availability=availability)
-
-    # if availability is not None:
-    #     if (availability == 'true'):
-    #         availability = True
-    #     elif (availability == 'false'):
-    #         availability = False
-
-    #     rooms = rooms.filter(availability=availability)
-
-    if availability is not None:
-        if availability == 'true':
-            availability = True
-        elif availability == 'false':
-            availability = False
-
-        print("Availability:", availability)  # Print the value of availability
-
-        rooms = rooms.filter(availability=availability)
-
     if price_lower:
-        rooms = rooms.filter(price_lower=price_lower)
+            rooms = rooms.filter(price_lower__gte=price_lower)              #recheck gte or lte
     if price_upper:
-        rooms = rooms.filter(price_upper=price_upper)
+            rooms = rooms.filter(price_upper__lte=price_upper)
     if capacity:
         rooms = rooms.filter(capacity=capacity)
 
-    if not rooms:
-        return Response({"message": "No rooms found that matches the search criteria."}, status=status.HTTP_404_NOT_FOUND)
-
     serializer = RoomSerializer(rooms, many=True)
+
+    if availability:
+        query = [d for d in serializer.data if d['availability'] == availability]
+        return Response(query)
+
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+#----------------------------------------------------------------------------------------------
+@api_view(['POST'])
+def search_establishment(request):
+    name = request.data.get('name', None)
+    location_exact = request.data.get('location_exact', None)
+    establishment_type = request.data.get('establishment_type', None)
+    tenant_type = request.data.get('tenant_type', None)
+    archived = request.data.get('archived')
+
+    establishments = Establishment.objects.all()
+
+    if name:
+        establishments = establishments.filter(name__icontains=name)
+
+    if location_exact:
+        establishments = establishments.filter(location_exact__icontains=location_exact)
+
+    if establishment_type:
+        establishments = establishments.filter(establishment_type__icontains=establishment_type)
+
+    if tenant_type:
+        establishments = establishments.filter(tenant_type__icontains=tenant_type)
+
+    serializer = EstablishmentSerializer(establishments, many=True)
+
+    if archived:
+        query = [d for d in serializer.data if d['archived'] == archived]
+        return Response(query)
+    
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def view_all_users(request):
+    user = User.objects.all()
+    serializer = userSerializer(user, many=True)
     return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def view_all_verified_users(request):                                         
+
+    user = User.objects.all()
+    serializer = userSerializer(user, many=True)
+    query = [d for d in serializer.data if d['verified'] == True]
+    return Response (query)
+
+@api_view(['GET'])     
+@permission_classes([IsAuthenticated])                                                         
+def view_all_verified_establishments(request):
+
+    establishment = Establishment.objects.all()
+    serializer = EstablishmentSerializer(establishment, many=True)
+    query = [d for d in serializer.data if d['verified'] == True]
+    return Response (query)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def view_all_archived_establishments(request):                                  
+    
+    establishment = Establishment.objects.all()
+    serializer = EstablishmentSerializer(establishment, many=True)
+    query = [d for d in serializer.data if d['archived'] == True]
+    return Response (query)
+
 
 

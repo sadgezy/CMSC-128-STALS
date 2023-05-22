@@ -34,4 +34,23 @@ urlpatterns = [
 
     path('search-room/', views.search_room),
     
+    path('search-room/', views.search_room),
+    path('search-establishment/', views.search_establishment),
+    
+
+    path('view-all-users/', views.view_all_users),
+    path('view-all-registered-users/', views.view_all_registered_users),
+    path('view-all-verified-establishments/', views.view_all_verified_establishments),
+    path('view-all-archived-establishments/', views.view_all_archived_establishments),
+
+    
+    path('search-room/', views.search_room),
+    path('search-establishment/', views.search_establishment),
+    
+    path('view-all-users/', views.view_all_users),
+    path('view-all-verified-users/', views.view_all_verified_users),
+    path('view-all-verified-establishments/', views.view_all_verified_establishments),
+    path('view-all-archived-establishments/', views.view_all_archived_establishments),
+
+
  ]
