@@ -218,6 +218,9 @@ def create_establishment(request):
             estab = Establishment.objects.get(pk=ObjectId(serializer.data['_id']))
             estab.delete()
             return Response(data={"message": "Owner not found"}, status=status.HTTP_404_NOT_FOUND)
+        
+        owner.establishments.append(serializer.data['_id'])
+        owner.save()
 
         return Response(serializer.data, status=201)
 
@@ -234,14 +237,18 @@ def delete_establishment(request, pk):
     
     #if request.user != establishment.owner:
     #    return Response({'error': '?'}, status=status.HTTP_401_UNAUTHORIZED)
-    estab_json = EstablishmentSerializer(establishment)
-    estab_json_accom = eval(estab_json.data['accommodations'])
+    estab = EstablishmentSerializer(establishment)
+    estab_json_accom = eval(estab.data['accommodations'])
     for i in estab_json_accom:
         try:
             room = Room.objects.get(pk=ObjectId(i))
             room.delete()
         except:
             return Response(data={"message":"Failure deleting a room"})
+
+    owner = User.objects.get(pk=ObjectId(estab.data['owner']))
+    owner.establishments.remove(estab.data['_id'])
+    owner.save()
 
     establishment.delete()
 
