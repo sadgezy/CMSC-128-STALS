@@ -415,7 +415,6 @@ def getreviewdetails(request):
 @api_view(['POST'])
 def search_room(request):
     establishment_id = request.data.get('establishment_id')
-    availability = request.data.get('availability')
     price_lower = request.data.get('price_lower')
     price_upper = request.data.get('price_upper')
     capacity = request.data.get('capacity')
@@ -433,25 +432,26 @@ def search_room(request):
 
     serializer = RoomSerializer(rooms, many=True)
 
-    if availability:
-        query = [d for d in serializer.data if d['availability'] == availability]
-        return Response(query)
-
-    return Response(serializer.data, status=status.HTTP_200_OK)
+    available = [d for d in serializer.data if d['availability'] == True]
+    return Response(available)
 
 #----------------------------------------------------------------------------------------------
 @api_view(['POST'])
 def search_establishment(request):
     name = request.data.get('name', None)
     location_exact = request.data.get('location_exact', None)
+    location_approx = request.data.get('location_approx')
     establishment_type = request.data.get('establishment_type', None)
     tenant_type = request.data.get('tenant_type', None)
-    archived = request.data.get('archived')
 
     establishments = Establishment.objects.all()
+    establishments_copy = establishments
 
     if name:
         establishments = establishments.filter(name__icontains=name)
+
+    if location_approx:
+        establishments = establishments.filter(location_approx=location_approx)
 
     if location_exact:
         establishments = establishments.filter(location_exact__icontains=location_exact)
@@ -462,13 +462,34 @@ def search_establishment(request):
     if tenant_type:
         establishments = establishments.filter(tenant_type__icontains=tenant_type)
 
-    serializer = EstablishmentSerializer(establishments, many=True)
+    serializer_estab = EstablishmentSerializer(establishments, many=True)
+    serializer_estab_full = EstablishmentSerializer(establishments_copy, many=True)
 
-    if archived:
-        query = [d for d in serializer.data if d['archived'] == archived]
-        return Response(query)
+    not_archived = [d for d in serializer_estab.data if d['archived'] == False]
+    verified = [d for d in not_archived if d['verified'] == True]
+    valid_estab_criteria = [d['_id'] for d in verified]
     
-    return Response(serializer.data, status=status.HTTP_200_OK)
+    price_lower = request.data.get('price_lower')
+    price_upper = request.data.get('price_upper')
+    capacity = request.data.get('capacity')
+
+    rooms = Room.objects.all()
+
+    if price_lower:
+        rooms = rooms.filter(price_lower__gte=price_lower)              #recheck gte or lte
+    if price_upper:
+        rooms = rooms.filter(price_upper__lte=price_upper)
+    if capacity:
+        rooms = rooms.filter(capacity=capacity)
+
+    serializer_room = RoomSerializer(rooms, many=True)
+    estab_ids = [d["establishment_id"] for d in serializer_room.data if d['availability'] == True and d['establishment_id'] in valid_estab_criteria]
+    unique_estab_ids = list(dict.fromkeys(estab_ids))
+
+    actual_estab_results = [d for d in serializer_estab_full.data if str(d['_id']) in unique_estab_ids]
+
+    return Response(actual_estab_results)
+    
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
