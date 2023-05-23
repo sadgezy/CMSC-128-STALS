@@ -408,6 +408,23 @@ def getreviewdetails(request):
     return Response(serializer.data)
 
 #writereview
+@api_view(['POST'])
+def review_establishment(request):
+    serializer = reviewSerializer(data = request.data)
+    if serializer.is_valid():
+        try:
+            serializer.save()
+            estab = Establishment.objects.get(pk=ObjectId(serializer.data['establishment_id']))
+        except Establishment.DoesNotExist:
+            review = Review.objects.get(pk=ObjectId(serializer.data['review_id']))
+            review.delete()
+            return Response(data={"message": "Establishment not found"}, status=status.HTTP_404_NOT_FOUND)
+        
+        estab.append(serializer.data['_id'])
+        estab.save()
+
+        return Response(serializer.data, status=201)
+    return Response(data={"message": "Failed creating a review"})
 
 #deletereview(on admin)
 
