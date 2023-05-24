@@ -50,5 +50,5 @@ urlpatterns = [
     path('view-all-verified-establishments/', views.view_all_verified_establishments),
     path('view-all-archived-establishments/', views.view_all_archived_establishments),
 
-
+    path('get-one-user-using-id/<str:pk>/', views.get_one_user_using_id),
  ]

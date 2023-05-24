@@ -184,6 +184,12 @@ def get_one_user(request):
     serializer = LimitedUserSerializer(user, many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def get_one_user_using_id(request, pk):
+    user = User.objects.get(pk=ObjectId(pk))
+    serializer = userSerializer(user, many=False)
+    return Response(serializer.data)
+
 
 # @api_view(['GET'])
 # def getestablishmentdetails(request):
@@ -587,6 +593,3 @@ def view_all_archived_establishments(request):
     serializer = EstablishmentSerializer(establishment, many=True)
     query = [d for d in serializer.data if d['archived'] == True]
     return Response (query)
-
-
-
