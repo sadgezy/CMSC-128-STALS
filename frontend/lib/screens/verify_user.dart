@@ -16,6 +16,8 @@ class _VerificationPageState extends State<VerificationPage> {
   String _idNumber = '';
   XFile? _idImage;
   PlatformFile? _imageFile;
+  bool uploadedImage = false;
+  String base64Image = '';
 
   @override
   Widget build(BuildContext context) {
@@ -136,6 +138,8 @@ class _VerificationPageState extends State<VerificationPage> {
               ),
               child: const Text('Submit'),
             ),
+            // DONT REMOVE. IMPORTANT FOR TESTING
+            //if (uploadedImage) Image.memory(Uri.parse(base64Image).data!.contentAsBytes()),
           ],
         ),
       ),
@@ -165,11 +169,16 @@ class _VerificationPageState extends State<VerificationPage> {
       final bytes = result.files.first.bytes;
       String extn = result.files.first.name.split('.').last;
       if (extn == 'png' || extn == 'PNG') {
-        String base64Image =  "data:image/png;base64,"+base64Encode(bytes!.toList());
+        base64Image =  "data:image/png;base64,"+base64Encode(bytes!.toList());
       } else {
-        String base64Image =  "data:image/jpeg;base64,"+base64Encode(bytes!.toList());
+        base64Image =  "data:image/jpeg;base64,"+base64Encode(bytes!.toList());
       }
-      
+      uploadedImage = true;
+      String header = '';
+      for (int i = 0; i < 25; i++) {
+        header+=base64Image[i];
+      }
+      print(header);
 
       //print(result.files.first.name);
       //print("img_pan : $base64Image");
