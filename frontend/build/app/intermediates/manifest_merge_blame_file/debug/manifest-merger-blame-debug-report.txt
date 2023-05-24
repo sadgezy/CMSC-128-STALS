@@ -13,8 +13,8 @@
 13         to allow setting breakpoints, to provide hot reload, etc.
 14    -->
 15    <uses-permission android:name="android.permission.INTERNET" />
-15-->/Users/chr1s/Desktop/CMSC-128-STALS/android/app/src/debug/AndroidManifest.xml:7:5-66
-15-->/Users/chr1s/Desktop/CMSC-128-STALS/android/app/src/debug/AndroidManifest.xml:7:22-64
+15-->/Users/chr1s/Desktop/CMSC-128-STALS/frontend/android/app/src/debug/AndroidManifest.xml:7:5-66
+15-->/Users/chr1s/Desktop/CMSC-128-STALS/frontend/android/app/src/debug/AndroidManifest.xml:7:22-64
 16
 17    <permission
 17-->[androidx.core:core:1.9.0] /Users/chr1s/.gradle/caches/transforms-3/b0e21cb23eaa313e61fdb7630797d2d9/transformed/core-1.9.0/AndroidManifest.xml:22:5-24:47
@@ -68,21 +68,21 @@
 60            android:value="2" />
 61
 62        <provider
-62-->[:image_picker_android] /Users/chr1s/Desktop/CMSC-128-STALS/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-18:20
+62-->[:image_picker_android] /Users/chr1s/Desktop/CMSC-128-STALS/frontend/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-18:20
 63            android:name="io.flutter.plugins.imagepicker.ImagePickerFileProvider"
-63-->[:image_picker_android] /Users/chr1s/Desktop/CMSC-128-STALS/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-82
+63-->[:image_picker_android] /Users/chr1s/Desktop/CMSC-128-STALS/frontend/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-82
 64            android:authorities="com.example.stals_frontend.flutter.image_provider"
-64-->[:image_picker_android] /Users/chr1s/Desktop/CMSC-128-STALS/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:12:13-74
+64-->[:image_picker_android] /Users/chr1s/Desktop/CMSC-128-STALS/frontend/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:12:13-74
 65            android:exported="false"
-65-->[:image_picker_android] /Users/chr1s/Desktop/CMSC-128-STALS/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:13:13-37
+65-->[:image_picker_android] /Users/chr1s/Desktop/CMSC-128-STALS/frontend/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:13:13-37
 66            android:grantUriPermissions="true" >
-66-->[:image_picker_android] /Users/chr1s/Desktop/CMSC-128-STALS/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:14:13-47
+66-->[:image_picker_android] /Users/chr1s/Desktop/CMSC-128-STALS/frontend/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:14:13-47
 67            <meta-data
-67-->[:image_picker_android] /Users/chr1s/Desktop/CMSC-128-STALS/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:15:13-17:75
+67-->[:image_picker_android] /Users/chr1s/Desktop/CMSC-128-STALS/frontend/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:15:13-17:75
 68                android:name="android.support.FILE_PROVIDER_PATHS"
-68-->[:image_picker_android] /Users/chr1s/Desktop/CMSC-128-STALS/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:16:17-67
+68-->[:image_picker_android] /Users/chr1s/Desktop/CMSC-128-STALS/frontend/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:16:17-67
 69                android:resource="@xml/flutter_image_picker_file_paths" />
-69-->[:image_picker_android] /Users/chr1s/Desktop/CMSC-128-STALS/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:17:17-72
+69-->[:image_picker_android] /Users/chr1s/Desktop/CMSC-128-STALS/frontend/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:17:17-72
 70        </provider>
 71
 72        <uses-library

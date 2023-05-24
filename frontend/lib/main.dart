@@ -4,6 +4,7 @@ import 'package:stals_frontend/screens/admin/admin_dashboard.dart';
 import 'package:stals_frontend/screens/admin/admin_view_accommodations.dart';
 import 'package:stals_frontend/screens/admin/admin_view_pending_approved.dart';
 import 'package:stals_frontend/screens/admin/admin_view_users.dart';
+import 'package:stals_frontend/screens/owner/add_accomm.dart';
 import 'package:stals_frontend/screens/signin.dart';
 import 'package:stals_frontend/screens/signup.dart';
 import 'package:stals_frontend/screens/homepage.dart';
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
         '/homepage': (context) => const UnregisteredHomepage(),
         '/signed_homepage': (context) => const RegisteredHomepage(),
         '/accomm': (context) => const AccommPage(),
+        '/add_accommodation': (context) => const AddAccommPage(),
         '/admin': (context) => const AdminDashBoard(),
         '/view_owned_accomms': (context) => const ViewOwnedAccomms(),
         '/admin/view_users': (context) => const ViewUsersPage(),
@@ -119,6 +121,13 @@ class _MyHomePageState extends State<MyHomePage> {
           trailing: const Icon(Icons.construction),
           onTap: () {
             Navigator.pushNamed(context, '/view_owned_accomms');
+          },
+        ),
+        ListTile(
+          title: const Text('Owner Add Accommodations Page'),
+          trailing: const Icon(Icons.construction),
+          onTap: () {
+            Navigator.pushNamed(context, '/add_accommodation');
           },
         ),
         ListTile(

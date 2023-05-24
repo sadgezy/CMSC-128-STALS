@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/chr1s/Desktop/CMSC-128-STALS/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
+            "outputFile": "/Users/chr1s/Desktop/CMSC-128-STALS/frontend/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
             "map": [
                 {
                     "source": "/Users/chr1s/.gradle/caches/transforms-3/0bfbffdc7bc1d0c9be48f1cd199bc7b9/transformed/lifecycle-runtime-2.6.1/res/values/values.xml",
@@ -57,25 +57,6 @@
                     }
                 },
                 {
-                    "source": "/Users/chr1s/Desktop/CMSC-128-STALS/android/app/src/main/res/values/styles.xml",
-                    "from": {
-                        "startLines": "3,14",
-                        "startColumns": "4,4",
-                        "startOffsets": "173,818",
-                        "endLines": "7,16",
-                        "endColumns": "12,12",
-                        "endOffsets": "476,982"
-                    },
-                    "to": {
-                        "startLines": "99,104",
-                        "startColumns": "4,4",
-                        "startOffsets": "5794,6102",
-                        "endLines": "103,106",
-                        "endColumns": "12,12",
-                        "endOffsets": "6097,6266"
-                    }
-                },
-                {
                     "source": "/Users/chr1s/.gradle/caches/transforms-3/9bace0d1e0e160221ab24ec205c7f35a/transformed/lifecycle-viewmodel-2.6.1/res/values/values.xml",
                     "from": {
                         "startLines": "2",
@@ -124,6 +105,25 @@
                         "startOffsets": "4462,5406",
                         "endColumns": "41,59",
                         "endOffsets": "4499,5461"
+                    }
+                },
+                {
+                    "source": "/Users/chr1s/Desktop/CMSC-128-STALS/frontend/android/app/src/main/res/values/styles.xml",
+                    "from": {
+                        "startLines": "3,14",
+                        "startColumns": "4,4",
+                        "startOffsets": "173,818",
+                        "endLines": "7,16",
+                        "endColumns": "12,12",
+                        "endOffsets": "476,982"
+                    },
+                    "to": {
+                        "startLines": "99,104",
+                        "startColumns": "4,4",
+                        "startOffsets": "5794,6102",
+                        "endLines": "103,106",
+                        "endColumns": "12,12",
+                        "endOffsets": "6097,6266"
                     }
                 },
                 {
