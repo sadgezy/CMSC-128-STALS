@@ -11,6 +11,7 @@ urlpatterns = [
     path('user-details/', views.getuserdetails),
     path('get-one-user/', views.get_one_user),
     path('review-details/', views.getreviewdetails),
+    path('delete-review/<str:pk>/', views.admindeletereview),
     path('ticket-details/', views.getticketdetails),
     # path('establishmentdetails/', views.getestablishmentdetails),
     path('edit-profile/<str:pk>/', views.editProfile),

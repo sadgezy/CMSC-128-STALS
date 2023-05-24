@@ -101,6 +101,13 @@ def adminunverifyuser(request, pk):
     return Response(data={"message": "Successfully unverified user"})
 
 @api_view(['DELETE'])
+def admindeletereview(request, pk):
+    review = Review.objects.get(pk=ObjectId(pk))
+    review.delete()
+    
+    return Response(data={"message": "Successfully deleted review"})
+
+@api_view(['DELETE'])
 def deleteuser(request, pk):
     user = User.objects.get(pk=ObjectId(pk))
     user.delete()
