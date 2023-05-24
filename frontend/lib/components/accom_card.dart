@@ -42,6 +42,8 @@ class _AccomCardState extends State<AccomCard> {
           // For now, redirect to sign up page.
           if (!widget.details.isSigned) {
             Navigator.pushNamed(context, '/signup');
+          } else if (widget.details.isOwner) {
+            Navigator.pushNamed(context, '/owned/accomm');
           }
         },
         child: Row(

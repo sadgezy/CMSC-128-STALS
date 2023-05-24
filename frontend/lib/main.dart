@@ -5,6 +5,8 @@ import 'package:stals_frontend/screens/admin/admin_view_accommodations.dart';
 import 'package:stals_frontend/screens/admin/admin_view_pending_approved.dart';
 import 'package:stals_frontend/screens/admin/admin_view_users.dart';
 import 'package:stals_frontend/screens/owner/add_accomm.dart';
+import 'package:stals_frontend/screens/owner/edit_accomm.dart';
+import 'package:stals_frontend/screens/owner/owned_accomm.dart';
 import 'package:stals_frontend/screens/signin.dart';
 import 'package:stals_frontend/screens/signup.dart';
 import 'package:stals_frontend/screens/homepage.dart';
@@ -49,6 +51,8 @@ class MyApp extends StatelessWidget {
         '/add_accommodation': (context) => const AddAccommPage(),
         '/admin': (context) => const AdminDashBoard(),
         '/view_owned_accomms': (context) => const ViewOwnedAccomms(),
+        '/owned/accomm': (context) => const OwnedAccommPage(),
+        '/owned/accomm/edit': (context) => const EditAccomm(),
         '/admin/view_users': (context) => const ViewUsersPage(),
         '/admin/view_accomms': (context) => const AdminViewAccommodations(),
       },

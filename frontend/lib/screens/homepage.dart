@@ -27,6 +27,7 @@ class _UnregisteredHomepageState extends State<UnregisteredHomepage> {
         "Description of Centrro Residences",
         "assets/images/room_stock.jpg",
         3,
+        false,
         false);
 
     return Scaffold(

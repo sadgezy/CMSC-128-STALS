@@ -24,6 +24,7 @@ class _ViewArchivedAccommodationsState
         "This is a description for accommodation 1",
         "assets/images/room_stock.jpg",
         3,
+        true,
         true);
     var accom2 = AccomCardDetails(
         "accommId2",
@@ -31,6 +32,7 @@ class _ViewArchivedAccommodationsState
         "This is a description for accommodation 2",
         "assets/images/room_stock.jpg",
         5,
+        true,
         true);
     var accom3 = AccomCardDetails(
         "accommId3",
@@ -38,6 +40,7 @@ class _ViewArchivedAccommodationsState
         "This is a description for accommodation 3",
         "assets/images/room_stock.jpg",
         2,
+        true,
         true);
 
     var archivedAccomms = Column(children: [

@@ -1,13 +1,13 @@
 import 'package:stals_frontend/components/rating.dart';
 import 'package:flutter/material.dart';
 
-class AccommPage extends StatefulWidget {
-  const AccommPage({super.key});
+class OwnedAccommPage extends StatefulWidget {
+  const OwnedAccommPage({super.key});
   @override
-  _AccommPageState createState() => _AccommPageState();
+  _OwnedAccommPageState createState() => _OwnedAccommPageState();
 }
 
-class _AccommPageState extends State<AccommPage> {
+class _OwnedAccommPageState extends State<OwnedAccommPage> {
   double rating = 4.0;
   int _index = 1;
   bool favorite = false;
@@ -18,7 +18,7 @@ class _AccommPageState extends State<AccommPage> {
         //App bar start
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
+            icon: const Icon(Icons.arrow_back_ios),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -71,21 +71,17 @@ class _AccommPageState extends State<AccommPage> {
                     ),
                     ElevatedButton(
                         onPressed: () {
-                          setState(() {
-                            favorite = !favorite;
-                            // add function to add accommodation to favorites
-                          });
+                          Navigator.pushNamed(context, '/owned/accomm/edit');
                         },
-                        child: (favorite)
-                            ? Icon(
-                                Icons.bookmark_outline,
-                                size: 20,
-                              )
-                            : Icon(Icons.bookmark, size: 20),
                         style: ElevatedButton.styleFrom(
                             shape: const CircleBorder(),
                             backgroundColor: Colors.white,
-                            foregroundColor: Color.fromARGB(255, 25, 83, 95))),
+                            foregroundColor:
+                                const Color.fromARGB(255, 25, 83, 95)),
+                        child: const Icon(
+                          Icons.edit,
+                          size: 20,
+                        ))
                   ],
                 )
               ],
@@ -136,7 +132,7 @@ class _AccommPageState extends State<AccommPage> {
             const Divider(
               color: Colors.black,
             ),
-            Column(
+            const Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[

@@ -145,14 +145,15 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
     <Object will come from database fetch later>
     */
     var accom = AccomCardDetails("jk23fvgw23", "Centtro Residences",
-        "Example Description", "assets/images/room_stock.jpg", 3, true);
+        "Example Description", "assets/images/room_stock.jpg", 3, true, false);
     var accom2 = AccomCardDetails(
         'test1234',
         'Casa Del Mar',
         'Casa Del Mar is located at Sapphire street.',
         "assets/images/room_stock.jpg",
         5,
-        true);
+        true,
+        false);
 
     var filterTitleList = [];
     var filterValueList = [];

@@ -18,7 +18,7 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
   @override
   Widget build(BuildContext context) {
     var accom = AccomCardDetails("jk23fvgw23", "Centtro Residences",
-        "Example Description", "assets/images/room_stock.jpg", 3, true);
+        "Example Description", "assets/images/room_stock.jpg", 3, true, true);
 
     return Scaffold(
         key: scaffoldKey,
@@ -93,12 +93,7 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
                   ),
                   AccomCard(
                     details: accom,
-                  ),
-                  const Divider(
-                    height: 20,
-                    thickness: 1.25,
-                    color: Color.fromRGBO(0, 0, 0, 0.25),
-                  ),
+                  )
                 ],
               ),
             ),
