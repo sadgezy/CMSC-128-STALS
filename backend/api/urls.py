@@ -27,11 +27,24 @@ urlpatterns = [
     path('archive-establishment/<str:pk>/', views.archive_establishment),
     path('unarchive-establishment/<str:pk>/', views.unarchive_establishment),
     path('report-establishment/', views.report_establishment),
+    path('review-establishment/<str:pk>/', views.review_establishment),
 
     path('add-room/', views.add_room_to_establishment), 
     path('edit-room/<str:pk>/', views.edit_room), 
     path('delete-room/<str:pk>/', views.delete_room),
 
-    path('search-room/', views.search_room),
+    path('view-all-users/', views.view_all_users),
+    path('view-all-registered-users/', views.view_all_verified_users),
+    path('view-all-verified-establishments/', views.view_all_verified_establishments),
+    path('view-all-archived-establishments/', views.view_all_archived_establishments),
     
+    path('search-room/', views.search_room),
+    path('search-establishment/', views.search_establishment),
+    
+    path('view-all-users/', views.view_all_users),
+    path('view-all-verified-users/', views.view_all_verified_users),
+    path('view-all-verified-establishments/', views.view_all_verified_establishments),
+    path('view-all-archived-establishments/', views.view_all_archived_establishments),
+
+
  ]
