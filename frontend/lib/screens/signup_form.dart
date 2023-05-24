@@ -10,6 +10,7 @@ class _SignUpFormState extends State<SignUpForm> {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController middleNameController = TextEditingController();
+  TextEditingController suffixController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -61,18 +62,12 @@ class _SignUpFormState extends State<SignUpForm> {
               onChanged: (value) => _middleName = value,
               controller: middleNameController,
             ),
-            DropdownButtonFormField(
-              items: const [
-                DropdownMenuItem(
-                  value: 'Mr.',
-                  child: Text('Jr.'),
-                ),
-                DropdownMenuItem(
-                  value: 'Ms.',
-                  child: Text('III'),
-                ),
-              ],
+            TextFormField(
+              decoration: const InputDecoration(
+                labelText: 'Suffix',
+              ),
               onChanged: (value) => _suffix = value,
+              controller: suffixController,
             ),
             TextFormField(
               decoration: const InputDecoration(
