@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "D:\\REPO\\from_frontend2_repo\\CMSC-128-STALS\\frontend\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-night-v8\\values-night-v8.xml",
+            "outputFile": "D:\\REPO\\from_frontend3_repo\\CMSC-128-STALS\\frontend\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-night-v8\\values-night-v8.xml",
             "map": [
                 {
-                    "source": "D:\\REPO\\from_frontend2_repo\\CMSC-128-STALS\\frontend\\android\\app\\src\\main\\res\\values-night\\styles.xml",
+                    "source": "D:\\REPO\\from_frontend3_repo\\CMSC-128-STALS\\frontend\\android\\app\\src\\main\\res\\values-night\\styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",

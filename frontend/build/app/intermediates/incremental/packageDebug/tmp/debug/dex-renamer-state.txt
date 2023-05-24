@@ -1,4 +1,4 @@
-#Sat May 20 21:45:56 SGT 2023
-base.0=D\:\\REPO\\from_frontend2_repo\\CMSC-128-STALS\\frontend\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+#Tue May 23 23:05:08 SGT 2023
+base.0=D\:\\REPO\\from_frontend3_repo\\CMSC-128-STALS\\frontend\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
 renamed.0=classes.dex
 path.0=classes.dex
