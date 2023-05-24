@@ -23,10 +23,10 @@ class _SignUpPageState extends State<SignUpPage> {
         onPressed: () {
           if (btnText == "Owner") {
             Navigator.pushNamed(context, '/signup_info',
-                arguments: {"type": "Owner"});
+                arguments: {"type": "owner"});
           } else if (btnText == "Customer") {
             Navigator.pushNamed(context, '/signup_info',
-                arguments: {"type": "User"});
+                arguments: {"type": "user"});
           }
         },
       ),

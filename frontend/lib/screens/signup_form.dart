@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stals_frontend/screens/verify_user.dart';
+import '../models/signup_arguments.dart';
 
 class SignUpForm extends StatefulWidget {
   @override
@@ -27,6 +28,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
   @override
   Widget build(BuildContext context) {
+    Map<String,String> args = ModalRoute.of(context)!.settings.arguments as Map<String,String>;
     final double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
@@ -101,7 +103,8 @@ class _SignUpFormState extends State<SignUpForm> {
             MaterialButton(
               child: const Text('Next'),
               onPressed: () {
-                Navigator.pushNamed(context, '/verify_user');
+                Navigator.pushNamed(context, '/verify_user',
+                arguments: SignupArguments(_firstName, _lastName, _middleName, _suffix, _username, _password, _email, _phone, args['type']));
               },
             ),
           ],

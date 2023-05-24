@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'dart:html' as html;
+import '../models/signup_arguments.dart';
 
 class VerificationPage extends StatefulWidget {
   @override
@@ -21,6 +22,7 @@ class _VerificationPageState extends State<VerificationPage> {
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as SignupArguments;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Verification'),
@@ -130,6 +132,9 @@ class _VerificationPageState extends State<VerificationPage> {
             MaterialButton(
               onPressed: () {
                 // TODO: Submit the verification form.
+                print(args.firstName);
+                print(args.lastName);
+                print(args.userType);
               },
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
@@ -174,11 +179,7 @@ class _VerificationPageState extends State<VerificationPage> {
         base64Image =  "data:image/jpeg;base64,"+base64Encode(bytes!.toList());
       }
       uploadedImage = true;
-      String header = '';
-      for (int i = 0; i < 25; i++) {
-        header+=base64Image[i];
-      }
-      print(header);
+    
 
       //print(result.files.first.name);
       //print("img_pan : $base64Image");
