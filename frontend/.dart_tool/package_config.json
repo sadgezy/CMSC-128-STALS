@@ -92,6 +92,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "file_picker",
+      "rootUri": "file:///C:/Users/Nathaniel/AppData/Local/Pub/Cache/hosted/pub.dev/file_picker-5.3.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
       "name": "flutter",
       "rootUri": "file:///C:/Users/Nathaniel/flutter/packages/flutter",
       "packageUri": "lib/",
@@ -440,7 +446,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2023-05-24T16:08:40.411102Z",
+  "generated": "2023-05-24T17:53:49.105944Z",
   "generator": "pub",
   "generatorVersion": "3.1.0-48.0.dev"
 }

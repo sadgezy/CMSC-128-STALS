@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
+import 'dart:typed_data';
+import 'dart:convert';
 import 'package:image_picker/image_picker.dart';
+import 'package:file_picker/file_picker.dart';
+import 'dart:html' as html;
 
 class VerificationPage extends StatefulWidget {
   @override
@@ -11,6 +15,7 @@ class _VerificationPageState extends State<VerificationPage> {
   String _idType = '';
   String _idNumber = '';
   XFile? _idImage;
+  PlatformFile? _imageFile;
 
   @override
   Widget build(BuildContext context) {
@@ -97,9 +102,15 @@ class _VerificationPageState extends State<VerificationPage> {
               ),
               onChanged: (value) => _idNumber = value,
             ),
+            if (_imageFile != null) Image.memory(
+                Uint8List.fromList(_imageFile!.bytes!),
+                width: 200,
+                height: 200,
+                fit: BoxFit.cover,
+              ),
             Container(
               width: 200.0,
-              height: 200.0,
+              height: 40.0,
               color: Colors.grey,
               child: _idImage != null
                   ? Image.file(_idImage as File)
@@ -138,13 +149,40 @@ class _VerificationPageState extends State<VerificationPage> {
   }
 
   void _chooseImage() async {
-    ImagePicker picker = ImagePicker();
-    final image = await picker.pickImage(source: ImageSource.gallery);
+    
+    //ImagePicker picker = ImagePicker();
+    //XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['jpg','png']
+    );
 
-    if (image != null) {
+    if (result  != null) {
       setState(() {
-        _idImage = image as XFile?;
+        _imageFile = result.files.first;
       });
+
+      final bytes = result.files.first.bytes;
+      String extn = result.files.first.name.split('.').last;
+      if (extn == 'png' || extn == 'PNG') {
+        String base64Image =  "data:image/png;base64,"+base64Encode(bytes!.toList());
+      } else {
+        String base64Image =  "data:image/jpeg;base64,"+base64Encode(bytes!.toList());
+      }
+      
+
+      //print(result.files.first.name);
+      //print("img_pan : $base64Image");
+      //setState(() {});
+      //var imageFile = Image.network(image.path);
+      //html.File(image.path.codeUnits, image.path);
+      //print(imageFile.name);
+
+      //_idImage = image as XFile?;
+      //final bytes = File(imageFile.name).readAsBytesSync();
+      //String base64Image =  "data:image/png;base64,"+base64Encode(bytes);
+
+      //print(base64Image);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
