@@ -69,7 +69,6 @@ class _SignInPageState extends State<SignInPage> {
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: ElevatedButton(
         onPressed: () async {
-          print("LOGGING IN");
           String url = "http://127.0.0.1:8000/login/";
           final response = await json.decode((await http.post(Uri.parse(url),
                   body: {
@@ -77,6 +76,7 @@ class _SignInPageState extends State<SignInPage> {
                 'password': passwordController.text
               }))
               .body);
+          print(response);
           if (response['message'] == "Login Successful") {
             String token = response['token'];
             Provider.of<TokenProvider>(context, listen: false).setToken(token);

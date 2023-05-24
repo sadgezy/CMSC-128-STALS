@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'dart:html' as html;
+import 'package:http/http.dart' as http;
 import '../models/signup_arguments.dart';
 
 class VerificationPage extends StatefulWidget {
@@ -106,7 +107,8 @@ class _VerificationPageState extends State<VerificationPage> {
               ),
               onChanged: (value) => _idNumber = value,
             ),
-            if (_imageFile != null) Image.memory(
+            if (_imageFile != null)
+              Image.memory(
                 Uint8List.fromList(_imageFile!.bytes!),
                 width: 200,
                 height: 200,
@@ -130,11 +132,34 @@ class _VerificationPageState extends State<VerificationPage> {
               style: TextStyle(color: Colors.red),
             ),
             MaterialButton(
-              onPressed: () {
+              onPressed: () async {
                 // TODO: Submit the verification form.
-                print(args.firstName);
-                print(args.lastName);
-                print(args.userType);
+
+                String url = "http://127.0.0.1:8000/signup/";
+                final response = await json.decode((await http
+                        .post(Uri.parse(url), body: {
+                  'first_name': args.firstName,
+                  'last_name': args.lastName,
+                  'middle_initial': args.middleName,
+                  'suffix': args.suffix,
+                  'username': args.username,
+                  'password': args.password,
+                  'email': args.email,
+                  'phone_no': args.phoneNo,
+                  'user_type': args.userType,
+                  'id_type': _idType,
+                  'id_number': _idNumber,
+                  'id_picture': base64Image
+                }))
+                    .body);
+
+                //print(response);
+                base64Image = response['data']['id_picture'];
+                //print(base64Image);
+                uploadedImage = true;
+                setState(() {
+                  
+                });
               },
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
@@ -144,7 +169,12 @@ class _VerificationPageState extends State<VerificationPage> {
               child: const Text('Submit'),
             ),
             // DONT REMOVE. IMPORTANT FOR TESTING
-            //if (uploadedImage) Image.memory(Uri.parse(base64Image).data!.contentAsBytes()),
+            if (uploadedImage) Column(
+              children: [
+                Text("If you see this picture, this was from the database!"),
+                Image.memory(Uri.parse(base64Image).data!.contentAsBytes())
+              ],
+            ),
           ],
         ),
       ),
@@ -158,15 +188,12 @@ class _VerificationPageState extends State<VerificationPage> {
   }
 
   void _chooseImage() async {
-    
     //ImagePicker picker = ImagePicker();
     //XFile? image = await picker.pickImage(source: ImageSource.gallery);
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['jpg','png']
-    );
+    FilePickerResult? result = await FilePicker.platform
+        .pickFiles(type: FileType.custom, allowedExtensions: ['jpg', 'png']);
 
-    if (result  != null) {
+    if (result != null) {
       setState(() {
         _imageFile = result.files.first;
       });
@@ -174,12 +201,11 @@ class _VerificationPageState extends State<VerificationPage> {
       final bytes = result.files.first.bytes;
       String extn = result.files.first.name.split('.').last;
       if (extn == 'png' || extn == 'PNG') {
-        base64Image =  "data:image/png;base64,"+base64Encode(bytes!.toList());
+        base64Image = "data:image/png;base64," + base64Encode(bytes!.toList());
       } else {
-        base64Image =  "data:image/jpeg;base64,"+base64Encode(bytes!.toList());
+        base64Image = "data:image/jpeg;base64," + base64Encode(bytes!.toList());
       }
-      uploadedImage = true;
-    
+      
 
       //print(result.files.first.name);
       //print("img_pan : $base64Image");
@@ -194,6 +220,7 @@ class _VerificationPageState extends State<VerificationPage> {
 
       //print(base64Image);
     } else {
+      _imageFile = null;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('No image selected'),
