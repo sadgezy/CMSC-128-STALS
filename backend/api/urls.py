@@ -17,6 +17,8 @@ urlpatterns = [
     path('delete-user/<str:pk>/', views.deleteuser),
     path('unverify-user/<str:pk>/', views.adminunverifyuser),
     path('verify-user/<str:pk>/', views.adminverifyuser),
+    path('view-all-user-favorites/', views.view_all_user_favorites),
+    path('add-room-to-user-favorites/', views.add_room_to_user_favorites),
 
     path('create-establishment/', views.create_establishment),
     path('view-all-establishment/', views.view_all_establishment),
@@ -24,6 +26,7 @@ urlpatterns = [
     path('edit-establishment/<str:pk>/', views.edit_establishment), 
     path('delete-establishment/<str:pk>/', views.delete_establishment), 
     path('verify-establishment/<str:pk>/', views.verify_establishment), 
+    path('unverify-establishment/<str:pk>/', views.unverify_establishment), 
     path('archive-establishment/<str:pk>/', views.archive_establishment),
     path('unarchive-establishment/<str:pk>/', views.unarchive_establishment),
     path('report-establishment/', views.report_establishment),

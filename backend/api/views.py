@@ -282,6 +282,20 @@ def verify_establishment(request, pk):
     return Response(data={"message": "Successfully verified establishment"})
 
 @api_view(['PUT'])
+def unverify_establishment(request, pk):
+
+    try:
+        accom = Establishment.objects.get(pk=ObjectId(pk))
+    except Establishment.DoesNotExist:
+         return Response(data={"message": "Establishment not found"}, status=status.HTTP_404_NOT_FOUND)
+    
+    accom.verified = False
+    accom.save()
+
+    return Response(data={"message": "Successfully unverified establishment"})
+
+
+@api_view(['PUT'])
 def archive_establishment(request, pk):   
 
     try:
@@ -425,6 +439,31 @@ def review_establishment(request):
 
         return Response(serializer.data, status=201)
     return Response(data={"message": "Failed creating a review"})
+
+@api_view(['POST'])
+def view_all_user_favorites(request):
+    try:
+        user = User.objects.filter(email=request.data['email'])
+        serializer = userSerializer(user, many=True)
+        return Response(serializer.data[0]['favorites'])
+    except:
+        return Response(data={"message": "Failed getting user favorites"})
+
+@api_view(['POST'])
+def add_room_to_user_favorites(request):
+    try:
+        user = User.objects.get(email=request.data['email'])
+        User_serializer = userSerializer(user)
+        user.favorites.append(request.data['ticket_id'])
+        user.save()  # Make sure you're saving an instance of User model, not a regular user object
+        return Response(data={"message": "Successfully added to user favorites"})
+    except User.DoesNotExist:
+        # Handle the case when the user doesn't exist
+        return Response("User not found", status=status.HTTP_404_NOT_FOUND)
+    
+    # return Response(user)
+    # except:
+    #     return Response(data={"message": "Error adding to user favorites"})
 
 #deletereview(on admin)
 
