@@ -1,17 +1,17 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/chr1s/Desktop/CMSC-128-STALS/frontend/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-night-v8/values-night-v8.xml",
+            "outputFile": "C:\\github_repo\\bagong pull\\CMSC-128-STALS\\frontend\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-night-v8\\values-night-v8.xml",
             "map": [
                 {
-                    "source": "/Users/chr1s/Desktop/CMSC-128-STALS/frontend/android/app/src/main/res/values-night/styles.xml",
+                    "source": "C:\\github_repo\\bagong pull\\CMSC-128-STALS\\frontend\\android\\app\\src\\main\\res\\values-night\\styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",
-                        "startOffsets": "172,817",
+                        "startOffsets": "175,831",
                         "endLines": "7,16",
                         "endColumns": "12,12",
-                        "endOffsets": "475,981"
+                        "endOffsets": "482,997"
                     },
                     "to": {
                         "startLines": "2,7",

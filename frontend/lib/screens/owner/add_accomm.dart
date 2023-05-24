@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:async';
+import 'dart:io';
 
 class AddAccommPage extends StatefulWidget {
   const AddAccommPage({super.key});
@@ -13,6 +18,8 @@ class _AddAccommPageState extends State<AddAccommPage> {
   String guestType = "";
   bool showGuestTypeError = false;
   bool showAccommTypeError = false;
+  XFile? _idImage;
+  File? imageFile;
 
   final GlobalKey<FormState> _formKey1 = GlobalKey<FormState>();
   final GlobalKey<FormState> _formKey2 = GlobalKey<FormState>();
@@ -37,6 +44,24 @@ class _AddAccommPageState extends State<AddAccommPage> {
       style: TextStyle(color: Color(0xff7B2D26)),
     );
 
+    Future chooseImage() async {
+      ImagePicker picker = ImagePicker();
+      final image = await picker.pickImage(source: ImageSource.gallery);
+
+      if (image != null) {
+        setState(() {
+          _idImage = image as XFile?;
+          imageFile = File(_idImage!.path);
+        });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('No image selected'),
+          ),
+        );
+      }
+    }
+
     Widget navigationButtons = Expanded(
       child: Align(
         alignment: Alignment.bottomCenter,
@@ -50,6 +75,9 @@ class _AddAccommPageState extends State<AddAccommPage> {
                   setState(() {
                     activestep--;
                   });
+                } else if (activestep == 0) {
+                  print("Add accommodation cancelled.");
+                  Navigator.pop(context);
                 }
               },
               style: ElevatedButton.styleFrom(
@@ -60,7 +88,8 @@ class _AddAccommPageState extends State<AddAccommPage> {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              child: const Text("Back", style: TextStyle(fontSize: 17)),
+              child: Text(activestep == 0 ? "Cancel" : "Back",
+                  style: const TextStyle(fontSize: 17)),
             ),
             ElevatedButton(
               onPressed: () {
@@ -504,6 +533,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
                             contentPadding: const EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 10),
                             fillColor: Colors.white,
+                            filled: true,
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
@@ -527,6 +557,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
                             contentPadding: const EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 10),
                             fillColor: Colors.white,
+                            filled: true,
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
@@ -550,6 +581,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
                             contentPadding: const EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 10),
                             fillColor: Colors.white,
+                            filled: true,
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
@@ -579,7 +611,6 @@ class _AddAccommPageState extends State<AddAccommPage> {
                           if (value != null && value.trim().isEmpty) {
                             return "City required";
                           }
-                          return null;
                         }),
                       ),
                     ),
@@ -596,6 +627,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
                                     contentPadding: const EdgeInsets.symmetric(
                                         vertical: 10, horizontal: 10),
                                     fillColor: Colors.white,
+                                    filled: true,
                                     enabledBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(8),
                                         borderSide: const BorderSide(
@@ -628,18 +660,23 @@ class _AddAccommPageState extends State<AddAccommPage> {
                                   if (value != null && value.trim().isEmpty) {
                                     return "Province required";
                                   }
-                                  return null;
                                 }),
                               ),
                             ),
                             SizedBox(
                               width: 140,
                               child: TextFormField(
+                                keyboardType: TextInputType.number,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.digitsOnly,
+                                  LengthLimitingTextInputFormatter(4),
+                                ],
                                 controller: zipcodeController,
                                 decoration: InputDecoration(
                                     contentPadding: const EdgeInsets.symmetric(
                                         vertical: 10, horizontal: 10),
                                     fillColor: Colors.white,
+                                    filled: true,
                                     enabledBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(8),
                                         borderSide: const BorderSide(
@@ -672,7 +709,6 @@ class _AddAccommPageState extends State<AddAccommPage> {
                                   if (value != null && value.trim().isEmpty) {
                                     return "Zip Code required";
                                   }
-                                  return null;
                                 }),
                               ),
                             )
@@ -686,6 +722,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
                             contentPadding: const EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 10),
                             fillColor: Colors.white,
+                            filled: true,
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
@@ -715,7 +752,6 @@ class _AddAccommPageState extends State<AddAccommPage> {
                           if (value != null && value.trim().isEmpty) {
                             return "Country required";
                           }
-                          return null;
                         }),
                       ),
                     ),
@@ -819,12 +855,12 @@ class _AddAccommPageState extends State<AddAccommPage> {
                                   if (value != null && value.trim().isEmpty) {
                                     return "Name required";
                                   }
-                                  return null;
                                 }),
                                 decoration: InputDecoration(
                                   contentPadding: const EdgeInsets.symmetric(
                                       vertical: 10, horizontal: 10),
                                   fillColor: Colors.white,
+                                  filled: true,
                                   enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
                                       borderSide: const BorderSide(
@@ -855,6 +891,44 @@ class _AddAccommPageState extends State<AddAccommPage> {
                             ],
                           )),
                       Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 7),
+                          child: _idImage == null
+                              ? DottedBorder(
+                                  strokeWidth: 1,
+                                  dashPattern: const [6, 6],
+                                  color: const Color(0xff1F2421),
+                                  child: Container(
+                                      height: 200,
+                                      width: double.infinity,
+                                      color: Colors.white,
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              minimumSize: const Size(150, 50),
+                                              maximumSize: const Size(150, 50),
+                                              elevation: 0,
+                                              backgroundColor:
+                                                  const Color(0xff7B2D26),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                            ),
+                                            onPressed: () {
+                                              chooseImage();
+                                            },
+                                            child: const Text("Upload image")),
+                                      )),
+                                )
+                              : Container(
+                                  height: 200,
+                                  width: double.infinity,
+                                  child: Image.file(
+                                    imageFile!,
+                                    fit: BoxFit.fitWidth,
+                                  ))),
+                      Padding(
                         padding: const EdgeInsets.symmetric(vertical: 7),
                         child: Column(
                           children: [
@@ -874,12 +948,12 @@ class _AddAccommPageState extends State<AddAccommPage> {
                                   if (value != null && value.trim().isEmpty) {
                                     return "Description required";
                                   }
-                                  return null;
                                 }),
                                 decoration: InputDecoration(
                                   contentPadding: const EdgeInsets.symmetric(
                                       vertical: 10, horizontal: 10),
                                   fillColor: Colors.white,
+                                  filled: true,
                                   enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
                                       borderSide: const BorderSide(
@@ -978,6 +1052,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
     }
 
     return Scaffold(
+      backgroundColor: Color(0xffF0F3F5),
       resizeToAvoidBottomInset: false,
       body: Center(child: getStep()),
     );

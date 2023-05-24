@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'dart:convert';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
-import 'dart:html' as html;
 import '../models/signup_arguments.dart';
 
 class VerificationPage extends StatefulWidget {
@@ -106,7 +105,8 @@ class _VerificationPageState extends State<VerificationPage> {
               ),
               onChanged: (value) => _idNumber = value,
             ),
-            if (_imageFile != null) Image.memory(
+            if (_imageFile != null)
+              Image.memory(
                 Uint8List.fromList(_imageFile!.bytes!),
                 width: 200,
                 height: 200,
@@ -158,15 +158,12 @@ class _VerificationPageState extends State<VerificationPage> {
   }
 
   void _chooseImage() async {
-    
     //ImagePicker picker = ImagePicker();
     //XFile? image = await picker.pickImage(source: ImageSource.gallery);
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['jpg','png']
-    );
+    FilePickerResult? result = await FilePicker.platform
+        .pickFiles(type: FileType.custom, allowedExtensions: ['jpg', 'png']);
 
-    if (result  != null) {
+    if (result != null) {
       setState(() {
         _imageFile = result.files.first;
       });
@@ -174,12 +171,11 @@ class _VerificationPageState extends State<VerificationPage> {
       final bytes = result.files.first.bytes;
       String extn = result.files.first.name.split('.').last;
       if (extn == 'png' || extn == 'PNG') {
-        base64Image =  "data:image/png;base64,"+base64Encode(bytes!.toList());
+        base64Image = "data:image/png;base64," + base64Encode(bytes!.toList());
       } else {
-        base64Image =  "data:image/jpeg;base64,"+base64Encode(bytes!.toList());
+        base64Image = "data:image/jpeg;base64," + base64Encode(bytes!.toList());
       }
       uploadedImage = true;
-    
 
       //print(result.files.first.name);
       //print("img_pan : $base64Image");

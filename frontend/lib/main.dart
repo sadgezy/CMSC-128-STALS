@@ -61,6 +61,7 @@ class MyApp extends StatelessWidget {
         //primarySwatch: MaterialColor(Color(0xff19535F), swatch),
         //accentColor: Color(0xff0B7A75),
       ),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
