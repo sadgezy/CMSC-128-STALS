@@ -108,6 +108,7 @@ class _VerificationPageState extends State<VerificationPage> {
               onChanged: (value) => _idNumber = value,
             ),
             if (_imageFile != null)
+             
               Image.memory(
                 Uint8List.fromList(_imageFile!.bytes!),
                 width: 200,
@@ -205,8 +206,7 @@ class _VerificationPageState extends State<VerificationPage> {
       } else {
         base64Image = "data:image/jpeg;base64," + base64Encode(bytes!.toList());
       }
-      
-
+  
       //print(result.files.first.name);
       //print("img_pan : $base64Image");
       //setState(() {});

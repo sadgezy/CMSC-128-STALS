@@ -43,6 +43,7 @@ dependencies:
   cached_network_image: ^3.2.3
   image_picker: ^0.8.7+5
   file_picker: ^5.3.1
+  dotted_border: ^2.0.0+3
 
 dev_dependencies:
   flutter_test:
@@ -70,8 +71,14 @@ flutter:
      - assets/images/room_stock.jpg
      - assets/images/stals_logo2.png
      - assets/images/
-  #   - images/a_dot_ham.jpeg
-
+     - assets/images/apartment.png
+     - assets/images/bed.png
+     - assets/images/bunk.png
+     - assets/images/home.png
+     - assets/images/hotel.png
+     - assets/images/flat.png
+     - assets/images/user.png
+     
   fonts:
       - family: SFProDisplayRegular
         fonts:
