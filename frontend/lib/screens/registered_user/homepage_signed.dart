@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../../classes.dart';
 import '../../UI_parameters.dart' as UIParameter;
 import 'favorites.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 // COMPONENTS
 import '../../components/accom_card.dart';
@@ -19,6 +21,9 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   Filter accomFilter = Filter(null, null, null, null, null, null);
 
+  // put data into a list. Will iterate over it to build cards
+  List<dynamic> accommList = [];
+  //List<dynamic> accommList = [{"_id":"jk23fvgw23", "name": "Centtro Residences", "location_exact": "LOCATION"}];
   /*
   a callback function that returns the filter(object) that the user chose
   Filter(
@@ -141,6 +146,7 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
   */
   @override
   Widget build(BuildContext context) {
+    String searchVal = '';
     /*
     DUMMY OBJECT
     <Object will come from database fetch later>
@@ -154,8 +160,7 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
         "assets/images/room_stock.jpg",
         5,true,false);
 
-    // put data into a list. Will iterate over it to build cards
-    late List<AccomCardDetails> accommList = [accom, accom2];
+    
 
     var filterTitleList = [];
     var filterValueList = [];
@@ -186,11 +191,50 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
               },
             ),
             // search bar at the top of the homepage
-            title: CustomSearchBar(
-              hintText: 'Search',
-              onChanged: (value) {
-                /* PUT SEARCH FUNCTION HERE */
-              },
+            title: Row(
+              children: [
+                Expanded(
+                  flex: 16,
+                  child: CustomSearchBar(
+                    hintText: 'Search',
+                    onChanged: (value) {
+                      /* PUT SEARCH FUNCTION HERE */
+                      searchVal = value;
+                    },
+                  ),
+                ),
+                Expanded(
+                    flex: 2,
+                    child: IconButton(
+                        onPressed: () async {
+                          print(searchVal);
+                          print(filterTitleList);
+                          print(filterValueList);
+
+                          String url = "http://127.0.0.1:8000/search-establishment/";
+                          final response = await json.decode((await http
+                                  .post(Uri.parse(url), body: {
+                            'name': searchVal,
+                            'location_exact': filterValueList[1] ?? "",
+                            //'location_approx': args.middleName,
+                            'establishment_type': filterValueList[2] ?? "",
+                            'tenant_type': filterValueList[3] ?? "",
+                            'price_lower': filterValueList[4] == null ? "" : "int(${filterValueList[4]})",
+                            'price_upper': filterValueList[5] == null ? "" : "int(${filterValueList[5]})",
+                            //'capacity': args.userType,
+                          }))
+                              .body);
+                            
+                          
+                          
+                          setState(() {
+                            // for (int i = 0; i < response.length; i++) {
+                            //   accommList.add(response[i]);
+                            // }
+                            accommList = response;
+                          });
+                        }, icon: const Icon(Icons.search, color: Color.fromARGB(255, 0, 0, 0),)))
+              ],
             ),
             // filter icon for filtered search
             // opens right drawer on tap
@@ -290,10 +334,12 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                   ),
                   Expanded(
                     child: ListView.builder(
+                      //key: new Key(getRandomString(15)),
                       itemCount: accommList.length,
                       itemBuilder: (context, index) {
+                        print([accommList[index]['_id'],accommList[index]['name'],accommList[index]['location_exact'], "assets/images/room_stock.jpg", 4, false, true]);
                         return AccomCard(
-                          details: accommList[index],
+                          details: AccomCardDetails(accommList[index]['_id'],accommList[index]['name'],accommList[index]['location_exact'], "assets/images/room_stock.jpg", 4, false, true),
                         );
                       },
                     ),
