@@ -15,7 +15,7 @@ class ViewArchivedAccommodations extends StatefulWidget {
 
 class _ViewArchivedAccommodationsState
     extends State<ViewArchivedAccommodations> {
-      Future<List<AccomCardDetails>>? _accommodationsFuture;
+  Future<List<AccomCardDetails>>? _accommodationsFuture;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   // int _selectedIndex = 2;
 
@@ -26,26 +26,25 @@ class _ViewArchivedAccommodationsState
   }
 
   Future<List<AccomCardDetails>> fetchAccommodations() async {
-  final response = await http.get(Uri.parse('http://127.0.0.1:8000/view-all-establishment/'));
+    final response = await http
+        .get(Uri.parse('http://127.0.0.1:8000/view-all-establishment/'));
 
-  if (response.statusCode == 200) {
-    List jsonResponse = jsonDecode(response.body);
-    // Filter the establishments based on the 'archived' property
-    List<AccomCardDetails> filteredAccommodations = jsonResponse
-        .map((accommodation) => AccomCardDetails.fromJson(accommodation))
-        .where((accommodation) => accommodation.archived) // Only include accommodations marked as 'archived'
-        .toList();
-    return filteredAccommodations;
-  } else {
-    throw Exception('Failed to load accommodations');
+    if (response.statusCode == 200) {
+      List jsonResponse = jsonDecode(response.body);
+      // Filter the establishments based on the 'archived' property
+      List<AccomCardDetails> filteredAccommodations = jsonResponse
+          .map((accommodation) => AccomCardDetails.fromJson(accommodation))
+          .where((accommodation) => accommodation
+              .archived) // Only include accommodations marked as 'archived'
+          .toList();
+      return filteredAccommodations;
+    } else {
+      throw Exception('Failed to load accommodations');
+    }
   }
-}
-
 
   @override
   Widget build(BuildContext context) {
-
-
     // var accom1 = AccomCardDetails(
     //     "accommId1",
     //     "Accommodation1",
@@ -120,6 +119,11 @@ class _ViewArchivedAccommodationsState
     //   ),
     // );
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: UIParameter.MAROON,
+        automaticallyImplyLeading: false,
+        elevation: 0,
+      ),
       body: SingleChildScrollView(
         child: FutureBuilder<List<AccomCardDetails>>(
           future: _accommodationsFuture,
@@ -134,6 +138,25 @@ class _ViewArchivedAccommodationsState
                     child: AccomCard(details: accommodation),
                   );
                 }).toList(),
+              );
+            } else if (snapshot.hasData && snapshot.data!.isEmpty) {
+              return Center(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    children: [
+                      const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 20)),
+                      Image.asset(
+                        'assets/images/no_archived.png',
+                        height: 70,
+                      ),
+                      const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 10)),
+                      Text("No Archived Accommodations")
+                    ],
+                  ),
+                ),
               );
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');

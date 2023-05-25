@@ -18,7 +18,6 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
   Future<List<AccomCardDetails>>? _accommodationsPendingFuture;
   Future<List<AccomCardDetails>>? _accommodationsFuture;
 
-  
   final scaffoldKey = GlobalKey<ScaffoldState>();
   // int _selectedIndex = 1;
 
@@ -30,16 +29,19 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
   }
 
   Future<List<AccomCardDetails>> fetchPendingAccommodations() async {
-    final response = await http.get(Uri.parse('http://127.0.0.1:8000/view-all-establishment/'));
+    final response = await http
+        .get(Uri.parse('http://127.0.0.1:8000/view-all-establishment/'));
 
     if (response.statusCode == 200) {
       List jsonResponse = jsonDecode(response.body);
       // Filter the establishments based on the 'waitingVerification' property
       List<AccomCardDetails> filteredAccommodations = jsonResponse
           .map((accommodation) => AccomCardDetails.fromJson(accommodation))
-          .where((accommodation) => (!accommodation.verified && !accommodation.archived)) // Only include accommodations marked true on verified and archived
+          .where((accommodation) => (!accommodation.verified &&
+              !accommodation
+                  .archived)) // Only include accommodations marked true on verified and archived
           .toList();
-          print(filteredAccommodations);
+      print(filteredAccommodations);
       return filteredAccommodations;
     } else {
       throw Exception('Failed to load accommodations');
@@ -47,73 +49,32 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
   }
 
   Future<List<AccomCardDetails>> fetchApprovedAccommodations() async {
-    final response = await http.get(Uri.parse('http://127.0.0.1:8000/view-all-establishment/'));
+    final response = await http
+        .get(Uri.parse('http://127.0.0.1:8000/view-all-establishment/'));
 
     if (response.statusCode == 200) {
       List jsonResponse = jsonDecode(response.body);
       // Filter the establishments based on the 'waitingVerification' property
       List<AccomCardDetails> filteredAccommodations1 = jsonResponse
           .map((accommodation) => AccomCardDetails.fromJson(accommodation))
-          .where((accommodation) => (accommodation.verified && !accommodation.archived)) // Only include accommodations marked false on verified and archived
+          .where((accommodation) => (accommodation.verified &&
+              !accommodation
+                  .archived)) // Only include accommodations marked false on verified and archived
           .toList();
-          print(filteredAccommodations1);
+      print(filteredAccommodations1);
       return filteredAccommodations1;
     } else {
       throw Exception('Failed to load accommodations');
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
-
-  Widget pendingAccomms = FutureBuilder<List<AccomCardDetails>>(
-    future: _accommodationsPendingFuture,
-    builder: (context, snapshot) {
-      if (snapshot.hasData) {
-        return ListView.builder(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          itemCount: snapshot.data!.length,
-          itemBuilder: (context, index) {
-            AccomCardDetails details = snapshot.data![index];
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 7),
-              child: PendingAccomCard(
-                accomName: details.name,
-                ownerName: details.name,
-                verified: details.verified,
-              ),
-            );
-          },
-        );
-      } else if (snapshot.hasError) {
-        return Text("${snapshot.error}");
-      }
-      return CircularProgressIndicator();
-    },
-  );
-
-  Widget approvedAccomms = FutureBuilder<List<AccomCardDetails>>(
-  future: _accommodationsFuture,
-  builder: (context, snapshot) {
-    if (snapshot.hasData) {
-      return Column(
-        children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 5),
-          ),
-          const Padding(
-            padding: EdgeInsets.only(left: 10),
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: Text("Approved", style: TextStyle(fontSize: 18)),
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 7),
-          ),
-          ListView.builder(
+    Widget pendingAccomms = FutureBuilder<List<AccomCardDetails>>(
+      future: _accommodationsPendingFuture,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return ListView.builder(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             itemCount: snapshot.data!.length,
@@ -121,19 +82,60 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
               AccomCardDetails details = snapshot.data![index];
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 7),
-                child: AccomCard(details: details),
+                child: PendingAccomCard(
+                  accomName: details.name,
+                  ownerName: details.name,
+                  verified: details.verified,
+                ),
               );
             },
-          ),
-        ],
-      );
-    } else if (snapshot.hasError) {
-      return Text("${snapshot.error}");
-    }
-    return CircularProgressIndicator();
-  },
-);
+          );
+        } else if (snapshot.hasError) {
+          return Text("${snapshot.error}");
+        }
+        return CircularProgressIndicator();
+      },
+    );
 
+    Widget approvedAccomms = FutureBuilder<List<AccomCardDetails>>(
+      future: _accommodationsFuture,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Column(
+            children: [
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 5),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Text("Approved", style: TextStyle(fontSize: 18)),
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 7),
+              ),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  AccomCardDetails details = snapshot.data![index];
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 7),
+                    child: AccomCard(details: details),
+                  );
+                },
+              ),
+            ],
+          );
+        } else if (snapshot.hasError) {
+          return Text("${snapshot.error}");
+        }
+        return CircularProgressIndicator();
+      },
+    );
 
     // var accom1 = AccomCardDetails(
     //     "accommId1",
@@ -184,63 +186,67 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
     //   AccomCard(details: accom3),
     // ]);
 
-    
-  FutureBuilder<List<AccomCardDetails>>(
-    future: _accommodationsPendingFuture,
-    builder: (context, snapshot) {
-      if (snapshot.hasData) {
-        return ListView.builder(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          itemCount: snapshot.data!.length,
-          itemBuilder: (context, index) {
-            AccomCardDetails details = snapshot.data![index];
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 7),
-              child: PendingAccomCard(
-                accomName: details.name,
-                ownerName: details.name,
-                verified: details.verified,
-              ),
-            );
-          },
-        );
-      } else if (snapshot.hasError) {
-        return Text("${snapshot.error}");
-      }
-      return CircularProgressIndicator();
-    },
-  );
+    FutureBuilder<List<AccomCardDetails>>(
+      future: _accommodationsPendingFuture,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return ListView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: snapshot.data!.length,
+            itemBuilder: (context, index) {
+              AccomCardDetails details = snapshot.data![index];
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 7),
+                child: PendingAccomCard(
+                  accomName: details.name,
+                  ownerName: details.name,
+                  verified: details.verified,
+                ),
+              );
+            },
+          );
+        } else if (snapshot.hasError) {
+          return Text("${snapshot.error}");
+        }
+        return CircularProgressIndicator();
+      },
+    );
 
-  FutureBuilder<List<AccomCardDetails>>(
-    future: _accommodationsFuture,
-    builder: (context, snapshot) {
-      if (snapshot.hasData) {
-        return ListView.builder(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          itemCount: snapshot.data!.length,
-          itemBuilder: (context, index) {
-            AccomCardDetails details = snapshot.data![index];
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 7),
-              child: PendingAccomCard(
-                accomName: details.name,
-                ownerName: details.name,
-                verified: details.verified,
-              ),
-            );
-          },
-        );
-      } else if (snapshot.hasError) {
-        return Text("${snapshot.error}");
-      }
-      return CircularProgressIndicator();
-    },
-  );
+    FutureBuilder<List<AccomCardDetails>>(
+      future: _accommodationsFuture,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return ListView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: snapshot.data!.length,
+            itemBuilder: (context, index) {
+              AccomCardDetails details = snapshot.data![index];
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 7),
+                child: PendingAccomCard(
+                  accomName: details.name,
+                  ownerName: details.name,
+                  verified: details.verified,
+                ),
+              );
+            },
+          );
+        } else if (snapshot.hasError) {
+          return Text("${snapshot.error}");
+        }
+        return CircularProgressIndicator();
+      },
+    );
 
-
+    // see code below for when there are no pending and archived accommodations
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: UIParameter.MAROON,
+        automaticallyImplyLeading: false,
+        elevation: 0,
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -273,3 +279,27 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
     );
   }
 }
+
+/*
+PLEASE READ:
+The code below is for when there are no pending accommodations
+*/
+
+// Center(
+//   child: Container(
+//     padding: const EdgeInsets.symmetric(horizontal: 20),
+//     child: Column(
+//       children: [
+//         const Padding(
+//             padding: EdgeInsets.symmetric(vertical: 20)),
+//         Image.asset(
+//           'assets/images/no_pending.png',
+//           height: 70,
+//         ),
+//         const Padding(
+//             padding: EdgeInsets.symmetric(vertical: 10)),
+//         Text("No Pending Accommodations")
+//       ],
+//     ),
+//   ),
+// ),
