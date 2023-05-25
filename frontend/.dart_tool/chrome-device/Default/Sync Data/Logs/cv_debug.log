@@ -1,0 +1,14 @@
+{"logTime": "0525/082437", "correlationVector":"gXN3n2GkNa8AUh0Bs4sugM.0","action":"FeedSettingFetch_homeCloud", "result":"0", "context":{}}
+{"logTime": "0525/082437", "correlationVector":"+fuJrIiAihalL638cSemPt.1","action":"SyncServerConnectionManagerRequest", "result":"SYNC_SERVER_OK", "context":{"environment":"Prod_EastAsia_000d", "migrationStage":"NotStarted", "server":"general01000029"}}
+{"logTime": "0525/082437", "correlationVector":"+fuJrIiAihalL638cSemPt","action":"Initial GetUpdates", "result":"", "context":Reason: NEW_CLIENT. cV=+fuJrIiAihalL638cSemPt}
+{"logTime": "0525/082437", "correlationVector":"+fuJrIiAihalL638cSemPt.2","action":"GetUpdates Response", "result":"SYNCER_OK", "context":Received 1 update(s). cV=+fuJrIiAihalL638cSemPt.0;server=general01000029;cloudType=Multitenant;environment=Prod_EastAsia_000d;migrationStage=NotStarted}
+{"logTime": "0525/082437", "correlationVector":"ZdbT58tffst4/tuTBOFxcV","action":"Normal GetUpdate request", "result":"", "context":cV=ZdbT58tffst4/tuTBOFxcV
+Refresh requested types: Encryption Keys}
+{"logTime": "0525/082437", "correlationVector":"ZdbT58tffst4/tuTBOFxcV.1","action":"SyncServerConnectionManagerRequest", "result":"SYNC_SERVER_OK", "context":{"environment":"Prod_EastAsia_000d", "migrationStage":"NotStarted", "server":"GENERAL0100000Q"}}
+{"logTime": "0525/082437", "correlationVector":"ZdbT58tffst4/tuTBOFxcV.2","action":"AAD.Mip.Unpack", "result":"Success", "context":MIP_CLOUD_COMMERCIAL:Success}
+{"logTime": "0525/082437", "correlationVector":"ZdbT58tffst4/tuTBOFxcV.3","action":"AAD.GetKeyResponse", "result":"Success", "context":Keys=4.LastKeyStatus=Normal. 2023-02-02 02:40:11 +08.State=None. Tags: Current_encryption_keys_tag = QO+/ve+/vTJay4dV77+977+9dXHvv73vv70O77+93rXvv71d77+977+9fSoJHE1LW0BG77+9, Updated_current_encryption_keys_tag = Empty}
+{"logTime": "0525/082437", "correlationVector":"ZdbT58tffst4/tuTBOFxcV.4","action":"GetUpdates Response", "result":"SYNCER_OK", "context":Received 0 update(s). cV=ZdbT58tffst4/tuTBOFxcV.0;server=GENERAL0100000Q;cloudType=Multitenant;environment=Prod_EastAsia_000d;migrationStage=NotStarted}
+{"logTime": "0525/082437", "correlationVector":"rIGNVnpycJtpC86hC118Fy","action":"Normal GetUpdate request", "result":"", "context":cV=rIGNVnpycJtpC86hC118Fy
+Refresh requested types: Encryption Keys}
+{"logTime": "0525/082437", "correlationVector":"rIGNVnpycJtpC86hC118Fy.1","action":"SyncServerConnectionManagerRequest", "result":"SYNC_SERVER_OK", "context":{"environment":"Prod_EastAsia_000d", "migrationStage":"NotStarted", "server":"GENERAL01000019"}}
+{"logTime": "0525/082437", "correlationVector":"rIGNVnpycJtpC86hC118Fy.2","action":"GetUpdates Response", "result":"SYNCER_OK", "context":Received 0 update(s). cV=rIGNVnpycJtpC86hC118Fy.0;server=GENERAL01000019;cloudType=Multitenant;environment=Prod_EastAsia_000d;migrationStage=NotStarted}
