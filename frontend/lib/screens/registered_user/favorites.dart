@@ -24,9 +24,7 @@ class _FavoritesState extends State<Favorites> {
       'Casa Del Mar',
       'Casa Del Mar is located at Sapphire street.',
       "assets/images/room_stock.jpg",
-      5,
-      false,
-      true);
+      5,true,false);
 
   late List<AccomCardDetails> favorites = [accom, accom2];
 

@@ -37,8 +37,6 @@ class _AddAccommPageState extends State<AddAccommPage> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
 
-  
-
   @override
   Widget build(BuildContext context) {
 
@@ -1034,7 +1032,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
                                     final Map<String, dynamic> requestBody = {
                                       "owner": id,
                                       "name": nameController.text,
-                                      "location_exact": houseNoController.text,
+                                      "location_exact": houseNoController.text + " " + streetController.text + " " + cityController.text + " " + provinceController.text + " " + countryController.text,
                                       "location_approx": "Maybe inside Campus",
                                       "establishment_type": accommType,
                                       "tenant_type": guestType,
