@@ -129,6 +129,13 @@ class _MyHomePageState extends State<MyHomePage> {
           },
         ),
         ListTile(
+          title: const Text('Edit Accommodation'),
+          trailing: const Icon(Icons.construction),
+          onTap: () {
+            Navigator.pushNamed(context, '/owned/accomm/edit');
+          },
+        ),
+        ListTile(
           title: const Text('Owner Add Accommodations Page'),
           trailing: const Icon(Icons.construction),
           onTap: () {
