@@ -146,13 +146,13 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
     <Object will come from database fetch later>
     */
     var accom = AccomCardDetails("jk23fvgw23", "Centtro Residences",
-        "Example Description", "assets/images/room_stock.jpg", 3);
+        "Example Description", "assets/images/room_stock.jpg", 3, false,true);
     var accom2 = AccomCardDetails(
         'test1234',
         'Casa Del Mar',
         'Casa Del Mar is located at Sapphire street.',
         "assets/images/room_stock.jpg",
-        5);
+        5,true,false);
 
     // put data into a list. Will iterate over it to build cards
     late List<AccomCardDetails> accommList = [accom, accom2];

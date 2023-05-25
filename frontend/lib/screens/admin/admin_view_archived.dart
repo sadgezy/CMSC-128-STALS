@@ -30,11 +30,17 @@ class _ViewArchivedAccommodationsState
 
   if (response.statusCode == 200) {
     List jsonResponse = jsonDecode(response.body);
-    return jsonResponse.map((accommodation) => AccomCardDetails.fromJson(accommodation)).toList();
+    // Filter the establishments based on the 'archived' property
+    List<AccomCardDetails> filteredAccommodations = jsonResponse
+        .map((accommodation) => AccomCardDetails.fromJson(accommodation))
+        .where((accommodation) => accommodation.archived) // Only include accommodations marked as 'archived'
+        .toList();
+    return filteredAccommodations;
   } else {
     throw Exception('Failed to load accommodations');
   }
-  }
+}
+
 
   @override
   Widget build(BuildContext context) {
