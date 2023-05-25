@@ -135,24 +135,44 @@ class _VerificationPageState extends State<VerificationPage> {
             MaterialButton(
               onPressed: () async {
                 // TODO: Submit the verification form.
-
-                String url = "http://127.0.0.1:8000/signup/";
-                final response = await json.decode((await http
-                        .post(Uri.parse(url), body: {
-                  'first_name': args.firstName,
-                  'last_name': args.lastName,
-                  'middle_initial': args.middleName,
-                  'suffix': args.suffix,
-                  'username': args.username,
-                  'password': args.password,
-                  'email': args.email,
-                  'phone_no': args.phoneNo,
-                  'user_type': args.userType,
-                  'id_type': _idType,
-                  'id_number': _idNumber,
-                  'id_picture': base64Image
-                }))
-                    .body);
+                final response;
+                if (args.suffix == null) {
+                  String url = "http://127.0.0.1:8000/signup/";
+                  response = await json.decode((await http
+                          .post(Uri.parse(url), body: {
+                    'first_name': args.firstName,
+                    'last_name': args.lastName,
+                    'middle_initial': args.middleName,
+                    'username': args.username,
+                    'password': args.password,
+                    'email': args.email,
+                    'phone_no': args.phoneNo,
+                    'user_type': args.userType,
+                    'id_type': _idType,
+                    'id_number': _idNumber,
+                    'id_picture': base64Image
+                  }))
+                      .body);
+                }
+                else {
+                  String url = "http://127.0.0.1:8000/signup/";
+                  response = await json.decode((await http
+                          .post(Uri.parse(url), body: {
+                    'first_name': args.firstName,
+                    'last_name': args.lastName,
+                    'middle_initial': args.middleName,
+                    'suffix': args.suffix,
+                    'username': args.username,
+                    'password': args.password,
+                    'email': args.email,
+                    'phone_no': args.phoneNo,
+                    'user_type': args.userType,
+                    'id_type': _idType,
+                    'id_number': _idNumber,
+                    'id_picture': base64Image
+                  }))
+                      .body);
+                }
 
                 //print(response);
                 base64Image = response['data']['id_picture'];

@@ -31,8 +31,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 height: 80,
                 child: Image.asset(
                   btnText == "Owner"
-                      ? 'assets/images/flat.png'
-                      : 'assets/images/user.png',
+                      ? 'images/flat.png'
+                      : 'images/user.png',
                   fit: BoxFit.fitWidth,
                 ),
               )
