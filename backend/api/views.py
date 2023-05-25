@@ -518,12 +518,22 @@ def search_room(request):
 #----------------------------------------------------------------------------------------------
 @api_view(['POST'])
 def search_establishment(request):
+    #print(request.data)
     name = request.data.get('name', None)
     location_exact = request.data.get('location_exact', None)
     location_approx = request.data.get('location_approx')
     establishment_type = request.data.get('establishment_type', None)
     tenant_type = request.data.get('tenant_type', None)
+    if (location_exact == ''):
+        location_exact = None
+    if (location_approx == ''):
+        location_approx = None
+    if (establishment_type == ''):
+        establishment_type = None
+    if (tenant_type == ''):
+        tenant_type = None
 
+    #print(name,location_exact,location_approx,establishment_type,tenant_type)
     establishments = Establishment.objects.all()
     establishments_copy = establishments
 
@@ -553,13 +563,24 @@ def search_establishment(request):
     price_upper = request.data.get('price_upper')
     capacity = request.data.get('capacity')
 
+    if (price_lower ==  ''):
+        price_lower = None
+    if (price_upper == ''):
+        price_upper = None
+    if (capacity == ''):
+        capacity = None
+    
+
     rooms = Room.objects.all()
 
     if price_lower:
+        price_lower = eval(price_lower)
         rooms = rooms.filter(price_lower__gte=price_lower)              #recheck gte or lte
     if price_upper:
+        price_upper = eval(price_upper)
         rooms = rooms.filter(price_upper__lte=price_upper)
     if capacity:
+        capacity = eval(capacity)
         rooms = rooms.filter(capacity=capacity)
 
     serializer_room = RoomSerializer(rooms, many=True)
