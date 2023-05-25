@@ -102,6 +102,13 @@ def adminunverifyuser(request, pk):
     return Response(data={"message": "Successfully unverified user"})
 
 @api_view(['DELETE'])
+def admindeletereview(request, pk):
+    review = Review.objects.get(pk=ObjectId(pk))
+    review.delete()
+    
+    return Response(data={"message": "Successfully deleted review"})
+
+@api_view(['DELETE'])
 def deleteuser(request, pk):
     user = User.objects.get(pk=ObjectId(pk))
     user.delete()
@@ -186,6 +193,12 @@ def getuserdetails(request):
 def get_one_user(request):
     user = User.objects.filter(email=request.data['email'])
     serializer = LimitedUserSerializer(user, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def get_one_user_using_id(request, pk):
+    user = User.objects.get(pk=ObjectId(pk))
+    serializer = userSerializer(user, many=False)
     return Response(serializer.data)
 
 
@@ -591,6 +604,3 @@ def view_all_archived_establishments(request):
     serializer = EstablishmentSerializer(establishment, many=True)
     query = [d for d in serializer.data if d['archived'] == True]
     return Response (query)
-
-
-
