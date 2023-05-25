@@ -4,5 +4,6 @@ In the backend directory, run:
 - python -m pip install -r requirements.txt
 
 In the directory where manage.py is located, run:  
-- python manage.py makemigrations  
+- python manage.py makemigrations api
 - python manage.py migrate
+- python manage.py runserver
