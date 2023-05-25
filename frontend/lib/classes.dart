@@ -44,7 +44,7 @@ class AccomCardDetails {
 
   factory AccomCardDetails.fromJson(Map<String, dynamic> json) {
     return AccomCardDetails(
-      json['id'] ?? '',
+      json['_id'] ?? '',
       json['name'] ?? '',
       json['description'] ?? '',
       json['image'] ?? '',
