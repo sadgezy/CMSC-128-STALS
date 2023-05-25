@@ -40,11 +40,11 @@ class _AccomCardState extends State<AccomCard> {
       child: InkWell(
         onTap: () {
           // For now, redirect to sign up page.
-          if (!widget.details.isSigned) {
-            Navigator.pushNamed(context, '/signup');
-          } else if (widget.details.isOwner) {
-            Navigator.pushNamed(context, '/owned/accomm');
-          }
+          // if (widget.details.ID is in the list of the signed in user's owned accomms) {
+          //   Navigator.pushNamed(context, '/owned/accomm');
+          // } else {
+          Navigator.pushNamed(context, '/accomm');
+          // }
         },
         child: Row(
           children: [

@@ -23,25 +23,19 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
         "Accommodation1",
         "This is a description for accommodation 1",
         "assets/images/room_stock.jpg",
-        3,
-        true,
-        false);
+        3);
     var accom2 = AccomCardDetails(
         "accommId2",
         "Accommodation2",
         "This is a description for accommodation 2",
         "assets/images/room_stock.jpg",
-        5,
-        true,
-        false);
+        5);
     var accom3 = AccomCardDetails(
         "accommId3",
         "Accommodation3",
         "This is a description for accommodation 3",
         "assets/images/room_stock.jpg",
-        2,
-        true,
-        false);
+        2);
 
     var pendingaccom1 = PendingAccomCard(
         accomName: "Villegas Compound", ownerName: "Owner Name");
