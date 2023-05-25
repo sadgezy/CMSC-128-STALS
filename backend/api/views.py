@@ -587,6 +587,24 @@ def view_all_verified_users(request):
     query = [d for d in serializer.data if d['verified'] == True]
     return Response (query)
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def view_all_unverified_users(request):                                         
+
+    user = User.objects.all()
+    serializer = userSerializer(user, many=True)
+    query = [d for d in serializer.data if d['verified'] == False]
+    return Response (query)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def view_all_archived_users(request):                                         
+
+    user = User.objects.all()
+    serializer = userSerializer(user, many=True)
+    query = [d for d in serializer.data if d['archived'] == True]
+    return Response (query)
+
 @api_view(['GET'])     
 @permission_classes([IsAuthenticated])                                                         
 def view_all_verified_establishments(request):
