@@ -18,7 +18,7 @@ class _FavoritesState extends State<Favorites> {
   <Object will come from database fetch later or from calling screen>
   */
   var accom = AccomCardDetails("jk23fvgw23", "Centtro Residences",
-      "Example Description", "assets/images/room_stock.jpg", 3, true,false);
+      "Example Description", "assets/images/room_stock.jpg", 3, false, true);
   var accom2 = AccomCardDetails(
       'test1234',
       'Casa Del Mar',
