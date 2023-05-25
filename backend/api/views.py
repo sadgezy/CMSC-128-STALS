@@ -11,6 +11,7 @@ from bson import ObjectId
 from decimal import Decimal
 from rest_framework import status
 import json
+from django.contrib.auth.hashers import check_password, make_password
 
 # Create your views here.
 
@@ -117,6 +118,9 @@ def signup(request):
     
     if serializer.is_valid():
         serializer.save()
+        #print(serializer.data)
+        #user = User.objects.get(pk=ObjectId(serializer.data["_id"]))
+        #print(check_password(request.data['password'], user.password))
 
         response = {"message": "User Created Successfully", "data": serializer.data}
 
@@ -129,7 +133,14 @@ def login(request):
     email = request.data['email']
     password = request.data['password']
 
-    user=authenticate(email=email, password=password)
+    user = User.objects.get(email=email)
+    if (not check_password(password, user.password)):
+        user = None
+    #user=authenticate(email=email, password=password)
+    #user = User.objects.get(email=email)
+    #if (user.password != password):
+    #    user = None
+    
   
     if user is not None:
         #Token.objects.create(user=user)
@@ -142,7 +153,7 @@ def login(request):
         return Response(data=response, status=HTTPStatus.OK)
 
     else:
-        return Response(data={"message": "Invalid email or password"})
+        return Response(data=request.data)
     
 @api_view(['PUT'])
 def editProfile(request, pk):

@@ -3,6 +3,7 @@ from .models import *
 from rest_framework.validators import ValidationError
 from rest_framework.authtoken.models import Token
 import re
+from django.contrib.auth.hashers import check_password, make_password
 
 
 class SignUpSerializer(serializers.ModelSerializer):
@@ -16,7 +17,7 @@ class SignUpSerializer(serializers.ModelSerializer):
     phone_no = serializers.CharField(max_length=15)
     verified = serializers.BooleanField(default=False)
     id_type = serializers.CharField(max_length=50, required=False)
-    id_picture = serializers.URLField(required=False)
+    id_picture = serializers.CharField(required=False)
     id_number = serializers.CharField(max_length=50, required=False)
     archived = serializers.BooleanField(default=False)
     tickets = serializers.JSONField(default=list)
@@ -27,6 +28,7 @@ class SignUpSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
+        #fields = ('email','username','password','first_name','last_name','middle_initial','suffix','phone_no','verified','id_type','id_number','archived','user_type','reviews','tickets','favorites','establishments')
         fields = '__all__'
 
     def validate(self, attrs):
@@ -58,11 +60,10 @@ class SignUpSerializer(serializers.ModelSerializer):
         return super().validate(attrs)
 
     def create(self, validated_data):
-        password = validated_data.pop("password")
 
         user = super().create(validated_data)
 
-        user.set_password(password)
+        user.password = make_password(user.password)
 
         user.save()
 

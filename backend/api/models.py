@@ -27,7 +27,8 @@ class CustomUserManager(BaseUserManager):
             user_type=user_type,
             establishments=establishments,
             reviews = reviews,
-            favorites = favorites
+            favorites = favorites,
+            password = password,
             **extra_fields
         )
 
@@ -69,7 +70,7 @@ class User(AbstractUser):
     username=models_django.CharField(max_length=45)
     verified = models_django.BooleanField(default=False)
     id_type = models_django.CharField(max_length=50)
-    id_picture = models_django.URLField()
+    id_picture = models_django.CharField(max_length=9999999)
     id_number = models_django.CharField(max_length=50)
     archived = models_django.BooleanField(default=False)
     tickets = models_djongo.JSONField(default=list)
