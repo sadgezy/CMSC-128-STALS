@@ -41,6 +41,17 @@ class AccomCardDetails {
   getRating() {
     return rating;
   }
+
+  factory AccomCardDetails.fromJson(Map<String, dynamic> json) {
+    return AccomCardDetails(
+      json['id'] ?? '',
+      json['name'] ?? '',
+      json['description'] ?? '',
+      json['image'] ?? '',
+      json['rating'] ?? 0.0,
+      json['isSigned'] ?? false,
+    );
+  }
 }
 
 class Filter {
