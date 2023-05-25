@@ -12,7 +12,7 @@ class SignUpSerializer(serializers.ModelSerializer):
     password = serializers.CharField(min_length=8, write_only=True)
     first_name = serializers.CharField(max_length=100)
     last_name = serializers.CharField(max_length=100)
-    middle_initial = serializers.CharField(max_length=1, required=False)
+    middle_initial = serializers.CharField(max_length=100, required=False)
     suffix = serializers.CharField(max_length=10, required=False)
     phone_no = serializers.CharField(max_length=15)
     verified = serializers.BooleanField(default=False)

@@ -64,7 +64,7 @@ class User(AbstractUser):
     email=models_django.CharField(max_length=80,unique=True)
     first_name = models_djongo.CharField(max_length=100)
     last_name = models_django.CharField(max_length=100)
-    middle_initial = models_django.CharField(max_length=1)
+    middle_initial = models_django.CharField(max_length=100)
     suffix = models_django.CharField(max_length=10)
     phone_no = models_django.CharField(max_length=15)
     username=models_django.CharField(max_length=45)
