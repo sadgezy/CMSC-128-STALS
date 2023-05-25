@@ -119,6 +119,7 @@ class _ViewArchivedAccommodationsState
           future: _accommodationsFuture,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
+              print(snapshot);
               List<AccomCardDetails> accommodations = snapshot.data!;
               return Column(
                 children: accommodations.map((accommodation) {
