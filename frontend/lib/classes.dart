@@ -16,9 +16,11 @@ class AccomCardDetails {
   String description;
   String image;
   double rating;
+  bool archived;
+  bool verified;
 
   AccomCardDetails(
-      this.ID, this.name, this.description, this.image, this.rating);
+      this.ID, this.name, this.description, this.image, this.rating, this.archived, this.verified);
 
   getName() {
     return name;
@@ -47,6 +49,8 @@ class AccomCardDetails {
       json['description'] ?? '',
       json['image'] ?? '',
       json['rating'] ?? 0.0,
+      json['archived'] ?? false,
+      json['verified'] ?? false,
     );
   }
 }

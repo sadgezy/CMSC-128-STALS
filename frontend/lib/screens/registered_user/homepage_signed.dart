@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../classes.dart';
 import '../../UI_parameters.dart' as UIParameter;
+import 'favorites.dart';
 
 // COMPONENTS
 import '../../components/accom_card.dart';
@@ -145,13 +146,16 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
     <Object will come from database fetch later>
     */
     var accom = AccomCardDetails("jk23fvgw23", "Centtro Residences",
-        "Example Description", "assets/images/room_stock.jpg", 3);
+        "Example Description", "assets/images/room_stock.jpg", 3, false,true);
     var accom2 = AccomCardDetails(
         'test1234',
         'Casa Del Mar',
         'Casa Del Mar is located at Sapphire street.',
         "assets/images/room_stock.jpg",
-        5);
+        5,true,false);
+
+    // put data into a list. Will iterate over it to build cards
+    late List<AccomCardDetails> accommList = [accom, accom2];
 
     var filterTitleList = [];
     var filterValueList = [];
@@ -236,6 +240,21 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                   // ...
                 },
               ),
+              // DONT KNOW IF PRPOER. Temporary Navigator.push
+              ListTile(
+                title: const Text('Favorites'),
+                onTap: () {
+                  // NOT SURE IF THIS IS THE PROPER WAY, TEMPORARY Navigator.push
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return Favorites();
+                      },
+                    ),
+                  );
+                },
+              ),
             ],
           ),
         ),
@@ -269,15 +288,16 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                   const SizedBox(
                     height: 10,
                   ),
-                  AccomCard(
-                    details: accom,
-                  ),
-                  const Divider(
-                    height: 20,
-                    thickness: 1.25,
-                    color: Color.fromRGBO(0, 0, 0, 0.25),
-                  ),
-                  AccomCard(details: accom2),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: accommList.length,
+                      itemBuilder: (context, index) {
+                        return AccomCard(
+                          details: accommList[index],
+                        );
+                      },
+                    ),
+                  )
                 ],
               ),
             ),

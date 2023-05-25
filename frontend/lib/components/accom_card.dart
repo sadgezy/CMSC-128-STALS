@@ -19,9 +19,16 @@ class AccomCard extends StatefulWidget {
 }
 
 class _AccomCardState extends State<AccomCard> {
+  // TO-DO: the calling screen/component should get these details from DB and pass it to accom_card as an argument
+  // temporary holders to determine if user is admin
+  var isAdmin = false;
+  // temporary holders to determine if post is part of user's favorite, or part of admin's archived accomms
+  var isFavorite = false;
+
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.symmetric(vertical: 10),
       width: MediaQuery.of(context).size.width - 40,
       height: 150,
       decoration: BoxDecoration(
@@ -92,24 +99,70 @@ class _AccomCardState extends State<AccomCard> {
                             fontFamily: UIParameter.FONT_REGULAR),
                       ),
                     ),
-                    RatingBar.builder(
-                        minRating: 0,
-                        maxRating: 5,
-                        initialRating: widget.details.getRating(),
-                        direction: Axis.horizontal,
-                        allowHalfRating: false,
+                    // if admin only display rating
+                    isAdmin
+                        ? RatingBar.builder(
+                            minRating: 0,
+                            maxRating: 5,
+                            initialRating: widget.details.getRating(),
+                            direction: Axis.horizontal,
+                            allowHalfRating: false,
 
-                        // ignore gestures to make rating un-editable
-                        ignoreGestures: true,
-                        onRatingUpdate: (rating) {
-                          /* CANNOT RATE HERE */
-                        },
-                        itemSize: 18,
-                        itemBuilder: (BuildContext context, int index) =>
-                            const Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                            ))
+                            // ignore gestures to make rating un-editable
+                            ignoreGestures: true,
+                            onRatingUpdate: (rating) {
+                              /* CANNOT RATE HERE */
+                            },
+                            itemSize: 18,
+                            itemBuilder: (BuildContext context, int index) =>
+                                const Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                ))
+                        // else add favorite icon
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              RatingBar.builder(
+                                  minRating: 0,
+                                  maxRating: 5,
+                                  initialRating: widget.details.getRating(),
+                                  direction: Axis.horizontal,
+                                  allowHalfRating: false,
+
+                                  // ignore gestures to make rating un-editable
+                                  ignoreGestures: true,
+                                  onRatingUpdate: (rating) {
+                                    /* CANNOT RATE HERE */
+                                  },
+                                  itemSize: 18,
+                                  itemBuilder:
+                                      (BuildContext context, int index) =>
+                                          const Icon(
+                                            Icons.star,
+                                            color: Colors.amber,
+                                          )),
+                              InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      isFavorite = !isFavorite;
+                                      // TODO: add or remove accommodation from favorites of user in DB
+                                    });
+                                  },
+                                  // check if part of favorite accomms
+                                  child: isFavorite
+                                      ? Icon(
+                                          Icons.favorite,
+                                          color: UIParameter.MAROON,
+                                          size: 18,
+                                        )
+                                      : const Icon(
+                                          Icons.favorite_outline_rounded,
+                                          color: Colors.grey,
+                                          size: 18,
+                                        ))
+                            ],
+                          )
                   ],
                 ),
               ),
