@@ -3,13 +3,22 @@ import 'package:flutter/material.dart';
 class PendingAccomCard extends StatefulWidget {
   final String accomName;
   final String ownerName;
+  final bool verified;
 
-  const PendingAccomCard(
-      {Key? key, required this.accomName, required this.ownerName})
+  PendingAccomCard(
+      {Key? key, required this.accomName, required this.ownerName, required this.verified})
       : super(key: key);
 
   @override
   State<PendingAccomCard> createState() => _PendingAccomCardState();
+
+    factory PendingAccomCard.fromJson(Map<String, dynamic> json) {
+    return PendingAccomCard(
+      accomName: json['name'] ?? '',
+      ownerName: json['owner'] ?? '',
+      verified: json['verified'] ?? false,
+    );
+  }
 }
 
 class _PendingAccomCardState extends State<PendingAccomCard> {
