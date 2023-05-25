@@ -8,11 +8,7 @@
   "location_approx": "Within Campus",
   "establishment_type": "Dormitory",
   "tenant_type": "Any. Prefer CEAT students.",
-  "utilities": [
-    "free wifi",
-    "common bedroom",
-    "air-conditioned rooms"
-  ],
+  "utilities": "free wifi , common bedroom , air-conditioned rooms",
   "description": "Enjoy a hassle free commute from home to CEAT with this close proximity dormitory.",
   "photos": [
     "https://drive.google.com/file/d/13tQRa7NyxKPDhQCqEnPqNpR-mCO5Pya-/view?usp=sharing",
@@ -43,12 +39,7 @@
   "location_approx": "Beyond Junction",
   "establishment_type": "Apartments",
   "tenant_type": "Any",
-  "utilities": [
-    "own comfort room",
-    "mini-kitchen",
-    "weekly cleaning service",
-    "aircon installed"
-  ],
+  "utilities": "own comfort room , mini-kitchen , weekly cleaning service , aircon installed",
   "description": "1BR Apartment near Los Banos Public Market.",
   "photos": [
     "https://drive.google.com/file/d/1GA6HroQNfGjw5eEF9l2laciZHPZabXJW/view?usp=sharing",
@@ -79,12 +70,7 @@
   "location_approx": "Umali Subd",
   "establishment_type": "Boarding House",
   "tenant_type": "Female Only",
-  "utilities": [
-    "water and electricty included",
-    "large common area",
-    "laundry area",
-    "cctv installed"
-  ],
+  "utilities": "water and electricty included , large common area , laundry area , cctv installed",
   "description": "A safe space for living and learning for women with 24/7 security.",
   "photos": [
     "https://drive.google.com/file/d/11Bs_9T22MhojGl9ex8WcNIuBNLZE5bru/view?usp=sharing",
@@ -113,12 +99,7 @@
   "location_approx": "Agapita",
   "establishment_type": "Apartment",
   "tenant_type": "Working Professional Only",
-  "utilities": [
-    "own electricity and water submeter",
-    "spacey kitchen",
-    "own seperated toilet and bath",
-    "gated compound"
-  ],
+  "utilities": "own electricity and water submeter , spacey kitchen , own seperated toilet and bath , gated compound",
   "description": "A professional needs a place that reflects his standards.",
   "photos": [
     "https://drive.google.com/file/d/1SHRoLc5726i90QLctvJxB9pqwSknqboZ/view?usp=sharing",
@@ -147,10 +128,7 @@
   "location_approx": "Beyond Junction",
   "establishment_type": "House",
   "tenant_type": "Any. Prefer Family.",
-  "utilities": [
-    "own electricity and water submeter",
-    "Gated front and back yard"
-  ],
+  "utilities": "own electricity and water submeter , Gated front and back yard",
   "description": "2-floor newly renovated house with 2BR and 1.5Bath. With plenty of open space outside.",
   "photos": [
     "https://drive.google.com/file/d/10p06Et-CEuVLpyL9LiLrs6w74cSWE5J6/view?usp=sharing",
