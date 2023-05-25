@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
         '/add_accommodation': (context) => const AddAccommPage(),
         '/admin': (context) => const AdminDashBoard(),
         '/view_owned_accomms': (context) => const ViewOwnedAccomms(),
-        '/owned/accomm': (context) => const OwnedAccommPage(),
+        '/owned/accomm': (context) => OwnedAccommPage(),
         '/owned/accomm/edit': (context) => const EditAccomm(),
         '/admin/view_users': (context) => const ViewUsersPage(),
         '/admin/view_accomms': (context) => const AdminViewAccommodations(),

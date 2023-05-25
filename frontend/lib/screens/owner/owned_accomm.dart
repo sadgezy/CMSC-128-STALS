@@ -2,7 +2,7 @@ import 'package:stals_frontend/components/rating.dart';
 import 'package:flutter/material.dart';
 
 class OwnedAccommPage extends StatefulWidget {
-  const OwnedAccommPage({super.key});
+  OwnedAccommPage({super.key});
   @override
   _OwnedAccommPageState createState() => _OwnedAccommPageState();
 }
@@ -18,13 +18,13 @@ class _OwnedAccommPageState extends State<OwnedAccommPage> {
         //App bar start
         appBar: AppBar(
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios),
+            icon: Icon(Icons.arrow_back_ios),
             onPressed: () {
               Navigator.pop(context);
             },
             color: Colors.black,
           ),
-          title: const Text(
+          title: Text(
             "All Establishments",
             style: TextStyle(color: Colors.black),
           ),
@@ -74,11 +74,11 @@ class _OwnedAccommPageState extends State<OwnedAccommPage> {
                           Navigator.pushNamed(context, '/owned/accomm/edit');
                         },
                         style: ElevatedButton.styleFrom(
-                            shape: const CircleBorder(),
+                            shape: CircleBorder(),
                             backgroundColor: Colors.white,
                             foregroundColor:
-                                const Color.fromARGB(255, 25, 83, 95)),
-                        child: const Icon(
+                                Color.fromARGB(255, 25, 83, 95)),
+                        child: Icon(
                           Icons.edit,
                           size: 20,
                         ))
@@ -86,7 +86,7 @@ class _OwnedAccommPageState extends State<OwnedAccommPage> {
                 )
               ],
             ),
-            const SizedBox(
+            SizedBox(
               height: 10,
             ),
             Row(
@@ -94,17 +94,17 @@ class _OwnedAccommPageState extends State<OwnedAccommPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(
+                SizedBox(
                   width: 35,
                 ),
-                const FittedBox(
+                FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Text(
                     "Apartment 1",
                     style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                   ),
                 ),
-                const SizedBox(
+                SizedBox(
                   width: 35,
                 ),
                 Column(children: [
@@ -114,7 +114,7 @@ class _OwnedAccommPageState extends State<OwnedAccommPage> {
                         setState(() => this.rating = rating),
                     color: Colors.black,
                   ),
-                  const FittedBox(
+                  FittedBox(
                     fit: BoxFit.scaleDown,
                     child: Text(
                       "100+ reviews",
@@ -126,13 +126,13 @@ class _OwnedAccommPageState extends State<OwnedAccommPage> {
               ],
             ),
             //Will be updated
-            const SizedBox(
+            SizedBox(
               height: 10,
             ),
-            const Divider(
+            Divider(
               color: Colors.black,
             ),
-            const Column(
+            Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -214,10 +214,10 @@ class _OwnedAccommPageState extends State<OwnedAccommPage> {
               ],
             ),
 
-            const SizedBox(
+            SizedBox(
               height: 10,
             ),
-            const Divider(
+            Divider(
               color: Colors.black,
             ),
 
@@ -248,7 +248,7 @@ class _OwnedAccommPageState extends State<OwnedAccommPage> {
                                   child: Center(
                                       child: Text(
                                     "Card ${i + 1}",
-                                    style: const TextStyle(fontSize: 20),
+                                    style: TextStyle(fontSize: 20),
                                   )),
                                 ),
                               );
@@ -258,10 +258,10 @@ class _OwnedAccommPageState extends State<OwnedAccommPage> {
                       );
                     })),
 
-            const SizedBox(
+            SizedBox(
               height: 10,
             ),
-            const Divider(
+            Divider(
               color: Colors.black,
             ),
           ]),
