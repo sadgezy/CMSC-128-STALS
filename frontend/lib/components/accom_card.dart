@@ -43,7 +43,7 @@ class _AccomCardState extends State<AccomCard> {
           // if (widget.details.ID is in the list of the signed in user's owned accomms) {
           //   Navigator.pushNamed(context, '/owned/accomm');
           // } else {
-          Navigator.pushNamed(context, '/accomm');
+          Navigator.pushNamed(context, '/accomm', arguments: widget.details.getID());
           // }
         },
         child: Row(
