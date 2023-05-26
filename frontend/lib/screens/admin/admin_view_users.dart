@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:provider/provider.dart';
+import 'package:stals_frontend/providers/token_provider.dart';
+import 'dart:html' as html;
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'dart:io';
 
 import '../../models/user_model.dart';
 
@@ -28,7 +34,9 @@ class _ViewUsersPageState extends State<ViewUsersPage> {
     });
 
     try {
-      Response response = await Dio().get(apiUrl);
+      Dio dio = new Dio();
+      dio.options.headers["Authorization"] = 'Token ${Provider.of<TokenProvider>(context, listen: false).currToken}';
+      Response response = await dio.get(apiUrl);
       print(response.data);
 
       if (response.statusCode == 200) {
