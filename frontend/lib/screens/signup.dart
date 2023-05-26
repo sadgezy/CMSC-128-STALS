@@ -29,10 +29,10 @@ class _SignUpPageState extends State<SignUpPage> {
               const SizedBox(height: 30),
               SizedBox(
                 height: 80,
-                child: Image.asset(
+                child:  Image.asset(
                   btnText == "Owner"
-                      ? 'images/flat.png'
-                      : 'images/user.png',
+                      ? 'assets/images/flat.png'
+                      : 'assets/images/user.png',
                   fit: BoxFit.fitWidth,
                 ),
               )

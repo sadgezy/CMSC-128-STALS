@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:provider/provider.dart';
 import 'package:stals_frontend/providers/token_provider.dart';
-import 'dart:html' as html;
+//import 'dart:html' as html;
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:io';
