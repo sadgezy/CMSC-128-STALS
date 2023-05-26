@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
         '/verify_user': (context) => VerificationPage(),
         '/homepage': (context) => const UnregisteredHomepage(),
         '/signed_homepage': (context) => const RegisteredHomepage(),
-        '/accomm': (context) => const AccommPage(),
+        '/accomm': (context) => AccommPage(),
         '/add_accommodation': (context) => const AddAccommPage(),
         '/admin': (context) => const AdminDashBoard(),
         '/view_owned_accomms': (context) => const ViewOwnedAccomms(),

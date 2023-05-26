@@ -4,9 +4,9 @@ import '../../UI_parameters.dart' as UIParameter;
 // COMPONENTS
 import '../../components/accom_card.dart';
 import '../../components/search_bar.dart' as sb;
-import '../pdf/invoice.dart';
-import '../pdf/pdf_model.dart';
-import '../pdf/pdf_view.dart';
+// import '../pdf/invoice.dart';
+// import '../pdf/pdf_model.dart';
+// import '../pdf/pdf_view.dart';
 
 class Favorites extends StatefulWidget {
   const Favorites({Key? key}) : super(key: key);
@@ -22,6 +22,7 @@ class _FavoritesState extends State<Favorites> {
   */
   var accom = AccomCardDetails("jk23fvgw23", "Centtro Residences",
       "Example Description", "assets/images/room_stock.jpg", 3, false, true);
+
   var accom2 = AccomCardDetails(
       'test1234',
       'Casa Del Mar',
@@ -32,29 +33,28 @@ class _FavoritesState extends State<Favorites> {
       true);
 
   //DUMMY FOR PDF
-  List<PDFData> dummyData = [
-    PDFData(
-        "PDF 1",
-        "assets/images/room_stock.jpg",
-        "Within Campus",
-        "11 L Street",
-        "Dormitory",
-        "Ceat Students.",
-        "0000000",
-        "gg@wp.com",
-        "mabango"),
-    PDFData(
-        "PDF 2",
-        "assets/images/room_stock.jpg",
-        "Beyond Junction",
-        "B7 L23 Jade St.",
-        "House",
-        "Working",
-        "0000000",
-        "gg@wp.com",
-        "toilet"),
-  ];
-
+  // List<PDFData> dummyData = [
+  //   PDFData(
+  //       "PDF 1",
+  //       "assets/images/room_stock.jpg",
+  //       "Within Campus",
+  //       "11 L Street",
+  //       "Dormitory",
+  //       "Ceat Students.",
+  //       "0000000",
+  //       "gg@wp.com",
+  //       "mabango"),
+  //   PDFData(
+  //       "PDF 2",
+  //       "assets/images/room_stock.jpg",
+  //       "Beyond Junction",
+  //       "B7 L23 Jade St.",
+  //       "House",
+  //       "Working",
+  //       "0000000",
+  //       "gg@wp.com",
+  //       "toilet"),
+  // ];
   late List<AccomCardDetails> favorites = [accom, accom2];
 
   @override
@@ -71,14 +71,14 @@ class _FavoritesState extends State<Favorites> {
                   icon: const Icon(Icons.save_alt),
                   color: UIParameter.WHITE,
                   onPressed: () async {
-                    final service = PdfDocumentService();
-                    final data = await service.createInvoice(dummyData);
-                    var fpath = await service.savePdfFile("example", data);
-                    // TODO: Fix;  Try moving the code above to pdf_view
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => PDFViewScreen(path: fpath)));
+                  //   final service = PdfDocumentService();
+                  //   final data = await service.createInvoice(dummyData);
+                  //   var fpath = await service.savePdfFile("example", data);
+                  //   // TODO: Fix;  Try moving the code above to pdf_view
+                  //   Navigator.push(
+                  //       context,
+                  //       MaterialPageRoute(
+                  //           builder: (context) => PDFViewScreen(path: fpath)));
                   },
                 );
               },
