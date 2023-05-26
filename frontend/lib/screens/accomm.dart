@@ -8,7 +8,7 @@ import 'dart:convert';
 import 'package:carousel_slider/carousel_slider.dart';
 
 class AccommPage extends StatefulWidget {
-  const AccommPage({super.key});
+  AccommPage({super.key});
   @override
   _AccommPageState createState() => _AccommPageState();
 }
@@ -43,11 +43,11 @@ bool isRef = ?
 */
 
 class Item1 extends StatelessWidget {
-  const Item1({Key? key}) : super(key: key);
+   Item1({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -60,7 +60,7 @@ class Item1 extends StatelessWidget {
               Color(0xffffcc66),
             ]),
       ),
-      child: const Column(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Icon(
@@ -95,18 +95,18 @@ class Item1 extends StatelessWidget {
 }
 
 class Item2 extends StatelessWidget {
-  const Item2({Key? key}) : super(key: key);
+   Item2({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration:  BoxDecoration(
         gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             stops: [0.3, 1],
             colors: [Color(0xff5f2c82), Color(0xff49a09d)]),
       ),
-      child: const Column(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Icon(
@@ -141,11 +141,11 @@ class Item2 extends StatelessWidget {
 }
 
 class Item3 extends StatelessWidget {
-  const Item3({Key? key}) : super(key: key);
+   Item3({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -173,11 +173,11 @@ class Item3 extends StatelessWidget {
 }
 
 class Item4 extends StatelessWidget {
-  const Item4({Key? key}) : super(key: key);
+   Item4({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: const Column(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text("Hanse",
@@ -211,7 +211,7 @@ class _AccommPageState extends State<AccommPage> {
   int _index = 1;
   bool favorite = false;
   int _currentIndex = 0;
-  List cardList = [const Item1(), const Item2(), const Item3(), const Item4()];
+  List cardList = [Item1(), Item2(), Item3(), Item4()];
 
   List<T> map<T>(List list, Function handler) {
     List<T> result = [];
@@ -274,13 +274,13 @@ class _AccommPageState extends State<AccommPage> {
       //App bar start
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
+          icon: Icon(Icons.arrow_back_ios),
           onPressed: () {
             Navigator.pop(context);
           },
           color: Colors.black,
         ),
-        title: const Text(
+        title: Text(
           "Return to Homepage",
           style: TextStyle(color: Colors.black),
         ),
@@ -315,7 +315,7 @@ class _AccommPageState extends State<AccommPage> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             // While the data is being fetched, show a loading indicator
-            return const Center(child: CircularProgressIndicator());
+            return  Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             // If there's an error, display an error message
             return Center(child: Text('Error: ${snapshot.error}'));
@@ -345,38 +345,38 @@ class _AccommPageState extends State<AccommPage> {
                                 });
                               },
                               style: ElevatedButton.styleFrom(
-                                  shape: const CircleBorder(),
+                                  shape:  CircleBorder(),
                                   backgroundColor: Colors.white,
                                   foregroundColor:
-                                      const Color.fromARGB(255, 25, 83, 95)),
+                                       Color.fromARGB(255, 25, 83, 95)),
                               child: (favorite)
-                                  ? const Icon(
+                                  ?  Icon(
                                       Icons.bookmark_outline,
                                       size: 20,
                                     )
-                                  : const Icon(Icons.bookmark, size: 20)),
+                                  :  Icon(Icons.bookmark, size: 20)),
                         ],
                       )
                     ],
                   ),
-                  const SizedBox(
+                   SizedBox(
                     height: 10,
                   ),
                   Row(
                     //optional
                     children: [
-                      const SizedBox(
+                       SizedBox(
                         width: 35,
                       ),
                       FittedBox(
                         fit: BoxFit.scaleDown,
                         child: Text(
                           response_Name,
-                          style: const TextStyle(
+                          style:  TextStyle(
                               fontSize: 28, fontWeight: FontWeight.bold),
                         ),
                       ),
-                      const SizedBox(
+                       SizedBox(
                         width: 35,
                       ),
                       Column(children: [
@@ -386,7 +386,7 @@ class _AccommPageState extends State<AccommPage> {
                               setState(() => this.rating = rating),
                           color: Colors.black,
                         ),
-                        const FittedBox(
+                         FittedBox(
                           fit: BoxFit.scaleDown,
                           child: Text(
                             "100+ reviews",
@@ -399,39 +399,39 @@ class _AccommPageState extends State<AccommPage> {
                   ),
 
                   //spacing and divider line
-                  const SizedBox(
+                   SizedBox(
                     height: 10,
                   ),
-                  const Divider(
+                   Divider(
                     color: Colors.black,
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      const SizedBox(
+                       SizedBox(
                         height: 3,
                       ),
 
                       //Owner Name
                       Row(
                         children: <Widget>[
-                          const SizedBox(
+                           SizedBox(
                             width: 10,
                           ),
-                          const CircleAvatar(
+                           CircleAvatar(
                             radius: 15,
                             backgroundImage:
                                 AssetImage("assets/images/room_stock.jpg"),
                           ),
-                          const SizedBox(
+                           SizedBox(
                             width: 5,
                           ),
                           FittedBox(
                             fit: BoxFit.fill,
                             child: Text(
                               response2_ownerName,
-                              style: const TextStyle(
+                              style:  TextStyle(
                                   fontSize: 15, fontWeight: FontWeight.normal),
                             ),
                           ),
@@ -441,10 +441,10 @@ class _AccommPageState extends State<AccommPage> {
                       //Location Details
                       Row(
                         children: <Widget>[
-                          const SizedBox(
+                           SizedBox(
                             width: 5,
                           ),
-                          const Icon(
+                           Icon(
                             Icons.location_pin,
                             color: Colors.blue,
                             size: 40,
@@ -453,7 +453,7 @@ class _AccommPageState extends State<AccommPage> {
                             fit: BoxFit.fill,
                             child: Text(
                               response_Address,
-                              style: const TextStyle(
+                              style:  TextStyle(
                                   fontSize: 15, fontWeight: FontWeight.normal),
                             ),
                           ),
@@ -463,22 +463,22 @@ class _AccommPageState extends State<AccommPage> {
                       //Contact Info
                       Row(
                         children: <Widget>[
-                          const SizedBox(
+                           SizedBox(
                             width: 6,
                           ),
-                          const Icon(
+                           Icon(
                             Icons.phone_in_talk_rounded,
                             color: Colors.blue,
                             size: 33,
                           ),
-                          const SizedBox(
+                           SizedBox(
                             width: 5,
                           ),
                           FittedBox(
                             fit: BoxFit.fill,
                             child: Text(
                               response2_phone_no,
-                              style: const TextStyle(
+                              style:  TextStyle(
                                   fontSize: 15, fontWeight: FontWeight.normal),
                             ),
                           ),
@@ -487,10 +487,10 @@ class _AccommPageState extends State<AccommPage> {
                     ],
                   ),
 
-                  const SizedBox(
+                   SizedBox(
                     height: 10,
                   ),
-                  const Divider(
+                   Divider(
                     color: Colors.black,
                   ),
 
@@ -503,9 +503,9 @@ class _AccommPageState extends State<AccommPage> {
                         options: CarouselOptions(
                           height: 200.0,
                           autoPlay: true,
-                          autoPlayInterval: const Duration(seconds: 5),
+                          autoPlayInterval:  Duration(seconds: 5),
                           autoPlayAnimationDuration:
-                              const Duration(milliseconds: 1000),
+                               Duration(milliseconds: 1000),
                           autoPlayCurve: Curves.fastOutSlowIn,
                           pauseAutoPlayOnTouch: true,
                           aspectRatio: 2.0,
@@ -534,7 +534,7 @@ class _AccommPageState extends State<AccommPage> {
                           return Container(
                             width: 10.0,
                             height: 10.0,
-                            margin: const EdgeInsets.symmetric(
+                            margin:  EdgeInsets.symmetric(
                                 vertical: 10.0, horizontal: 2.0),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
@@ -549,14 +549,14 @@ class _AccommPageState extends State<AccommPage> {
                   ),
                   //End of Cards
 
-                  const SizedBox(
+                  SizedBox(
                     height: 10,
                   ),
-                  const Divider(
+                  Divider(
                     color: Colors.black,
                   ),
                   //Description
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -595,15 +595,15 @@ class _AccommPageState extends State<AccommPage> {
                     ],
                   ),
                   //end of Description
-                  const SizedBox(
+                  SizedBox(
                     height: 5,
                   ),
-                  const Divider(
+                  Divider(
                     color: Colors.black,
                   ),
 
                   //Highlights
-                  const FittedBox(
+                  FittedBox(
                     fit: BoxFit.fill,
                     child: Text(
                       "Highlights",
@@ -611,7 +611,7 @@ class _AccommPageState extends State<AccommPage> {
                           fontSize: 22, fontWeight: FontWeight.normal),
                     ),
                   ),
-                  const SizedBox(
+                  SizedBox(
                       height: 2000,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

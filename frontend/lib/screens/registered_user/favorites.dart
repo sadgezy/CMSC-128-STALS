@@ -22,6 +22,7 @@ class _FavoritesState extends State<Favorites> {
   */
   var accom = AccomCardDetails("jk23fvgw23", "Centtro Residences",
       "Example Description", "assets/images/room_stock.jpg", 3, false, true);
+
   var accom2 = AccomCardDetails(
       'test1234',
       'Casa Del Mar',
@@ -54,7 +55,6 @@ class _FavoritesState extends State<Favorites> {
         "gg@wp.com",
         "toilet"),
   ];
-
   late List<AccomCardDetails> favorites = [accom, accom2];
 
   @override
