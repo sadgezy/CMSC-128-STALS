@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:stals_frontend/providers/user_provider.dart';
+import 'package:provider/provider.dart';
+// import 'package:stals_frontend/providers/token_provider.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'dart:async';
+import 'dart:io';
 
 class EditAccomm extends StatefulWidget {
   const EditAccomm({super.key});
@@ -543,11 +550,36 @@ class _EditAccommState extends State<EditAccomm> {
                               style: TextStyle(fontSize: 17)),
                         ),
                         ElevatedButton(
-                          onPressed: () {
+                          // fixed muna ang mga inputs
+                          onPressed: () async {
                             if (_formKey2.currentState!.validate()) {
-                              print("Add accommodation complete.");
-                              Navigator.pop(context);
-                            }
+                               print("edit accommodation complete.");
+                                  String url = "http://127.0.0.1:8000/edit-establishment/6437f190fe3f89a27b315961/";
+                                    final Map<String, dynamic> requestBody = {
+                                      "owner": "6437f190fe3f89a27b315961",
+                                      "name": nameController.text,
+                                      "location_exact": houseNoController.text + " " + streetController.text + " " + cityController.text + " " + provinceController.text + " " + countryController.text,
+                                      "location_approx": "Maybe inside Campus",
+                                      "establishment_type": "Dorm",
+                                      "tenant_type": "Student",
+                                      "utilities": [],
+                                      "description": descriptionController.text,
+                                      "photos": [],
+                                      "proof_type": "None",
+                                      "proof_number": "None",
+                                      "proof_picture": "https://drive.google.com/file/d/1ZI80TYmed8EXDfkgDtmyukYICwgPQUYf/view?usp=sharing", // this field is required to have a url
+                                      "reviews": [],
+                                      "verified": false,
+                                      "archived": false,
+                                      "accommodations": []
+                                    };
+                                final headers = {
+                                  'Content-Type': 'application/json',
+                                };  
+                                final response = await http.put(Uri.parse(url), headers: headers, body: json.encode(requestBody));
+                                // final decodedResponse = json.decode(response.body);
+                                // Navigator.pop(context);
+                                }
                           },
                           style: ElevatedButton.styleFrom(
                             elevation: 0,
