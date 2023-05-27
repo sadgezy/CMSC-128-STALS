@@ -21,7 +21,7 @@ class _UnregisteredHomepageState extends State<UnregisteredHomepage> {
     DUMMY OBJECT
     <Object will come from database fetch later>
     */
-    var accom = AccomCardDetails("jk23fvgw23", "Centrro Residences",
+    var accom = AccomCardDetails("jk23fvgw23", "Centrro Residences", "6437e2f6fe3f89a27b315950",
         "Description of Centrro Residences", "assets/images/room_stock.jpg", 3,false,false);
 
     return Scaffold(

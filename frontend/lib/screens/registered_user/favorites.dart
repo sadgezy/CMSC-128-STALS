@@ -20,12 +20,13 @@ class _FavoritesState extends State<Favorites> {
   DUMMY OBJECTS
   <Object will come from database fetch later or from calling screen>
   */
-  var accom = AccomCardDetails("jk23fvgw23", "Centtro Residences",
+  var accom = AccomCardDetails("jk23fvgw23", "Centtro Residences", "6437e2f6fe3f89a27b315950",
       "Example Description", "assets/images/room_stock.jpg", 3, false, true);
 
   var accom2 = AccomCardDetails(
       'test1234',
       'Casa Del Mar',
+      "6437e2f6fe3f89a27b315950",
       'Casa Del Mar is located at Sapphire street.',
       "assets/images/room_stock.jpg",
       5,
