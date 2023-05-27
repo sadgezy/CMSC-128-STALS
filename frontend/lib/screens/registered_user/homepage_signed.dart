@@ -207,9 +207,9 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                     flex: 2,
                     child: IconButton(
                         onPressed: () async {
-                          print(searchVal);
-                          print(filterTitleList);
-                          print(filterValueList);
+                          // print(searchVal);
+                          // print(filterTitleList);
+                          // print(filterValueList);
 
                           String url = "http://127.0.0.1:8000/search-establishment/";
                           final response = await json.decode((await http
@@ -224,7 +224,7 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                             //'capacity': args.userType,
                           }))
                               .body);
-                            
+                          print(response);
                           
                           
                           setState(() {

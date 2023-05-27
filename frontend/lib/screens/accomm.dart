@@ -231,6 +231,7 @@ class _AccommPageState extends State<AccommPage> {
   String response2_phone_no = "";
   String response2_firstname = "";
   String response2_lastname = "";
+  String id = "";
 
   @override
   Widget build(BuildContext context) {
@@ -247,9 +248,15 @@ class _AccommPageState extends State<AccommPage> {
       // print(email);
       // print(username);
       // print(user_type);
-
+       final arguments = ModalRoute.of(context)!.settings.arguments;
+      if (arguments != null) {
+      // Do something with the passed data
+        final card_id = arguments as String;
+        id = card_id;
+        // print('Received ID: id');
+      }
       String url1 =
-          "http://127.0.0.1:8000/view-establishment/6437ee4afe3f89a27b31595f/";
+          "http://127.0.0.1:8000/view-establishment/" + id + "/";
       final response = await http.get(Uri.parse(url1));
       var responseData = json.decode(response.body);
 
