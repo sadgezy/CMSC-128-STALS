@@ -129,35 +129,53 @@ class _ViewArchivedAccommodationsState
           future: _accommodationsFuture,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              print(snapshot);
-              List<AccomCardDetails> accommodations = snapshot.data!;
-              return Column(
-                children: accommodations.map((accommodation) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 7),
-                    child: AccomCard(details: accommodation),
-                  );
-                }).toList(),
-              );
-            } else if (snapshot.hasData && snapshot.data!.isEmpty) {
-              return Center(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    children: [
-                      const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20)),
-                      Image.asset(
-                        'assets/images/no_archived.png',
-                        height: 70,
-                      ),
-                      const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 10)),
-                      Text("No Archived Accommodations")
-                    ],
+              if (snapshot.data!.length > 0) {
+                return Column(
+                  children: [
+                    const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 5)),
+                    const Padding(
+                        padding: EdgeInsets.only(left: 10),
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Text("Archived", style: TextStyle(fontSize: 18)),
+                        )),
+                    const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 7)),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        AccomCardDetails accommodation = snapshot.data![index];
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 7),
+                          child: AccomCard(details: accommodation),
+                        );
+                      },
+                    ),
+                  ],
+                );
+              } else {
+                return Center(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      children: [
+                        const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 20)),
+                        Image.asset(
+                          'assets/images/no_archived.png',
+                          height: 70,
+                        ),
+                        const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 10)),
+                        Text("No Archived Accommodations"),
+                      ],
+                    ),
                   ),
-                ),
-              );
+                );
+              }
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             }
