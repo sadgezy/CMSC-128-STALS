@@ -178,56 +178,6 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
     },
   );
 
-
-    // var accom1 = AccomCardDetails(
-    //     "accommId1",
-    //     "Accommodation1",
-    //     "This is a description for accommodation 1",
-    //     "assets/images/room_stock.jpg",
-    //     3, false,true);
-    // var accom2 = AccomCardDetails(
-    //     "accommId2",
-    //     "Accommodation2",
-    //     "This is a description for accommodation 2",
-    //     "assets/images/room_stock.jpg",
-    //     5,true,false);
-    // var accom3 = AccomCardDetails(
-    //     "accommId3",
-    //     "Accommodation3",
-    //     "This is a description for accommodation 3",
-    //     "assets/images/room_stock.jpg",
-    //     2, true, true);
-
-    // var pendingaccom1 = PendingAccomCard(
-    //     accomName: "Villegas Compound", ownerName: "Owner Name", true);
-    // var pendingaccom2 = PendingAccomCard(
-    //     accomName: "Carlos Santos Apartments", ownerName: "Owner Name", true);
-
-    // var approvedAccomms = Column(children: [
-    //   const Padding(
-    //     padding: EdgeInsets.symmetric(vertical: 5),
-    //   ),
-    //   const Padding(
-    //     padding: EdgeInsets.only(left: 10),
-    //     child: Align(
-    //       alignment: Alignment.topLeft,
-    //       child: Text("Approved", style: TextStyle(fontSize: 18)),
-    //     ),
-    //   ),
-    //   const Padding(
-    //     padding: EdgeInsets.symmetric(vertical: 7),
-    //   ),
-    //   AccomCard(details: accom1),
-    //   const Padding(
-    //     padding: EdgeInsets.symmetric(vertical: 7),
-    //   ),
-    //   AccomCard(details: accom2),
-    //   const Padding(
-    //     padding: EdgeInsets.symmetric(vertical: 7),
-    //   ),
-    //   AccomCard(details: accom3),
-    // ]);
-
     FutureBuilder<List<AccomCardDetails>>(
       future: _accommodationsPendingFuture,
       builder: (context, snapshot) {
