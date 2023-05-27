@@ -151,11 +151,12 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
     DUMMY OBJECT
     <Object will come from database fetch later>
     */
-    var accom = AccomCardDetails("jk23fvgw23", "Centtro Residences",
+    var accom = AccomCardDetails("jk23fvgw23", "Centtro Residences", "6437e2f6fe3f89a27b315950",
         "Example Description", "assets/images/room_stock.jpg", 3, false,true);
     var accom2 = AccomCardDetails(
         'test1234',
         'Casa Del Mar',
+        "6437e2f6fe3f89a27b315950",
         'Casa Del Mar is located at Sapphire street.',
         "assets/images/room_stock.jpg",
         5,true,false);
@@ -339,7 +340,7 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                       itemBuilder: (context, index) {
                         print([accommList[index]['_id'],accommList[index]['name'],accommList[index]['location_exact'], "assets/images/room_stock.jpg", 4, false, true]);
                         return AccomCard(
-                          details: AccomCardDetails(accommList[index]['_id'],accommList[index]['name'],accommList[index]['location_exact'], "assets/images/room_stock.jpg", 4, false, true),
+                          details: AccomCardDetails(accommList[index]['_id'],accommList[index]['name'],accommList[index]['owner'],accommList[index]['location_exact'], "assets/images/room_stock.jpg", 4, false, true),
                         );
                       },
                     ),
