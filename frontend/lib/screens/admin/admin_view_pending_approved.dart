@@ -54,7 +54,7 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
               !accommodation
                   .archived)) // Only include accommodations marked true on verified and archived
           .toList();
-      print(filteredAccommodations);
+      // print(filteredAccommodations);
       return filteredAccommodations;
     } else {
       throw Exception('Failed to load accommodations');
@@ -74,7 +74,7 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
               !accommodation
                   .archived)) // Only include accommodations marked false on verified and archived
           .toList();
-      print(filteredAccommodations1);
+      // print(filteredAccommodations1);
       return filteredAccommodations1;
     } else {
       throw Exception('Failed to load accommodations');
@@ -87,19 +87,20 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
       future: _accommodationsPendingFuture,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return ListView.builder(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: snapshot.data!.length,
-            itemBuilder: (context, index) {
-              AccomCardDetails details = snapshot.data![index];
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 7),
-                child: PendingAccomCard(
-                  accomName: details.name,
-                  ownerName: details.name,
-                  verified: details.verified,
-                  ID: details.ID,
+          if (snapshot.data!.length > 0) {
+            return ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                AccomCardDetails details = snapshot.data![index];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 7),
+                  child: PendingAccomCard(
+                    accomName: details.name,
+                    ownerName: details.name,
+                    verified: details.verified,
+                    ID: details.ID,
                   onApproved: () async {
                     try {
                       await approveAccommodation(details.ID);
@@ -113,11 +114,30 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
                       print("Error approving accommodation: $e");
                     }
                   },
-
+                  ),
+                );
+              },
+            );
+          } else {
+            return Center(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  children: [
+                    const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 20)),
+                    Image.asset(
+                      'assets/images/no_pending.png',
+                      height: 70,
+                    ),
+                    const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10)),
+                    Text("No Pending Accommodations")
+                  ],
                 ),
-              );
-            },
-          );
+              ),
+            );
+          }
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");
         }
@@ -125,25 +145,25 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
       },
     );
 
-    Widget approvedAccomms = FutureBuilder<List<AccomCardDetails>>(
-      future: _accommodationsFuture,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
+
+  Widget approvedAccomms = FutureBuilder<List<AccomCardDetails>>(
+    future: _accommodationsFuture,
+    builder: (context, snapshot) {
+      if (snapshot.hasData) {
+        if (snapshot.data!.length > 0) {
           return Column(
             children: [
               const Padding(
-                padding: EdgeInsets.symmetric(vertical: 5),
+                  padding: EdgeInsets.symmetric(vertical: 5)),
+              const Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Text("Approved", style: TextStyle(fontSize: 18)),
+                  ),
               ),
               const Padding(
-                padding: EdgeInsets.only(left: 10),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text("Approved", style: TextStyle(fontSize: 18)),
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 7),
-              ),
+                  padding: EdgeInsets.symmetric(vertical: 7)),
               ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
@@ -158,61 +178,32 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
               ),
             ],
           );
-        } else if (snapshot.hasError) {
-          return Text("${snapshot.error}");
+        } else {
+          return Center(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 20)),
+                  Image.asset(
+                    'assets/images/no_pending.png',
+                    height: 70,
+                  ),
+                  const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10)),
+                  Text("No Approved Accommodations"),
+                ],
+              ),
+            ),
+          );
         }
-        return CircularProgressIndicator();
-      },
-    );
-
-    // var accom1 = AccomCardDetails(
-    //     "accommId1",
-    //     "Accommodation1",
-    //     "This is a description for accommodation 1",
-    //     "assets/images/room_stock.jpg",
-    //     3, false,true);
-    // var accom2 = AccomCardDetails(
-    //     "accommId2",
-    //     "Accommodation2",
-    //     "This is a description for accommodation 2",
-    //     "assets/images/room_stock.jpg",
-    //     5,true,false);
-    // var accom3 = AccomCardDetails(
-    //     "accommId3",
-    //     "Accommodation3",
-    //     "This is a description for accommodation 3",
-    //     "assets/images/room_stock.jpg",
-    //     2, true, true);
-
-    // var pendingaccom1 = PendingAccomCard(
-    //     accomName: "Villegas Compound", ownerName: "Owner Name", true);
-    // var pendingaccom2 = PendingAccomCard(
-    //     accomName: "Carlos Santos Apartments", ownerName: "Owner Name", true);
-
-    // var approvedAccomms = Column(children: [
-    //   const Padding(
-    //     padding: EdgeInsets.symmetric(vertical: 5),
-    //   ),
-    //   const Padding(
-    //     padding: EdgeInsets.only(left: 10),
-    //     child: Align(
-    //       alignment: Alignment.topLeft,
-    //       child: Text("Approved", style: TextStyle(fontSize: 18)),
-    //     ),
-    //   ),
-    //   const Padding(
-    //     padding: EdgeInsets.symmetric(vertical: 7),
-    //   ),
-    //   AccomCard(details: accom1),
-    //   const Padding(
-    //     padding: EdgeInsets.symmetric(vertical: 7),
-    //   ),
-    //   AccomCard(details: accom2),
-    //   const Padding(
-    //     padding: EdgeInsets.symmetric(vertical: 7),
-    //   ),
-    //   AccomCard(details: accom3),
-    // ]);
+      } else if (snapshot.hasError) {
+        return Text("${snapshot.error}");
+      }
+      return CircularProgressIndicator();
+    },
+  );
 
     FutureBuilder<List<AccomCardDetails>>(
       future: _accommodationsPendingFuture,
@@ -335,27 +326,3 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
     );
   }
 }
-
-/*
-PLEASE READ:
-The code below is for when there are no pending accommodations
-*/
-
-// Center(
-//   child: Container(
-//     padding: const EdgeInsets.symmetric(horizontal: 20),
-//     child: Column(
-//       children: [
-//         const Padding(
-//             padding: EdgeInsets.symmetric(vertical: 20)),
-//         Image.asset(
-//           'assets/images/no_pending.png',
-//           height: 70,
-//         ),
-//         const Padding(
-//             padding: EdgeInsets.symmetric(vertical: 10)),
-//         Text("No Pending Accommodations")
-//       ],
-//     ),
-//   ),
-// ),
