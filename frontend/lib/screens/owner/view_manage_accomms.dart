@@ -56,7 +56,7 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
     List<AccomCardDetails> filteredAccommodations = accommodations
         .where((accommodation) => accommodation.owner == id)
         .toList();
-
+      
       return filteredAccommodations;
     } else {
       throw Exception('Failed to load accommodations');
