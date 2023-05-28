@@ -42,7 +42,9 @@ bool isRef = ?
 
 */
 
+
 class Item1 extends StatelessWidget {
+  
    Item1({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -241,16 +243,16 @@ class _AccommPageState extends State<AccommPage> {
       // controller: emailController;
       List<String> user =
           Provider.of<UserProvider>(context, listen: false).userInfo;
-      String id = user[0];
+      id = user[0];
       String email = user[1];
       String username = user[2];
-      String user_type = user[3];
+      user_type = user[3];
 
       // print(id);
       // print(email);
       // print(username);
       // print(user_type);
-       final arguments = ModalRoute.of(context)!.settings.arguments;
+      final arguments = ModalRoute.of(context)!.settings.arguments;
       if (arguments != null) {
       // Do something with the passed data
         final card_id = arguments as String;
@@ -278,6 +280,25 @@ class _AccommPageState extends State<AccommPage> {
       response2_ownerName = response2_firstname + " " + response2_lastname;
       response2_phone_no = responseData2['phone_no'];
     }
+
+     Widget buildUserTypeIcon() {
+      if (user_type == "user") {
+        return Icon(
+          Icons.bookmark_outline,
+          size: 20,
+        );
+      } else if (user_type == "owner") {
+        return Icon(
+          Icons.edit,
+          size: 20,
+        );
+      } else {
+        return Icon(
+          Icons.bookmark,
+          size: 20,
+        );
+      }
+    } 
 
     return Scaffold(
       //App bar start
@@ -349,8 +370,13 @@ class _AccommPageState extends State<AccommPage> {
                           ElevatedButton(
                               onPressed: () {
                                 setState(() {
-                                  favorite = !favorite;
-                                  // add function to add accommodation to favorites
+                                  if(user_type == 'owner'){
+                                    Navigator.pushNamed(context, '/owned/accomm/edit', arguments: id);
+                                  }
+                                  else{
+                                    // add function to add accommodation to favorites
+                                  }
+                                  
                                 });
                               },
                               style: ElevatedButton.styleFrom(
@@ -358,12 +384,7 @@ class _AccommPageState extends State<AccommPage> {
                                   backgroundColor: Colors.white,
                                   foregroundColor:
                                        Color.fromARGB(255, 25, 83, 95)),
-                              child: (user_type == "owner")
-                                  ?  Icon(
-                                      Icons.bookmark_outline,
-                                      size: 20,
-                                    )
-                                  :  Icon(Icons.bookmark, size: 20)),
+                              child: buildUserTypeIcon()),
                         ],
                       )
                     ],
