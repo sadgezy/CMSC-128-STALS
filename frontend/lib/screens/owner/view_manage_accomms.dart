@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../classes.dart';
 import '../../UI_parameters.dart' as UIParameter;
+import 'package:stals_frontend/providers/token_provider.dart';
 import 'package:stals_frontend/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 // import 'package:stals_frontend/providers/token_provider.dart';
@@ -109,19 +110,32 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
                 ),
               ),
               ListTile(
-                title: const Text('Item 1'),
+                title: const Text('Edit Accommodationomm'),
                 onTap: () {
                   // Update the state of the app.
                   // ...
+                  Navigator.pushNamed(context, '/owned/accomm/edit');
                 },
               ),
               ListTile(
-                title: const Text('Item 2'),
+                title: const Text('Add Accommodation'),
                 onTap: () {
                   // Update the state of the app.
-                  // ...
+                    Navigator.pushNamed(context, '/add_accommodation');
                 },
               ),
+              ListTile(
+                title: const Text('Logout'),
+                trailing: const Icon(Icons.logout),
+                onTap: () {
+                  Provider.of<TokenProvider>(context, listen: false)
+                      .removeToken("DO NOT REMOVE THIS PARAM");
+                  Provider.of<UserProvider>(context, listen: false)
+                      .removeUser("DO NOT REMOVE THIS PARAM");
+
+                  Navigator.pushNamed(context, '/signin');
+                },
+              )
             ],
           ),
         ),
@@ -165,7 +179,9 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             }
-            return CircularProgressIndicator();
+            return Center(
+              child: CircularProgressIndicator(), // Or any loading indicator widget
+            );
           },
         ),
       ),

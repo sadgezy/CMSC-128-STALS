@@ -232,17 +232,19 @@ class _AccommPageState extends State<AccommPage> {
   String response2_firstname = "";
   String response2_lastname = "";
   String id = "";
+  String email = "";
+  String user_type = "";
 
   @override
   Widget build(BuildContext context) {
     Future<void> fetchData() async {
       // controller: emailController;
-      // List<String> user =
-      //     Provider.of<UserProvider>(context, listen: false).userInfo;
-      // String id = user[0];
-      // String email = user[1];
-      // String username = user[2];
-      // String user_type = user[3];
+      List<String> user =
+          Provider.of<UserProvider>(context, listen: false).userInfo;
+      String id = user[0];
+      String email = user[1];
+      String username = user[2];
+      String user_type = user[3];
 
       // print(id);
       // print(email);
@@ -293,9 +295,9 @@ class _AccommPageState extends State<AccommPage> {
         ),
         backgroundColor: Colors.white,
       ),
-      //end of Appbar
+      // end of Appbar
 
-      //Main Content for body start
+      // Main Content for body start
 
       /*
         Row content Arrangement: 
@@ -356,7 +358,7 @@ class _AccommPageState extends State<AccommPage> {
                                   backgroundColor: Colors.white,
                                   foregroundColor:
                                        Color.fromARGB(255, 25, 83, 95)),
-                              child: (favorite)
+                              child: (user_type == "owner")
                                   ?  Icon(
                                       Icons.bookmark_outline,
                                       size: 20,
