@@ -15,12 +15,13 @@ class AccomCardDetails {
   String name;
   String description;
   String image;
+  String owner;
   double rating;
   bool archived;
   bool verified;
 
   AccomCardDetails(
-      this.ID, this.name, this.description, this.image, this.rating, this.archived, this.verified);
+      this.ID, this.name, this.owner, this.description, this.image, this.rating, this.archived, this.verified);
 
   getName() {
     return name;
@@ -46,6 +47,7 @@ class AccomCardDetails {
     return AccomCardDetails(
       json['_id'] ?? '',
       json['name'] ?? '',
+      json['owner'] ?? '',
       json['description'] ?? '',
       json['image'] ?? '',
       json['rating'] ?? 0.0,

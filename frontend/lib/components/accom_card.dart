@@ -53,6 +53,7 @@ class _AccomCardState extends State<AccomCard> {
           Navigator.pushNamed(context, '/accomm', arguments: widget.details.getID());
           // }
         },
+        
         child: Row(
           children: [
             // 2 Sized boxes to split the card in half

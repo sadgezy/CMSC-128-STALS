@@ -11,6 +11,7 @@ class _OwnedAccommPageState extends State<OwnedAccommPage> {
   double rating = 4.0;
   int _index = 1;
   bool favorite = false;
+  
 
   @override
   Widget build(BuildContext context) {

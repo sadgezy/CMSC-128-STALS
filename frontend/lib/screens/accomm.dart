@@ -231,25 +231,34 @@ class _AccommPageState extends State<AccommPage> {
   String response2_phone_no = "";
   String response2_firstname = "";
   String response2_lastname = "";
+  String id = "";
+  String email = "";
+  String user_type = "";
 
   @override
   Widget build(BuildContext context) {
     Future<void> fetchData() async {
       // controller: emailController;
-      // List<String> user =
-      //     Provider.of<UserProvider>(context, listen: false).userInfo;
-      // String id = user[0];
-      // String email = user[1];
-      // String username = user[2];
-      // String user_type = user[3];
+      List<String> user =
+          Provider.of<UserProvider>(context, listen: false).userInfo;
+      String id = user[0];
+      String email = user[1];
+      String username = user[2];
+      String user_type = user[3];
 
       // print(id);
       // print(email);
       // print(username);
       // print(user_type);
-
+       final arguments = ModalRoute.of(context)!.settings.arguments;
+      if (arguments != null) {
+      // Do something with the passed data
+        final card_id = arguments as String;
+        id = card_id;
+        // print('Received ID: id');
+      }
       String url1 =
-          "http://127.0.0.1:8000/view-establishment/6437ee4afe3f89a27b31595f/";
+          "http://127.0.0.1:8000/view-establishment/" + id + "/";
       final response = await http.get(Uri.parse(url1));
       var responseData = json.decode(response.body);
 
@@ -286,9 +295,9 @@ class _AccommPageState extends State<AccommPage> {
         ),
         backgroundColor: Colors.white,
       ),
-      //end of Appbar
+      // end of Appbar
 
-      //Main Content for body start
+      // Main Content for body start
 
       /*
         Row content Arrangement: 
@@ -349,7 +358,7 @@ class _AccommPageState extends State<AccommPage> {
                                   backgroundColor: Colors.white,
                                   foregroundColor:
                                        Color.fromARGB(255, 25, 83, 95)),
-                              child: (favorite)
+                              child: (user_type == "owner")
                                   ?  Icon(
                                       Icons.bookmark_outline,
                                       size: 20,
