@@ -54,9 +54,9 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
           .toList();
 
        // Apply the filter
-    List<AccomCardDetails> filteredAccommodations = accommodations
-        .where((accommodation) => accommodation.owner == id && accommodation.verified)
-        .toList();
+      List<AccomCardDetails> filteredAccommodations = accommodations
+          .where((accommodation) => accommodation.owner == id && accommodation.verified)
+          .toList();
       
       return filteredAccommodations;
     } else {

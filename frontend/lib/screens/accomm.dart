@@ -292,7 +292,14 @@ class _AccommPageState extends State<AccommPage> {
           Icons.edit,
           size: 20,
         );
-      } else {
+      }
+      else if (user_type == "owner") {
+        return Icon(
+          Icons.edit,
+          size: 20,
+        );
+      }
+       else {
         return Icon(
           Icons.bookmark,
           size: 20,
@@ -367,24 +374,75 @@ class _AccommPageState extends State<AccommPage> {
                               fit: BoxFit.cover,
                             ),
                           ),
-                          ElevatedButton(
-                              onPressed: () {
-                                setState(() {
-                                  if(user_type == 'owner'){
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                            if (user_type == 'user')
+                              ElevatedButton(
+                                onPressed: () {
+                                  // Action for the first icon button
                                     Navigator.pushNamed(context, '/owned/accomm/edit', arguments: id);
-                                  }
-                                  else{
-                                    // add function to add accommodation to favorites
-                                  }
-                                  
-                                });
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  shape:  CircleBorder(),
-                                  backgroundColor: Colors.white,
-                                  foregroundColor:
-                                       Color.fromARGB(255, 25, 83, 95)),
-                              child: buildUserTypeIcon()),
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  shape: CircleBorder(),
+                                  primary: Colors.white,
+                                  onPrimary: Color.fromARGB(255, 25, 83, 95),
+                                ),
+                                child: buildUserTypeIcon(), // First icon
+                              ),
+                            if (user_type == 'owner')
+                              ElevatedButton(
+                                onPressed: () {
+                                  // Action for the second icon button
+                                  Navigator.pushNamed(context, '/view_owned_accomms', arguments: id);
+
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  shape: CircleBorder(),
+                                  primary: Colors.white,
+                                  onPrimary: Color.fromARGB(255, 25, 83, 95),
+                                ),
+                                child: buildUserTypeIcon(), // Second icon
+                              ),
+                            if (user_type == 'owner')
+                              ElevatedButton(
+                                onPressed: () async {
+                                  // Action for the third icon button
+                                  String url = "http://127.0.0.1:8000/delete-establishment/" + id + "/";
+                                  final response = await http.delete(Uri.parse(url));
+                                  Navigator.pushNamed(context, '/view_owned_accomms');
+
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  shape: CircleBorder(),
+                                  primary: Colors.white,
+                                  onPrimary: Color.fromARGB(255, 25, 83, 95),
+                                ),
+                                child:Icon(
+                                  Icons.delete,
+                                  size: 20,
+                                ), // Third icon
+                              ),
+                              if (user_type == 'owner')
+                              ElevatedButton(
+                                onPressed: () async {
+                                  // Action for the third icon button
+                                 String url = "http://127.0.0.1:8000/archive-establishment/" + id + "/";
+                                  final response = await http.put(Uri.parse(url));
+                                  Navigator.pushNamed(context, '/view_owned_accomms');
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  shape: CircleBorder(),
+                                  primary: Colors.white,
+                                  onPrimary: Color.fromARGB(255, 25, 83, 95),
+                                ),
+                                child:Icon(
+                                  Icons.archive,
+                                  size: 20,
+                                ),
+                              ),
+                            ],
+                          ),
                         ],
                       )
                     ],
