@@ -95,7 +95,133 @@ class _UnregisteredHomepageState extends State<UnregisteredHomepage> {
                   },
                 );
               },
-            )
+            ),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Routes'),
+                        content: Container(
+                          constraints: BoxConstraints(
+                            minHeight: 500, //minimum height
+                            minWidth: 300, // minimum width
+                            maxHeight:
+                                MediaQuery.of(context).size.height * 0.65,
+                            maxWidth: MediaQuery.of(context).size.width * 0.25,
+                          ),
+                          width: double.maxFinite,
+                          child: ListView(
+                            shrinkWrap: true,
+                            children: <Widget>[
+                              TextButton(
+                                child: Text('Signin Page'),
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/signin');
+                                },
+                              ),
+                              TextButton(
+                                child: Text('Sign Up'),
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/signup');
+                                },
+                              ),
+                              TextButton(
+                                child: Text('Sign Up Form'),
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/signup_info');
+                                },
+                              ),
+                              TextButton(
+                                child: Text('Verification Page'),
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/verify_user');
+                                },
+                              ),
+                              TextButton(
+                                child: Text('Homepage'),
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/homepage');
+                                },
+                              ),
+                              TextButton(
+                                child: Text('Registered Homepage'),
+                                onPressed: () {
+                                  Navigator.pushNamed(
+                                      context, '/signed_homepage');
+                                },
+                              ),
+                              TextButton(
+                                child: Text('Accomodation Page'),
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/accomm');
+                                },
+                              ),
+                              TextButton(
+                                child: Text('Add Accom'),
+                                onPressed: () {
+                                  Navigator.pushNamed(
+                                      context, '/add_accommodation');
+                                },
+                              ),
+                              TextButton(
+                                child: Text('Admin Page'),
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/admin');
+                                },
+                              ),
+                              TextButton(
+                                child: Text('View Owned Accom'),
+                                onPressed: () {
+                                  Navigator.pushNamed(
+                                      context, '/view_owned_accomms');
+                                },
+                              ),
+                              TextButton(
+                                child: Text('Owned Accom'),
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/owned/accomm');
+                                },
+                              ),
+                              TextButton(
+                                child: Text('Edit Owned Accom'),
+                                onPressed: () {
+                                  Navigator.pushNamed(
+                                      context, '/owned/accomm/edit');
+                                },
+                              ),
+                              TextButton(
+                                child: Text('Admin View Users'),
+                                onPressed: () {
+                                  Navigator.pushNamed(
+                                      context, '/admin/view_users');
+                                },
+                              ),
+                              TextButton(
+                                child: Text('Admin View Accoms'),
+                                onPressed: () {
+                                  Navigator.pushNamed(
+                                      context, '/admin/view_accomms');
+                                },
+                              ),
+                              ElevatedButton(
+                                child: Text('Close'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+                child: Text('Page Routes'),
+              ),
+            ),
           ]),
       // the left drawer
       drawer: Drawer(
