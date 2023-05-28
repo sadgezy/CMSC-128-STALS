@@ -28,8 +28,10 @@ class _AddAccommPageState extends State<AddAccommPage> {
   bool showAccommTypeError = false;
   XFile? _idImage;
   PlatformFile? _imageFile;
+  PlatformFile? _imageFile2;
   bool uploadedImage = false;
-  String base64Image = '';
+  String base64Image1 = '';
+  String base64Image2 = '';
 
   final GlobalKey<FormState> _formKey1 = GlobalKey<FormState>();
   final GlobalKey<FormState> _formKey2 = GlobalKey<FormState>();
@@ -79,7 +81,40 @@ class _AddAccommPageState extends State<AddAccommPage> {
     //     );
     //   }
     // }
-    void _chooseImage() async {
+    // Future<String?> _chooseImage(File? imageFile) async {
+    //   if (imageFile != null) {
+    //     var bytes = imageFile.readAsBytesSync();
+    //     double fileSize = (bytes.lengthInBytes / (1024 * 1024));
+    //     if (fileSize > 1) {
+    //       ScaffoldMessenger.of(context).showSnackBar(
+    //         const SnackBar(
+    //           content: Text('Image too large'),
+    //         ),
+    //       );
+    //       return null;
+    //     } else {
+    //       String base64Image;
+    //       String extn = imageFile.path.split('.').last;
+    //       if (extn == 'png' || extn == 'PNG') {
+    //         base64Image =
+    //             "data:image/png;base64," + base64Encode(bytes.toList());
+    //       } else {
+    //         base64Image =
+    //             "data:image/jpeg;base64," + base64Encode(bytes.toList());
+    //       }
+
+    //       return base64Image;
+    //     }
+    //   } else {
+    //     ScaffoldMessenger.of(context).showSnackBar(
+    //       const SnackBar(
+    //         content: Text('No image selected'),
+    //       ),
+    //     );
+    //     return null;
+    //   }
+    // }
+    void _chooseImage(int image) async {
       //ImagePicker picker = ImagePicker();
       //XFile? image = await picker.pickImage(source: ImageSource.gallery);
       FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -104,18 +139,31 @@ class _AddAccommPageState extends State<AddAccommPage> {
             ),
           );
         } else {
-          setState(() {
-            _imageFile = result.files.first;
-          });
-          String extn = result.files.first.name.split('.').last;
-          if (extn == 'png' || extn == 'PNG') {
-            base64Image =
-                "data:image/png;base64," + base64Encode(bytes!.toList());
+          if (image == 1) {
+            setState(() {
+              _imageFile = result.files.first;
+            });
+            String extn = result.files.first.name.split('.').last;
+            if (extn == 'png' || extn == 'PNG') {
+              base64Image1 =
+                  "data:image/png;base64," + base64Encode(bytes!.toList());
+            } else {
+              base64Image1 =
+                  "data:image/jpeg;base64," + base64Encode(bytes!.toList());
+            }
           } else {
-            base64Image =
-                "data:image/jpeg;base64," + base64Encode(bytes!.toList());
+            setState(() {
+              _imageFile2 = result.files.first;
+            });
+            String extn = result.files.first.name.split('.').last;
+            if (extn == 'png' || extn == 'PNG') {
+              base64Image2 =
+                  "data:image/png;base64," + base64Encode(bytes!.toList());
+            } else {
+              base64Image2 =
+                  "data:image/jpeg;base64," + base64Encode(bytes!.toList());
+            }
           }
-
           //print(result.files.first.name);
           //print("img_pan : $base64Image");
           //setState(() {});
@@ -990,13 +1038,6 @@ class _AddAccommPageState extends State<AddAccommPage> {
                         const Align(
                             alignment: Alignment.topLeft,
                             child: Text("Accomodation Picture")),
-                        if (_imageFile != null)
-                          Image.memory(
-                            Uint8List.fromList(_imageFile!.bytes!),
-                            width: 100,
-                            height: 100,
-                            fit: BoxFit.cover,
-                          ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 7),
                           child: Container(
@@ -1014,16 +1055,23 @@ class _AddAccommPageState extends State<AddAccommPage> {
                                       ),
                                     ),
                                     onPressed: () {
-                                      _chooseImage();
+                                      _chooseImage(1);
                                     },
                                     child: const Text("Upload image")),
                           ),
                         ),
-                        const SizedBox(
-                          height: 5,
-                        ),
                       ],
                     ),
+                  ),
+                  if (_imageFile != null)
+                    Image.memory(
+                      Uint8List.fromList(_imageFile!.bytes!),
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.cover,
+                    ),
+                  const SizedBox(
+                    height: 5,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 7),
@@ -1036,7 +1084,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
                           height: 5,
                         ),
                         SizedBox(
-                          height: 200,
+                          height: 100,
                           child: TextFormField(
                             controller: descriptionController,
                             minLines: 5,
@@ -1081,6 +1129,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
                       ],
                     ),
                   ),
+
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text("Proof Type"),
@@ -1160,9 +1209,9 @@ class _AddAccommPageState extends State<AddAccommPage> {
                             ),
                           ),
                         ),
-                        if (_imageFile != null)
+                        if (_imageFile2 != null)
                           Image.memory(
-                            Uint8List.fromList(_imageFile!.bytes!),
+                            Uint8List.fromList(_imageFile2!.bytes!),
                             width: 100,
                             height: 100,
                             fit: BoxFit.cover,
@@ -1184,7 +1233,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
                                       ),
                                     ),
                                     onPressed: () {
-                                      _chooseImage();
+                                      _chooseImage(2);
                                     },
                                     child: const Text("Upload image")),
                           ),
@@ -1320,8 +1369,8 @@ class _AddAccommPageState extends State<AddAccommPage> {
                               "photos": [],
                               "proof_type": "None",
                               "proof_number": "None",
-                              "loc_picture": base64Image,
-                              "proof_picture": base64Image,
+                              "loc_picture": base64Image1,
+                              "proof_picture": base64Image2,
                               "reviews": [],
                               "verified": false,
                               "archived": false,
