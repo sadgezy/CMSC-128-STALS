@@ -643,3 +643,35 @@ def view_all_archived_establishments(request):
     serializer = EstablishmentSerializer(establishment, many=True)
     query = [d for d in serializer.data if d['archived'] == True]
     return Response (query)
+
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def archive_user(request, pk):   
+
+    try:
+        user = User.objects.get(pk=ObjectId(pk))
+
+    except User.DoesNotExist:
+         return Response(data={"message": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    user.archived = True
+    user.save()
+
+    return Response(data={"message": "Successfully archived user"})
+
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def unarchive_user(request, pk):   
+
+    try:
+        user = User.objects.get(pk=ObjectId(pk))
+
+    except User.DoesNotExist:
+         return Response(data={"message": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    user.archived = False
+    user.save()
+
+    return Response(data={"message": "Successfully unarchived user"})
