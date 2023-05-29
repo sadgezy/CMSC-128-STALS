@@ -4,19 +4,28 @@ class PendingAccomCard extends StatefulWidget {
   final String accomName;
   final String ownerName;
   final bool verified;
+  final String ID;
+  final VoidCallback onApproved;
 
-  PendingAccomCard(
-      {Key? key, required this.accomName, required this.ownerName, required this.verified})
-      : super(key: key);
+  PendingAccomCard({
+    Key? key,
+    required this.accomName,
+    required this.ownerName,
+    required this.verified,
+    required this.ID,
+    required this.onApproved,
+  }) : super(key: key);
 
   @override
   State<PendingAccomCard> createState() => _PendingAccomCardState();
 
-    factory PendingAccomCard.fromJson(Map<String, dynamic> json) {
+    factory PendingAccomCard.fromJson(Map<String, dynamic> json,VoidCallback onApprovedCallback) {
     return PendingAccomCard(
       accomName: json['name'] ?? '',
       ownerName: json['owner'] ?? '',
       verified: json['verified'] ?? false,
+      ID: json['_id'] ?? '',
+      onApproved: onApprovedCallback,
     );
   }
 }
@@ -68,7 +77,7 @@ class _PendingAccomCardState extends State<PendingAccomCard> {
                           color: Color(0xff19535F),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {widget.onApproved();},
                     ),
                   ),
                   const SizedBox(

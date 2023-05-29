@@ -6,6 +6,7 @@ import '../../components/accom_card.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+
 class AdminViewPendingApproved extends StatefulWidget {
   const AdminViewPendingApproved({Key? key}) : super(key: key);
 
@@ -27,6 +28,18 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
     _accommodationsPendingFuture = fetchPendingAccommodations();
     _accommodationsFuture = fetchApprovedAccommodations();
   }
+
+  Future<void> approveAccommodation(String id) async {
+    print(id);
+    final response = await http.put(
+      Uri.parse('http://127.0.0.1:8000/verify-establishment/$id/'),
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to approve accommodation');
+    }
+  }
+
 
   Future<List<AccomCardDetails>> fetchPendingAccommodations() async {
     final response = await http
@@ -87,6 +100,20 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
                     accomName: details.name,
                     ownerName: details.name,
                     verified: details.verified,
+                    ID: details.ID,
+                  onApproved: () async {
+                    try {
+                      await approveAccommodation(details.ID);
+                      print("Approved accommodation with ID: ${details.ID}");
+                      // Refresh the list of pending and approved accommodations
+                      setState(() {
+                        _accommodationsPendingFuture = fetchPendingAccommodations();
+                        _accommodationsFuture = fetchApprovedAccommodations();
+                      });
+                    } catch (e) {
+                      print("Error approving accommodation: $e");
+                    }
+                  },
                   ),
                 );
               },
@@ -194,6 +221,20 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
                   accomName: details.name,
                   ownerName: details.name,
                   verified: details.verified,
+                  ID: details.ID,
+                  onApproved: () async {
+                    try {
+                      await approveAccommodation(details.ID);
+                      print("Approved accommodation with ID: ${details.ID}");
+                      // Refresh the list of pending and approved accommodations
+                      setState(() {
+                        _accommodationsPendingFuture = fetchPendingAccommodations();
+                        _accommodationsFuture = fetchApprovedAccommodations();
+                      });
+                    } catch (e) {
+                      print("Error approving accommodation: $e");
+                    }
+                  },
                 ),
               );
             },
@@ -221,6 +262,20 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
                   accomName: details.name,
                   ownerName: details.name,
                   verified: details.verified,
+                  ID: details.ID,
+                  onApproved: () async {
+                    try {
+                      await approveAccommodation(details.ID);
+                      print("Approved accommodation with ID: ${details.ID}");
+                      // Refresh the list of pending and approved accommodations
+                      setState(() {
+                        _accommodationsPendingFuture = fetchPendingAccommodations();
+                        _accommodationsFuture = fetchApprovedAccommodations();
+                      });
+                    } catch (e) {
+                      print("Error approving accommodation: $e");
+                    }
+                  },
                 ),
               );
             },
