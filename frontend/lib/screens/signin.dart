@@ -96,12 +96,15 @@ class _SignInPageState extends State<SignInPage> {
           }
 
         if(user_type == "user"){
+            Navigator.pop(context);
             Navigator.pushNamed(context, '/signed_homepage');
         }
         else if(user_type == 'admin'){
+            Navigator.pop(context);
             Navigator.pushNamed(context, '/admin');
         }
         else{
+            Navigator.pop(context);
             Navigator.pushNamed(context, '/view_owned_accomms');
         }
 

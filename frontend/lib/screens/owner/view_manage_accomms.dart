@@ -133,7 +133,8 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
                   Provider.of<UserProvider>(context, listen: false)
                       .removeUser("DO NOT REMOVE THIS PARAM");
 
-                  Navigator.pushNamed(context, '/signin');
+                  Navigator.pop(context);
+                  Navigator.pop(context);
                 },
               )
             ],
