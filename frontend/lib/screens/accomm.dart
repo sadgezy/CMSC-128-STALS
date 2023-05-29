@@ -42,7 +42,9 @@ bool isRef = ?
 
 */
 
+
 class Item1 extends StatelessWidget {
+  
    Item1({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -231,25 +233,34 @@ class _AccommPageState extends State<AccommPage> {
   String response2_phone_no = "";
   String response2_firstname = "";
   String response2_lastname = "";
+  String id = "";
+  String email = "";
+  String user_type = "";
 
   @override
   Widget build(BuildContext context) {
     Future<void> fetchData() async {
       // controller: emailController;
-      // List<String> user =
-      //     Provider.of<UserProvider>(context, listen: false).userInfo;
-      // String id = user[0];
-      // String email = user[1];
-      // String username = user[2];
-      // String user_type = user[3];
+      List<String> user =
+          Provider.of<UserProvider>(context, listen: false).userInfo;
+      id = user[0];
+      String email = user[1];
+      String username = user[2];
+      user_type = user[3];
 
       // print(id);
       // print(email);
       // print(username);
       // print(user_type);
-
+      final arguments = ModalRoute.of(context)!.settings.arguments;
+      if (arguments != null) {
+      // Do something with the passed data
+        final card_id = arguments as String;
+        id = card_id;
+        // print('Received ID: id');
+      }
       String url1 =
-          "http://127.0.0.1:8000/view-establishment/6437ee4afe3f89a27b31595f/";
+          "http://127.0.0.1:8000/view-establishment/" + id + "/";
       final response = await http.get(Uri.parse(url1));
       var responseData = json.decode(response.body);
 
@@ -270,6 +281,32 @@ class _AccommPageState extends State<AccommPage> {
       response2_phone_no = responseData2['phone_no'];
     }
 
+     Widget buildUserTypeIcon() {
+      if (user_type == "user") {
+        return Icon(
+          Icons.bookmark_outline,
+          size: 20,
+        );
+      } else if (user_type == "owner") {
+        return Icon(
+          Icons.edit,
+          size: 20,
+        );
+      }
+      else if (user_type == "owner") {
+        return Icon(
+          Icons.edit,
+          size: 20,
+        );
+      }
+       else {
+        return Icon(
+          Icons.bookmark,
+          size: 20,
+        );
+      }
+    } 
+
     return Scaffold(
       //App bar start
       appBar: AppBar(
@@ -286,9 +323,9 @@ class _AccommPageState extends State<AccommPage> {
         ),
         backgroundColor: Colors.white,
       ),
-      //end of Appbar
+      // end of Appbar
 
-      //Main Content for body start
+      // Main Content for body start
 
       /*
         Row content Arrangement: 
@@ -337,24 +374,75 @@ class _AccommPageState extends State<AccommPage> {
                               fit: BoxFit.cover,
                             ),
                           ),
-                          ElevatedButton(
-                              onPressed: () {
-                                setState(() {
-                                  favorite = !favorite;
-                                  // add function to add accommodation to favorites
-                                });
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  shape:  CircleBorder(),
-                                  backgroundColor: Colors.white,
-                                  foregroundColor:
-                                       Color.fromARGB(255, 25, 83, 95)),
-                              child: (favorite)
-                                  ?  Icon(
-                                      Icons.bookmark_outline,
-                                      size: 20,
-                                    )
-                                  :  Icon(Icons.bookmark, size: 20)),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                            if (user_type == 'user')
+                              ElevatedButton(
+                                onPressed: () {
+                                  // Action for the first icon button
+                                    Navigator.pushNamed(context, '/owned/accomm/edit', arguments: id);
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  shape: CircleBorder(),
+                                  primary: Colors.white,
+                                  onPrimary: Color.fromARGB(255, 25, 83, 95),
+                                ),
+                                child: buildUserTypeIcon(), // First icon
+                              ),
+                            if (user_type == 'owner')
+                              ElevatedButton(
+                                onPressed: () {
+                                  // Action for the second icon button
+                                  Navigator.pushNamed(context, '/view_owned_accomms', arguments: id);
+
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  shape: CircleBorder(),
+                                  primary: Colors.white,
+                                  onPrimary: Color.fromARGB(255, 25, 83, 95),
+                                ),
+                                child: buildUserTypeIcon(), // Second icon
+                              ),
+                            if (user_type == 'owner')
+                              ElevatedButton(
+                                onPressed: () async {
+                                  // Action for the third icon button
+                                  String url = "http://127.0.0.1:8000/delete-establishment/" + id + "/";
+                                  final response = await http.delete(Uri.parse(url));
+                                  Navigator.pushNamed(context, '/view_owned_accomms');
+
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  shape: CircleBorder(),
+                                  primary: Colors.white,
+                                  onPrimary: Color.fromARGB(255, 25, 83, 95),
+                                ),
+                                child:Icon(
+                                  Icons.delete,
+                                  size: 20,
+                                ), // Third icon
+                              ),
+                              if (user_type == 'owner')
+                              ElevatedButton(
+                                onPressed: () async {
+                                  // Action for the third icon button
+                                 String url = "http://127.0.0.1:8000/archive-establishment/" + id + "/";
+                                  final response = await http.put(Uri.parse(url));
+                                  Navigator.pushNamed(context, '/view_owned_accomms');
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  shape: CircleBorder(),
+                                  primary: Colors.white,
+                                  onPrimary: Color.fromARGB(255, 25, 83, 95),
+                                ),
+                                child:Icon(
+                                  Icons.archive,
+                                  size: 20,
+                                ),
+                              ),
+                            ],
+                          ),
                         ],
                       )
                     ],

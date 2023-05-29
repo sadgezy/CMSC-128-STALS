@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import '../../classes.dart';
 import '../../UI_parameters.dart' as UIParameter;
 import 'favorites.dart';
+import 'package:provider/provider.dart';
+import 'package:stals_frontend/providers/token_provider.dart';
+import 'package:stals_frontend/providers/user_provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -151,16 +154,24 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
     DUMMY OBJECT
     <Object will come from database fetch later>
     */
-    var accom = AccomCardDetails("jk23fvgw23", "Centtro Residences",
-        "Example Description", "assets/images/room_stock.jpg", 3, false,true);
+    var accom = AccomCardDetails(
+        "jk23fvgw23",
+        "Centtro Residences",
+        "6437e2f6fe3f89a27b315950",
+        "Example Description",
+        "assets/images/room_stock.jpg",
+        3,
+        false,
+        true);
     var accom2 = AccomCardDetails(
         'test1234',
         'Casa Del Mar',
+        "6437e2f6fe3f89a27b315950",
         'Casa Del Mar is located at Sapphire street.',
         "assets/images/room_stock.jpg",
-        5,true,false);
-
-    
+        5,
+        true,
+        false);
 
     var filterTitleList = [];
     var filterValueList = [];
@@ -207,33 +218,41 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                     flex: 2,
                     child: IconButton(
                         onPressed: () async {
-                          print(searchVal);
-                          print(filterTitleList);
-                          print(filterValueList);
+                          // print(searchVal);
+                          // print(filterTitleList);
+                          // print(filterValueList);
 
-                          String url = "http://127.0.0.1:8000/search-establishment/";
-                          final response = await json.decode((await http
-                                  .post(Uri.parse(url), body: {
+                          String url =
+                              "http://127.0.0.1:8000/search-establishment/";
+                          final response = await json
+                              .decode((await http.post(Uri.parse(url), body: {
                             'name': searchVal,
                             'location_exact': filterValueList[1] ?? "",
                             //'location_approx': args.middleName,
                             'establishment_type': filterValueList[2] ?? "",
                             'tenant_type': filterValueList[3] ?? "",
-                            'price_lower': filterValueList[4] == null ? "" : "int(${filterValueList[4]})",
-                            'price_upper': filterValueList[5] == null ? "" : "int(${filterValueList[5]})",
+                            'price_lower': filterValueList[4] == null
+                                ? ""
+                                : "int(${filterValueList[4]})",
+                            'price_upper': filterValueList[5] == null
+                                ? ""
+                                : "int(${filterValueList[5]})",
                             //'capacity': args.userType,
                           }))
-                              .body);
-                            
-                          
-                          
+                                  .body);
+                          print(response);
+
                           setState(() {
                             // for (int i = 0; i < response.length; i++) {
                             //   accommList.add(response[i]);
                             // }
                             accommList = response;
                           });
-                        }, icon: const Icon(Icons.search, color: Color.fromARGB(255, 0, 0, 0),)))
+                        },
+                        icon: const Icon(
+                          Icons.search,
+                          color: Color.fromARGB(255, 0, 0, 0),
+                        )))
               ],
             ),
             // filter icon for filtered search
@@ -271,21 +290,6 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                 ),
               ),
               ListTile(
-                title: const Text('Item 1'),
-                onTap: () {
-                  // Update the state of the app.
-                  // ...
-                },
-              ),
-              ListTile(
-                title: const Text('Item 2'),
-                onTap: () {
-                  // Update the state of the app.
-                  // ...
-                },
-              ),
-              // DONT KNOW IF PRPOER. Temporary Navigator.push
-              ListTile(
                 title: const Text('Favorites'),
                 onTap: () {
                   // NOT SURE IF THIS IS THE PROPER WAY, TEMPORARY Navigator.push
@@ -297,6 +301,20 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                       },
                     ),
                   );
+                },
+              ),
+              ListTile(
+                title: const Text('Logout'),
+                trailing: const Icon(Icons.logout),
+                onTap: () {
+                  Provider.of<TokenProvider>(context, listen: false)
+                      .removeToken("DO NOT REMOVE THIS PARAM");
+                  Provider.of<UserProvider>(context, listen: false)
+                      .removeUser("DO NOT REMOVE THIS PARAM");
+
+                  print("Logged out");
+
+                  Navigator.pushNamed(context, '/signin');
                 },
               ),
             ],
@@ -337,9 +355,25 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                       //key: new Key(getRandomString(15)),
                       itemCount: accommList.length,
                       itemBuilder: (context, index) {
-                        print([accommList[index]['_id'],accommList[index]['name'],accommList[index]['location_exact'], "assets/images/room_stock.jpg", 4, false, true]);
+                        print([
+                          accommList[index]['_id'],
+                          accommList[index]['name'],
+                          accommList[index]['location_exact'],
+                          "assets/images/room_stock.jpg",
+                          4,
+                          false,
+                          true
+                        ]);
                         return AccomCard(
-                          details: AccomCardDetails(accommList[index]['_id'],accommList[index]['name'],accommList[index]['location_exact'], "assets/images/room_stock.jpg", 4, false, true),
+                          details: AccomCardDetails(
+                              accommList[index]['_id'],
+                              accommList[index]['name'],
+                              accommList[index]['owner'],
+                              accommList[index]['location_exact'],
+                              "assets/images/room_stock.jpg",
+                              4,
+                              false,
+                              true),
                         );
                       },
                     ),

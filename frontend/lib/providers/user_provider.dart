@@ -25,4 +25,8 @@ class UserProvider with ChangeNotifier {
     _type = "";
     notifyListeners();
   }
+
+  bool get isAuthenticated {
+    return UserProvider()._id != "";
+  }
 }

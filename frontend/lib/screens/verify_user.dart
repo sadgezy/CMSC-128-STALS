@@ -212,35 +212,54 @@ class _VerificationPageState extends State<VerificationPage> {
     //ImagePicker picker = ImagePicker();
     //XFile? image = await picker.pickImage(source: ImageSource.gallery);
     FilePickerResult? result = await FilePicker.platform
-        .pickFiles(type: FileType.custom, allowedExtensions: ['jpg', 'png']);
+        .pickFiles(withData: true, type: FileType.custom, allowedExtensions: ['jpg', 'png']);
 
     if (result != null) {
-      setState(() {
-        _imageFile = result.files.first;
-      });
+      
 
-      final bytes = result.files.first.bytes;
-      String extn = result.files.first.name.split('.').last;
-      if (extn == 'png' || extn == 'PNG') {
-        base64Image = "data:image/png;base64," + base64Encode(bytes!.toList());
+      var bytes = result.files.first.bytes;
+      bytes ??= File(result.files.single.path!).readAsBytesSync();
+      double fileSize = (bytes.lengthInBytes / (1024 * 1024));
+      //print(bytes.lengthInBytes);
+      //print(fileSize);
+      if (fileSize > 1) {
+        setState(() {
+          _imageFile = null;
+        });
+
+        ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Image too large'),
+        ),
+      );
       } else {
-        base64Image = "data:image/jpeg;base64," + base64Encode(bytes!.toList());
-      }
-  
-      //print(result.files.first.name);
-      //print("img_pan : $base64Image");
-      //setState(() {});
-      //var imageFile = Image.network(image.path);
-      //html.File(image.path.codeUnits, image.path);
-      //print(imageFile.name);
+        setState(() {
+          _imageFile = result.files.first;
+        });
+        String extn = result.files.first.name.split('.').last;
+        if (extn == 'png' || extn == 'PNG') {
+          base64Image = "data:image/png;base64," + base64Encode(bytes!.toList());
+        } else {
+          base64Image = "data:image/jpeg;base64," + base64Encode(bytes!.toList());
+        }
+    
+        //print(result.files.first.name);
+        //print("img_pan : $base64Image");
+        //setState(() {});
+        //var imageFile = Image.network(image.path);
+        //html.File(image.path.codeUnits, image.path);
+        //print(imageFile.name);
 
-      //_idImage = image as XFile?;
-      //final bytes = File(imageFile.name).readAsBytesSync();
-      //String base64Image =  "data:image/png;base64,"+base64Encode(bytes);
+        //_idImage = image as XFile?;
+        //final bytes = File(imageFile.name).readAsBytesSync();
+        //String base64Image =  "data:image/png;base64,"+base64Encode(bytes);
 
-      //print(base64Image);
+        //print(base64Image);
+      }  
     } else {
-      _imageFile = null;
+      setState(() {
+        _imageFile = null;
+      });
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('No image selected'),

@@ -45,79 +45,7 @@ class _ViewArchivedAccommodationsState
 
   @override
   Widget build(BuildContext context) {
-    // var accom1 = AccomCardDetails(
-    //     "accommId1",
-    //     "Accommodation1",
-    //     "This is a description for accommodation 1",
-    //     "assets/images/room_stock.jpg",
-    //     3,
-    //     true,
-    //     true);
-    // var accom2 = AccomCardDetails(
-    //     "accommId2",
-    //     "Accommodation2",
-    //     "This is a description for accommodation 2",
-    //     "assets/images/room_stock.jpg",
-    //     5,
-    //     true,
-    //     true);
-    // var accom3 = AccomCardDetails(
-    //     "accommId3",
-    //     "Accommodation3",
-    //     "This is a description for accommodation 3",
-    //     "assets/images/room_stock.jpg",
-    //     2,
-    //     true,
-    //     true);
 
-    // var archivedAccomms = Column(children: [
-    //   const Padding(
-    //     padding: EdgeInsets.symmetric(vertical: 5),
-    //   ),
-    //   const Padding(
-    //     padding: EdgeInsets.only(left: 10),
-    //     child: Align(
-    //       alignment: Alignment.topLeft,
-    //       child: Text("Archived", style: TextStyle(fontSize: 18)),
-    //     ),
-    //   ),
-    //   const Padding(
-    //     padding: EdgeInsets.symmetric(vertical: 7),
-    //   ),
-    //   AccomCard(details: accom1),
-    //   const Padding(
-    //     padding: EdgeInsets.symmetric(vertical: 7),
-    //   ),
-    //   AccomCard(details: accom2),
-    //   const Padding(
-    //     padding: EdgeInsets.symmetric(vertical: 7),
-    //   ),
-    //   AccomCard(details: accom3),
-    // ]);
-
-    // return Scaffold(
-    //   body: SingleChildScrollView(
-    //     child: Column(children: [
-    //       Container(
-    //         height: MediaQuery.of(context).size.height,
-    //         width: MediaQuery.of(context).size.width,
-    //         padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-    //         color: UIParameter.WHITE,
-    //         child: SingleChildScrollView(
-    //           child: Column(children: [
-    //             const Padding(
-    //               padding: EdgeInsets.symmetric(vertical: 10),
-    //             ),
-    //             archivedAccomms,
-    //             const Padding(
-    //               padding: EdgeInsets.symmetric(vertical: 30),
-    //             ),
-    //           ]),
-    //         ),
-    //       ),
-    //     ]),
-    //   ),
-    // );
     return Scaffold(
       appBar: AppBar(
         backgroundColor: UIParameter.MAROON,
@@ -129,35 +57,53 @@ class _ViewArchivedAccommodationsState
           future: _accommodationsFuture,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              print(snapshot);
-              List<AccomCardDetails> accommodations = snapshot.data!;
-              return Column(
-                children: accommodations.map((accommodation) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 7),
-                    child: AccomCard(details: accommodation),
-                  );
-                }).toList(),
-              );
-            } else if (snapshot.hasData && snapshot.data!.isEmpty) {
-              return Center(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    children: [
-                      const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20)),
-                      Image.asset(
-                        'assets/images/no_archived.png',
-                        height: 70,
-                      ),
-                      const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 10)),
-                      Text("No Archived Accommodations")
-                    ],
+              if (snapshot.data!.length > 0) {
+                return Column(
+                  children: [
+                    const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 5)),
+                    const Padding(
+                        padding: EdgeInsets.only(left: 10),
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Text("Archived", style: TextStyle(fontSize: 18)),
+                        )),
+                    const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 7)),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        AccomCardDetails accommodation = snapshot.data![index];
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 7),
+                          child: AccomCard(details: accommodation),
+                        );
+                      },
+                    ),
+                  ],
+                );
+              } else {
+                return Center(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      children: [
+                        const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 20)),
+                        Image.asset(
+                          'assets/images/no_archived.png',
+                          height: 70,
+                        ),
+                        const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 10)),
+                        Text("No Archived Accommodations"),
+                      ],
+                    ),
                   ),
-                ),
-              );
+                );
+              }
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             }

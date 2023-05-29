@@ -17,6 +17,7 @@ class _SignInPageState extends State<SignInPage> {
   final GlobalKey<FormState> passKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  String user_type = "";
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +77,6 @@ class _SignInPageState extends State<SignInPage> {
                 'password': passwordController.text
               }))
               .body);
-          print(response);
           if (response['message'] == "Login Successful") {
             String token = response['token'];
             Provider.of<TokenProvider>(context, listen: false).setToken(token);
@@ -87,9 +87,24 @@ class _SignInPageState extends State<SignInPage> {
                   'email': emailController.text,
                 }))
                 .body);
+            print(response2);
+            user_type = response2[0]["user_type"];
             Provider.of<UserProvider>(context, listen: false).setUser(response2[0]["_id"], response2[0]["email"], response2[0]["username"], response2[0]["user_type"]);
           }
-          
+          else{
+            print("Unsuccesful login!");
+          }
+
+        if(user_type == "user"){
+            Navigator.pushNamed(context, '/signed_homepage');
+        }
+        else if(user_type == 'admin'){
+            Navigator.pushNamed(context, '/admin');
+        }
+        else{
+            Navigator.pushNamed(context, '/view_owned_accomms');
+        }
+
         },
         style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
@@ -204,8 +219,8 @@ class _SignInPageState extends State<SignInPage> {
 
           );
     } else {
-      print(Provider.of<UserProvider>(context, listen: false).userInfo);
-      return Center(child: Text("You are logged in"),);
+      // print(Provider.of<UserProvider>(context, listen: false).userInfo);
+      return Center(child: CircularProgressIndicator());
     }
   }
 }
