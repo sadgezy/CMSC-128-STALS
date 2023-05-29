@@ -18,8 +18,6 @@ import 'package:provider/provider.dart';
 import 'package:stals_frontend/providers/token_provider.dart';
 import 'package:stals_frontend/providers/user_provider.dart';
 import 'package:stals_frontend/screens/verify_user.dart';
-
-import 'package:stals_frontend/screens/admin/admin_viewusers_card.dart';
 void main() {
   runApp(
     MultiProvider(
@@ -57,7 +55,6 @@ class MyApp extends StatelessWidget {
         '/owned/accomm/edit': (context) => const EditAccomm(),
         '/admin/view_users': (context) => const ViewUsersPage(),
         '/admin/view_accomms': (context) => const AdminViewAccommodations(),
-        '/admin/usercard_test': (context) => const ViewUserCardsTest()
       },
       theme: ThemeData(
         fontFamily: 'SFProDisplayRegular',
