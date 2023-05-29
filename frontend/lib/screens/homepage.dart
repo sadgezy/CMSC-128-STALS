@@ -265,7 +265,7 @@ class _UnregisteredHomepageState extends State<UnregisteredHomepage> {
         child: FutureBuilder<List<AccomCardDetails>>(
           future: _accommodationsFuture,
           builder: (context, snapshot) {
-            if (snapshot.hasData) {
+            if (snapshot.hasData && snapshot.data!.isNotEmpty) {
               // print("RAN");
               print(snapshot);
               List<AccomCardDetails> accommodations = snapshot.data!;
@@ -278,7 +278,7 @@ class _UnregisteredHomepageState extends State<UnregisteredHomepage> {
                   );
                 }).toList(),
               );
-            } else if (snapshot.hasData && snapshot.data!.isEmpty) {
+            } else if (snapshot.hasData && snapshot.data!.isEmpty || !snapshot.hasData) {
               return Center(
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
