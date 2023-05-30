@@ -314,7 +314,8 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
 
                   print("Logged out");
 
-                  Navigator.pushNamed(context, '/signin');
+                  Navigator.pop(context);
+                  Navigator.pop(context);
                 },
               ),
             ],

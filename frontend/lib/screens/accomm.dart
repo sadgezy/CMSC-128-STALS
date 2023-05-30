@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:stals_frontend/UI_parameters.dart' as UIParams;
+import '../components/report_listing.dart';
 
 class AccommPage extends StatefulWidget {
   AccommPage({super.key});
@@ -42,10 +44,8 @@ bool isRef = ?
 
 */
 
-
 class Item1 extends StatelessWidget {
-  
-   Item1({Key? key}) : super(key: key);
+  Item1({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -97,11 +97,11 @@ class Item1 extends StatelessWidget {
 }
 
 class Item2 extends StatelessWidget {
-   Item2({Key? key}) : super(key: key);
+  Item2({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration:  BoxDecoration(
+      decoration: BoxDecoration(
         gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -143,7 +143,7 @@ class Item2 extends StatelessWidget {
 }
 
 class Item3 extends StatelessWidget {
-   Item3({Key? key}) : super(key: key);
+  Item3({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -175,7 +175,7 @@ class Item3 extends StatelessWidget {
 }
 
 class Item4 extends StatelessWidget {
-   Item4({Key? key}) : super(key: key);
+  Item4({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -254,13 +254,12 @@ class _AccommPageState extends State<AccommPage> {
       // print(user_type);
       final arguments = ModalRoute.of(context)!.settings.arguments;
       if (arguments != null) {
-      // Do something with the passed data
+        // Do something with the passed data
         final card_id = arguments as String;
         id = card_id;
         // print('Received ID: id');
       }
-      String url1 =
-          "http://127.0.0.1:8000/view-establishment/" + id + "/";
+      String url1 = "http://127.0.0.1:8000/view-establishment/" + id + "/";
       final response = await http.get(Uri.parse(url1));
       var responseData = json.decode(response.body);
 
@@ -281,7 +280,7 @@ class _AccommPageState extends State<AccommPage> {
       response2_phone_no = responseData2['phone_no'];
     }
 
-     Widget buildUserTypeIcon() {
+    Widget buildUserTypeIcon() {
       if (user_type == "user") {
         return Icon(
           Icons.bookmark_outline,
@@ -292,20 +291,18 @@ class _AccommPageState extends State<AccommPage> {
           Icons.edit,
           size: 20,
         );
-      }
-      else if (user_type == "owner") {
+      } else if (user_type == "owner") {
         return Icon(
           Icons.edit,
           size: 20,
         );
-      }
-       else {
+      } else {
         return Icon(
           Icons.bookmark,
           size: 20,
         );
       }
-    } 
+    }
 
     return Scaffold(
       //App bar start
@@ -352,7 +349,7 @@ class _AccommPageState extends State<AccommPage> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             // While the data is being fetched, show a loading indicator
-            return  Center(child: CircularProgressIndicator());
+            return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             // If there's an error, display an error message
             return Center(child: Text('Error: ${snapshot.error}'));
@@ -377,94 +374,106 @@ class _AccommPageState extends State<AccommPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                            if (user_type == 'user')
-                              ElevatedButton(
-                                onPressed: () {
-                                  // Action for the first icon button
-                                    Navigator.pushNamed(context, '/owned/accomm/edit', arguments: id);
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  shape: CircleBorder(),
-                                  primary: Colors.white,
-                                  onPrimary: Color.fromARGB(255, 25, 83, 95),
+                              if (user_type == 'user')
+                                ElevatedButton(
+                                  onPressed: () {
+                                    // Action for the first icon button
+                                    Navigator.pushNamed(
+                                        context, '/owned/accomm/edit',
+                                        arguments: id);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    shape: CircleBorder(),
+                                    primary: Colors.white,
+                                    onPrimary: Color.fromARGB(255, 25, 83, 95),
+                                  ),
+                                  child: buildUserTypeIcon(), // First icon
                                 ),
-                                child: buildUserTypeIcon(), // First icon
-                              ),
-                            if (user_type == 'owner')
-                              ElevatedButton(
-                                onPressed: () {
-                                  // Action for the second icon button
-                                  Navigator.pushNamed(context, '/view_owned_accomms', arguments: id);
-
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  shape: CircleBorder(),
-                                  primary: Colors.white,
-                                  onPrimary: Color.fromARGB(255, 25, 83, 95),
-                                ),
-                                child: buildUserTypeIcon(), // Second icon
-                              ),
-                            if (user_type == 'owner')
-                              ElevatedButton(
-                                onPressed: () async {
-                                  // Action for the third icon button
-                                  String url = "http://127.0.0.1:8000/delete-establishment/" + id + "/";
-                                  final response = await http.delete(Uri.parse(url));
-                                  Navigator.pushNamed(context, '/view_owned_accomms');
-
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  shape: CircleBorder(),
-                                  primary: Colors.white,
-                                  onPrimary: Color.fromARGB(255, 25, 83, 95),
-                                ),
-                                child:Icon(
-                                  Icons.delete,
-                                  size: 20,
-                                ), // Third icon
-                              ),
                               if (user_type == 'owner')
-                              ElevatedButton(
-                                onPressed: () async {
-                                  // Action for the third icon button
-                                 String url = "http://127.0.0.1:8000/archive-establishment/" + id + "/";
-                                  final response = await http.put(Uri.parse(url));
-                                  Navigator.pushNamed(context, '/view_owned_accomms');
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  shape: CircleBorder(),
-                                  primary: Colors.white,
-                                  onPrimary: Color.fromARGB(255, 25, 83, 95),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    // Action for the second icon button
+                                    Navigator.pushNamed(
+                                        context, '/view_owned_accomms',
+                                        arguments: id);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    shape: CircleBorder(),
+                                    primary: Colors.white,
+                                    onPrimary: Color.fromARGB(255, 25, 83, 95),
+                                  ),
+                                  child: buildUserTypeIcon(), // Second icon
                                 ),
-                                child:Icon(
-                                  Icons.archive,
-                                  size: 20,
+                              if (user_type == 'owner')
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    // Action for the third icon button
+                                    String url =
+                                        "http://127.0.0.1:8000/delete-establishment/" +
+                                            id +
+                                            "/";
+                                    final response =
+                                        await http.delete(Uri.parse(url));
+                                    Navigator.pushNamed(
+                                        context, '/view_owned_accomms');
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    shape: CircleBorder(),
+                                    primary: Colors.white,
+                                    onPrimary: Color.fromARGB(255, 25, 83, 95),
+                                  ),
+                                  child: Icon(
+                                    Icons.delete,
+                                    size: 20,
+                                  ), // Third icon
                                 ),
-                              ),
+                              if (user_type == 'owner')
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    // Action for the third icon button
+                                    String url =
+                                        "http://127.0.0.1:8000/archive-establishment/" +
+                                            id +
+                                            "/";
+                                    final response =
+                                        await http.put(Uri.parse(url));
+                                    Navigator.pushNamed(
+                                        context, '/view_owned_accomms');
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    shape: CircleBorder(),
+                                    primary: Colors.white,
+                                    onPrimary: Color.fromARGB(255, 25, 83, 95),
+                                  ),
+                                  child: Icon(
+                                    Icons.archive,
+                                    size: 20,
+                                  ),
+                                ),
                             ],
                           ),
                         ],
                       )
                     ],
                   ),
-                   SizedBox(
+                  SizedBox(
                     height: 10,
                   ),
                   Row(
                     //optional
                     children: [
-                       SizedBox(
+                      SizedBox(
                         width: 35,
                       ),
                       FittedBox(
                         fit: BoxFit.scaleDown,
                         child: Text(
                           response_Name,
-                          style:  TextStyle(
+                          style: TextStyle(
                               fontSize: 28, fontWeight: FontWeight.bold),
                         ),
                       ),
-                       SizedBox(
+                      SizedBox(
                         width: 35,
                       ),
                       Column(children: [
@@ -474,7 +483,7 @@ class _AccommPageState extends State<AccommPage> {
                               setState(() => this.rating = rating),
                           color: Colors.black,
                         ),
-                         FittedBox(
+                        FittedBox(
                           fit: BoxFit.scaleDown,
                           child: Text(
                             "100+ reviews",
@@ -487,39 +496,39 @@ class _AccommPageState extends State<AccommPage> {
                   ),
 
                   //spacing and divider line
-                   SizedBox(
+                  SizedBox(
                     height: 10,
                   ),
-                   Divider(
+                  Divider(
                     color: Colors.black,
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                       SizedBox(
+                      SizedBox(
                         height: 3,
                       ),
 
                       //Owner Name
                       Row(
                         children: <Widget>[
-                           SizedBox(
+                          SizedBox(
                             width: 10,
                           ),
-                           CircleAvatar(
+                          CircleAvatar(
                             radius: 15,
                             backgroundImage:
                                 AssetImage("assets/images/room_stock.jpg"),
                           ),
-                           SizedBox(
+                          SizedBox(
                             width: 5,
                           ),
                           FittedBox(
                             fit: BoxFit.fill,
                             child: Text(
                               response2_ownerName,
-                              style:  TextStyle(
+                              style: TextStyle(
                                   fontSize: 15, fontWeight: FontWeight.normal),
                             ),
                           ),
@@ -529,10 +538,10 @@ class _AccommPageState extends State<AccommPage> {
                       //Location Details
                       Row(
                         children: <Widget>[
-                           SizedBox(
+                          SizedBox(
                             width: 5,
                           ),
-                           Icon(
+                          Icon(
                             Icons.location_pin,
                             color: Colors.blue,
                             size: 40,
@@ -541,7 +550,7 @@ class _AccommPageState extends State<AccommPage> {
                             fit: BoxFit.fill,
                             child: Text(
                               response_Address,
-                              style:  TextStyle(
+                              style: TextStyle(
                                   fontSize: 15, fontWeight: FontWeight.normal),
                             ),
                           ),
@@ -551,34 +560,94 @@ class _AccommPageState extends State<AccommPage> {
                       //Contact Info
                       Row(
                         children: <Widget>[
-                           SizedBox(
+                          SizedBox(
                             width: 6,
                           ),
-                           Icon(
+                          Icon(
                             Icons.phone_in_talk_rounded,
                             color: Colors.blue,
                             size: 33,
                           ),
-                           SizedBox(
+                          SizedBox(
                             width: 5,
                           ),
                           FittedBox(
                             fit: BoxFit.fill,
                             child: Text(
                               response2_phone_no,
-                              style:  TextStyle(
+                              style: TextStyle(
                                   fontSize: 15, fontWeight: FontWeight.normal),
                             ),
                           ),
                         ],
+                      ),
+                      TextButton.icon(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                scrollable: true,
+                                title: const Text("Report Listing"),
+                                content: Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: Form(
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              EdgeInsets.symmetric(vertical: 5),
+                                          child: Text("Select Reason"),
+                                        ),
+                                        ReportListing(),
+                                        Padding(
+                                          padding: EdgeInsets.all(10),
+                                          child: SizedBox(
+                                            width: 200,
+                                            child: TextFormField(
+                                              style: TextStyle(fontSize: 13),
+                                              decoration: const InputDecoration(
+                                                border: OutlineInputBorder(),
+                                                hintText: "Report description",
+                                                contentPadding:
+                                                    EdgeInsets.all(10),
+                                              ),
+                                              maxLines: 5,
+                                              minLines: 5,
+                                            ),
+                                          ),
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () {},
+                                          child: Text(
+                                            "Report",
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor: UIParams.MAROON),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        icon: Icon(Icons.flag_outlined),
+                        label: Text("Report this listing"),
+                        style: TextButton.styleFrom(
+                          foregroundColor: Color(0xff7B2D26),
+                        ),
                       )
                     ],
                   ),
 
-                   SizedBox(
+                  SizedBox(
                     height: 10,
                   ),
-                   Divider(
+                  Divider(
                     color: Colors.black,
                   ),
 
@@ -591,9 +660,9 @@ class _AccommPageState extends State<AccommPage> {
                         options: CarouselOptions(
                           height: 200.0,
                           autoPlay: true,
-                          autoPlayInterval:  Duration(seconds: 5),
+                          autoPlayInterval: Duration(seconds: 5),
                           autoPlayAnimationDuration:
-                               Duration(milliseconds: 1000),
+                              Duration(milliseconds: 1000),
                           autoPlayCurve: Curves.fastOutSlowIn,
                           pauseAutoPlayOnTouch: true,
                           aspectRatio: 2.0,
@@ -622,7 +691,7 @@ class _AccommPageState extends State<AccommPage> {
                           return Container(
                             width: 10.0,
                             height: 10.0,
-                            margin:  EdgeInsets.symmetric(
+                            margin: EdgeInsets.symmetric(
                                 vertical: 10.0, horizontal: 2.0),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
