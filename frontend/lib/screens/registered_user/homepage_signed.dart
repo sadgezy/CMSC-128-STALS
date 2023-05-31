@@ -23,6 +23,7 @@ class RegisteredHomepage extends StatefulWidget {
 class _RegisteredHomepageState extends State<RegisteredHomepage> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   Filter accomFilter = Filter(null, null, null, null, null, null);
+  String searchVal = '';
 
   // put data into a list. Will iterate over it to build cards
   List<dynamic> accommList = [];
@@ -149,7 +150,7 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
   */
   @override
   Widget build(BuildContext context) {
-    String searchVal = '';
+    
     /*
     DUMMY OBJECT
     <Object will come from database fetch later>
