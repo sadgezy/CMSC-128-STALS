@@ -9,6 +9,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:stals_frontend/UI_parameters.dart' as UIParams;
 import '../components/report_listing.dart';
 import 'package:stals_frontend/screens/review.dart';
+import 'package:stals_frontend/screens/owner/add_room.dart';
 
 class AccommPage extends StatefulWidget {
   AccommPage({super.key});
@@ -287,7 +288,8 @@ class _AccommPageState extends State<AccommPage> {
           },
           color: Colors.black,
         ),
-        title: Text(
+        title: 
+        Text(
           "Return to Homepage",
           style: TextStyle(color: Colors.black),
         ),
@@ -345,7 +347,7 @@ class _AccommPageState extends State<AccommPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              if (user_type == 'user')
+                              if (user_type == 'owner')
                                 ElevatedButton(
                                   onPressed: () {
                                     // Action for the first icon button
@@ -360,21 +362,21 @@ class _AccommPageState extends State<AccommPage> {
                                   ),
                                   child: buildUserTypeIcon(), // First icon
                                 ),
-                              if (user_type == 'owner')
-                                ElevatedButton(
-                                  onPressed: () {
-                                    // Action for the second icon button
-                                    Navigator.pushNamed(
-                                        context, '/view_owned_accomms',
-                                        arguments: id);
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    shape: CircleBorder(),
-                                    primary: Colors.white,
-                                    onPrimary: Color.fromARGB(255, 25, 83, 95),
-                                  ),
-                                  child: buildUserTypeIcon(), // Second icon
-                                ),
+                              // if (user_type == 'owner')
+                              //   ElevatedButton(
+                              //     onPressed: () {
+                              //       // Action for the second icon button
+                              //       Navigator.pushNamed(
+                              //           context, '/view_owned_accomms',
+                              //           arguments: id);
+                              //     },
+                              //     style: ElevatedButton.styleFrom(
+                              //       shape: CircleBorder(),
+                              //       primary: Colors.white,
+                              //       onPrimary: Color.fromARGB(255, 25, 83, 95),
+                              //     ),
+                              //     child: buildUserTypeIcon(), // Second icon
+                              //   ),
                               if (user_type == 'owner')
                                 ElevatedButton(
                                   onPressed: () async {
@@ -418,6 +420,24 @@ class _AccommPageState extends State<AccommPage> {
                                   ),
                                   child: const Icon(
                                     Icons.archive,
+                                    size: 20,
+                                  ),
+                                ),
+                              if (user_type == 'owner')
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    // Action for the fourth icon button
+                                    showDialog(context: context, builder: (context) {
+                                      return AddRoom(estabId: id, estabName: response_Name);
+                                    });
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    shape: const CircleBorder(),
+                                    primary: Colors.white,
+                                    onPrimary: Color.fromARGB(255, 25, 83, 95),
+                                  ),
+                                  child: const Icon(
+                                    Icons.add_home,
                                     size: 20,
                                   ),
                                 ),

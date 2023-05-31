@@ -236,7 +236,7 @@ class RoomManager(models_django.Manager):
     
 class Room(models_django.Model):
     _id = models_djongo.ObjectIdField()
-    availability = models_django.BooleanField()
+    availability = models_django.BooleanField(default=True)
     price_lower = models_django.IntegerField()
     price_upper = models_django.IntegerField()
     capacity = models_django.PositiveIntegerField()

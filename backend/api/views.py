@@ -355,8 +355,12 @@ def unarchive_establishment(request, pk):
 
 @api_view(['POST'])
 def add_room_to_establishment(request):
-
-    serializer = RoomSerializer(data=request.data)
+    req = {}
+    req["capacity"] = int(request.data["capacity"])
+    req["price_lower"] = int(request.data["price_lower"])
+    req["price_upper"] = int(request.data["price_upper"])
+    req["establishment_id"] = request.data["establishment_id"]
+    serializer = RoomSerializer(data=req)
     
     if serializer.is_valid():
         try:
