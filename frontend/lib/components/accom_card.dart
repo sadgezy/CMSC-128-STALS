@@ -102,48 +102,48 @@ class _AccomCardState extends State<AccomCard> {
                       ),
                     ),
                     // if admin only display rating
-                    isAdmin
-                        ? RatingBar.builder(
-                            minRating: 0,
-                            maxRating: 5,
-                            initialRating: widget.details.getRating(),
-                            direction: Axis.horizontal,
-                            allowHalfRating: false,
+                    isAdmin ? Container()
+                        // ? RatingBar.builder(
+                        //     minRating: 0,
+                        //     maxRating: 5,
+                        //     initialRating: widget.details.getRating(),
+                        //     direction: Axis.horizontal,
+                        //     allowHalfRating: false,
 
-                            // ignore gestures to make rating un-editable
-                            ignoreGestures: true,
-                            onRatingUpdate: (rating) {
-                              /* CANNOT RATE HERE */
-                            },
-                            itemSize: 18,
-                            itemBuilder: (BuildContext context, int index) =>
-                                const Icon(
-                                  Icons.star,
-                                  color: Colors.amber,
-                                ))
+                        //     // ignore gestures to make rating un-editable
+                        //     ignoreGestures: true,
+                        //     onRatingUpdate: (rating) {
+                        //       /* CANNOT RATE HERE */
+                        //     },
+                        //     itemSize: 18,
+                        //     itemBuilder: (BuildContext context, int index) =>
+                        //         const Icon(
+                        //           Icons.star,
+                        //           color: Colors.amber,
+                        //         ))
                         // else add favorite icon
                         : Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              RatingBar.builder(
-                                  minRating: 0,
-                                  maxRating: 5,
-                                  initialRating: widget.details.getRating(),
-                                  direction: Axis.horizontal,
-                                  allowHalfRating: false,
+                              // RatingBar.builder(
+                              //     minRating: 0,
+                              //     maxRating: 5,
+                              //     initialRating: widget.details.getRating(),
+                              //     direction: Axis.horizontal,
+                              //     allowHalfRating: false,
 
-                                  // ignore gestures to make rating un-editable
-                                  ignoreGestures: true,
-                                  onRatingUpdate: (rating) {
-                                    /* CANNOT RATE HERE */
-                                  },
-                                  itemSize: 18,
-                                  itemBuilder:
-                                      (BuildContext context, int index) =>
-                                          const Icon(
-                                            Icons.star,
-                                            color: Colors.amber,
-                                          )),
+                              //     // ignore gestures to make rating un-editable
+                              //     ignoreGestures: true,
+                              //     onRatingUpdate: (rating) {
+                              //       /* CANNOT RATE HERE */
+                              //     },
+                              //     itemSize: 18,
+                              //     itemBuilder:
+                              //         (BuildContext context, int index) =>
+                              //             const Icon(
+                              //               Icons.star,
+                              //               color: Colors.amber,
+                              //             )),
                               InkWell(
                                   onTap: () {
                                     setState(() {
