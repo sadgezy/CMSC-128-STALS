@@ -6,7 +6,7 @@ import '../components/accom_card.dart';
 import '../components/search_bar.dart';
 import 'package:stals_frontend/providers/user_provider.dart';
 import 'package:provider/provider.dart';
-// import 'package:stals_frontend/providers/token_provider.dart';
+import 'package:stals_frontend/providers/token_provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';

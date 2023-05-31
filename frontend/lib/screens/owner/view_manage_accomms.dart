@@ -55,7 +55,7 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
 
        // Apply the filter
       List<AccomCardDetails> filteredAccommodations = accommodations
-          .where((accommodation) => accommodation.owner == id && accommodation.verified)
+          .where((accommodation) => accommodation.owner == id)// && accommodation.verified)
           .toList();
       
       return filteredAccommodations;
@@ -147,9 +147,8 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
           builder: (context, snapshot) {
             if (snapshot.hasData && snapshot.data!.isNotEmpty) {
               print("RAN");
-              print(snapshot);
               List<AccomCardDetails> accommodations = snapshot.data!;
-              print(accommodations);
+              print(accommodations[0].getImage());
               return Column(
                 children: accommodations.map((accommodation) {
                   return Padding(

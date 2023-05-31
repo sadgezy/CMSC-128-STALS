@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../UI_parameters.dart' as UIParameter;
 import '../classes.dart';
+import 'dart:typed_data';
 
 class AccomCard extends StatefulWidget {
   /* Accom Card will accept an object that will contain
@@ -50,10 +51,10 @@ class _AccomCardState extends State<AccomCard> {
           // if (widget.details.ID is in the list of the signed in user's owned accomms) {
           //   Navigator.pushNamed(context, '/owned/accomm');
           // } else {
-          Navigator.pushNamed(context, '/accomm', arguments: widget.details.getID());
+          Navigator.pushNamed(context, '/accomm',
+              arguments: widget.details.getID());
           // }
         },
-        
         child: Row(
           children: [
             // 2 Sized boxes to split the card in half
@@ -63,15 +64,15 @@ class _AccomCardState extends State<AccomCard> {
               width: (MediaQuery.of(context).size.width - 40) / 2,
               height: 200,
               child: ClipRRect(
-                // round the left edges of the image to match the card
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(15),
-                    bottomLeft: Radius.circular(15)),
-                child: FittedBox(
-                  fit: BoxFit.fill,
-                  child: Image.asset(widget.details.getImage()),
-                ),
-              ),
+                  // round the left edges of the image to match the card
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      bottomLeft: Radius.circular(15)),
+                  child: FittedBox(
+                      fit: BoxFit.fill,
+                      child: Image.memory(Uri.parse(widget.details.getImage())
+                          .data!
+                          .contentAsBytes()))),
             ),
             SizedBox(
               width: (MediaQuery.of(context).size.width - 40) / 2,
