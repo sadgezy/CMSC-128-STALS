@@ -667,9 +667,7 @@ class _AccommPageState extends State<AccommPage> {
                           pauseAutoPlayOnTouch: true,
                           aspectRatio: 2.0,
                           onPageChanged: (index, reason) {
-                            setState(() {
-                              _currentIndex = index;
-                            });
+                            _currentIndex = index;
                           },
                         ),
                         items: cardList.map((card) {
