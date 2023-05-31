@@ -141,7 +141,7 @@ class Item3 extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Image.asset(
-            'assets/flutter_dev.png',
+            'assets/images/bed.png',
             height: 180.0,
             fit: BoxFit.cover,
           )
@@ -190,6 +190,8 @@ class _EditAccommState extends State<EditAccomm> {
   int _index = 1;
   bool favorite = false;
   int _currentIndex = 0;
+  TextEditingController _controller = TextEditingController();
+  String userInput = "NA";
   List cardList = [const Item1(), const Item2(), const Item3(), const Item4()];
 
   List<T> map<T>(List list, Function handler) {
@@ -260,6 +262,8 @@ class _EditAccommState extends State<EditAccomm> {
                           ),
                           ElevatedButton(
                               onPressed: () {
+                                //on button pushed it saves the editted details and routes back the owned accoms page
+                                //setState(() {});
                                 Navigator.pushNamed(context, '/owned/accomm');
                               },
                               style: ElevatedButton.styleFrom(
@@ -288,12 +292,15 @@ class _EditAccommState extends State<EditAccomm> {
                       const SizedBox(
                         width: 35,
                       ),
-                      const FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Text(
-                          "Apartment 1",
-                          style: TextStyle(
-                              fontSize: 28, fontWeight: FontWeight.bold),
+                      SizedBox(
+                        height: 50,
+                        width: 200,
+                        child: TextFormField(
+                          controller: _controller,
+                          decoration: const InputDecoration(
+                              hintText: 'Edit Establishment Name',
+                              //label text should be the value before editting
+                              labelText: 'Previous Establishment Name'),
                         ),
                       ),
                       const SizedBox(
@@ -325,31 +332,34 @@ class _EditAccommState extends State<EditAccomm> {
                   ),
 
                   //Contact Information Box
-                  const Column(
+                  Column(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 3,
                       ),
                       //Profile icon and name of owner
                       Row(
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
-                          CircleAvatar(
+                          //Profile of Owner
+                          const CircleAvatar(
                             radius: 15,
                             backgroundImage:
                                 AssetImage("assets/images/room_stock.jpg"),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
-                          FittedBox(
-                            fit: BoxFit.fill,
-                            child: Text(
-                              "Hanse Hernandez",
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.normal),
+                          SizedBox(
+                            height: 50,
+                            width: 200,
+                            child: TextFormField(
+                              controller: _controller,
+                              decoration: const InputDecoration(
+                                  hintText: 'Edit Owner Name',
+                                  labelText: 'Previous Owner Name'),
                             ),
                           ),
                         ],
@@ -357,20 +367,22 @@ class _EditAccommState extends State<EditAccomm> {
                       //Location Details
                       Row(
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
-                          Icon(
+                          const Icon(
                             Icons.location_pin,
                             color: Colors.blue,
                             size: 40,
                           ),
-                          FittedBox(
-                            fit: BoxFit.fill,
-                            child: Text(
-                              "Barangay Batong Malake, Los Baños, Laguna",
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.normal),
+                          SizedBox(
+                            height: 50,
+                            width: 200,
+                            child: TextFormField(
+                              controller: _controller,
+                              decoration: const InputDecoration(
+                                  hintText: 'Edit Location Details',
+                                  labelText: 'Previous Location Details'),
                             ),
                           ),
                         ],
@@ -378,23 +390,25 @@ class _EditAccommState extends State<EditAccomm> {
                       //Contact Info
                       Row(
                         children: <Widget>[
-                          SizedBox(
+                          const SizedBox(
                             width: 6,
                           ),
-                          Icon(
+                          const Icon(
                             Icons.phone_in_talk_rounded,
                             color: Colors.blue,
                             size: 33,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
-                          FittedBox(
-                            fit: BoxFit.fill,
-                            child: Text(
-                              "09123456978 / 0912-4201-619",
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.normal),
+                          SizedBox(
+                            height: 50,
+                            width: 200,
+                            child: TextFormField(
+                              controller: _controller,
+                              decoration: const InputDecoration(
+                                  hintText: 'Edit Contact Details',
+                                  labelText: 'Previous Contact Details'),
                             ),
                           ),
                         ],
@@ -414,6 +428,25 @@ class _EditAccommState extends State<EditAccomm> {
                   //Alternative Cards
                   Column(
                     children: [
+                      // Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                      //   const Text("Click Here to add Room details",
+                      //       style: TextStyle(color: Colors.black)),
+                      //   //this button should reroute to the Add Rooms route?
+                      //   ElevatedButton(
+                      //       onPressed: () {
+                      //         Navigator.pushNamed(
+                      //             context, '/add_accommodation');
+                      //       },
+                      //       style: ElevatedButton.styleFrom(
+                      //           shape: const CircleBorder(),
+                      //           backgroundColor: Colors.white,
+                      //           foregroundColor:
+                      //               const Color.fromARGB(255, 25, 83, 95)),
+                      //       child: const Icon(
+                      //         Icons.save_as,
+                      //         size: 20,
+                      //       )),
+                      // ]),
                       CarouselSlider(
                         options: CarouselOptions(
                           height: 200.0,
@@ -472,18 +505,18 @@ class _EditAccommState extends State<EditAccomm> {
                   ),
 
                   //Description
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 4,
                         width: 25,
                       ),
                       Expanded(
                           child: Column(
                         children: [
-                          FittedBox(
+                          const FittedBox(
                             alignment: Alignment.topLeft,
                             child: Text(
                               "About Name",
@@ -493,18 +526,25 @@ class _EditAccommState extends State<EditAccomm> {
                               textAlign: TextAlign.start,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 2,
                             width: 5,
                           ),
                           SizedBox(
-                            width: 450,
-                            child: Text(
-                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"
-                                " do eiusmod tempor incididunt ut labore et dolore magna "
-                                "aliqua. Ut enim ad minim veniam, quis nostrud "
-                                "exercitation ullamco laboris nisi ut aliquip ex ea "
-                                "commodo consequat."),
+                            height: 100,
+                            width: 600,
+                            child: TextFormField(
+                              maxLines: 5,
+                              controller: _controller,
+                              decoration: const InputDecoration(
+                                  hintText:
+                                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"
+                                      " do eiusmod tempor incididunt ut labore et dolore magna "
+                                      "aliqua. Ut enim ad minim veniam, quis nostrud "
+                                      "exercitation ullamco laboris nisi ut aliquip ex ea "
+                                      "commodo consequat.",
+                                  labelText: 'Edit Description'),
+                            ),
                           ),
                         ],
                       ))

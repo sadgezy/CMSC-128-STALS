@@ -281,11 +281,11 @@ class _OwnedAccommPageState extends State<OwnedAccommPage> {
                                     context, '/owned/accomm/edit');
                               },
                               style: ElevatedButton.styleFrom(
-                                  shape: CircleBorder(),
+                                  shape: const CircleBorder(),
                                   backgroundColor: Colors.white,
                                   foregroundColor:
-                                      Color.fromARGB(255, 25, 83, 95)),
-                              child: Icon(
+                                      const Color.fromARGB(255, 25, 83, 95)),
+                              child: const Icon(
                                 Icons.edit,
                                 size: 20,
                               ))
@@ -315,7 +315,7 @@ class _OwnedAccommPageState extends State<OwnedAccommPage> {
                         ),
                       ),
                       const SizedBox(
-                        width: 35,
+                        width: 50,
                       ),
                       Column(children: [
                         StarRating(
