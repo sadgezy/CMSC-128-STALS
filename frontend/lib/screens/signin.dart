@@ -224,10 +224,10 @@ class _SignInPageState extends State<SignInPage> {
           );
     } else {
       // print(Provider.of<UserProvider>(context, listen: false).userInfo);
-      Timer(const Duration(milliseconds: 500), () {
-        Provider.of<TokenProvider>(context, listen: false).removeToken("");
-        Provider.of<UserProvider>(context, listen: false).removeUser("");
-      });
+      // Timer(const Duration(milliseconds: 500), () {
+      //   Provider.of<TokenProvider>(context, listen: false).removeToken("");
+      //   Provider.of<UserProvider>(context, listen: false).removeUser("");
+      // });
       
       return Center(child: CircularProgressIndicator());
     }

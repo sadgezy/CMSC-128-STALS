@@ -23,6 +23,7 @@ class UserProvider with ChangeNotifier {
     _email = "";
     _username = "";
     _type = "";
+    print("XXXXXXXXXXXXXXXXXXXXXXXXXXXX");
     notifyListeners();
   }
 
