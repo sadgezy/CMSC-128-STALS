@@ -136,7 +136,7 @@ class Review(models_django.Model):
 
 
 class EstablishmentManager(models_django.Manager):
-    def create_establishment(self,name,owner,location_exact,location_approx,establishment_type,tenant_type,description,utilities,photos,proof_type,proof_number,proof_picture,reviews,verified,archived,accommodations):
+    def create_establishment(self,name,owner,location_exact,location_approx,establishment_type,tenant_type,description,utilities,loc_picture,proof_type,proof_number,proof_picture,reviews,verified,archived,accommodations):
         # email=self.normalize_email(email)
 
         establishment=self.model(
@@ -148,7 +148,7 @@ class EstablishmentManager(models_django.Manager):
             tenant_type = tenant_type,
             utilities = utilities,
             description = description,
-            photos = photos,
+            loc_picture = loc_picture,
             proof_type = proof_type,
             proof_number = proof_number,
             proof_picture = proof_picture,

@@ -111,8 +111,8 @@ class _UnregisteredHomepageState extends State<UnregisteredHomepage> {
                         title: Text('Routes'),
                         content: Container(
                           constraints: BoxConstraints(
-                            minHeight: 500, //minimum height
-                            minWidth: 300, // minimum width
+                            minHeight: 200, //minimum height
+                            minWidth: 100, // minimum width
                             maxHeight:
                                 MediaQuery.of(context).size.height * 0.65,
                             maxWidth: MediaQuery.of(context).size.width * 0.25,
