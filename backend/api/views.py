@@ -594,7 +594,7 @@ def search_establishment(request):
     unique_estab_ids = list(dict.fromkeys(estab_ids))
     
     actual_estab_results = [d for d in serializer_estab_full.data if str(d['_id']) in unique_estab_ids]
-    print(actual_estab_results)
+    #print(actual_estab_results)
     return Response(actual_estab_results)
     
 

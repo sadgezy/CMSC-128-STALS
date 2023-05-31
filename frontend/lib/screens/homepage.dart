@@ -273,7 +273,7 @@ class _UnregisteredHomepageState extends State<UnregisteredHomepage> {
               return Column(
                 children: accommodations.map((accommodation) {
                   return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 7),
+                    padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
                     child: AccomCard(details: accommodation),
                   );
                 }).toList(),

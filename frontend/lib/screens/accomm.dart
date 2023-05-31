@@ -8,6 +8,7 @@ import 'dart:convert';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:stals_frontend/UI_parameters.dart' as UIParams;
 import '../components/report_listing.dart';
+import 'package:stals_frontend/screens/review.dart';
 
 class AccommPage extends StatefulWidget {
   AccommPage({super.key});
@@ -78,16 +79,13 @@ class _ItemState extends State<Item> {
     if (widget.index % 4 == 0) {
       color1 = const Color(0xffff4000);
       color2 = const Color(0xffffcc66);
-    }
-    else if (widget.index % 4 == 1) {
-      color1 = const Color(0xff5f2c82) ;
+    } else if (widget.index % 4 == 1) {
+      color1 = const Color(0xff5f2c82);
       color2 = const Color(0xff49a09d);
-    }
-    else if (widget.index % 4 == 2) {
+    } else if (widget.index % 4 == 2) {
       color1 = const Color.fromARGB(255, 17, 149, 21);
       color2 = const Color.fromARGB(255, 85, 94, 120);
-    }
-    else {
+    } else {
       color1 = Color.fromARGB(255, 32, 27, 26);
       color2 = Color.fromARGB(255, 232, 154, 53);
     }
@@ -97,38 +95,30 @@ class _ItemState extends State<Item> {
         gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            stops: [
-              0.3,
-              1
-            ],
-            
-            colors:  [
-              color1,
-              color2
-            ]),
+            stops: [0.3, 1],
+            colors: [color1, color2]),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-            const Icon(
-            Icons.king_bed_outlined,
-            color: Color.fromARGB(255, 255, 255, 255),
-            size: 75,
+              const Icon(
+                Icons.king_bed_outlined,
+                color: Color.fromARGB(255, 255, 255, 255),
+                size: 75,
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 50,
+              ),
+              Text("${widget.index + 1}",
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 50.0,
+                      fontWeight: FontWeight.w600)),
+            ],
           ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width / 50,
-          ),
-            Text("${widget.index + 1}",
-              style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 50.0,
-                  fontWeight: FontWeight.w600)),
-          
-          ],),
           Text("Max Capacity : ${widget.capacity}",
               style: const TextStyle(
                   color: Colors.white,
@@ -546,82 +536,111 @@ class _AccommPageState extends State<AccommPage> {
                           ),
                         ],
                       ),
-                      if (user_type == "user" || user_type=="guest")
-                      TextButton.icon(
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              print(user_type);
-                              if (user_type == "guest") {
-                                return AlertDialog(
-                                  content: Padding(
-                                    padding: const EdgeInsets.all(8),
-                                    child: Text("Sign in to file a report"),
-                                  )
-                                );
-                              }
-                              return AlertDialog(
-                                scrollable: true,
-                                title: const Text("Report Listing"),
-                                content: Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: Form(
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsets.symmetric(vertical: 5),
-                                          child: Text("Select Reason"),
-                                        ),
-                                        ReportListing(),
-                                        Padding(
-                                          padding: EdgeInsets.all(10),
-                                          child: SizedBox(
-                                            width: 200,
-                                            child: TextFormField(
-                                              style: TextStyle(fontSize: 13),
-                                              decoration: const InputDecoration(
-                                                border: OutlineInputBorder(),
-                                                hintText: "Report description",
-                                                contentPadding:
-                                                    EdgeInsets.all(10),
+
+                      if (user_type == "user" || user_type == "guest")
+                        Row(
+                          children: [
+                            TextButton.icon(
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    print(user_type);
+                                    if (user_type == "guest") {
+                                      return AlertDialog(
+                                          content: Padding(
+                                        padding: const EdgeInsets.all(8),
+                                        child: Text("Sign in to file a report"),
+                                      ));
+                                    }
+                                    return AlertDialog(
+                                      scrollable: true,
+                                      title: const Text("Report Listing"),
+                                      content: Padding(
+                                        padding: const EdgeInsets.all(8),
+                                        child: Form(
+                                          child: Column(
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: 5),
+                                                child: Text("Select Reason"),
                                               ),
-                                              maxLines: 5,
-                                              minLines: 5,
-                                            ),
+                                              ReportListing(),
+                                              Padding(
+                                                padding: EdgeInsets.all(10),
+                                                child: SizedBox(
+                                                  width: 200,
+                                                  child: TextFormField(
+                                                    style:
+                                                        TextStyle(fontSize: 13),
+                                                    decoration:
+                                                        const InputDecoration(
+                                                      border:
+                                                          OutlineInputBorder(),
+                                                      hintText:
+                                                          "Report description",
+                                                      contentPadding:
+                                                          EdgeInsets.all(10),
+                                                    ),
+                                                    maxLines: 5,
+                                                    minLines: 5,
+                                                  ),
+                                                ),
+                                              ),
+                                              ElevatedButton(
+                                                onPressed: () {},
+                                                child: Text(
+                                                  "Report",
+                                                  style: TextStyle(
+                                                      color: Colors.white),
+                                                ),
+                                                style: ElevatedButton.styleFrom(
+                                                    backgroundColor:
+                                                        UIParams.MAROON),
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                        ElevatedButton(
-                                          onPressed: () {},
-                                          child: Text(
-                                            "Report",
-                                            style:
-                                                TextStyle(color: Colors.white),
-                                          ),
-                                          style: ElevatedButton.styleFrom(
-                                              backgroundColor: UIParams.MAROON),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          );
-                        },
-                        icon: Icon(Icons.flag_outlined),
-                        label: Text("Report this listing"),
-                        style: TextButton.styleFrom(
-                          foregroundColor: Color(0xff7B2D26),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                              icon: Icon(Icons.flag_outlined),
+                              label: Text("Report this listing"),
+                              style: TextButton.styleFrom(
+                                foregroundColor: Color(0xff7B2D26),
+                              ),
+                            ),
+                            TextButton.icon(
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    print(user_type);
+                                    if (user_type == "guest") {
+                                      return AlertDialog(
+                                          content: Padding(
+                                        padding: const EdgeInsets.all(8),
+                                        child: Text("Sign in to file a report"),
+                                      ));
+                                    }
+                                    return Review(accommName: response_Name);
+                                  },
+                                );
+                              },
+                              icon: Icon(Icons.rate_review),
+                              label: Text("Write a review"),
+                              style: TextButton.styleFrom(
+                                foregroundColor: Color(0xff7B2D26),
+                              ),
+                            )
+                          ],
                         ),
-                      )
                     ],
                   ),
 
-                  SizedBox(
-                    height: 10,
-                  ),
                   Divider(
                     color: Colors.black,
                   ),
