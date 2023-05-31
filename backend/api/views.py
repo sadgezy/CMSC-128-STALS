@@ -454,12 +454,16 @@ def review_establishment(request):
             serializer.save()
             estab = Establishment.objects.get(pk=ObjectId(serializer.data['establishment_id']))
         except Establishment.DoesNotExist:
-            review = Review.objects.get(pk=ObjectId(serializer.data['review_id']))
+            review = Review.objects.get(pk=ObjectId(serializer.data['_id']))
             review.delete()
             return Response(data={"message": "Establishment not found"}, status=status.HTTP_404_NOT_FOUND)
         
-        estab.append(serializer.data['_id'])
+        estab.reviews.append(serializer.data['_id'])
         estab.save()
+
+        user = User.objects.get(pk=ObjectId(serializer.data['user_id']))
+        user.reviews.append(serializer.data['_id'])
+        user.save()
 
         return Response(serializer.data, status=201)
     return Response(data={"message": "Failed creating a review"})

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../UI_parameters.dart' as UIParameter;
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class Review extends StatefulWidget {
   final String accommName;
@@ -94,8 +96,12 @@ class _ReviewState extends State<Review> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           // FUNCTION TO DO WHEN PRESSED/CLICKED
+                          String url = "http://127.0.0.1:8000/review-establishment/";
+                          final response = await json.decode((await http.post(Uri.parse(url),
+                                  body: {"user_id": widget.userId, "establishment_id": widget.estabId, "username": widget.username, "body": reviewController.text}))
+                              .body);
                           Navigator.pop(context);
                         },
                         style: ElevatedButton.styleFrom(

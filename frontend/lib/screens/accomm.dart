@@ -625,7 +625,7 @@ class _AccommPageState extends State<AccommPage> {
                                       return AlertDialog(
                                           content: Padding(
                                         padding: const EdgeInsets.all(8),
-                                        child: Text("Sign in to file a report"),
+                                        child: Text("Sign in to post a review"),
                                       ));
                                     }
                                     return Review(accommName: response_Name, estabId: id, username: username, userId: user_id);

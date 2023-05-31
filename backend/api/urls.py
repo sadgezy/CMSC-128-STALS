@@ -31,7 +31,7 @@ urlpatterns = [
     path('archive-establishment/<str:pk>/', views.archive_establishment),
     path('unarchive-establishment/<str:pk>/', views.unarchive_establishment),
     path('report-establishment/', views.report_establishment),
-    path('review-establishment/<str:pk>/', views.review_establishment),
+    path('review-establishment/', views.review_establishment),
 
     path('add-room/', views.add_room_to_establishment), 
     path('edit-room/<str:pk>/', views.edit_room), 
