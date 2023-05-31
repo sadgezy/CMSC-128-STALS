@@ -236,6 +236,7 @@ class _AccommPageState extends State<AccommPage> {
   String id = "";
   String email = "";
   String user_type = "";
+  String loc_picture = "";
 
   @override
   Widget build(BuildContext context) {
@@ -262,6 +263,7 @@ class _AccommPageState extends State<AccommPage> {
       String url1 = "http://127.0.0.1:8000/view-establishment/" + id + "/";
       final response = await http.get(Uri.parse(url1));
       var responseData = json.decode(response.body);
+      loc_picture = responseData["loc_picture"];
 
       owner_id = responseData['owner'];
       // print(owner_id);
@@ -364,12 +366,12 @@ class _AccommPageState extends State<AccommPage> {
                         alignment: Alignment.topRight,
                         children: [
                           Container(
-                            height: 280,
+                            height: MediaQuery.of(context).size.height/3.5,
                             width: MediaQuery.of(context).size.width,
-                            child: Image.asset(
-                              'assets/images/room_stock.jpg',
-                              fit: BoxFit.cover,
-                            ),
+                            child: 
+                            Image.memory(Uri.parse(loc_picture)
+                          .data!
+                          .contentAsBytes())
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -476,22 +478,22 @@ class _AccommPageState extends State<AccommPage> {
                       SizedBox(
                         width: 35,
                       ),
-                      Column(children: [
-                        StarRating(
-                          rating: rating,
-                          onRatingChanged: (rating) =>
-                              setState(() => this.rating = rating),
-                          color: Colors.black,
-                        ),
-                        FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Text(
-                            "100+ reviews",
-                            style: TextStyle(
-                                fontSize: 10, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ]),
+                      // Column(children: [
+                      //   StarRating(
+                      //     rating: rating,
+                      //     onRatingChanged: (rating) =>
+                      //         setState(() => this.rating = rating),
+                      //     color: Colors.black,
+                      //   ),
+                      //   FittedBox(
+                      //     fit: BoxFit.scaleDown,
+                      //     child: Text(
+                      //       "100+ reviews",
+                      //       style: TextStyle(
+                      //           fontSize: 10, fontWeight: FontWeight.bold),
+                      //     ),
+                      //   ),
+                      // ]),
                     ],
                   ),
 
