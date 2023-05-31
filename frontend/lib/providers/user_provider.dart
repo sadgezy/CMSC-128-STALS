@@ -4,7 +4,7 @@ class UserProvider with ChangeNotifier {
   String _id = "";
   String _email = "";
   String _username = "";
-  String _type = "";
+  String _type = "guest";
 
   List<String> get userInfo {
     return [_id, _email, _username, _type];
@@ -22,7 +22,7 @@ class UserProvider with ChangeNotifier {
     _id = "";
     _email = "";
     _username = "";
-    _type = "";
+    _type = "guest";
     print("XXXXXXXXXXXXXXXXXXXXXXXXXXXX");
     notifyListeners();
   }

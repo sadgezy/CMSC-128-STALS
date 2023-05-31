@@ -546,11 +546,21 @@ class _AccommPageState extends State<AccommPage> {
                           ),
                         ],
                       ),
+                      if (user_type == "user" || user_type=="guest")
                       TextButton.icon(
                         onPressed: () {
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
+                              print(user_type);
+                              if (user_type == "guest") {
+                                return AlertDialog(
+                                  content: Padding(
+                                    padding: const EdgeInsets.all(8),
+                                    child: Text("Sign in to file a report"),
+                                  )
+                                );
+                              }
                               return AlertDialog(
                                 scrollable: true,
                                 title: const Text("Report Listing"),
