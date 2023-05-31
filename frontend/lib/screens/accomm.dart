@@ -44,10 +44,54 @@ bool isRef = ?
 
 */
 
-class Item1 extends StatelessWidget {
-  Item1({Key? key}) : super(key: key);
+class Item extends StatefulWidget {
+  const Item(
+      {Key? key,
+      required this.availability,
+      required this.priceLower,
+      required this.priceUpper,
+      required this.capacity,
+      required this.index})
+      : super(key: key);
+  final int priceLower;
+  final int priceUpper;
+  final bool availability;
+  final int capacity;
+  final int index;
+
+  @override
+  State<Item> createState() => _ItemState();
+}
+
+class _ItemState extends State<Item> {
+  String available = "";
+  late Color color1;
+  late Color color2;
+
   @override
   Widget build(BuildContext context) {
+    if (widget.availability == true) {
+      available = "Yes";
+    } else {
+      available = "No";
+    }
+    if (widget.index % 4 == 0) {
+      color1 = const Color(0xffff4000);
+      color2 = const Color(0xffffcc66);
+    }
+    else if (widget.index % 4 == 1) {
+      color1 = const Color(0xff5f2c82) ;
+      color2 = const Color(0xff49a09d);
+    }
+    else if (widget.index % 4 == 2) {
+      color1 = const Color.fromARGB(255, 17, 149, 21);
+      color2 = const Color.fromARGB(255, 85, 94, 120);
+    }
+    else {
+      color1 = Color.fromARGB(255, 32, 27, 26);
+      color2 = Color.fromARGB(255, 232, 154, 53);
+    }
+
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -57,151 +101,56 @@ class Item1 extends StatelessWidget {
               0.3,
               1
             ],
-            colors: [
-              Color(0xffff4000),
-              Color(0xffffcc66),
+            
+            colors:  [
+              color1,
+              color2
             ]),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Icon(
-            Icons.single_bed_outlined,
+          
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+            const Icon(
+            Icons.king_bed_outlined,
             color: Color.fromARGB(255, 255, 255, 255),
             size: 75,
           ),
-          Text("1 Bedroom",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold)),
-          Text("Max Capacity : 4",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17.0,
-                  fontWeight: FontWeight.w600)),
-          Text("Price: Php69,420",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17.0,
-                  fontWeight: FontWeight.w600)),
-          Text("Available : Yes",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17.0,
-                  fontWeight: FontWeight.w600))
-        ],
-      ),
-    );
-  }
-}
-
-class Item2 extends StatelessWidget {
-  Item2({Key? key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            stops: [0.3, 1],
-            colors: [Color(0xff5f2c82), Color(0xff49a09d)]),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Icon(
-            Icons.king_bed_outlined,
-            color: Colors.white,
-            size: 75,
+          SizedBox(
+            width: MediaQuery.of(context).size.width / 50,
           ),
-          Text("2 Bedroom",
-              style: TextStyle(
+            Text("${widget.index + 1}",
+              style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold)),
-          Text("Max Capacity : 6",
-              style: TextStyle(
+                  fontSize: 50.0,
+                  fontWeight: FontWeight.w600)),
+          
+          ],),
+          Text("Max Capacity : ${widget.capacity}",
+              style: const TextStyle(
                   color: Colors.white,
                   fontSize: 17.0,
                   fontWeight: FontWeight.w600)),
-          Text("Price: Php69,420",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17.0,
-                  fontWeight: FontWeight.w600)),
-          Text("Available : No",
-              style: TextStyle(
+          if (widget.priceLower == widget.priceUpper)
+            Text("Price: ${widget.priceLower}",
+                style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 17.0,
+                    fontWeight: FontWeight.w600))
+          else
+            Text("Price: ${widget.priceLower} -  ${widget.priceUpper}",
+                style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 17.0,
+                    fontWeight: FontWeight.w600)),
+          Text("Available : $available",
+              style: const TextStyle(
                   color: Colors.white,
                   fontSize: 17.0,
                   fontWeight: FontWeight.w600))
-        ],
-      ),
-    );
-  }
-}
-
-class Item3 extends StatelessWidget {
-  Item3({Key? key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            stops: [
-              0.3,
-              1
-            ],
-            colors: [
-              Color(0xffff4000),
-              Color(0xffffcc66),
-            ]),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Image.asset(
-            'assets/flutter_dev.png',
-            height: 180.0,
-            fit: BoxFit.cover,
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class Item4 extends StatelessWidget {
-  Item4({Key? key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text("Hanse",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold)),
-          Text("Papasok kaba",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17.0,
-                  fontWeight: FontWeight.w600)),
-          Text("Syempre hindi",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold)),
-          Text("Tara kain",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17.0,
-                  fontWeight: FontWeight.w600)),
         ],
       ),
     );
@@ -213,7 +162,7 @@ class _AccommPageState extends State<AccommPage> {
   int _index = 1;
   bool favorite = false;
   int _currentIndex = 0;
-  List cardList = [Item1(), Item2(), Item3(), Item4()];
+  List cardList = [];
 
   List<T> map<T>(List list, Function handler) {
     List<T> result = [];
@@ -237,6 +186,7 @@ class _AccommPageState extends State<AccommPage> {
   String email = "";
   String user_type = "";
   String loc_picture = "";
+  String description = "";
 
   @override
   Widget build(BuildContext context) {
@@ -264,6 +214,7 @@ class _AccommPageState extends State<AccommPage> {
       final response = await http.get(Uri.parse(url1));
       var responseData = json.decode(response.body);
       loc_picture = responseData["loc_picture"];
+      description = responseData["description"];
 
       owner_id = responseData['owner'];
       // print(owner_id);
@@ -280,6 +231,20 @@ class _AccommPageState extends State<AccommPage> {
       response2_lastname = responseData2['last_name'];
       response2_ownerName = response2_firstname + " " + response2_lastname;
       response2_phone_no = responseData2['phone_no'];
+
+      String url3 = "http://127.0.0.1:8000/search-room/";
+      final response3 = await json.decode((await http.post(Uri.parse(url3),
+              body: {"establishment_id": id, "user_type": user_type}))
+          .body);
+
+      for (int i = 0; i < response3.length; i++) {
+        cardList.add(Item(
+            availability: response3[i]["availability"],
+            priceLower: response3[i]["price_lower"],
+            priceUpper: response3[i]["price_upper"],
+            capacity: response3[i]["capacity"],
+            index: i));
+      }
     }
 
     Widget buildUserTypeIcon() {
@@ -366,13 +331,11 @@ class _AccommPageState extends State<AccommPage> {
                         alignment: Alignment.topRight,
                         children: [
                           Container(
-                            height: MediaQuery.of(context).size.height/3.5,
-                            width: MediaQuery.of(context).size.width,
-                            child: 
-                            Image.memory(Uri.parse(loc_picture)
-                          .data!
-                          .contentAsBytes())
-                          ),
+                              height: MediaQuery.of(context).size.height / 3.5,
+                              width: MediaQuery.of(context).size.width,
+                              child: Image.memory(Uri.parse(loc_picture)
+                                  .data!
+                                  .contentAsBytes())),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
@@ -443,11 +406,11 @@ class _AccommPageState extends State<AccommPage> {
                                         context, '/view_owned_accomms');
                                   },
                                   style: ElevatedButton.styleFrom(
-                                    shape: CircleBorder(),
+                                    shape: const CircleBorder(),
                                     primary: Colors.white,
                                     onPrimary: Color.fromARGB(255, 25, 83, 95),
                                   ),
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.archive,
                                     size: 20,
                                   ),
@@ -458,24 +421,24 @@ class _AccommPageState extends State<AccommPage> {
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
                     //optional
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         width: 35,
                       ),
                       FittedBox(
                         fit: BoxFit.scaleDown,
                         child: Text(
                           response_Name,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 28, fontWeight: FontWeight.bold),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 35,
                       ),
                       // Column(children: [
@@ -670,6 +633,7 @@ class _AccommPageState extends State<AccommPage> {
                           aspectRatio: 2.0,
                           onPageChanged: (index, reason) {
                             _currentIndex = index;
+                            print(index);
                           },
                         ),
                         items: cardList.map((card) {
@@ -685,67 +649,54 @@ class _AccommPageState extends State<AccommPage> {
                           });
                         }).toList(),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: map<Widget>(cardList, (index, url) {
-                          return Container(
-                            width: 10.0,
-                            height: 10.0,
-                            margin: EdgeInsets.symmetric(
-                                vertical: 10.0, horizontal: 2.0),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: _currentIndex == index
-                                  ? Colors.blueAccent
-                                  : Colors.grey,
-                            ),
-                          );
-                        }),
-                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   children: map<Widget>(cardList, (index, url) {
+                      //     return Container(
+                      //       width: 10.0,
+                      //       height: 10.0,
+                      //       margin: EdgeInsets.symmetric(
+                      //           vertical: 10.0, horizontal: 2.0),
+                      //       decoration: BoxDecoration(
+                      //         shape: BoxShape.circle,
+                      //         color: _currentIndex == index
+                      //             ? Colors.blueAccent
+                      //             : Colors.grey,
+                      //       ),
+                      //     );
+                      //   }),
+                      // ),
                     ],
                   ),
                   //End of Cards
 
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  Divider(
+                  const Divider(
                     color: Colors.black,
                   ),
                   //Description
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(
-                        height: 4,
-                        width: 25,
-                      ),
                       Expanded(
                           child: Column(
                         children: [
-                          FittedBox(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              "About Name",
-                              maxLines: 1,
-                              style: TextStyle(
-                                  fontSize: 22, fontWeight: FontWeight.normal),
-                              textAlign: TextAlign.start,
-                            ),
+                          const Text(
+                            "Description",
+                            maxLines: 1,
+                            style: TextStyle(
+                                fontSize: 22, fontWeight: FontWeight.normal),
+                            textAlign: TextAlign.center,
                           ),
                           SizedBox(
-                            height: 2,
-                            width: 5,
+                            height: MediaQuery.of(context).size.height / 60,
                           ),
                           SizedBox(
                             width: 450,
-                            child: Text(
-                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"
-                                " do eiusmod tempor incididunt ut labore et dolore magna "
-                                "aliqua. Ut enim ad minim veniam, quis nostrud "
-                                "exercitation ullamco laboris nisi ut aliquip ex ea "
-                                "commodo consequat."),
+                            child: Text(description,
+                                style: TextStyle(fontWeight: FontWeight.normal),
+                                textAlign: TextAlign.center),
                           ),
                         ],
                       ))
@@ -760,332 +711,331 @@ class _AccommPageState extends State<AccommPage> {
                   ),
 
                   //Highlights
-                  FittedBox(
-                    fit: BoxFit.fill,
-                    child: Text(
-                      "Highlights",
-                      style: TextStyle(
-                          fontSize: 22, fontWeight: FontWeight.normal),
-                    ),
-                  ),
-                  SizedBox(
-                      height: 2000,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 5,
-                          ),
-                          FittedBox(
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Icon(
-                                  Icons.pets,
-                                  color: Colors.blue,
-                                  size: 40,
-                                ),
-                                FittedBox(
-                                    fit: BoxFit.fill,
-                                    child: Text(
-                                      "Pets Allowed",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.normal),
-                                    )),
-                              ],
-                            ),
-                          ),
-                          FittedBox(
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Icon(
-                                  Icons.bathtub_outlined,
-                                  color: Colors.blue,
-                                  size: 40,
-                                ),
-                                FittedBox(
-                                    fit: BoxFit.fill,
-                                    child: Text(
-                                      "Own Bathroom",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.normal),
-                                    )),
-                              ],
-                            ),
-                          ),
-                          FittedBox(
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Icon(
-                                  Icons.restaurant_menu,
-                                  color: Colors.blue,
-                                  size: 40,
-                                ),
-                                FittedBox(
-                                    fit: BoxFit.fill,
-                                    child: Text(
-                                      "Cooking Allowed",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.normal),
-                                    )),
-                              ],
-                            ),
-                          ),
-                          FittedBox(
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Icon(
-                                  Icons.wifi,
-                                  color: Colors.blue,
-                                  size: 40,
-                                ),
-                                FittedBox(
-                                    fit: BoxFit.fill,
-                                    child: Text(
-                                      "With Internet Connection",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.normal),
-                                    )),
-                              ],
-                            ),
-                          ),
-                          FittedBox(
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Icon(
-                                  Icons.ac_unit,
-                                  color: Colors.blue,
-                                  size: 40,
-                                ),
-                                FittedBox(
-                                    fit: BoxFit.fill,
-                                    child: Text(
-                                      "Air - Conditioned Room",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.normal),
-                                    )),
-                              ],
-                            ),
-                          ),
-                          FittedBox(
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Icon(
-                                  Icons.bedtime_off,
-                                  color: Colors.blue,
-                                  size: 40,
-                                ),
-                                FittedBox(
-                                    fit: BoxFit.fill,
-                                    child: Text(
-                                      "No Curfew",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.normal),
-                                    )),
-                              ],
-                            ),
-                          ),
-                          FittedBox(
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Icon(
-                                  Icons.electric_meter_outlined,
-                                  color: Colors.blue,
-                                  size: 40,
-                                ),
-                                FittedBox(
-                                    fit: BoxFit.fill,
-                                    child: Text(
-                                      "Own Meter",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.normal),
-                                    )),
-                              ],
-                            ),
-                          ),
-                          FittedBox(
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Icon(
-                                  Icons.bed_sharp,
-                                  color: Colors.blue,
-                                  size: 40,
-                                ),
-                                FittedBox(
-                                    fit: BoxFit.fill,
-                                    child: Text(
-                                      "Furnished",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.normal),
-                                    )),
-                              ],
-                            ),
-                          ),
-                          FittedBox(
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Icon(
-                                  Icons.desk,
-                                  color: Colors.blue,
-                                  size: 40,
-                                ),
-                                FittedBox(
-                                    fit: BoxFit.fill,
-                                    child: Text(
-                                      "Semi Furnished",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.normal),
-                                    )),
-                              ],
-                            ),
-                          ),
-                          FittedBox(
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Icon(
-                                  Icons.drive_eta_outlined,
-                                  color: Colors.blue,
-                                  size: 40,
-                                ),
-                                FittedBox(
-                                    fit: BoxFit.fill,
-                                    child: Text(
-                                      "Parking Space",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.normal),
-                                    )),
-                              ],
-                            ),
-                          ),
-                          FittedBox(
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Icon(
-                                  Icons.local_laundry_service_outlined,
-                                  color: Colors.blue,
-                                  size: 40,
-                                ),
-                                FittedBox(
-                                    fit: BoxFit.fill,
-                                    child: Text(
-                                      "Laundry Allowed",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.normal),
-                                    )),
-                              ],
-                            ),
-                          ),
-                          FittedBox(
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Icon(
-                                  Icons.nights_stay_outlined,
-                                  color: Colors.blue,
-                                  size: 40,
-                                ),
-                                FittedBox(
-                                    fit: BoxFit.fill,
-                                    child: Text(
-                                      "Overnight Visitors Allowed",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.normal),
-                                    )),
-                              ],
-                            ),
-                          ),
-                          FittedBox(
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Icon(
-                                  Icons.directions_walk,
-                                  color: Colors.blue,
-                                  size: 40,
-                                ),
-                                FittedBox(
-                                    fit: BoxFit.fill,
-                                    child: Text(
-                                      "Visitors Allowed",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.normal),
-                                    )),
-                              ],
-                            ),
-                          ),
-                          FittedBox(
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Icon(
-                                  Icons.video_camera_front_outlined,
-                                  color: Colors.blue,
-                                  size: 40,
-                                ),
-                                FittedBox(
-                                    fit: BoxFit.fill,
-                                    child: Text(
-                                      "CCTV in the Area",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.normal),
-                                    )),
-                              ],
-                            ),
-                          ),
-                        ],
-                      )),
+                  // FittedBox(
+                  //   fit: BoxFit.fill,
+                  //   child: Text(
+                  //     "Highlights",
+                  //     style: TextStyle(
+                  //         fontSize: 22, fontWeight: FontWeight.normal),
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //     child: Column(
+                  //   crossAxisAlignment: CrossAxisAlignment.start,
+                  //   children: [
+                  //     SizedBox(
+                  //       height: 5,
+                  //     ),
+                  //     FittedBox(
+                  //       child: Row(
+                  //         children: [
+                  //           SizedBox(
+                  //             width: 5,
+                  //           ),
+                  //           Icon(
+                  //             Icons.pets,
+                  //             color: Colors.blue,
+                  //             size: 40,
+                  //           ),
+                  //           FittedBox(
+                  //               fit: BoxFit.fill,
+                  //               child: Text(
+                  //                 "Pets Allowed",
+                  //                 style: TextStyle(
+                  //                     fontSize: 16,
+                  //                     fontWeight: FontWeight.normal),
+                  //               )),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //     FittedBox(
+                  //       child: Row(
+                  //         children: [
+                  //           SizedBox(
+                  //             width: 5,
+                  //           ),
+                  //           Icon(
+                  //             Icons.bathtub_outlined,
+                  //             color: Colors.blue,
+                  //             size: 40,
+                  //           ),
+                  //           FittedBox(
+                  //               fit: BoxFit.fill,
+                  //               child: Text(
+                  //                 "Own Bathroom",
+                  //                 style: TextStyle(
+                  //                     fontSize: 16,
+                  //                     fontWeight: FontWeight.normal),
+                  //               )),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //     FittedBox(
+                  //       child: Row(
+                  //         children: [
+                  //           SizedBox(
+                  //             width: 5,
+                  //           ),
+                  //           Icon(
+                  //             Icons.restaurant_menu,
+                  //             color: Colors.blue,
+                  //             size: 40,
+                  //           ),
+                  //           FittedBox(
+                  //               fit: BoxFit.fill,
+                  //               child: Text(
+                  //                 "Cooking Allowed",
+                  //                 style: TextStyle(
+                  //                     fontSize: 16,
+                  //                     fontWeight: FontWeight.normal),
+                  //               )),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //     FittedBox(
+                  //       child: Row(
+                  //         children: [
+                  //           SizedBox(
+                  //             width: 5,
+                  //           ),
+                  //           Icon(
+                  //             Icons.wifi,
+                  //             color: Colors.blue,
+                  //             size: 40,
+                  //           ),
+                  //           FittedBox(
+                  //               fit: BoxFit.fill,
+                  //               child: Text(
+                  //                 "With Internet Connection",
+                  //                 style: TextStyle(
+                  //                     fontSize: 16,
+                  //                     fontWeight: FontWeight.normal),
+                  //               )),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //     FittedBox(
+                  //       child: Row(
+                  //         children: [
+                  //           SizedBox(
+                  //             width: 5,
+                  //           ),
+                  //           Icon(
+                  //             Icons.ac_unit,
+                  //             color: Colors.blue,
+                  //             size: 40,
+                  //           ),
+                  //           FittedBox(
+                  //               fit: BoxFit.fill,
+                  //               child: Text(
+                  //                 "Air - Conditioned Room",
+                  //                 style: TextStyle(
+                  //                     fontSize: 16,
+                  //                     fontWeight: FontWeight.normal),
+                  //               )),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //     FittedBox(
+                  //       child: Row(
+                  //         children: [
+                  //           SizedBox(
+                  //             width: 5,
+                  //           ),
+                  //           Icon(
+                  //             Icons.bedtime_off,
+                  //             color: Colors.blue,
+                  //             size: 40,
+                  //           ),
+                  //           FittedBox(
+                  //               fit: BoxFit.fill,
+                  //               child: Text(
+                  //                 "No Curfew",
+                  //                 style: TextStyle(
+                  //                     fontSize: 16,
+                  //                     fontWeight: FontWeight.normal),
+                  //               )),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //     FittedBox(
+                  //       child: Row(
+                  //         children: [
+                  //           SizedBox(
+                  //             width: 5,
+                  //           ),
+                  //           Icon(
+                  //             Icons.electric_meter_outlined,
+                  //             color: Colors.blue,
+                  //             size: 40,
+                  //           ),
+                  //           FittedBox(
+                  //               fit: BoxFit.fill,
+                  //               child: Text(
+                  //                 "Own Meter",
+                  //                 style: TextStyle(
+                  //                     fontSize: 16,
+                  //                     fontWeight: FontWeight.normal),
+                  //               )),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //     FittedBox(
+                  //       child: Row(
+                  //         children: [
+                  //           SizedBox(
+                  //             width: 5,
+                  //           ),
+                  //           Icon(
+                  //             Icons.bed_sharp,
+                  //             color: Colors.blue,
+                  //             size: 40,
+                  //           ),
+                  //           FittedBox(
+                  //               fit: BoxFit.fill,
+                  //               child: Text(
+                  //                 "Furnished",
+                  //                 style: TextStyle(
+                  //                     fontSize: 16,
+                  //                     fontWeight: FontWeight.normal),
+                  //               )),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //     FittedBox(
+                  //       child: Row(
+                  //         children: [
+                  //           SizedBox(
+                  //             width: 5,
+                  //           ),
+                  //           Icon(
+                  //             Icons.desk,
+                  //             color: Colors.blue,
+                  //             size: 40,
+                  //           ),
+                  //           FittedBox(
+                  //               fit: BoxFit.fill,
+                  //               child: Text(
+                  //                 "Semi Furnished",
+                  //                 style: TextStyle(
+                  //                     fontSize: 16,
+                  //                     fontWeight: FontWeight.normal),
+                  //               )),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //     FittedBox(
+                  //       child: Row(
+                  //         children: [
+                  //           SizedBox(
+                  //             width: 5,
+                  //           ),
+                  //           Icon(
+                  //             Icons.drive_eta_outlined,
+                  //             color: Colors.blue,
+                  //             size: 40,
+                  //           ),
+                  //           FittedBox(
+                  //               fit: BoxFit.fill,
+                  //               child: Text(
+                  //                 "Parking Space",
+                  //                 style: TextStyle(
+                  //                     fontSize: 16,
+                  //                     fontWeight: FontWeight.normal),
+                  //               )),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //     FittedBox(
+                  //       child: Row(
+                  //         children: [
+                  //           SizedBox(
+                  //             width: 5,
+                  //           ),
+                  //           Icon(
+                  //             Icons.local_laundry_service_outlined,
+                  //             color: Colors.blue,
+                  //             size: 40,
+                  //           ),
+                  //           FittedBox(
+                  //               fit: BoxFit.fill,
+                  //               child: Text(
+                  //                 "Laundry Allowed",
+                  //                 style: TextStyle(
+                  //                     fontSize: 16,
+                  //                     fontWeight: FontWeight.normal),
+                  //               )),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //     FittedBox(
+                  //       child: Row(
+                  //         children: [
+                  //           SizedBox(
+                  //             width: 5,
+                  //           ),
+                  //           Icon(
+                  //             Icons.nights_stay_outlined,
+                  //             color: Colors.blue,
+                  //             size: 40,
+                  //           ),
+                  //           FittedBox(
+                  //               fit: BoxFit.fill,
+                  //               child: Text(
+                  //                 "Overnight Visitors Allowed",
+                  //                 style: TextStyle(
+                  //                     fontSize: 16,
+                  //                     fontWeight: FontWeight.normal),
+                  //               )),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //     FittedBox(
+                  //       child: Row(
+                  //         children: [
+                  //           SizedBox(
+                  //             width: 5,
+                  //           ),
+                  //           Icon(
+                  //             Icons.directions_walk,
+                  //             color: Colors.blue,
+                  //             size: 40,
+                  //           ),
+                  //           FittedBox(
+                  //               fit: BoxFit.fill,
+                  //               child: Text(
+                  //                 "Visitors Allowed",
+                  //                 style: TextStyle(
+                  //                     fontSize: 16,
+                  //                     fontWeight: FontWeight.normal),
+                  //               )),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //     FittedBox(
+                  //       child: Row(
+                  //         children: [
+                  //           SizedBox(
+                  //             width: 5,
+                  //           ),
+                  //           Icon(
+                  //             Icons.video_camera_front_outlined,
+                  //             color: Colors.blue,
+                  //             size: 40,
+                  //           ),
+                  //           FittedBox(
+                  //               fit: BoxFit.fill,
+                  //               child: Text(
+                  //                 "CCTV in the Area",
+                  //                 style: TextStyle(
+                  //                     fontSize: 16,
+                  //                     fontWeight: FontWeight.normal),
+                  //               )),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ],
+                  // )),
                   //End of Highlights
                 ],
               ),

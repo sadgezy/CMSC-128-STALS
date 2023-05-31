@@ -499,6 +499,8 @@ def search_room(request):
     price_upper = request.data.get('price_upper')
     capacity = request.data.get('capacity')
 
+    #user_type = request.data.get('user_type')
+
     rooms = Room.objects.all()
 
     if establishment_id:
@@ -512,8 +514,11 @@ def search_room(request):
 
     serializer = RoomSerializer(rooms, many=True)
 
-    available = [d for d in serializer.data if d['availability'] == True]
-    return Response(available)
+    # if user_type == "user":
+    #     available = [d for d in serializer.data if d['availability'] == True]
+    #     return Response(available)
+    # else:
+    return Response(serializer.data)
 
 #----------------------------------------------------------------------------------------------
 @api_view(['POST'])
