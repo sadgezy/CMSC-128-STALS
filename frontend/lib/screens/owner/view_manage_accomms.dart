@@ -145,7 +145,7 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
         child: FutureBuilder<List<AccomCardDetails>>(
           future: _accommodationsFuture,
           builder: (context, snapshot) {
-            if (snapshot.hasData) {
+            if (snapshot.hasData && snapshot.data!.isNotEmpty) {
               print("RAN");
               print(snapshot);
               List<AccomCardDetails> accommodations = snapshot.data!;
@@ -172,7 +172,7 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
                       ),
                       const Padding(
                           padding: EdgeInsets.symmetric(vertical: 10)),
-                      Text("No Accommodations in database ")
+                      Text("No establishments added yet")
                     ],
                   ),
                 ),
