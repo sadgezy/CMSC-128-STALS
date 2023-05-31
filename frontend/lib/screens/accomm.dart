@@ -153,6 +153,7 @@ class _AccommPageState extends State<AccommPage> {
   bool favorite = false;
   int _currentIndex = 0;
   List cardList = [];
+  List reviewList = [];
 
   List<T> map<T>(List list, Function handler) {
     List<T> result = [];
@@ -182,6 +183,7 @@ class _AccommPageState extends State<AccommPage> {
 
   @override
   Widget build(BuildContext context) {
+    reviewList = [];
     Future<void> fetchData() async {
       // controller: emailController;
       List<String> user =
@@ -236,6 +238,15 @@ class _AccommPageState extends State<AccommPage> {
             priceUpper: response3[i]["price_upper"],
             capacity: response3[i]["capacity"],
             index: i));
+      }
+
+      String url4 = "http://127.0.0.1:8000/review-details/";
+      final response4 = await json.decode(
+          (await http.post(Uri.parse(url4), body: {"establishment_id": id}))
+              .body);
+
+      for (int i = 0; i < response4.length; i++) {
+        reviewList.add(response4[i]);
       }
     }
 
@@ -628,7 +639,12 @@ class _AccommPageState extends State<AccommPage> {
                                         child: Text("Sign in to post a review"),
                                       ));
                                     }
-                                    return Review(accommName: response_Name, estabId: id, username: username, userId: user_id);
+                                    return Review(
+                                        accommName: response_Name,
+                                        estabId: id,
+                                        username: username,
+                                        userId: user_id);
+                                  
                                   },
                                 );
                               },
@@ -1068,6 +1084,49 @@ class _AccommPageState extends State<AccommPage> {
                   //   ],
                   // )),
                   //End of Highlights
+
+                  //View Reviews
+                  Column(
+                    children: [
+                      const Text(
+                        "Reviews",
+                        style: TextStyle(
+                            fontSize: 22, fontWeight: FontWeight.normal),
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height / 60,
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height / 6,
+                        child: ListView.builder(
+                            itemCount: reviewList.length,
+                            itemBuilder: (BuildContext context, int index) {
+                          return Column(
+                              children: [
+                                Row(
+                                  children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                    child: Text(reviewList[index]["username"]),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                    child: Text(reviewList[index]["date_submitted"].substring(0,10) + " " + reviewList[index]["date_submitted"].substring(11,19)),
+                                  )
+                                ],),
+                                Row(
+                                  children: [Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(reviewList[index]["body"]),
+                                  )],
+                                )
+                              ]
+                            );
+                        }),
+                      ),
+                    ],
+                  ),
+                  //end of View Reviews
                 ],
               ),
             );

@@ -103,6 +103,9 @@ class _ReviewState extends State<Review> {
                                   body: {"user_id": widget.userId, "establishment_id": widget.estabId, "username": widget.username, "body": reviewController.text}))
                               .body);
                           Navigator.pop(context);
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, '/accomm',
+                            arguments: widget.estabId);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: UIParameter.MAROON,

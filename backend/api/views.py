@@ -439,9 +439,10 @@ def report_establishment(request): #can be used for other types of tickets
 # REVIEW ACTIONS
 
 # takes the list of reviews and requests them
-@api_view(['GET'])
+@api_view(['POST'])
 def getreviewdetails(request):
-    review = Review.objects.all()
+    estab = Establishment.objects.get(pk=ObjectId(request.data["establishment_id"]))
+    review = Review.objects.filter(pk__in=[ObjectId(d) for d in estab.reviews])
     serializer = reviewSerializer(review, many=True)
     return Response(serializer.data)
 
