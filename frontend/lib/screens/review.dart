@@ -3,9 +3,15 @@ import '../../../UI_parameters.dart' as UIParameter;
 
 class Review extends StatefulWidget {
   final String accommName;
+  final String estabId;
+  final String username;
+  final String userId;
   const Review({
     Key? key,
     required this.accommName,
+    required this.estabId,
+    required this.username,
+    required this.userId
   }) : super(key: key);
 
   @override
@@ -27,6 +33,9 @@ class _ReviewState extends State<Review> {
 
   @override
   Widget build(BuildContext context) {
+    // print("Estab ID: ${widget.estabId}");
+    // print("User ID: ${widget.userId}");
+    // print("Username: ${widget.username}");
     // get the height and width of the device
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
@@ -87,6 +96,7 @@ class _ReviewState extends State<Review> {
                       ElevatedButton(
                         onPressed: () {
                           // FUNCTION TO DO WHEN PRESSED/CLICKED
+                          Navigator.pop(context);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: UIParameter.MAROON,

@@ -99,18 +99,16 @@ class Admin(models_django.Model):
     
 
 class ReviewManager(models_django.Manager):
-    def create_review(self,userID,establishmentID,dateSubmitted,title,rating,archived,body):
+    def create_review(self,user_id,establishment_id,username,date_submitted,body):
         # email=self.normalize_email(email)
 
         review=self.model(
             # _id=_id,
-            userID=userID,
-            establishmentID=establishmentID,
-            dateSubmitted=dateSubmitted,
-            title=title,
-            rating=rating,
-            archived=archived,
-            body=body,
+            user_id=user_id,
+            establishment_id=establishment_id,
+            date_submitted=date_submitted,
+            username=username,
+            body=body
         )
 
         # I think it says in the docs that this isn't necessary when you're using a manager 
@@ -119,20 +117,17 @@ class ReviewManager(models_django.Manager):
         return review
 
 class Review(models_django.Model):
-    # commented until functional
     _id = models_djongo.ObjectIdField()
-    userID = models_django.CharField(max_length=25)
-    establishmentID = models_django.CharField(max_length=25)
-    dateSubmited = models_django.DateTimeField(auto_now_add=True)
-    title = models_django.CharField(max_length=255)
-    rating = models_django.IntegerField()
-    archived = models_django.BooleanField(default=False)
+    user_id = models_django.CharField(max_length=25)
+    establishment_id = models_django.CharField(max_length=25)
+    username=models_django.CharField(max_length=45)
+    date_submitted = models_django.DateTimeField(auto_now_add=True)
     body = models_django.TextField()
 
     objects = ReviewManager()
 
     def __str__(self):
-        return self.title
+        return self.body
 
 
 class EstablishmentManager(models_django.Manager):

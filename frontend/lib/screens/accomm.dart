@@ -173,6 +173,8 @@ class _AccommPageState extends State<AccommPage> {
   String response2_firstname = "";
   String response2_lastname = "";
   String id = "";
+  String user_id = "";
+  String username = "";
   String email = "";
   String user_type = "";
   String loc_picture = "";
@@ -184,9 +186,9 @@ class _AccommPageState extends State<AccommPage> {
       // controller: emailController;
       List<String> user =
           Provider.of<UserProvider>(context, listen: false).userInfo;
-      id = user[0];
-      String email = user[1];
-      String username = user[2];
+      user_id = user[0];
+      email = user[1];
+      username = user[2];
       user_type = user[3];
 
       // print(id);
@@ -626,7 +628,7 @@ class _AccommPageState extends State<AccommPage> {
                                         child: Text("Sign in to file a report"),
                                       ));
                                     }
-                                    return Review(accommName: response_Name);
+                                    return Review(accommName: response_Name, estabId: id, username: username, userId: user_id);
                                   },
                                 );
                               },
