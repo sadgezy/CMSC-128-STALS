@@ -24,6 +24,33 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   Filter accomFilter = Filter(null, null, null, null, null, null);
   String searchVal = '';
+  Future<List<AccomCardDetails>>? _accommodationsFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _accommodationsFuture = fetchAllAccommodations();
+  }
+
+  Future<List<AccomCardDetails>> fetchAllAccommodations() async {
+    final response = await http
+        .get(Uri.parse('http://127.0.0.1:8000/view-all-establishment/'));
+
+    if (response.statusCode == 200) {
+      List jsonResponse = jsonDecode(response.body);
+      List<AccomCardDetails> filteredAccommodations1 = jsonResponse
+          .map((accommodation) => AccomCardDetails.fromJson(accommodation))
+          .where((accommodation) => (accommodation.verified &&
+              !accommodation
+                  .archived)) // Only include accommodations marked false on verified and archived
+          .toList();
+
+      // Apply the filter
+      return filteredAccommodations1;
+    } else {
+      throw Exception('Failed to load accommodations');
+    }
+  }
 
   // put data into a list. Will iterate over it to build cards
   List<dynamic> accommList = [];
@@ -150,7 +177,6 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
   */
   @override
   Widget build(BuildContext context) {
-    
     /*
     DUMMY OBJECT
     <Object will come from database fetch later>
@@ -183,207 +209,192 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
     }
 
     return Scaffold(
-        key: scaffoldKey,
-        appBar: AppBar(
-            backgroundColor: UIParameter.WHITE,
-            elevation: 0,
-            // hamburger icon for profile
-            // opens left drawer on tap
-            leading: IconButton(
-              icon: const Icon(Icons.menu),
-              color: UIParameter.LIGHT_TEAL,
-              onPressed: () {
-                if (scaffoldKey.currentState!.isDrawerOpen) {
-                  //scaffoldKey.currentState!.closeDrawer();
-                  //close drawer, if drawer is open
-                } else {
-                  scaffoldKey.currentState!.openDrawer();
-                  //open drawer, if drawer is closed
-                }
-              },
-            ),
-            // search bar at the top of the homepage
-            title: Row(
-              children: [
-                Expanded(
-                  flex: 16,
-                  child: CustomSearchBar(
-                    hintText: 'Search',
-                    onChanged: (value) {
-                      /* PUT SEARCH FUNCTION HERE */
-                      searchVal = value;
-                    },
-                  ),
-                ),
-                Expanded(
-                    flex: 2,
-                    child: IconButton(
-                        onPressed: () async {
-                          // print(searchVal);
-                          // print(filterTitleList);
-                          // print(filterValueList);
-
-                          String url =
-                              "http://127.0.0.1:8000/search-establishment/";
-                          final response = await json
-                              .decode((await http.post(Uri.parse(url), body: {
-                            'name': searchVal,
-                            'location_exact': filterValueList[1] ?? "",
-                            //'location_approx': args.middleName,
-                            'establishment_type': filterValueList[2] ?? "",
-                            'tenant_type': filterValueList[3] ?? "",
-                            'price_lower': filterValueList[4] == null
-                                ? ""
-                                : "int(${filterValueList[4]})",
-                            'price_upper': filterValueList[5] == null
-                                ? ""
-                                : "int(${filterValueList[5]})",
-                            //'capacity': args.userType,
-                          }))
-                                  .body);
-                          print(response);
-
-                          setState(() {
-                            // for (int i = 0; i < response.length; i++) {
-                            //   accommList.add(response[i]);
-                            // }
-                            accommList = response;
-                          });
-                        },
-                        icon: const Icon(
-                          Icons.search,
-                          color: Color.fromARGB(255, 0, 0, 0),
-                        )))
-              ],
-            ),
-            // filter icon for filtered search
-            // opens right drawer on tap
-            // thinking to implement yung katulad ng filter sa shoppee?
-            actions: <Widget>[
-              Builder(
-                builder: (context) {
-                  return IconButton(
-                    icon: const Icon(Icons.filter_alt),
-                    color: UIParameter.MAROON,
-                    onPressed: () {
-                      Scaffold.of(context).openEndDrawer();
-                    },
-                  );
-                },
-              )
-            ]),
-        // the left drawer
-        drawer: Drawer(
-          // Add a ListView to the drawer. This ensures the user can scroll
-          // through the options in the drawer if there isn't enough vertical
-          // space to fit everything.
-          child: ListView(
-            // Important: Remove any padding from the ListView.
-            padding: EdgeInsets.zero,
+      key: scaffoldKey,
+      appBar: AppBar(
+          backgroundColor: UIParameter.WHITE,
+          elevation: 0,
+          // hamburger icon for profile
+          // opens left drawer on tap
+          leading: IconButton(
+            icon: const Icon(Icons.menu),
+            color: UIParameter.LIGHT_TEAL,
+            onPressed: () {
+              if (scaffoldKey.currentState!.isDrawerOpen) {
+                //scaffoldKey.currentState!.closeDrawer();
+                //close drawer, if drawer is open
+              } else {
+                scaffoldKey.currentState!.openDrawer();
+                //open drawer, if drawer is closed
+              }
+            },
+          ),
+          // search bar at the top of the homepage
+          title: Row(
             children: [
-              SizedBox(
-                height: 100,
-                child: DrawerHeader(
-                  decoration: BoxDecoration(
-                    color: UIParameter.LIGHT_TEAL,
-                  ),
-                  child: const Text('PROFILE'),
+              Expanded(
+                flex: 16,
+                child: CustomSearchBar(
+                  hintText: 'Search',
+                  onChanged: (value) {
+                    /* PUT SEARCH FUNCTION HERE */
+                    searchVal = value;
+                  },
                 ),
               ),
-              ListTile(
-                title: const Text('Favorites'),
-                onTap: () {
-                  // NOT SURE IF THIS IS THE PROPER WAY, TEMPORARY Navigator.push
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return Favorites();
+              Expanded(
+                  flex: 2,
+                  child: IconButton(
+                      onPressed: () async {
+                        // print(searchVal);
+                        // print(filterTitleList);
+                        // print(filterValueList);
+
+                        String url =
+                            "http://127.0.0.1:8000/search-establishment/";
+                        final response = await json
+                            .decode((await http.post(Uri.parse(url), body: {
+                          'name': searchVal,
+                          'location_exact': filterValueList[1] ?? "",
+                          //'location_approx': args.middleName,
+                          'establishment_type': filterValueList[2] ?? "",
+                          'tenant_type': filterValueList[3] ?? "",
+                          'price_lower': filterValueList[4] == null
+                              ? ""
+                              : "int(${filterValueList[4]})",
+                          'price_upper': filterValueList[5] == null
+                              ? ""
+                              : "int(${filterValueList[5]})",
+                          //'capacity': args.userType,
+                        }))
+                                .body);
+                        print(response);
+
+                        setState(() {
+                          // for (int i = 0; i < response.length; i++) {
+                          //   accommList.add(response[i]);
+                          // }
+                          accommList = response;
+                        });
                       },
-                    ),
-                  );
-                },
-              ),
-              ListTile(
-                title: const Text('Logout'),
-                trailing: const Icon(Icons.logout),
-                onTap: () {
-                  Provider.of<TokenProvider>(context, listen: false)
-                      .removeToken("DO NOT REMOVE THIS PARAM");
-                  Provider.of<UserProvider>(context, listen: false)
-                      .removeUser("DO NOT REMOVE THIS PARAM");
-
-                  print("Logged out");
-
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                },
-              ),
+                      icon: const Icon(
+                        Icons.search,
+                        color: Color.fromARGB(255, 0, 0, 0),
+                      )))
             ],
           ),
-        ),
-        // the right drawer
-        endDrawer: FilterDrawer(filter: accomFilter, callback: getFilter),
-        body: SingleChildScrollView(
-          child: Container(
-            // get the height and width of the device
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-            color: UIParameter.WHITE,
-            child: Center(
-              child: Column(
-                children: [
-                  // if the Filter object of the homepage is not null (atleast one filter is selected)
-                  // we will build the Filter to be displayed
-                  if (!accomFilter.isEmpty())
-                    Wrap(children: [
-                      for (int i = 0; i < filterValueList.length; i++)
-                        if (filterValueList[i] != null)
-                          _displayFilter(
-                              filterValueList[i].toString(), filterTitleList[i])
-                    ])
-                  // else there is no Filter currently selected
-                  // we build nothing
-                  else
-                    Container(),
-                  // 1 accomm card for demo
-                  // to create a component later that will build all the AccomCard of all fetched accommodation from database
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Expanded(
-                    child: ListView.builder(
-                      //key: new Key(getRandomString(15)),
-                      itemCount: accommList.length,
-                      itemBuilder: (context, index) {
-                        print([
-                          accommList[index]['_id'],
-                          accommList[index]['name'],
-                          accommList[index]['location_exact'],
-                          "assets/images/room_stock.jpg",
-                          4,
-                          false,
-                          true
-                        ]);
-                        return AccomCard(
-                          details: AccomCardDetails(
-                              accommList[index]['_id'],
-                              accommList[index]['name'],
-                              accommList[index]['owner'],
-                              accommList[index]['location_exact'],
-                              accommList[index]['loc_picture'],
-                              4,
-                              accommList[index]['archived'],
-                              accommList[index]['verified']),
-                        );
-                      },
-                    ),
-                  )
-                ],
+          // filter icon for filtered search
+          // opens right drawer on tap
+          // thinking to implement yung katulad ng filter sa shoppee?
+          actions: <Widget>[
+            Builder(
+              builder: (context) {
+                return IconButton(
+                  icon: const Icon(Icons.filter_alt),
+                  color: UIParameter.MAROON,
+                  onPressed: () {
+                    Scaffold.of(context).openEndDrawer();
+                  },
+                );
+              },
+            )
+          ]),
+      // the left drawer
+      drawer: Drawer(
+        // Add a ListView to the drawer. This ensures the user can scroll
+        // through the options in the drawer if there isn't enough vertical
+        // space to fit everything.
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: [
+            SizedBox(
+              height: 100,
+              child: DrawerHeader(
+                decoration: BoxDecoration(
+                  color: UIParameter.LIGHT_TEAL,
+                ),
+                child: const Text('PROFILE'),
               ),
             ),
-          ),
-        ));
+            ListTile(
+              title: const Text('Favorites'),
+              onTap: () {
+                // NOT SURE IF THIS IS THE PROPER WAY, TEMPORARY Navigator.push
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return Favorites();
+                    },
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Logout'),
+              trailing: const Icon(Icons.logout),
+              onTap: () {
+                Provider.of<TokenProvider>(context, listen: false)
+                    .removeToken("DO NOT REMOVE THIS PARAM");
+                Provider.of<UserProvider>(context, listen: false)
+                    .removeUser("DO NOT REMOVE THIS PARAM");
+
+                print("Logged out");
+
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
+      ),
+      // the right drawer
+      endDrawer: FilterDrawer(filter: accomFilter, callback: getFilter),
+      body: SingleChildScrollView(
+        child: FutureBuilder<List<AccomCardDetails>>(
+          future: _accommodationsFuture,
+          builder: (context, snapshot) {
+            if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+              // print("RAN");
+              print(snapshot);
+              List<AccomCardDetails> accommodations = snapshot.data!;
+              print(accommodations);
+              return Column(
+                children: accommodations.map((accommodation) {
+                  return Padding(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
+                    child: AccomCard(details: accommodation),
+                  );
+                }).toList(),
+              );
+            } else if (snapshot.hasData && snapshot.data!.isEmpty ||
+                !snapshot.hasData) {
+              return Center(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    children: [
+                      const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 20)),
+                      Image.asset(
+                        'assets/images/no_archived.png',
+                        height: 70,
+                      ),
+                      const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 10)),
+                      Text("No Accommodations in database ")
+                    ],
+                  ),
+                ),
+              );
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            }
+            return CircularProgressIndicator();
+          },
+        ),
+      ),
+    );
   }
 }
