@@ -524,6 +524,8 @@ def search_establishment(request):
     location_approx = request.data.get('location_approx')
     establishment_type = request.data.get('establishment_type', None)
     tenant_type = request.data.get('tenant_type', None)
+    if (name == ''):
+        name = None
     if (location_exact == ''):
         location_exact = None
     if (location_approx == ''):
@@ -539,7 +541,6 @@ def search_establishment(request):
 
     if name:
         establishments = establishments.filter(name__icontains=name)
-        
     if location_approx:
         establishments = establishments.filter(location_approx=location_approx)
 
@@ -584,12 +585,11 @@ def search_establishment(request):
         rooms = rooms.filter(capacity=capacity)
 
     serializer_room = RoomSerializer(rooms, many=True)
-    print(serializer_room.data)
     estab_ids = [d["establishment_id"] for d in serializer_room.data if d['availability'] == True and d['establishment_id'] in valid_estab_criteria]
     unique_estab_ids = list(dict.fromkeys(estab_ids))
     
     actual_estab_results = [d for d in serializer_estab_full.data if str(d['_id']) in unique_estab_ids]
-    
+    print(actual_estab_results)
     return Response(actual_estab_results)
     
 

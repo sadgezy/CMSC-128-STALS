@@ -372,10 +372,10 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                               accommList[index]['name'],
                               accommList[index]['owner'],
                               accommList[index]['location_exact'],
-                              "assets/images/room_stock.jpg",
+                              accommList[index]['loc_picture'],
                               4,
-                              false,
-                              true),
+                              accommList[index]['archived'],
+                              accommList[index]['verified']),
                         );
                       },
                     ),
