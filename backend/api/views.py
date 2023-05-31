@@ -417,7 +417,12 @@ def getticketdetails(request):
 
 @api_view(['POST'])
 def report_establishment(request): #can be used for other types of tickets
-    serializer = ticketSerializer(data=request.data)
+    req = {}
+    req["tags"] = [request.data["tags"][2:-2]]
+    req["user_id"] = request.data["user_id"]
+    req["establishment_id"] = request.data["establishment_id"]
+    req["description"] = request.data["description"]
+    serializer = ticketSerializer(data=req)
 
     if serializer.is_valid():
         try:

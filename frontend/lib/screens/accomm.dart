@@ -164,6 +164,8 @@ class _AccommPageState extends State<AccommPage> {
   }
 
   TextEditingController emailController = TextEditingController();
+  TextEditingController reportController = TextEditingController();
+  TextEditingController tagsController = TextEditingController();
   var responseData = "";
   var responseData2 = "";
   String response_Name = "";
@@ -180,6 +182,7 @@ class _AccommPageState extends State<AccommPage> {
   String user_type = "";
   String loc_picture = "";
   String description = "";
+  List selectedReason = [];
 
   @override
   Widget build(BuildContext context) {
@@ -579,12 +582,15 @@ class _AccommPageState extends State<AccommPage> {
                                                     vertical: 5),
                                                 child: Text("Select Reason"),
                                               ),
-                                              ReportListing(),
+                                              ReportListing(
+                                                tags: tagsController,
+                                              ),
                                               Padding(
                                                 padding: EdgeInsets.all(10),
                                                 child: SizedBox(
                                                   width: 200,
                                                   child: TextFormField(
+                                                    controller: reportController,
                                                     style:
                                                         TextStyle(fontSize: 13),
                                                     decoration:
@@ -602,7 +608,34 @@ class _AccommPageState extends State<AccommPage> {
                                                 ),
                                               ),
                                               ElevatedButton(
-                                                onPressed: () {},
+                                                onPressed: () async {
+                                                  print(tagsController.text);
+                                                  switch(tagsController.text) {
+                                                    case "1":
+                                                      selectedReason = ["Inactive Owner"];
+                                                      break;
+                                                    case "2":
+                                                      selectedReason = ["Inaccurate Details"];
+                                                      break;
+                                                    case "3":
+                                                      selectedReason = ["Fraudulent Listing"];
+                                                      break;
+                                                    case "4":
+                                                      selectedReason = ["Offensive Content"];
+                                                      break;
+                                                    case "5":
+                                                      selectedReason = ["Other Reason"];
+                                                      break;
+                                                  }
+                                                  
+                                                  String url5 = "http://127.0.0.1:8000/report-establishment/";
+                                                  final response5 = await json.decode(
+                                                      (await http.post(Uri.parse(url5), body: {"establishment_id": id, "user_id": user_id, "tags": "'${selectedReason.toString()}'", "description": reportController.text}))
+                                                          .body);
+                                                  
+                                                  reportController.clear();
+                                                  Navigator.pop(context);
+                                                },
                                                 child: Text(
                                                   "Report",
                                                   style: TextStyle(

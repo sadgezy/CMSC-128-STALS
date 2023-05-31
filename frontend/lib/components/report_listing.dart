@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:stals_frontend/UI_parameters.dart' as UIParams;
 
 class ReportListing extends StatefulWidget {
-  const ReportListing({super.key});
+  final TextEditingController tags;
+  const ReportListing({super.key, required this.tags});
 
   @override
   State<ReportListing> createState() => _ReportListingState();
@@ -21,6 +22,7 @@ class _ReportListingState extends State<ReportListing> {
               setState(() {
                 value = index;
               });
+              widget.tags.text = index.toString();
             },
             child: Text(
               text,
@@ -47,6 +49,7 @@ class _ReportListingState extends State<ReportListing> {
         CustomRadioButton("Inaccurate Details", 2),
         CustomRadioButton("Fraudulent Listing", 3),
         CustomRadioButton("Offensive Content", 4),
+        CustomRadioButton("Other Reason", 5),
       ],
     );
   }
