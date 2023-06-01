@@ -21,7 +21,7 @@ class PendingAccomCard extends StatefulWidget {
   @override
   State<PendingAccomCard> createState() => _PendingAccomCardState();
 
-    factory PendingAccomCard.fromJson(Map<String, dynamic> json,VoidCallback onApprovedCallback,,VoidCallback onDisapprovedCallback) {
+    factory PendingAccomCard.fromJson(Map<String, dynamic> json,VoidCallback onApprovedCallback,VoidCallback onDisapprovedCallback) {
     return PendingAccomCard(
       accomName: json['name'] ?? '',
       ownerName: json['owner'] ?? '',
