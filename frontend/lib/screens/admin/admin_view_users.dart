@@ -35,7 +35,7 @@ class _ViewAllUsersPageState extends State<ViewUsersPage> {
   // String apiUrl_allUsers = 'http://127.0.0.1:8000/view-all-users/';
   
   String apiUrl_allUnverifiedUsers =
-      'http://127.0.0.1:8000/view-all-unverified-users/';
+      'http://127.0.0.1:8000/view-all-modifUnverified-users/';
 
   String apiUrl_allVerifiedUsers =
       'http://127.0.0.1:8000/view-all-modifVerified-users/';
