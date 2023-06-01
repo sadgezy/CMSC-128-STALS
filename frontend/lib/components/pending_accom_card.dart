@@ -6,6 +6,7 @@ class PendingAccomCard extends StatefulWidget {
   final bool verified;
   final String ID;
   final VoidCallback onApproved;
+  final VoidCallback onDisapproved;
 
   PendingAccomCard({
     Key? key,
@@ -14,18 +15,20 @@ class PendingAccomCard extends StatefulWidget {
     required this.verified,
     required this.ID,
     required this.onApproved,
+    required this.onDisapproved,
   }) : super(key: key);
 
   @override
   State<PendingAccomCard> createState() => _PendingAccomCardState();
 
-    factory PendingAccomCard.fromJson(Map<String, dynamic> json,VoidCallback onApprovedCallback) {
+    factory PendingAccomCard.fromJson(Map<String, dynamic> json,VoidCallback onApprovedCallback,VoidCallback onDisapprovedCallback) {
     return PendingAccomCard(
       accomName: json['name'] ?? '',
       ownerName: json['owner'] ?? '',
       verified: json['verified'] ?? false,
       ID: json['_id'] ?? '',
       onApproved: onApprovedCallback,
+      onDisapproved: onDisapprovedCallback,
     );
   }
 }
@@ -101,7 +104,7 @@ class _PendingAccomCardState extends State<PendingAccomCard> {
                         size: 35,
                         color: Color(0xff7B2D26),
                       ),
-                      onPressed: () {},
+                      onPressed: () {widget.onDisapproved();},
                     ),
                   ),
                 ],
