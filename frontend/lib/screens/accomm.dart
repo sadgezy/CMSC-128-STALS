@@ -774,9 +774,10 @@ class _AccommPageState extends State<AccommPage> {
                     const SizedBox(
                       height: 10,
                     ),
-                  const Divider(
-                    color: Colors.black,
-                  ),
+                  if (cardList.isNotEmpty)
+                    const Divider(
+                      color: Colors.black,
+                    ),
                   //Description
                   Row(
                     children: [
@@ -1150,34 +1151,37 @@ class _AccommPageState extends State<AccommPage> {
                       SizedBox(
                         height: MediaQuery.of(context).size.height / 60,
                       ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height / 6,
-                        child: ListView.builder(
-                            itemCount: reviewList.length,
-                            itemBuilder: (BuildContext context, int index) {
-                          return Column(
-                              children: [
-                                Row(
-                                  children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                    child: Text(reviewList[index]["username"]),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                    child: Text(reviewList[index]["date_submitted"].substring(0,10) + " " + reviewList[index]["date_submitted"].substring(11,19)),
+                      if (reviewList.isNotEmpty)
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height / 6,
+                          child: ListView.builder(
+                              itemCount: reviewList.length,
+                              itemBuilder: (BuildContext context, int index) {
+                            return Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                      child: Text(reviewList[index]["username"]),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                      child: Text(reviewList[index]["date_submitted"].substring(0,10) + " " + reviewList[index]["date_submitted"].substring(11,19)),
+                                    )
+                                  ],),
+                                  Row(
+                                    children: [Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(reviewList[index]["body"]),
+                                    )],
                                   )
-                                ],),
-                                Row(
-                                  children: [Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(reviewList[index]["body"]),
-                                  )],
-                                )
-                              ]
-                            );
-                        }),
-                      ),
+                                ]
+                              );
+                          }),
+                        ),
+                      if (reviewList.isEmpty)
+                        Text("No reviews yet"),
                     ],
                   ),
                   //end of View Reviews
