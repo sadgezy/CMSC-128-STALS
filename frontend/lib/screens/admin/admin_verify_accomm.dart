@@ -17,6 +17,35 @@ class AccommPageProof extends StatefulWidget {
   _AccommPageProofState createState() => _AccommPageProofState();
 }
 
+/*possible values:
+bool isOwner = true/false
+if true then it is the owner there   will be an edit button to edit the current information on the page/cards/image/highlights/etc..
+if false then there will be a favorite button for the user 
+
+Highlights booleans
+if true it will show in the highlights
+if false it wont show
+bool isPet = ?
+bool isbathroom = ?
+bool isCook = ?
+bool isNet = ?
+bool isConnectNet = ?
+bool isAircon = ?
+bool isCurfew = ?
+bool isMeter = ?
+bool isFurnished = ?
+bool isSemiFurnished = ?
+bool isParking = ? 
+bool isLaundry = ? 
+bool isOvernight = ?
+bool isVisitors = ?
+bool isCCTV = ?
+bool isMeter = ?
+bool isRef = ?
+
+
+*/
+
 class Item extends StatefulWidget {
   const Item(
       {Key? key,
@@ -155,6 +184,9 @@ class _AccommPageProofState extends State<AccommPageProof> {
   String loc_picture = "";
   String description = "";
   List selectedReason = [];
+  String proof_type = "";
+  String proof_number = "";
+  String proof_picture = "";
 
   @override
   Widget build(BuildContext context) {
@@ -184,6 +216,9 @@ class _AccommPageProofState extends State<AccommPageProof> {
       var responseData = json.decode(response.body);
       loc_picture = responseData["loc_picture"];
       description = responseData["description"];
+      proof_type = responseData["proof_type"];
+      proof_number = responseData["proof_number"];
+      proof_picture = responseData["proof_picture"];
 
       owner_id = responseData['owner'];
       // print(owner_id);
@@ -259,9 +294,8 @@ class _AccommPageProofState extends State<AccommPageProof> {
           },
           color: Colors.black,
         ),
-        title: 
-        Text(
-          "Verify Establishment",
+        title: Text(
+          "",
           style: TextStyle(color: Colors.black),
         ),
         backgroundColor: Colors.white,
@@ -398,9 +432,13 @@ class _AccommPageProofState extends State<AccommPageProof> {
                                 ElevatedButton(
                                   onPressed: () async {
                                     // Action for the fourth icon button
-                                    showDialog(context: context, builder: (context) {
-                                      return AddRoom(estabId: id, estabName: response_Name);
-                                    });
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return AddRoom(
+                                              estabId: id,
+                                              estabName: response_Name);
+                                        });
                                   },
                                   style: ElevatedButton.styleFrom(
                                     shape: const CircleBorder(),
@@ -581,7 +619,8 @@ class _AccommPageProofState extends State<AccommPageProof> {
                                                 child: SizedBox(
                                                   width: 200,
                                                   child: TextFormField(
-                                                    controller: reportController,
+                                                    controller:
+                                                        reportController,
                                                     style:
                                                         TextStyle(fontSize: 13),
                                                     decoration:
@@ -601,29 +640,50 @@ class _AccommPageProofState extends State<AccommPageProof> {
                                               ElevatedButton(
                                                 onPressed: () async {
                                                   print(tagsController.text);
-                                                  switch(tagsController.text) {
+                                                  switch (tagsController.text) {
                                                     case "1":
-                                                      selectedReason = ["Inactive Owner"];
+                                                      selectedReason = [
+                                                        "Inactive Owner"
+                                                      ];
                                                       break;
                                                     case "2":
-                                                      selectedReason = ["Inaccurate Details"];
+                                                      selectedReason = [
+                                                        "Inaccurate Details"
+                                                      ];
                                                       break;
                                                     case "3":
-                                                      selectedReason = ["Fraudulent Listing"];
+                                                      selectedReason = [
+                                                        "Fraudulent Listing"
+                                                      ];
                                                       break;
                                                     case "4":
-                                                      selectedReason = ["Offensive Content"];
+                                                      selectedReason = [
+                                                        "Offensive Content"
+                                                      ];
                                                       break;
                                                     case "5":
-                                                      selectedReason = ["Other Reason"];
+                                                      selectedReason = [
+                                                        "Other Reason"
+                                                      ];
                                                       break;
                                                   }
-                                                  
-                                                  String url5 = "http://127.0.0.1:8000/report-establishment/";
-                                                  final response5 = await json.decode(
-                                                      (await http.post(Uri.parse(url5), body: {"establishment_id": id, "user_id": user_id, "tags": "'${selectedReason.toString()}'", "description": reportController.text}))
+
+                                                  String url5 =
+                                                      "http://127.0.0.1:8000/report-establishment/";
+                                                  final response5 = await json
+                                                      .decode((await http.post(
+                                                              Uri.parse(url5),
+                                                              body: {
+                                                        "establishment_id": id,
+                                                        "user_id": user_id,
+                                                        "tags":
+                                                            "'${selectedReason.toString()}'",
+                                                        "description":
+                                                            reportController
+                                                                .text
+                                                      }))
                                                           .body);
-                                                  
+
                                                   reportController.clear();
                                                   Navigator.pop(context);
                                                 },
@@ -668,7 +728,6 @@ class _AccommPageProofState extends State<AccommPageProof> {
                                         estabId: id,
                                         username: username,
                                         userId: user_id);
-                                  
                                   },
                                 );
                               },
@@ -690,63 +749,66 @@ class _AccommPageProofState extends State<AccommPageProof> {
                   //CARD Carousel for ROOM Capacity/Type/Price/Availability
                   //Cards Information/Data are on items1-4()
                   //starting from lines 45-223
-                  Column(
-                    children: [
-                      CarouselSlider(
-                        options: CarouselOptions(
-                          height: 200.0,
-                          autoPlay: true,
-                          autoPlayInterval: Duration(seconds: 5),
-                          autoPlayAnimationDuration:
-                              Duration(milliseconds: 1000),
-                          autoPlayCurve: Curves.fastOutSlowIn,
-                          pauseAutoPlayOnTouch: true,
-                          aspectRatio: 2.0,
-                          onPageChanged: (index, reason) {
-                            _currentIndex = index;
-                            print(index);
-                          },
+                  if (cardList.isNotEmpty)
+                    Column(
+                      children: [
+                        CarouselSlider(
+                          options: CarouselOptions(
+                            height: 200.0,
+                            autoPlay: true,
+                            autoPlayInterval: Duration(seconds: 5),
+                            autoPlayAnimationDuration:
+                                Duration(milliseconds: 1000),
+                            autoPlayCurve: Curves.fastOutSlowIn,
+                            pauseAutoPlayOnTouch: true,
+                            aspectRatio: 2.0,
+                            onPageChanged: (index, reason) {
+                              _currentIndex = index;
+                              print(index);
+                            },
+                          ),
+                          items: cardList.map((card) {
+                            return Builder(builder: (BuildContext context) {
+                              return SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.30,
+                                width: MediaQuery.of(context).size.width,
+                                child: Card(
+                                  color: Colors.blueAccent,
+                                  child: card,
+                                ),
+                              );
+                            });
+                          }).toList(),
                         ),
-                        items: cardList.map((card) {
-                          return Builder(builder: (BuildContext context) {
-                            return SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.30,
-                              width: MediaQuery.of(context).size.width,
-                              child: Card(
-                                color: Colors.blueAccent,
-                                child: card,
-                              ),
-                            );
-                          });
-                        }).toList(),
-                      ),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.center,
-                      //   children: map<Widget>(cardList, (index, url) {
-                      //     return Container(
-                      //       width: 10.0,
-                      //       height: 10.0,
-                      //       margin: EdgeInsets.symmetric(
-                      //           vertical: 10.0, horizontal: 2.0),
-                      //       decoration: BoxDecoration(
-                      //         shape: BoxShape.circle,
-                      //         color: _currentIndex == index
-                      //             ? Colors.blueAccent
-                      //             : Colors.grey,
-                      //       ),
-                      //     );
-                      //   }),
-                      // ),
-                    ],
-                  ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   children: map<Widget>(cardList, (index, url) {
+                        //     return Container(
+                        //       width: 10.0,
+                        //       height: 10.0,
+                        //       margin: EdgeInsets.symmetric(
+                        //           vertical: 10.0, horizontal: 2.0),
+                        //       decoration: BoxDecoration(
+                        //         shape: BoxShape.circle,
+                        //         color: _currentIndex == index
+                        //             ? Colors.blueAccent
+                        //             : Colors.grey,
+                        //       ),
+                        //     );
+                        //   }),
+                        // ),
+                      ],
+                    ),
                   //End of Cards
-
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Divider(
-                    color: Colors.black,
-                  ),
+                  if (cardList.isNotEmpty)
+                    const SizedBox(
+                      height: 10,
+                    ),
+                  if (cardList.isNotEmpty)
+                    const Divider(
+                      color: Colors.black,
+                    ),
                   //Description
                   Row(
                     children: [
@@ -781,6 +843,360 @@ class _AccommPageProofState extends State<AccommPageProof> {
                     color: Colors.black,
                   ),
 
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        Text.rich(
+                          TextSpan(
+                            children: [
+                              const TextSpan(
+                                  text: "Proof Type: ",
+                                  style: TextStyle(fontWeight: FontWeight.bold)),
+                              TextSpan(text: "$proof_type\n"),
+                              const TextSpan(
+                                  text: "Proof No: ",
+                                  style: TextStyle(fontWeight: FontWeight.bold)),
+                              TextSpan(text: "$proof_number\n"),
+                              const TextSpan(
+                                  text: "Proof Picture: \n",
+                                  style: TextStyle(fontWeight: FontWeight.bold)),
+                            ],
+                            style: const TextStyle(fontSize: 18),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Image.memory(Uri.parse(proof_picture).data!.contentAsBytes())
+
+                  //Highlights
+                  // FittedBox(
+                  //   fit: BoxFit.fill,
+                  //   child: Text(
+                  //     "Highlights",
+                  //     style: TextStyle(
+                  //         fontSize: 22, fontWeight: FontWeight.normal),
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //     child: Column(
+                  //   crossAxisAlignment: CrossAxisAlignment.start,
+                  //   children: [
+                  //     SizedBox(
+                  //       height: 5,
+                  //     ),
+                  //     FittedBox(
+                  //       child: Row(
+                  //         children: [
+                  //           SizedBox(
+                  //             width: 5,
+                  //           ),
+                  //           Icon(
+                  //             Icons.pets,
+                  //             color: Colors.blue,
+                  //             size: 40,
+                  //           ),
+                  //           FittedBox(
+                  //               fit: BoxFit.fill,
+                  //               child: Text(
+                  //                 "Pets Allowed",
+                  //                 style: TextStyle(
+                  //                     fontSize: 16,
+                  //                     fontWeight: FontWeight.normal),
+                  //               )),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //     FittedBox(
+                  //       child: Row(
+                  //         children: [
+                  //           SizedBox(
+                  //             width: 5,
+                  //           ),
+                  //           Icon(
+                  //             Icons.bathtub_outlined,
+                  //             color: Colors.blue,
+                  //             size: 40,
+                  //           ),
+                  //           FittedBox(
+                  //               fit: BoxFit.fill,
+                  //               child: Text(
+                  //                 "Own Bathroom",
+                  //                 style: TextStyle(
+                  //                     fontSize: 16,
+                  //                     fontWeight: FontWeight.normal),
+                  //               )),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //     FittedBox(
+                  //       child: Row(
+                  //         children: [
+                  //           SizedBox(
+                  //             width: 5,
+                  //           ),
+                  //           Icon(
+                  //             Icons.restaurant_menu,
+                  //             color: Colors.blue,
+                  //             size: 40,
+                  //           ),
+                  //           FittedBox(
+                  //               fit: BoxFit.fill,
+                  //               child: Text(
+                  //                 "Cooking Allowed",
+                  //                 style: TextStyle(
+                  //                     fontSize: 16,
+                  //                     fontWeight: FontWeight.normal),
+                  //               )),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //     FittedBox(
+                  //       child: Row(
+                  //         children: [
+                  //           SizedBox(
+                  //             width: 5,
+                  //           ),
+                  //           Icon(
+                  //             Icons.wifi,
+                  //             color: Colors.blue,
+                  //             size: 40,
+                  //           ),
+                  //           FittedBox(
+                  //               fit: BoxFit.fill,
+                  //               child: Text(
+                  //                 "With Internet Connection",
+                  //                 style: TextStyle(
+                  //                     fontSize: 16,
+                  //                     fontWeight: FontWeight.normal),
+                  //               )),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //     FittedBox(
+                  //       child: Row(
+                  //         children: [
+                  //           SizedBox(
+                  //             width: 5,
+                  //           ),
+                  //           Icon(
+                  //             Icons.ac_unit,
+                  //             color: Colors.blue,
+                  //             size: 40,
+                  //           ),
+                  //           FittedBox(
+                  //               fit: BoxFit.fill,
+                  //               child: Text(
+                  //                 "Air - Conditioned Room",
+                  //                 style: TextStyle(
+                  //                     fontSize: 16,
+                  //                     fontWeight: FontWeight.normal),
+                  //               )),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //     FittedBox(
+                  //       child: Row(
+                  //         children: [
+                  //           SizedBox(
+                  //             width: 5,
+                  //           ),
+                  //           Icon(
+                  //             Icons.bedtime_off,
+                  //             color: Colors.blue,
+                  //             size: 40,
+                  //           ),
+                  //           FittedBox(
+                  //               fit: BoxFit.fill,
+                  //               child: Text(
+                  //                 "No Curfew",
+                  //                 style: TextStyle(
+                  //                     fontSize: 16,
+                  //                     fontWeight: FontWeight.normal),
+                  //               )),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //     FittedBox(
+                  //       child: Row(
+                  //         children: [
+                  //           SizedBox(
+                  //             width: 5,
+                  //           ),
+                  //           Icon(
+                  //             Icons.electric_meter_outlined,
+                  //             color: Colors.blue,
+                  //             size: 40,
+                  //           ),
+                  //           FittedBox(
+                  //               fit: BoxFit.fill,
+                  //               child: Text(
+                  //                 "Own Meter",
+                  //                 style: TextStyle(
+                  //                     fontSize: 16,
+                  //                     fontWeight: FontWeight.normal),
+                  //               )),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //     FittedBox(
+                  //       child: Row(
+                  //         children: [
+                  //           SizedBox(
+                  //             width: 5,
+                  //           ),
+                  //           Icon(
+                  //             Icons.bed_sharp,
+                  //             color: Colors.blue,
+                  //             size: 40,
+                  //           ),
+                  //           FittedBox(
+                  //               fit: BoxFit.fill,
+                  //               child: Text(
+                  //                 "Furnished",
+                  //                 style: TextStyle(
+                  //                     fontSize: 16,
+                  //                     fontWeight: FontWeight.normal),
+                  //               )),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //     FittedBox(
+                  //       child: Row(
+                  //         children: [
+                  //           SizedBox(
+                  //             width: 5,
+                  //           ),
+                  //           Icon(
+                  //             Icons.desk,
+                  //             color: Colors.blue,
+                  //             size: 40,
+                  //           ),
+                  //           FittedBox(
+                  //               fit: BoxFit.fill,
+                  //               child: Text(
+                  //                 "Semi Furnished",
+                  //                 style: TextStyle(
+                  //                     fontSize: 16,
+                  //                     fontWeight: FontWeight.normal),
+                  //               )),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //     FittedBox(
+                  //       child: Row(
+                  //         children: [
+                  //           SizedBox(
+                  //             width: 5,
+                  //           ),
+                  //           Icon(
+                  //             Icons.drive_eta_outlined,
+                  //             color: Colors.blue,
+                  //             size: 40,
+                  //           ),
+                  //           FittedBox(
+                  //               fit: BoxFit.fill,
+                  //               child: Text(
+                  //                 "Parking Space",
+                  //                 style: TextStyle(
+                  //                     fontSize: 16,
+                  //                     fontWeight: FontWeight.normal),
+                  //               )),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //     FittedBox(
+                  //       child: Row(
+                  //         children: [
+                  //           SizedBox(
+                  //             width: 5,
+                  //           ),
+                  //           Icon(
+                  //             Icons.local_laundry_service_outlined,
+                  //             color: Colors.blue,
+                  //             size: 40,
+                  //           ),
+                  //           FittedBox(
+                  //               fit: BoxFit.fill,
+                  //               child: Text(
+                  //                 "Laundry Allowed",
+                  //                 style: TextStyle(
+                  //                     fontSize: 16,
+                  //                     fontWeight: FontWeight.normal),
+                  //               )),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //     FittedBox(
+                  //       child: Row(
+                  //         children: [
+                  //           SizedBox(
+                  //             width: 5,
+                  //           ),
+                  //           Icon(
+                  //             Icons.nights_stay_outlined,
+                  //             color: Colors.blue,
+                  //             size: 40,
+                  //           ),
+                  //           FittedBox(
+                  //               fit: BoxFit.fill,
+                  //               child: Text(
+                  //                 "Overnight Visitors Allowed",
+                  //                 style: TextStyle(
+                  //                     fontSize: 16,
+                  //                     fontWeight: FontWeight.normal),
+                  //               )),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //     FittedBox(
+                  //       child: Row(
+                  //         children: [
+                  //           SizedBox(
+                  //             width: 5,
+                  //           ),
+                  //           Icon(
+                  //             Icons.directions_walk,
+                  //             color: Colors.blue,
+                  //             size: 40,
+                  //           ),
+                  //           FittedBox(
+                  //               fit: BoxFit.fill,
+                  //               child: Text(
+                  //                 "Visitors Allowed",
+                  //                 style: TextStyle(
+                  //                     fontSize: 16,
+                  //                     fontWeight: FontWeight.normal),
+                  //               )),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //     FittedBox(
+                  //       child: Row(
+                  //         children: [
+                  //           SizedBox(
+                  //             width: 5,
+                  //           ),
+                  //           Icon(
+                  //             Icons.video_camera_front_outlined,
+                  //             color: Colors.blue,
+                  //             size: 40,
+                  //           ),
+                  //           FittedBox(
+                  //               fit: BoxFit.fill,
+                  //               child: Text(
+                  //                 "CCTV in the Area",
+                  //                 style: TextStyle(
+                  //                     fontSize: 16,
+                  //                     fontWeight: FontWeight.normal),
+                  //               )),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ],
+                  // )),
+                  //End of Highlights
                 ],
               ),
             );

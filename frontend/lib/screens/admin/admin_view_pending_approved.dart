@@ -110,7 +110,7 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
                   padding: const EdgeInsets.symmetric(vertical: 7),
                   child: InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, '/accomm',
+                      Navigator.pushNamed(context, '/admin/verify_accomm',
                             arguments: details.ID);
                     },
                     child: PendingAccomCard(
