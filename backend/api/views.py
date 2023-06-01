@@ -652,21 +652,21 @@ def view_all_archived_users(request):
 def view_all_modifUnverified_users(request):
     user = User.objects.all()
     serializer = userSerializer(user, many=True)
-    query = [d for d in serializer.data if d['verified'] == False and d['archived'] == False and d['user_type'] =="user"]
+    query = [d for d in serializer.data if d['verified'] == False and d['archived'] == False and d['user_type'] !="admin"]
     return Response(query)
 
 @api_view(['GET'])
 def view_all_modifVerified_users(request):
     user = User.objects.all()
     serializer = userSerializer(user, many=True)
-    query = [d for d in serializer.data if d['verified'] == True and d['archived'] == False and d['user_type'] =="user"]
+    query = [d for d in serializer.data if d['verified'] == True and d['archived'] == False and d['user_type'] !="admin"]
     return Response(query)
 
 @api_view(['GET'])
 def view_all_modifArchived_users(request):
     user = User.objects.all()
     serializer = userSerializer(user, many=True)
-    query = [d for d in serializer.data if d['archived'] == True and d['verified'] == True and d['user_type'] =="user"]
+    query = [d for d in serializer.data if d['archived'] == True and d['verified'] == True and d['user_type'] !="admin"]
     return Response(query)
 
 
