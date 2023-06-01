@@ -150,6 +150,7 @@ def login(request):
     
   
     if user is not None:
+        
         #Token.objects.create(user=user)
         response = {
             "message": "Login Successful",
@@ -613,14 +614,14 @@ def search_establishment(request):
     
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def view_all_users(request):
     user = User.objects.all()
     serializer = userSerializer(user, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def view_all_verified_users(request):                                         
 
     user = User.objects.all()
@@ -629,7 +630,7 @@ def view_all_verified_users(request):
     return Response (query)
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def view_all_unverified_users(request):                                         
 
     user = User.objects.all()
@@ -638,7 +639,7 @@ def view_all_unverified_users(request):
     return Response (query)
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def view_all_archived_users(request):                                         
 
     user = User.objects.all()
@@ -646,8 +647,24 @@ def view_all_archived_users(request):
     query = [d for d in serializer.data if d['archived'] == True]
     return Response (query)
 
+
+@api_view(['GET'])
+def view_all_modifVerified_users(request):
+    user = User.objects.all()
+    serializer = userSerializer(user, many=True)
+    query = [d for d in serializer.data if d['verified'] == True and d['archived'] == False]
+    return Response(query)
+
+@api_view(['GET'])
+def view_all_modifArchived_users(request):
+    user = User.objects.all()
+    serializer = userSerializer(user, many=True)
+    query = [d for d in serializer.data if d['archived'] == True and d['verified'] == True]
+    return Response(query)
+
+
 @api_view(['GET'])     
-@permission_classes([IsAuthenticated])                                                         
+# @permission_classes([IsAuthenticated])                                                         
 def view_all_verified_establishments(request):
 
     establishment = Establishment.objects.all()
@@ -656,10 +673,42 @@ def view_all_verified_establishments(request):
     return Response (query)
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def view_all_archived_establishments(request):                                  
     
     establishment = Establishment.objects.all()
     serializer = EstablishmentSerializer(establishment, many=True)
     query = [d for d in serializer.data if d['archived'] == True]
     return Response (query)
+
+
+@api_view(['PUT'])
+# @permission_classes([IsAuthenticated])
+def archive_user(request, pk):   
+
+    try:
+        user = User.objects.get(pk=ObjectId(pk))
+
+    except User.DoesNotExist:
+         return Response(data={"message": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    user.archived = True
+    user.save()
+
+    return Response(data={"message": "Successfully archived user"})
+
+
+@api_view(['PUT'])
+# @permission_classes([IsAuthenticated])
+def unarchive_user(request, pk):   
+
+    try:
+        user = User.objects.get(pk=ObjectId(pk))
+
+    except User.DoesNotExist:
+         return Response(data={"message": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    user.archived = False
+    user.save()
+
+    return Response(data={"message": "Successfully unarchived user"})
