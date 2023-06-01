@@ -26,9 +26,13 @@ class _SignUpFormState extends State<SignUpForm> {
   String _email = '';
   String _phone = '';
 
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool _isPasswordVisible = false;
   @override
   Widget build(BuildContext context) {
-    Map<String,String> args = ModalRoute.of(context)!.settings.arguments as Map<String,String>;
+    Map<String, String>? args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, String>?;
+
     final double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
@@ -43,69 +47,148 @@ class _SignUpFormState extends State<SignUpForm> {
               "Welcome!",
               style: TextStyle(fontSize: 30, color: Color(0xFF363f93)),
             ),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'First Name',
+            Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: 'First Name',
+                    ),
+                    onChanged: (value) => _firstName = value,
+                    controller: firstNameController,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your first name';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: 'Last Name',
+                    ),
+                    onChanged: (value) => _lastName = value,
+                    controller: lastNameController,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your last name';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: 'Middle Name',
+                    ),
+                    onChanged: (value) => _middleName = value,
+                    controller: middleNameController,
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: 'Suffix',
+                    ),
+                    onChanged: (value) => _suffix = value,
+                    controller: suffixController,
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: 'Username',
+                    ),
+                    onChanged: (value) => _username = value,
+                    controller: usernameController,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter a username';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      suffixIcon: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _isPasswordVisible = !_isPasswordVisible;
+                          });
+                        },
+                        child: Icon(
+                          _isPasswordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                        ),
+                      ),
+                    ),
+                    obscureText: !_isPasswordVisible,
+                    onChanged: (value) => _password = value,
+                    controller: passwordController,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter a password';
+                      }
+                      if (!RegExp(
+                              r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*(),.?":{}|<>]).{8,}$')
+                          .hasMatch(value)) {
+                        return 'Password must have at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: 'Email',
+                    ),
+                    onChanged: (value) => _email = value,
+                    controller: emailController,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your email';
+                      }
+                      if (!RegExp(
+                              r'^[\w-]+(\.[\w-]+)*@([a-zA-Z0-9-]+\.)*[a-zA-Z]{2,7}$')
+                          .hasMatch(value)) {
+                        return 'Please enter a valid email address';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: 'Phone Number',
+                    ),
+                    onChanged: (value) => _phone = value,
+                    controller: phoneController,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your phone number';
+                      }
+                      if (!RegExp(r'^09\d{9}$').hasMatch(value)) {
+                        return 'Please enter a valid mobile number starting with 09';
+                      }
+                      return null;
+                    },
+                  ),
+                  MaterialButton(
+                    child: const Text('Next'),
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        Navigator.pushNamed(context, '/verify_user',
+                            arguments: SignupArguments(
+                                _firstName,
+                                _lastName,
+                                _middleName,
+                                _suffix,
+                                _username,
+                                _password,
+                                _email,
+                                _phone,
+                                args?['type'] ?? ''));
+                      }
+                    },
+                  ),
+                ],
               ),
-              onChanged: (value) => _firstName = value,
-              controller: firstNameController,
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Last Name',
-              ),
-              onChanged: (value) => _lastName = value,
-              controller: lastNameController,
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Middle Name',
-              ),
-              onChanged: (value) => _middleName = value,
-              controller: middleNameController,
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Suffix',
-              ),
-              onChanged: (value) => _suffix = value,
-              controller: suffixController,
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Username',
-              ),
-              onChanged: (value) => _username = value,
-              controller: usernameController,
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Password',
-              ),
-              obscureText: true,
-              onChanged: (value) => _password = value,
-              controller: passwordController,
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Email',
-              ),
-              onChanged: (value) => _email = value,
-              controller: emailController,
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Phone Number',
-              ),
-              onChanged: (value) => _phone = value,
-              controller: phoneController,
-            ),
-            MaterialButton(
-              child: const Text('Next'),
-              onPressed: () {
-                Navigator.pushNamed(context, '/verify_user',
-                arguments: SignupArguments(_firstName, _lastName, _middleName, _suffix, _username, _password, _email, _phone, args['type']));
-              },
             ),
           ],
         ),
