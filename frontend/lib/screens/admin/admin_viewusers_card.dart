@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import '../../UI_parameters.dart' as UIParameter;
 import 'package:dio/dio.dart';
 import 'package:stals_frontend/screens/admin/profile.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:stals_frontend/screens/admin/admin_view_reports.dart';
 
 
 class PendingUserCard extends StatefulWidget {
@@ -381,7 +384,7 @@ class ArchiveUserCard extends StatefulWidget {
 
 class _ArchiveUserCardState extends State<ArchiveUserCard> {
 
-  void unarchiveUser() async {
+  void resolveReport() async {
     try {
       Response response = await Dio().put('http://127.0.0.1:8000/unarchive-user/${widget.userId}/');
 
@@ -469,7 +472,7 @@ class _ArchiveUserCardState extends State<ArchiveUserCard> {
                     ),
                   ),
                   onPressed: () {
-                    unarchiveUser();
+                    resolveReport();
                   },
                   child: Text(
                     "RESTORE",
@@ -495,6 +498,152 @@ class _ArchiveUserCardState extends State<ArchiveUserCard> {
                   ),
                   onPressed: () {
                     deleteUser();
+                  },
+                  child: Text(
+                    "DELETE",
+                    style: TextStyle(
+                      color: UIParameter.WHITE,
+                      fontSize: UIParameter.FONT_BODY_SIZE,
+                      fontFamily: UIParameter.FONT_REGULAR,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+
+                const SizedBox(width: 10),
+              ],
+            ),
+          ),
+        ]));
+  }
+}
+
+
+class TicketCard extends StatefulWidget {
+  final String ticketId;
+  final String name;
+  final bool resolved;
+  final VoidCallback fetchAllTickets;
+  // TODO: image
+  
+  const TicketCard({Key? key, required this.ticketId, required this.name, required this.resolved, required this.fetchAllTickets}) : super(key: key);
+
+  @override
+  State<TicketCard> createState() => _TicketCardState();
+}
+
+class _TicketCardState extends State<TicketCard> {
+
+  void resolveReport() async {
+    try {
+      String url = "http://127.0.0.1:8000/resolve-report/";
+      final response2 = await json.decode((await http.post(Uri.parse(url),
+              body: {"_id": widget.ticketId}))
+          .body);
+
+      // TEMP SOL. Replace if better solution is found
+      Navigator.pop(context);
+      Navigator.push(context, new MaterialPageRoute(builder: (context) => new ViewReportsPage()));
+      
+
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
+  void deleteReport() async {
+    try {
+      String url = "http://127.0.0.1:8000/delete-report/";
+      final response2 = await json.decode((await http.post(Uri.parse(url),
+              body: {"_id": widget.ticketId}))
+          .body);
+        
+      // TEMP SOL. Replace if better solution is found
+      Navigator.pop(context);
+      Navigator.push(context, new MaterialPageRoute(builder: (context) => new ViewReportsPage()));
+
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        decoration: BoxDecoration(
+            color: UIParameter.WHITE,
+            borderRadius: UIParameter.CARD_BORDER_RADIUS),
+        width: (MediaQuery.of(context).size.width),
+        height: 58,
+        child: Row(children: [
+          SizedBox(
+            width: (MediaQuery.of(context).size.width - 40) / 7,
+            child: const Icon(Icons.flag_outlined,
+                size: 34, color: Colors.black87),
+          ),
+          SizedBox(
+              width: (MediaQuery.of(context).size.width - 40) * 2 / 7,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(widget.name,
+                            softWrap: false,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                                fontSize: UIParameter.FONT_HEADING_SIZE,
+                                fontFamily: UIParameter.FONT_REGULAR,
+                                fontWeight: FontWeight.w600))),
+                  ],
+                ),
+              )),
+          SizedBox(
+            width: (MediaQuery.of(context).size.width - 40) * 4 / 7,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                if (!widget.resolved)
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: UIParameter.DARK_TEAL,
+                      shape: RoundedRectangleBorder(
+                        // borderRadius: BorderRadius.circular(UIParameter.CARD_BORDER_RADIUS),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    onPressed: () {
+                      resolveReport();
+                      widget.fetchAllTickets();
+                    },
+                    child: Text(
+                      "RESOLVE",
+                      style: TextStyle(
+                        color: UIParameter.WHITE,
+                        fontSize: UIParameter.FONT_BODY_SIZE,
+                        fontFamily: UIParameter.FONT_REGULAR,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                if (widget.resolved)
+                  Text("RESOLVED"),
+                const SizedBox(width: 10),
+
+
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: UIParameter.MAROON,
+                    shape: RoundedRectangleBorder(
+                      // borderRadius: BorderRadius.circular(UIParameter.CARD_BORDER_RADIUS),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                  onPressed: () {
+                    deleteReport();
+                    widget.fetchAllTickets();
                   },
                   child: Text(
                     "DELETE",
