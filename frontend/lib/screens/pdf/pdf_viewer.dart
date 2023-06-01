@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'package:flutter/services.dart';
-
+import 'package:flutter/material.dart' as mt;
 import '../../UI_parameters.dart' as UIParameter;
 import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';
@@ -69,15 +69,15 @@ class PDFViewScreen extends StatelessWidget {
               for (var estab in estabData)
                 pw.Container(
                     decoration: pw.BoxDecoration(border: pw.Border.all()),
+                    // padding: const pw.EdgeInsets.all(16.0),
                     child: pw.Column(children: [
+                      pw.SizedBox(
+                        height: 10,
+                      ),
                       pw.Row(
                         children: [
-                          // pw.Expanded(
-                          // // child: pw.Icon(Icons.warning)
-                          // child: pw.Image(
-                          //   pw.MemoryImage(await _loadImage(estab.image)),
-                          // ),
-                          // ),
+                          pw.SizedBox(width: 10),
+                          // IMAGE INSERT HERE
                           pw.Expanded(
                             child: pw.Column(
                               crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -104,17 +104,23 @@ class PDFViewScreen extends StatelessWidget {
                               ],
                             ),
                           ),
+                          pw.SizedBox(width: 10),
                           pw.Expanded(
                               child: pw.Column(
                             crossAxisAlignment: pw.CrossAxisAlignment.start,
                             mainAxisAlignment: pw.MainAxisAlignment.start,
                             children: [
+                              pw.Text("Rooms in this Establishment",
+                                  style: pw.Theme.of(context)
+                                      .defaultTextStyle
+                                      .copyWith(
+                                          fontWeight: pw.FontWeight.bold)),
                               for (var r in estab.rooms)
                                 pw.Row(
                                   children: [
                                     // pw.Icon(Icons.check_circle_outline, ) // TO IMPLEMENT: ICONS CHECK or X for availability
                                     pw.Text(
-                                        "PHP${r.price.toString()} with capacity of ${r.capacity.toString()}"),
+                                        "PHP${r.price.toString()} for ${r.capacity.toString()}"),
                                     if (r.available)
                                       pw.Text(" [AVAILABLE]")
                                     else
@@ -122,7 +128,8 @@ class PDFViewScreen extends StatelessWidget {
                                   ],
                                 )
                             ],
-                          ))
+                          )),
+                          pw.SizedBox(width: 10)
                         ],
                       ),
                       pw.SizedBox(height: 20),
