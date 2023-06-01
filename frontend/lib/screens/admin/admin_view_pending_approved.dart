@@ -96,24 +96,30 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
                 AccomCardDetails details = snapshot.data![index];
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 7),
-                  child: PendingAccomCard(
-                    accomName: details.name,
-                    ownerName: details.name,
-                    verified: details.verified,
-                    ID: details.ID,
-                  onApproved: () async {
-                    try {
-                      await approveAccommodation(details.ID);
-                      print("Approved accommodation with ID: ${details.ID}");
-                      // Refresh the list of pending and approved accommodations
-                      setState(() {
-                        _accommodationsPendingFuture = fetchPendingAccommodations();
-                        _accommodationsFuture = fetchApprovedAccommodations();
-                      });
-                    } catch (e) {
-                      print("Error approving accommodation: $e");
-                    }
-                  },
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/accomm',
+                            arguments: details.ID);
+                    },
+                    child: PendingAccomCard(
+                      accomName: details.name,
+                      ownerName: details.name,
+                      verified: details.verified,
+                      ID: details.ID,
+                    onApproved: () async {
+                      try {
+                        await approveAccommodation(details.ID);
+                        print("Approved accommodation with ID: ${details.ID}");
+                        // Refresh the list of pending and approved accommodations
+                        setState(() {
+                          _accommodationsPendingFuture = fetchPendingAccommodations();
+                          _accommodationsFuture = fetchApprovedAccommodations();
+                        });
+                      } catch (e) {
+                        print("Error approving accommodation: $e");
+                      }
+                    },
+                    ),
                   ),
                 );
               },
