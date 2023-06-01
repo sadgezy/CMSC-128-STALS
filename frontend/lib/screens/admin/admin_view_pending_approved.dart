@@ -40,6 +40,18 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
     }
   }
 
+  Future<void> disapproveAccommodation(String id) async {
+    print(id);
+    
+    final response = await http.put(
+      Uri.parse('http://127.0.0.1:8000/archive-establishment/$id/'),
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to archive accommodation');
+    }
+  }
+
 
   Future<List<AccomCardDetails>> fetchPendingAccommodations() async {
     final response = await http
@@ -112,6 +124,19 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
                       });
                     } catch (e) {
                       print("Error approving accommodation: $e");
+                    }
+                  },
+                  onDisapproved: () async {
+                    try {
+                      await disapproveAccommodation(details.ID);
+                      print("Disapproved and archived accommodation with ID: ${details.ID}");
+                      // Refresh the list of pending and approved accommodations
+                      setState(() {
+                        _accommodationsPendingFuture = fetchPendingAccommodations();
+                        _accommodationsFuture = fetchApprovedAccommodations();
+                      });
+                    } catch (e) {
+                      print("Error disapproving accommodation: $e");
                     }
                   },
                   ),
@@ -235,6 +260,19 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
                       print("Error approving accommodation: $e");
                     }
                   },
+                  onDisapproved: () async {
+                    try {
+                      await disapproveAccommodation(details.ID);
+                      print("Disapproved and archived accommodation with ID: ${details.ID}");
+                      // Refresh the list of pending and approved accommodations
+                      setState(() {
+                        _accommodationsPendingFuture = fetchPendingAccommodations();
+                        _accommodationsFuture = fetchApprovedAccommodations();
+                      });
+                    } catch (e) {
+                      print("Error disapproving accommodation: $e");
+                    }
+                  },
                 ),
               );
             },
@@ -274,6 +312,19 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
                       });
                     } catch (e) {
                       print("Error approving accommodation: $e");
+                    }
+                  },
+                  onDisapproved: () async {
+                    try {
+                      await disapproveAccommodation(details.ID);
+                      print("Disapproved and archived accommodation with ID: ${details.ID}");
+                      // Refresh the list of pending and approved accommodations
+                      setState(() {
+                        _accommodationsPendingFuture = fetchPendingAccommodations();
+                        _accommodationsFuture = fetchApprovedAccommodations();
+                      });
+                    } catch (e) {
+                      print("Error disapproving accommodation: $e");
                     }
                   },
                 ),
