@@ -39,7 +39,7 @@ class Item1 extends StatelessWidget {
               Color(0xffffcc66),
             ]),
       ),
-      child: const Column(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Icon(
@@ -85,7 +85,7 @@ class Item2 extends StatelessWidget {
             stops: [0.3, 1],
             colors: [Color(0xff5f2c82), Color(0xff49a09d)]),
       ),
-      child: const Column(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Icon(
@@ -152,11 +152,11 @@ class Item3 extends StatelessWidget {
 }
 
 class Item4 extends StatelessWidget {
-  const Item4({Key? key}) : super(key: key);
+  Item4({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: const Column(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text("Hanse",
@@ -192,7 +192,7 @@ class _EditAccommState extends State<EditAccomm> {
   int _currentIndex = 0;
   TextEditingController _controller = TextEditingController();
   String userInput = "NA";
-  List cardList = [const Item1(), const Item2(), const Item3(), const Item4()];
+  List cardList = [ Item1(), Item2(), Item3(), Item4()];
 
   List<T> map<T>(List list, Function handler) {
     List<T> result = [];
@@ -567,7 +567,7 @@ class _EditAccommState extends State<EditAccomm> {
                           fontSize: 22, fontWeight: FontWeight.normal),
                     ),
                   ),
-                  const SizedBox(
+                  SizedBox(
                       height: 2000,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
