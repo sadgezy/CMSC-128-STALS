@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../classes.dart';
 import '../../UI_parameters.dart' as UIParameter;
+import '../pdf/pdf_viewer.dart';
 import 'favorites.dart';
 import 'package:provider/provider.dart';
 import 'package:stals_frontend/providers/token_provider.dart';
@@ -242,44 +243,45 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                 ),
               ),
               Expanded(
-                  flex: 2,
-                  child: IconButton(
-                      onPressed: () async {
-                        // print(searchVal);
-                        // print(filterTitleList);
-                        // print(filterValueList);
+                flex: 2,
+                child: IconButton(
+                    onPressed: () async {
+                      // print(searchVal);
+                      // print(filterTitleList);
+                      // print(filterValueList);
 
-                        String url =
-                            "http://127.0.0.1:8000/search-establishment/";
-                        final response = await json
-                            .decode((await http.post(Uri.parse(url), body: {
-                          'name': searchVal,
-                          'location_exact': filterValueList[1] ?? "",
-                          //'location_approx': args.middleName,
-                          'establishment_type': filterValueList[2] ?? "",
-                          'tenant_type': filterValueList[3] ?? "",
-                          'price_lower': filterValueList[4] == null
-                              ? ""
-                              : "int(${filterValueList[4]})",
-                          'price_upper': filterValueList[5] == null
-                              ? ""
-                              : "int(${filterValueList[5]})",
-                          //'capacity': args.userType,
-                        }))
-                                .body);
-                        print(response);
+                      String url =
+                          "http://127.0.0.1:8000/search-establishment/";
+                      final response = await json
+                          .decode((await http.post(Uri.parse(url), body: {
+                        'name': searchVal,
+                        'location_exact': filterValueList[1] ?? "",
+                        //'location_approx': args.middleName,
+                        'establishment_type': filterValueList[2] ?? "",
+                        'tenant_type': filterValueList[3] ?? "",
+                        'price_lower': filterValueList[4] == null
+                            ? ""
+                            : "int(${filterValueList[4]})",
+                        'price_upper': filterValueList[5] == null
+                            ? ""
+                            : "int(${filterValueList[5]})",
+                        //'capacity': args.userType,
+                      }))
+                              .body);
+                      print(response);
 
-                        setState(() {
-                          // for (int i = 0; i < response.length; i++) {
-                          //   accommList.add(response[i]);
-                          // }
-                          accommList = response;
-                        });
-                      },
-                      icon: const Icon(
-                        Icons.search,
-                        color: Color.fromARGB(255, 0, 0, 0),
-                      )))
+                      setState(() {
+                        // for (int i = 0; i < response.length; i++) {
+                        //   accommList.add(response[i]);
+                        // }
+                        accommList = response;
+                      });
+                    },
+                    icon: const Icon(
+                      Icons.search,
+                      color: Color.fromARGB(255, 0, 0, 0),
+                    )),
+              )
             ],
           ),
           // filter icon for filtered search
@@ -293,6 +295,22 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                   color: UIParameter.MAROON,
                   onPressed: () {
                     Scaffold.of(context).openEndDrawer();
+                  },
+                );
+              },
+            ),
+            Builder(
+              builder: (context) {
+                return IconButton(
+                  icon: const Icon(Icons.save_alt),
+                  color: UIParameter.MAROON,
+                  onPressed: () async {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PDFViewScreen(
+                                // estabData: dummyData,
+                                )));
                   },
                 );
               },

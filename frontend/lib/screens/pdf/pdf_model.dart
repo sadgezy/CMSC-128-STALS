@@ -3,11 +3,7 @@ class Room {
   int capacity;
   bool available;
 
-  Room (
-    this.price,
-    this.capacity,
-    this.available
-  );
+  Room(this.price, this.capacity, this.available);
 }
 
 class PDFData {
@@ -20,19 +16,17 @@ class PDFData {
   String ownerContact;
   String ownerEmail;
   String utilities;
-  // List<Room> rooms;
+  List<Room> rooms;
 
   PDFData(
-    this.estabName,
-    this.image,
-    this.approxLoc,
-    this.exactLoc,
-    this.estabType,
-    this.tenantType,
-    this.ownerContact,
-    this.ownerEmail,
-    this.utilities,
-    // this.rooms
-  );  
+      this.estabName,
+      this.image,
+      this.approxLoc,
+      this.exactLoc,
+      this.estabType,
+      this.tenantType,
+      this.ownerContact,
+      this.ownerEmail,
+      this.utilities,
+      this.rooms);
 }
-

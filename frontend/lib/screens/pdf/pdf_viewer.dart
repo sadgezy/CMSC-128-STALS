@@ -1,5 +1,7 @@
 import 'dart:typed_data';
+import 'package:flutter/services.dart';
 
+import '../../UI_parameters.dart' as UIParameter;
 import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -7,15 +9,43 @@ import 'package:printing/printing.dart';
 
 import 'pdf_model.dart';
 
+//DUMMY FOR PDF
+List<PDFData> estabData = [
+  PDFData(
+      "PDF 1",
+      "assets/images/room_stock.jpg",
+      "Within Campus",
+      "11 L Street",
+      "Dormitory",
+      "Ceat Students.",
+      "0000000",
+      "gg@wp.com",
+      "mabango", []),
+  PDFData(
+      "PDF 2",
+      "assets/images/room_stock.jpg",
+      "Beyond Junction",
+      "B7 L23 Jade St.",
+      "House",
+      "Working",
+      "0000000",
+      "gg@wp.com",
+      "toilet", []),
+];
+
 class PDFViewScreen extends StatelessWidget {
-  const PDFViewScreen({super.key, required this.estabData});
-  final List<PDFData> estabData;
+  // const PDFViewScreen({super.key, required this.estabData});
+  // final List<PDFData> estabData;
+  const PDFViewScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: const Text("PDFavorites.")),
+        appBar: AppBar(
+          title: const Text("PDFavorites."),
+          backgroundColor: UIParameter.MAROON,
+        ),
         body: PdfPreview(
           maxPageWidth: 700,
           build: (format) => _generatePdf(format),
@@ -32,11 +62,7 @@ class PDFViewScreen extends StatelessWidget {
       pw.Page(
         pageFormat: format,
         build: (pw.Context context) {
-          return pw.Column(
-            children: [
-              buildEstabTiles(estabData),
-            ],
-          );
+          return buildEstabTiles(estabData);
         },
       ),
     );
@@ -50,21 +76,28 @@ class PDFViewScreen extends StatelessWidget {
               pw.Row(
                 children: [
                   // pw.Expanded(
-                  //     child: pw.Image(
-                  //         pw.MemoryImage((rootBundle.load(d.image)) as Uint8List))),
+                  // child: pw.Icon(Icons.warning)
+                  // child: pw.Image(
+                  //   pw.MemoryImage(await _loadImage(estab.image)),
+                  // ),
+                  // ),
                   pw.Expanded(
-                      child: pw.Column(
-                    children: [
-                      pw.Text(
-                        estab.estabName,
-                      ),
-                      pw.Text(estab.approxLoc),
-                      pw.Text(estab.exactLoc),
-                    ],
-                  ))
+                    child: pw.Column(
+                      children: [
+                        pw.Text(estab.estabName),
+                        pw.Text(estab.approxLoc),
+                        pw.Text(estab.exactLoc),
+                      ],
+                    ),
+                  ),
                 ],
               ),
           ],
         ),
       );
+
+  Future<Uint8List> _loadImage(String imagePath) async {
+    final ByteData imageData = await rootBundle.load(imagePath);
+    return imageData.buffer.asUint8List();
+  }
 }

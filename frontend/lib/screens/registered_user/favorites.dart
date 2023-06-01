@@ -44,30 +44,6 @@ class _FavoritesState extends State<Favorites> {
       false,
       true);
 
-  //DUMMY FOR PDF
-  List<PDFData> dummyData = [
-    PDFData(
-        "PDF 1",
-        "assets/images/room_stock.jpg",
-        "Within Campus",
-        "11 L Street",
-        "Dormitory",
-        "Ceat Students.",
-        "0000000",
-        "gg@wp.com",
-        "mabango"),
-    PDFData(
-        "PDF 2",
-        "assets/images/room_stock.jpg",
-        "Beyond Junction",
-        "B7 L23 Jade St.",
-        "House",
-        "Working",
-        "0000000",
-        "gg@wp.com",
-        "toilet"),
-  ];
-
   @override
   Widget build(BuildContext context) {
     List<AccomCardDetails> favorites = [accom, accom2];
@@ -87,7 +63,7 @@ class _FavoritesState extends State<Favorites> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => PDFViewScreen(
-                                  estabData: dummyData,
+                                // estabData: dummyData,
                                 )));
                   },
                 );
