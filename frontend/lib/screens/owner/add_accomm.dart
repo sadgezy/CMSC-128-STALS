@@ -1360,15 +1360,17 @@ class _AddAccommPageState extends State<AddAccommPage> {
                                   " " +
                                   provinceController.text +
                                   " " +
-                                  countryController.text,
+                                  countryController.text +
+                                  " " +
+                                  zipcodeController.text,
                               "location_approx": "Maybe inside Campus",
                               "establishment_type": accommType,
                               "tenant_type": guestType,
                               "utilities": [],
                               "description": descriptionController.text,
                               "photos": [],
-                              "proof_type": "None",
-                              "proof_number": "None",
+                              "proof_type": _idType,
+                              "proof_number": idnoController.text,
                               "loc_picture": base64Image1,
                               "proof_picture": base64Image2,
                               "reviews": [],
@@ -1384,6 +1386,9 @@ class _AddAccommPageState extends State<AddAccommPage> {
                                 body: json.encode(requestBody));
                             final decodedResponse = json.decode(response.body);
                             Navigator.pop(context);
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                            Navigator.pushNamed(context, '/view_owned_accomms');
                           }
                         } else {
                           print("Not an owner");
