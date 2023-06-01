@@ -47,6 +47,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
     List<String> user =
         Provider.of<UserProvider>(context, listen: false).userInfo;
     String id = user[0];
@@ -54,14 +55,20 @@ class _AddAccommPageState extends State<AddAccommPage> {
     String username = user[2];
     String user_type = user[3];
 
-    const accommTypeError = Text(
-      "Please select an accommodation type.",
-      style: TextStyle(color: Color(0xff7B2D26)),
+    const accommTypeError = SizedBox(
+      height: 16,
+      child: Text(
+        "Please select an accommodation type.",
+        style: TextStyle(color: Color(0xff7B2D26)),
+      ),
     );
 
-    const guestTypeError = Text(
-      "Please select a guest type.",
-      style: TextStyle(color: Color(0xff7B2D26)),
+    const guestTypeError = SizedBox(
+      height: 16,
+      child: Text(
+        "Please select a guest type.",
+        style: TextStyle(color: Color(0xff7B2D26)),
+      ),
     );
 
     // Future chooseImage() async {
@@ -189,84 +196,78 @@ class _AddAccommPageState extends State<AddAccommPage> {
       }
     }
 
-    Widget navigationButtons = Expanded(
-      child: Align(
-        alignment: Alignment.bottomCenter,
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(40, 0, 40, 50),
-          child:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            ElevatedButton(
-              onPressed: () {
-                if (activestep > 0) {
-                  setState(() {
-                    activestep--;
-                  });
-                } else if (activestep == 0) {
-                  print("Add accommodation cancelled.");
-                  Navigator.pop(context);
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                elevation: 0,
-                backgroundColor: const Color(0xff7B2D26),
-                minimumSize: const Size(100, 50),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              child: Text(activestep == 0 ? "Cancel" : "Back",
-                  style: const TextStyle(fontSize: 17)),
+    Widget navigationButtons = Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 40),
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        ElevatedButton(
+          onPressed: () {
+            if (activestep > 0) {
+              setState(() {
+                activestep--;
+              });
+            } else if (activestep == 0) {
+              //print("Add accommodation cancelled.");
+              Navigator.pop(context);
+            }
+          },
+          style: ElevatedButton.styleFrom(
+            elevation: 0,
+            backgroundColor: const Color(0xff7B2D26),
+            minimumSize: const Size(100, 50),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
             ),
-            ElevatedButton(
-              onPressed: () {
-                if (activestep < stepcount) {
-                  if (activestep == 0) {
-                    if (accommType == "") {
-                      setState(() {
-                        showAccommTypeError = true;
-                      });
-                      print("Please select an accomodation type.");
-                    } else {
-                      setState(() {
-                        activestep++;
-                      });
-                    }
-                  } else if (activestep == 1) {
-                    if (guestType == "") {
-                      setState(() {
-                        showGuestTypeError = true;
-                      });
-                      print("Please select a guest type.");
-                    } else {
-                      setState(() {
-                        activestep++;
-                      });
-                    }
-                  }
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                elevation: 0,
-                backgroundColor: const Color(0xff0B7A75),
-                minimumSize: const Size(100, 50),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              child: const Text("Next", style: TextStyle(fontSize: 17)),
-            ),
-          ]),
+          ),
+          child: Text(activestep == 0 ? "Cancel" : "Back",
+              style: const TextStyle(fontSize: 17)),
         ),
-      ),
+        ElevatedButton(
+          onPressed: () {
+            if (activestep < stepcount) {
+              if (activestep == 0) {
+                if (accommType == "") {
+                  setState(() {
+                    showAccommTypeError = true;
+                  });
+                  //print("Please select an accomodation type.");
+                } else {
+                  setState(() {
+                    activestep++;
+                  });
+                }
+              } else if (activestep == 1) {
+                if (guestType == "") {
+                  setState(() {
+                    showGuestTypeError = true;
+                  });
+                  //print("Please select a guest type.");
+                } else {
+                  setState(() {
+                    activestep++;
+                  });
+                }
+              }
+            }
+          },
+          style: ElevatedButton.styleFrom(
+            elevation: 0,
+            backgroundColor: const Color(0xff0B7A75),
+            minimumSize: const Size(100, 50),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          child: const Text("Next", style: TextStyle(fontSize: 17)),
+        ),
+      ]),
     );
 
     Widget step0() {
       return (Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           const SizedBox(
-            height: 100,
+            height: 70,
           ),
           const Text(
             "Which of these best\ndescribes your place?",
@@ -286,8 +287,8 @@ class _AddAccommPageState extends State<AddAccommPage> {
                     padding: const EdgeInsets.symmetric(vertical: 5),
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            maximumSize: const Size(300, 70),
-                            minimumSize: const Size(300, 70),
+                            maximumSize: const Size(300, 75),
+                            minimumSize: const Size(300, 75),
                             backgroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
@@ -300,12 +301,12 @@ class _AddAccommPageState extends State<AddAccommPage> {
                         onPressed: () {
                           setState(() {
                             accommType = "house";
-                            showGuestTypeError = false;
-                            print("Seleced accommodation type: " + accommType);
+                            showAccommTypeError = false;
+                            //print("Seleced accommodation type: " + accommType);
                           });
                         },
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SizedBox(
                               height: 50,
@@ -325,8 +326,8 @@ class _AddAccommPageState extends State<AddAccommPage> {
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            maximumSize: const Size(300, 70),
-                            minimumSize: const Size(300, 70),
+                            maximumSize: const Size(300, 75),
+                            minimumSize: const Size(300, 75),
                             backgroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
@@ -339,19 +340,19 @@ class _AddAccommPageState extends State<AddAccommPage> {
                         onPressed: () {
                           setState(() {
                             accommType = "dormitory";
-                            showGuestTypeError = false;
-                            print("Seleced accommodation type: " + accommType);
+                            showAccommTypeError = false;
+                            //print("Seleced accommodation type: " + accommType);
                           });
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               SizedBox(
                                 height: 50,
                                 child: Image.asset(
-                                  'assets/images/bunk.png',
+                                  'assets/images/dormitory.png',
                                   fit: BoxFit.fitWidth,
                                 ),
                               ),
@@ -367,8 +368,8 @@ class _AddAccommPageState extends State<AddAccommPage> {
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            maximumSize: const Size(300, 70),
-                            minimumSize: const Size(300, 70),
+                            maximumSize: const Size(300, 75),
+                            minimumSize: const Size(300, 75),
                             backgroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
@@ -381,12 +382,12 @@ class _AddAccommPageState extends State<AddAccommPage> {
                         onPressed: () {
                           setState(() {
                             accommType = "apartment";
-                            showGuestTypeError = false;
-                            print("Seleced accommodation type: " + accommType);
+                            showAccommTypeError = false;
+                            //print("Seleced accommodation type: " + accommType);
                           });
                         },
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SizedBox(
                               height: 50,
@@ -406,8 +407,8 @@ class _AddAccommPageState extends State<AddAccommPage> {
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            maximumSize: const Size(300, 70),
-                            minimumSize: const Size(300, 70),
+                            maximumSize: const Size(300, 75),
+                            minimumSize: const Size(300, 75),
                             backgroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
@@ -420,17 +421,17 @@ class _AddAccommPageState extends State<AddAccommPage> {
                         onPressed: () {
                           setState(() {
                             accommType = "transient";
-                            showGuestTypeError = false;
-                            print("Seleced accommodation type: " + accommType);
+                            showAccommTypeError = false;
+                            //print("Seleced accommodation type: " + accommType);
                           });
                         },
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SizedBox(
                               height: 50,
                               child: Image.asset(
-                                'assets/images/bed.png',
+                                'assets/images/transient.png',
                                 fit: BoxFit.fitWidth,
                               ),
                             ),
@@ -445,8 +446,8 @@ class _AddAccommPageState extends State<AddAccommPage> {
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            maximumSize: const Size(300, 70),
-                            minimumSize: const Size(300, 70),
+                            maximumSize: const Size(300, 75),
+                            minimumSize: const Size(300, 75),
                             backgroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
@@ -459,12 +460,12 @@ class _AddAccommPageState extends State<AddAccommPage> {
                         onPressed: () {
                           setState(() {
                             accommType = "hotel";
-                            showGuestTypeError = false;
-                            print("Seleted accommodation type: " + accommType);
+                            showAccommTypeError = false;
+                            //print("Seleted accommodation type: " + accommType);
                           });
                         },
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SizedBox(
                               height: 50,
@@ -484,7 +485,8 @@ class _AddAccommPageState extends State<AddAccommPage> {
               ),
             ),
           ),
-          showAccommTypeError ? accommTypeError : const SizedBox(),
+          showAccommTypeError ? accommTypeError : const SizedBox(height: 16),
+          const SizedBox(height: 30),
           navigationButtons
         ],
       ));
@@ -529,7 +531,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
                               setState(() {
                                 guestType = "students";
                                 showGuestTypeError = false;
-                                print("Selected guest type: " + guestType);
+                                //print("Selected guest type: " + guestType);
                               });
                             },
                             child: const Padding(
@@ -558,7 +560,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
                               setState(() {
                                 guestType = "teachers";
                                 showGuestTypeError = false;
-                                print("Selected guest type: " + guestType);
+                                //print("Selected guest type: " + guestType);
                               });
                             },
                             child: const Padding(
@@ -587,7 +589,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
                               setState(() {
                                 guestType = "professionals";
                                 showGuestTypeError = false;
-                                print("Selected guest type: " + guestType);
+                                //("Selected guest type: " + guestType);
                               });
                             },
                             child: const Padding(
@@ -616,7 +618,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
                               setState(() {
                                 guestType = "anyone";
                                 showGuestTypeError = false;
-                                print("Selected guest type: " + guestType);
+                                // print("Selected guest type: " + guestType);
                               });
                             },
                             child: const Padding(
@@ -627,260 +629,258 @@ class _AddAccommPageState extends State<AddAccommPage> {
                                         color: Color(0xff1F2421))))),
                       )
                     ]))),
-            showGuestTypeError ? guestTypeError : const SizedBox(),
+            showGuestTypeError ? guestTypeError : const SizedBox(height: 16),
+            const SizedBox(height: 75),
             navigationButtons
           ]));
     }
 
     Widget step2() {
-      return (Column(mainAxisAlignment: MainAxisAlignment.start, children: <
-          Widget>[
-        const SizedBox(
-          height: 100,
-        ),
-        const Text(
-          "Where are you located?",
-          style: TextStyle(fontSize: 27, color: Color(0xff1F2421)),
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(
-          height: 50,
-        ),
-        Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40),
-            child: Form(
-              key: _formKey1,
-              child: Column(children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 7),
-                  child: TextFormField(
-                    controller: houseNoController,
-                    decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 10),
-                        fillColor: Colors.white,
-                        filled: true,
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                              color: Color(0xff1F2421),
-                              width: 1,
-                            )),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 15, 170, 163),
-                              width: 2,
-                            )),
-                        hintText: "House No., Unit No., etc."),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 7),
-                  child: TextFormField(
-                    controller: streetController,
-                    decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 10),
-                        fillColor: Colors.white,
-                        filled: true,
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                              color: Color(0xff1F2421),
-                              width: 1,
-                            )),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 15, 170, 163),
-                              width: 2,
-                            )),
-                        hintText: "Street"),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 7),
-                  child: TextFormField(
-                    controller: cityController,
-                    decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 10),
-                        fillColor: Colors.white,
-                        filled: true,
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                              color: Color(0xff1F2421),
-                              width: 1,
-                            )),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 15, 170, 163),
-                              width: 2,
-                            )),
-                        focusedErrorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 175, 31, 18),
-                              width: 2,
-                            )),
-                        errorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 175, 31, 18),
-                              width: 1,
-                            )),
-                        hintText: "City"),
-                    validator: ((value) {
-                      if (value != null && value.trim().isEmpty) {
-                        return "City required";
-                      }
-                    }),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 7),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          width: 160,
-                          child: TextFormField(
-                            controller: provinceController,
-                            decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 10),
-                                fillColor: Colors.white,
-                                filled: true,
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: const BorderSide(
-                                      color: Color(0xff1F2421),
-                                      width: 1,
-                                    )),
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: const BorderSide(
-                                      color: Color.fromARGB(255, 15, 170, 163),
-                                      width: 2,
-                                    )),
-                                focusedErrorBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: const BorderSide(
-                                      color: Color.fromARGB(255, 175, 31, 18),
-                                      width: 2,
-                                    )),
-                                errorBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: const BorderSide(
-                                      color: Color.fromARGB(255, 175, 31, 18),
-                                      width: 1,
-                                    )),
-                                hintText: "Province"),
-                            validator: ((value) {
-                              if (value != null && value.trim().isEmpty) {
-                                return "Province required";
-                              }
-                            }),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 140,
-                          child: TextFormField(
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly,
-                              LengthLimitingTextInputFormatter(4),
-                            ],
-                            controller: zipcodeController,
-                            decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 10),
-                                fillColor: Colors.white,
-                                filled: true,
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: const BorderSide(
-                                      color: Color(0xff1F2421),
-                                      width: 1,
-                                    )),
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: const BorderSide(
-                                      color: Color.fromARGB(255, 15, 170, 163),
-                                      width: 2,
-                                    )),
-                                focusedErrorBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: const BorderSide(
-                                      color: Color.fromARGB(255, 175, 31, 18),
-                                      width: 2,
-                                    )),
-                                errorBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: const BorderSide(
-                                      color: Color.fromARGB(255, 175, 31, 18),
-                                      width: 1,
-                                    )),
-                                hintText: "Zip Code"),
-                            validator: ((value) {
-                              if (value != null && value.trim().isEmpty) {
-                                return "Zip Code required";
-                              }
-                            }),
-                          ),
-                        )
-                      ]),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 7),
-                  child: TextFormField(
-                    controller: countryController,
-                    decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 10),
-                        fillColor: Colors.white,
-                        filled: true,
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                              color: Color(0xff1F2421),
-                              width: 1,
-                            )),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 15, 170, 163),
-                              width: 2,
-                            )),
-                        focusedErrorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 175, 31, 18),
-                              width: 2,
-                            )),
-                        errorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 175, 31, 18),
-                              width: 1,
-                            )),
-                        hintText: "Country"),
-                    validator: ((value) {
-                      if (value != null && value.trim().isEmpty) {
-                        return "Country required";
-                      }
-                    }),
-                  ),
-                ),
-              ]),
-            )),
-        Expanded(
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
+      return (Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            const SizedBox(
+              height: 100,
+            ),
+            const Text(
+              "Where are you located?",
+              style: TextStyle(fontSize: 27, color: Color(0xff1F2421)),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+            Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: Form(
+                  key: _formKey1,
+                  child: Column(children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 7),
+                      child: TextFormField(
+                        controller: houseNoController,
+                        decoration: InputDecoration(
+                            contentPadding:
+                                const EdgeInsets.fromLTRB(25, 10, 10, 10),
+                            fillColor: Colors.white,
+                            filled: true,
+                            border: const OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(18)),
+                                borderSide: BorderSide(
+                                    width: 0, style: BorderStyle.none)),
+                            focusedErrorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                borderSide: const BorderSide(
+                                  color: Color.fromARGB(255, 175, 31, 18),
+                                  width: 2,
+                                )),
+                            errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                borderSide: const BorderSide(
+                                  color: Color.fromARGB(255, 175, 31, 18),
+                                  width: 1,
+                                )),
+                            labelText: "House No., Unit No., etc."),
+                        validator: ((value) {
+                          if (value != null && value.trim().isEmpty) {
+                            return "This field is required.";
+                          }
+                        }),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 7),
+                      child: TextFormField(
+                        controller: streetController,
+                        decoration: InputDecoration(
+                            contentPadding:
+                                const EdgeInsets.fromLTRB(25, 10, 10, 10),
+                            fillColor: Colors.white,
+                            filled: true,
+                            border: const OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(18)),
+                                borderSide: BorderSide(
+                                    width: 0, style: BorderStyle.none)),
+                            focusedErrorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                borderSide: const BorderSide(
+                                  color: Color.fromARGB(255, 175, 31, 18),
+                                  width: 2,
+                                )),
+                            errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                borderSide: const BorderSide(
+                                  color: Color.fromARGB(255, 175, 31, 18),
+                                  width: 1,
+                                )),
+                            labelText: "Street"),
+                        validator: ((value) {
+                          if (value != null && value.trim().isEmpty) {
+                            return "Street required.";
+                          }
+                        }),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 7),
+                      child: TextFormField(
+                        controller: cityController,
+                        decoration: InputDecoration(
+                            contentPadding:
+                                const EdgeInsets.fromLTRB(25, 10, 10, 10),
+                            fillColor: Colors.white,
+                            filled: true,
+                            border: const OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(18)),
+                                borderSide: BorderSide(
+                                    width: 0, style: BorderStyle.none)),
+                            focusedErrorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                borderSide: const BorderSide(
+                                  color: Color.fromARGB(255, 175, 31, 18),
+                                  width: 2,
+                                )),
+                            errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                borderSide: const BorderSide(
+                                  color: Color.fromARGB(255, 175, 31, 18),
+                                  width: 1,
+                                )),
+                            labelText: "City"),
+                        validator: ((value) {
+                          if (value != null && value.trim().isEmpty) {
+                            return "City required";
+                          }
+                        }),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 7),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width: 200,
+                              child: TextFormField(
+                                controller: provinceController,
+                                decoration: InputDecoration(
+                                    contentPadding: const EdgeInsets.fromLTRB(
+                                        25, 10, 10, 10),
+                                    fillColor: Colors.white,
+                                    filled: true,
+                                    border: const OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(18)),
+                                        borderSide: BorderSide(
+                                            width: 0, style: BorderStyle.none)),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(18),
+                                        borderSide: const BorderSide(
+                                          color:
+                                              Color.fromARGB(255, 175, 31, 18),
+                                          width: 2,
+                                        )),
+                                    errorBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(18),
+                                        borderSide: const BorderSide(
+                                          color:
+                                              Color.fromARGB(255, 175, 31, 18),
+                                          width: 1,
+                                        )),
+                                    labelText: "Province"),
+                                validator: ((value) {
+                                  if (value != null && value.trim().isEmpty) {
+                                    return "Province required";
+                                  }
+                                }),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 150,
+                              child: TextFormField(
+                                keyboardType: TextInputType.number,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.digitsOnly,
+                                  LengthLimitingTextInputFormatter(4),
+                                ],
+                                controller: zipcodeController,
+                                decoration: InputDecoration(
+                                    contentPadding: const EdgeInsets.fromLTRB(
+                                        25, 10, 10, 10),
+                                    fillColor: Colors.white,
+                                    filled: true,
+                                    border: const OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(18)),
+                                        borderSide: BorderSide(
+                                            width: 0, style: BorderStyle.none)),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(18),
+                                        borderSide: const BorderSide(
+                                          color:
+                                              Color.fromARGB(255, 175, 31, 18),
+                                          width: 2,
+                                        )),
+                                    errorBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(18),
+                                        borderSide: const BorderSide(
+                                          color:
+                                              Color.fromARGB(255, 175, 31, 18),
+                                          width: 1,
+                                        )),
+                                    labelText: "Zip Code"),
+                                validator: ((value) {
+                                  if (value != null && value.trim().isEmpty) {
+                                    return "Zip Code required";
+                                  }
+                                }),
+                              ),
+                            )
+                          ]),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 7),
+                      child: TextFormField(
+                        controller: countryController,
+                        decoration: InputDecoration(
+                            contentPadding:
+                                const EdgeInsets.fromLTRB(25, 10, 10, 10),
+                            fillColor: Colors.white,
+                            filled: true,
+                            border: const OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(18)),
+                                borderSide: BorderSide(
+                                    width: 0, style: BorderStyle.none)),
+                            focusedErrorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                borderSide: const BorderSide(
+                                  color: Color.fromARGB(255, 175, 31, 18),
+                                  width: 2,
+                                )),
+                            errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                borderSide: const BorderSide(
+                                  color: Color.fromARGB(255, 175, 31, 18),
+                                  width: 1,
+                                )),
+                            labelText: "Country"),
+                        validator: ((value) {
+                          if (value != null && value.trim().isEmpty) {
+                            return "Country required";
+                          }
+                        }),
+                      ),
+                    ),
+                  ]),
+                )),
+            const SizedBox(
+              height: 166,
+            ),
+            Padding(
               padding: const EdgeInsets.fromLTRB(40, 0, 40, 50),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -930,398 +930,392 @@ class _AddAccommPageState extends State<AddAccommPage> {
                       child: const Text("Next", style: TextStyle(fontSize: 17)),
                     ),
                   ]),
-            ),
-          ),
-        )
-      ]));
+            )
+          ]));
     }
 
     Widget step3() {
-      return (Column(mainAxisAlignment: MainAxisAlignment.start, children: <
-          Widget>[
-        const SizedBox(
-          height: 100,
-        ),
-        const Text(
-          "Tell us about your place",
-          style: TextStyle(fontSize: 27, color: Color(0xff1F2421)),
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(
-          height: 30,
-        ),
-        Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40),
-            child: Form(
-                key: _formKey2,
-                child: Column(children: [
-                  Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 7),
-                      child: Column(
-                        children: [
-                          const Align(
-                            alignment: Alignment.topLeft,
-                            child: Text("Name"),
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          TextFormField(
-                            controller: nameController,
-                            validator: ((value) {
-                              if (value != null && value.trim().isEmpty) {
-                                return "Name required";
-                              }
-                            }),
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 10),
-                              fillColor: Colors.white,
-                              filled: true,
-                              enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: const BorderSide(
-                                    color: Color(0xff1F2421),
-                                    width: 1,
-                                  )),
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: const BorderSide(
-                                    color: Color.fromARGB(255, 15, 170, 163),
-                                    width: 2,
-                                  )),
-                              focusedErrorBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: const BorderSide(
-                                    color: Color.fromARGB(255, 175, 31, 18),
-                                    width: 2,
-                                  )),
-                              errorBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: const BorderSide(
-                                    color: Color.fromARGB(255, 175, 31, 18),
-                                    width: 1,
-                                  )),
-                            ),
-                          ),
-                        ],
-                      )),
-
-                  // if (_imageFile != null)
-                  //   Image.memory(
-                  //     Uint8List.fromList(_imageFile!.bytes!),
-                  //     width: 200,
-                  //     height: 200,
-                  //     fit: BoxFit.cover,
-                  //   ),
-                  // Container(
-                  //   width: 200.0,
-                  //   height: 40.0,
-                  //   color: Colors.grey,
-                  //   child: _idImage != null
-                  //       ? Image.file(_idImage as File)
-                  //       : IconButton(
-                  //           icon: const Icon(Icons.add),
-                  //           onPressed: () {
-                  //             _chooseImage();
-                  //           },
-                  //         ),
-                  // ),
-                  // const Text(
-                  //   'Only photos 4mb and below are allowed.',
-                  //   style: TextStyle(color: Colors.red),
-                  // ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 7),
-                    child: Column(
-                      children: [
-                        const Align(
-                            alignment: Alignment.topLeft,
-                            child: Text("Accomodation Picture")),
-                        Padding(
+      return (Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            const SizedBox(
+              height: 70,
+            ),
+            const Text(
+              "Tell us about your place",
+              style: TextStyle(fontSize: 27, color: Color(0xff1F2421)),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: Form(
+                    key: _formKey2,
+                    child: Column(children: [
+                      Padding(
                           padding: const EdgeInsets.symmetric(vertical: 7),
-                          child: Container(
-                            alignment: Alignment.center,
-                            child: _idImage != null
-                                ? Image.file(_idImage as File)
-                                : ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      minimumSize: const Size(150, 50),
-                                      maximumSize: const Size(150, 50),
-                                      elevation: 0,
-                                      backgroundColor: const Color(0xff7B2D26),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      _chooseImage(1);
-                                    },
-                                    child: const Text("Upload image")),
-                          ),
+                          child: Column(
+                            children: [
+                              const Align(
+                                alignment: Alignment.topLeft,
+                                child: Text("Name"),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              TextFormField(
+                                controller: nameController,
+                                validator: ((value) {
+                                  if (value != null && value.trim().isEmpty) {
+                                    return "Name required";
+                                  }
+                                }),
+                                decoration: InputDecoration(
+                                  contentPadding:
+                                      const EdgeInsets.fromLTRB(25, 10, 10, 10),
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  border: const OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(18)),
+                                      borderSide: BorderSide(
+                                          width: 0, style: BorderStyle.none)),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(18),
+                                      borderSide: const BorderSide(
+                                        color: Color.fromARGB(255, 175, 31, 18),
+                                        width: 2,
+                                      )),
+                                  errorBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(18),
+                                      borderSide: const BorderSide(
+                                        color: Color.fromARGB(255, 175, 31, 18),
+                                        width: 1,
+                                      )),
+                                ),
+                              ),
+                            ],
+                          )),
+
+                      // if (_imageFile != null)
+                      //   Image.memory(
+                      //     Uint8List.fromList(_imageFile!.bytes!),
+                      //     width: 200,
+                      //     height: 200,
+                      //     fit: BoxFit.cover,
+                      //   ),
+                      // Container(
+                      //   width: 200.0,
+                      //   height: 40.0,
+                      //   color: Colors.grey,
+                      //   child: _idImage != null
+                      //       ? Image.file(_idImage as File)
+                      //       : IconButton(
+                      //           icon: const Icon(Icons.add),
+                      //           onPressed: () {
+                      //             _chooseImage();
+                      //           },
+                      //         ),
+                      // ),
+                      // const Text(
+                      //   'Only photos 4mb and below are allowed.',
+                      //   style: TextStyle(color: Colors.red),
+                      // ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 7),
+                        child: Column(
+                          children: [
+                            const Align(
+                                alignment: Alignment.topLeft,
+                                child: Text("Accomodation Picture")),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 7),
+                              child: Container(
+                                alignment: Alignment.center,
+                                child: _idImage != null
+                                    ? Image.file(_idImage as File)
+                                    : ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          minimumSize: const Size(150, 50),
+                                          maximumSize: const Size(150, 50),
+                                          elevation: 0,
+                                          backgroundColor:
+                                              //const Color(0xff7B2D26),
+                                              const Color.fromARGB(
+                                                  255, 25, 83, 95),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          _chooseImage(1);
+                                        },
+                                        child: const Text("Upload image")),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-                  if (_imageFile != null)
-                    Image.memory(
-                      Uint8List.fromList(_imageFile!.bytes!),
-                      width: 100,
-                      height: 100,
-                      fit: BoxFit.cover,
-                    ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 7),
-                    child: Column(
-                      children: [
-                        const Align(
-                            alignment: Alignment.topLeft,
-                            child: Text("Description")),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        SizedBox(
+                      ),
+                      if (_imageFile != null)
+                        Image.memory(
+                          Uint8List.fromList(_imageFile!.bytes!),
+                          width: 100,
                           height: 100,
-                          child: TextFormField(
-                            controller: descriptionController,
-                            minLines: 5,
-                            maxLines: 5,
-                            validator: ((value) {
-                              if (value != null && value.trim().isEmpty) {
-                                return "Description required";
-                              }
-                            }),
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 10),
-                              fillColor: Colors.white,
-                              filled: true,
-                              enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: const BorderSide(
-                                    color: Color(0xff1F2421),
-                                    width: 1,
-                                  )),
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: const BorderSide(
-                                    color: Color.fromARGB(255, 15, 170, 163),
-                                    width: 2,
-                                  )),
-                              focusedErrorBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: const BorderSide(
-                                    color: Color.fromARGB(255, 175, 31, 18),
-                                    width: 2,
-                                  )),
-                              errorBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: const BorderSide(
-                                    color: Color.fromARGB(255, 175, 31, 18),
-                                    width: 1,
-                                  )),
-                            ),
-                          ),
+                          fit: BoxFit.cover,
                         ),
-                      ],
-                    ),
-                  ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 7),
+                        child: Column(
+                          children: [
+                            const Align(
+                                alignment: Alignment.topLeft,
+                                child: Text("Description")),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            SizedBox(
+                              height: 100,
+                              child: TextFormField(
+                                controller: descriptionController,
+                                minLines: 5,
+                                maxLines: 5,
+                                validator: ((value) {
+                                  if (value != null && value.trim().isEmpty) {
+                                    return "Description required";
+                                  }
+                                }),
+                                decoration: InputDecoration(
+                                  contentPadding:
+                                      const EdgeInsets.fromLTRB(25, 10, 10, 10),
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  border: const OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(18)),
+                                      borderSide: BorderSide(
+                                          width: 0, style: BorderStyle.none)),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(18),
+                                      borderSide: const BorderSide(
+                                        color: Color.fromARGB(255, 175, 31, 18),
+                                        width: 2,
+                                      )),
+                                  errorBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(18),
+                                      borderSide: const BorderSide(
+                                        color: Color.fromARGB(255, 175, 31, 18),
+                                        width: 1,
+                                      )),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
 
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text("Proof Type"),
-                  ),
-                  DropdownButtonFormField(
-                    items: const [
-                      DropdownMenuItem(
-                        value: 'Business Permit',
-                        child: Text('Business Permit'),
-                      ),
-                      DropdownMenuItem(
-                        value: 'BIR',
-                        child: Text('BIR'),
-                      ),
-                      DropdownMenuItem(
-                        value: 'Proof of Land Ownership',
-                        child: Text('Proof of Land Ownership'),
-                      ),
-                      DropdownMenuItem(
-                        value: 'Building Permit',
-                        child: Text('Building Permit'),
-                      ),
-                      DropdownMenuItem(
-                        value: 'Others',
-                        child: Text('Others'),
-                      ),
-                    ],
-                    onChanged: (value) => _idType = value!,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 7),
-                    child: Column(
-                      children: [
-                        const Align(
-                            alignment: Alignment.topLeft,
-                            child: Text("ID Number")),
-                        SizedBox(
-                          height: 35,
-                          child: TextFormField(
-                            controller: idnoController,
-                            minLines: 5,
-                            maxLines: 5,
-                            validator: ((value) {
-                              if (value != null && value.trim().isEmpty) {
-                                return "ID Number required";
-                              }
-                            }),
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 10),
-                              fillColor: Colors.white,
-                              filled: true,
-                              enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: const BorderSide(
-                                    color: Color(0xff1F2421),
-                                    width: 1,
-                                  )),
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: const BorderSide(
-                                    color: Color.fromARGB(255, 15, 170, 163),
-                                    width: 2,
-                                  )),
-                              focusedErrorBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: const BorderSide(
-                                    color: Color.fromARGB(255, 175, 31, 18),
-                                    width: 2,
-                                  )),
-                              errorBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: const BorderSide(
-                                    color: Color.fromARGB(255, 175, 31, 18),
-                                    width: 1,
-                                  )),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 7),
+                        child: Column(
+                          children: [
+                            const Align(
+                              alignment: Alignment.topLeft,
+                              child: Text("Proof Type"),
                             ),
-                          ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            DropdownButtonFormField(
+                              items: const [
+                                DropdownMenuItem(
+                                  value: 'Business Permit',
+                                  child: Text('Business Permit'),
+                                ),
+                                DropdownMenuItem(
+                                  value: 'BIR',
+                                  child: Text('BIR'),
+                                ),
+                                DropdownMenuItem(
+                                  value: 'Proof of Land Ownership',
+                                  child: Text('Proof of Land Ownership'),
+                                ),
+                                DropdownMenuItem(
+                                  value: 'Building Permit',
+                                  child: Text('Building Permit'),
+                                ),
+                                DropdownMenuItem(
+                                  value: 'Others',
+                                  child: Text('Others'),
+                                ),
+                              ],
+                              onChanged: (value) => _idType = value!,
+                            ),
+                          ],
                         ),
-                        if (_imageFile2 != null)
-                          Image.memory(
-                            Uint8List.fromList(_imageFile2!.bytes!),
-                            width: 100,
-                            height: 100,
-                            fit: BoxFit.cover,
-                          ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 7),
-                          child: Container(
-                            alignment: Alignment.center,
-                            child: _idImage != null
-                                ? Image.file(_idImage as File)
-                                : ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      minimumSize: const Size(150, 50),
-                                      maximumSize: const Size(150, 50),
-                                      elevation: 0,
-                                      backgroundColor: const Color(0xff7B2D26),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
+                      ),
+
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 7),
+                        child: Column(
+                          children: [
+                            const Align(
+                                alignment: Alignment.topLeft,
+                                child: Text("ID Number")),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            TextFormField(
+                              controller: nameController,
+                              validator: ((value) {
+                                if (value != null && value.trim().isEmpty) {
+                                  return "ID Number required";
+                                }
+                              }),
+                              decoration: InputDecoration(
+                                contentPadding:
+                                    const EdgeInsets.fromLTRB(25, 10, 10, 10),
+                                fillColor: Colors.white,
+                                filled: true,
+                                border: const OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(18)),
+                                    borderSide: BorderSide(
+                                        width: 0, style: BorderStyle.none)),
+                                focusedErrorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(18),
+                                    borderSide: const BorderSide(
+                                      color: Color.fromARGB(255, 175, 31, 18),
+                                      width: 2,
+                                    )),
+                                errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(18),
+                                    borderSide: const BorderSide(
+                                      color: Color.fromARGB(255, 175, 31, 18),
+                                      width: 1,
+                                    )),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      if (_imageFile2 != null)
+                        Image.memory(
+                          Uint8List.fromList(_imageFile2!.bytes!),
+                          width: 100,
+                          height: 100,
+                          fit: BoxFit.cover,
+                        ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 7),
+                        child: Container(
+                          alignment: Alignment.center,
+                          child: _idImage != null
+                              ? Image.file(_idImage as File)
+                              : ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    minimumSize: const Size(150, 50),
+                                    maximumSize: const Size(150, 50),
+                                    elevation: 0,
+                                    backgroundColor:
+                                        const Color.fromARGB(255, 25, 83, 95),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
-                                    onPressed: () {
-                                      _chooseImage(2);
-                                    },
-                                    child: const Text("Upload image")),
-                          ),
+                                  ),
+                                  onPressed: () {
+                                    _chooseImage(2);
+                                  },
+                                  child: const Text("Upload image")),
                         ),
-                        const SizedBox(
-                          height: 5,
+                      ),
+                      const Text(
+                        'Only photos 4mb and below are allowed.',
+                        style: TextStyle(
+                          color: const Color.fromARGB(255, 25, 83, 95),
                         ),
-                      ],
-                    ),
-                  ),
-                  const Text(
-                    'Only photos 4mb and below are allowed.',
-                    style: TextStyle(color: Colors.red),
-                  ),
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(vertical: 7),
-                  //   child: _idImage == null
-                  //       ? DottedBorder(
-                  //           strokeWidth: 1,
-                  //           dashPattern: const [6, 6],
-                  //           color: const Color(0xff1F2421),
-                  //           child: Container(
-                  //               height: 100,
-                  //               width: double.infinity,
-                  //               color: Colors.white,
-                  //               child: Container(
-                  //                 alignment: Alignment.center,
-                  //                 child: _idImage != null
-                  //                     ? Image.memory(_idImage! as Uint8List)
-                  //                     : IconButton(
-                  //                         icon: const Icon(Icons.add),
-                  //                         onPressed: () {
-                  //                           _chooseImage();
-                  //                         },
-                  //                       ),
-                  //               )),
-                  //         )
-                  //       : Container(
-                  //           height: 100,
-                  //           width: double.infinity,
-                  //           child: Image.memory(
-                  //             _imageFile! as Uint8List,
-                  //             fit: BoxFit.fitWidth,
-                  //           )),
-                  // ),
-                  // Padding(
-                  //     padding: const EdgeInsets.symmetric(vertical: 7),
-                  //     child: _idImage == null
-                  //         ? DottedBorder(
-                  //             strokeWidth: 1,
-                  //             dashPattern: const [6, 6],
-                  //             color: const Color(0xff1F2421),
-                  //             child: Container(
-                  //                 height: 100,
-                  //                 width: double.infinity,
-                  //                 color: Colors.white,
-                  //                 child: Container(
-                  //                   alignment: Alignment.center,
-                  //                   child: ElevatedButton(
-                  //                       style: ElevatedButton.styleFrom(
-                  //                         minimumSize: const Size(150, 50),
-                  //                         maximumSize: const Size(150, 50),
-                  //                         elevation: 0,
-                  //                         backgroundColor:
-                  //                             const Color(0xff7B2D26),
-                  //                         shape: RoundedRectangleBorder(
-                  //                           borderRadius:
-                  //                               BorderRadius.circular(10),
-                  //                         ),
-                  //                       ),
-                  //                       onPressed: () {
-                  //                         chooseImage();
-                  //                       },
-                  //                       child: const Text("Upload image")),
-                  //                 )),
-                  //           )
-                  //         : Container(
-                  //             height: 100,
-                  //             width: double.infinity,
-                  //             child: Image.file(
-                  //               imageFile!,
-                  //               fit: BoxFit.fitWidth,
-                  //             ))),
-                ]))),
-        Expanded(
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
+                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.symmetric(vertical: 7),
+                      //   child: _idImage == null
+                      //       ? DottedBorder(
+                      //           strokeWidth: 1,
+                      //           dashPattern: const [6, 6],
+                      //           color: const Color(0xff1F2421),
+                      //           child: Container(
+                      //               height: 100,
+                      //               width: double.infinity,
+                      //               color: Colors.white,
+                      //               child: Container(
+                      //                 alignment: Alignment.center,
+                      //                 child: _idImage != null
+                      //                     ? Image.memory(_idImage! as Uint8List)
+                      //                     : IconButton(
+                      //                         icon: const Icon(Icons.add),
+                      //                         onPressed: () {
+                      //                           _chooseImage();
+                      //                         },
+                      //                       ),
+                      //               )),
+                      //         )
+                      //       : Container(
+                      //           height: 100,
+                      //           width: double.infinity,
+                      //           child: Image.memory(
+                      //             _imageFile! as Uint8List,
+                      //             fit: BoxFit.fitWidth,
+                      //           )),
+                      // ),
+                      // Padding(
+                      //     padding: const EdgeInsets.symmetric(vertical: 7),
+                      //     child: _idImage == null
+                      //         ? DottedBorder(
+                      //             strokeWidth: 1,
+                      //             dashPattern: const [6, 6],
+                      //             color: const Color(0xff1F2421),
+                      //             child: Container(
+                      //                 height: 100,
+                      //                 width: double.infinity,
+                      //                 color: Colors.white,
+                      //                 child: Container(
+                      //                   alignment: Alignment.center,
+                      //                   child: ElevatedButton(
+                      //                       style: ElevatedButton.styleFrom(
+                      //                         minimumSize: const Size(150, 50),
+                      //                         maximumSize: const Size(150, 50),
+                      //                         elevation: 0,
+                      //                         backgroundColor:
+                      //                             const Color(0xff7B2D26),
+                      //                         shape: RoundedRectangleBorder(
+                      //                           borderRadius:
+                      //                               BorderRadius.circular(10),
+                      //                         ),
+                      //                       ),
+                      //                       onPressed: () {
+                      //                         chooseImage();
+                      //                       },
+                      //                       child: const Text("Upload image")),
+                      //                 )),
+                      //           )
+                      //         : Container(
+                      //             height: 100,
+                      //             width: double.infinity,
+                      //             child: Image.file(
+                      //               imageFile!,
+                      //               fit: BoxFit.fitWidth,
+                      //             ))),
+                    ]))),
+            const SizedBox(
+              height: 70,
+            ),
+            Padding(
               padding: const EdgeInsets.fromLTRB(40, 0, 40, 50),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1360,17 +1354,15 @@ class _AddAccommPageState extends State<AddAccommPage> {
                                   " " +
                                   provinceController.text +
                                   " " +
-                                  countryController.text +
-                                  " " +
-                                  zipcodeController.text,
+                                  countryController.text,
                               "location_approx": "Maybe inside Campus",
                               "establishment_type": accommType,
                               "tenant_type": guestType,
                               "utilities": [],
                               "description": descriptionController.text,
                               "photos": [],
-                              "proof_type": _idType,
-                              "proof_number": idnoController.text,
+                              "proof_type": "None",
+                              "proof_number": "None",
                               "loc_picture": base64Image1,
                               "proof_picture": base64Image2,
                               "reviews": [],
@@ -1386,9 +1378,6 @@ class _AddAccommPageState extends State<AddAccommPage> {
                                 body: json.encode(requestBody));
                             final decodedResponse = json.decode(response.body);
                             Navigator.pop(context);
-                            Navigator.pop(context);
-                            Navigator.pop(context);
-                            Navigator.pushNamed(context, '/view_owned_accomms');
                           }
                         } else {
                           print("Not an owner");
@@ -1406,10 +1395,8 @@ class _AddAccommPageState extends State<AddAccommPage> {
                           const Text("Submit", style: TextStyle(fontSize: 17)),
                     ),
                   ]),
-            ),
-          ),
-        )
-      ]));
+            )
+          ]));
     }
 
     Widget getStep() {
@@ -1430,7 +1417,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
     return Scaffold(
       backgroundColor: Color(0xffF0F3F5),
       resizeToAvoidBottomInset: false,
-      body: Center(child: getStep()),
+      body: SingleChildScrollView(child: Center(child: getStep())),
     );
   }
 }
