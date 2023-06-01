@@ -171,6 +171,7 @@ class _AccommPageState extends State<AccommPage> {
   var responseData2 = "";
   String response_Name = "";
   String response_Address = "";
+  bool ?response_archived;
   String owner_id = "";
   String response2_ownerName = "";
   String response2_phone_no = "";
@@ -213,7 +214,8 @@ class _AccommPageState extends State<AccommPage> {
       var responseData = json.decode(response.body);
       loc_picture = responseData["loc_picture"];
       description = responseData["description"];
-
+      response_archived = responseData["archived"];
+ 
       owner_id = responseData['owner'];
       // print(owner_id);
       // print("http://127.0.0.1:8000/get-one-user-using-id/" + owner_id + "/");
@@ -377,7 +379,7 @@ class _AccommPageState extends State<AccommPage> {
                               //     ),
                               //     child: buildUserTypeIcon(), // Second icon
                               //   ),
-                              if (user_type == 'owner')
+                              if (user_type == 'owner' || user_type == 'admin')
                                 ElevatedButton(
                                   onPressed: () async {
                                     // Action for the third icon button
@@ -387,8 +389,15 @@ class _AccommPageState extends State<AccommPage> {
                                             "/";
                                     final response =
                                         await http.delete(Uri.parse(url));
-                                    Navigator.pushNamed(
+                                     if(user_type == 'owner'){
+                                      Navigator.pushNamed(
                                         context, '/view_owned_accomms');
+                                      }
+
+                                      if(user_type == 'admin'){
+                                        Navigator.pushNamed(
+                                          context, '/admin/view_accomms');
+                                      }
                                   },
                                   style: ElevatedButton.styleFrom(
                                     shape: CircleBorder(),
@@ -400,18 +409,31 @@ class _AccommPageState extends State<AccommPage> {
                                     size: 20,
                                   ), // Third icon
                                 ),
-                              if (user_type == 'owner')
+                              if (user_type == 'owner' || user_type == 'admin')
                                 ElevatedButton(
                                   onPressed: () async {
                                     // Action for the third icon button
-                                    String url =
-                                        "http://127.0.0.1:8000/archive-establishment/" +
-                                            id +
-                                            "/";
-                                    final response =
-                                        await http.put(Uri.parse(url));
-                                    Navigator.pushNamed(
+                                    if (response_archived == true){
+                                        String url = "http://127.0.0.1:8000/unarchive-establishment/" + id +"/";
+                                        final response = await http.put(Uri.parse(url));
+                                    }
+
+                                    else{
+                                         String url = "http://127.0.0.1:8000/archive-establishment/" + id +"/";
+                                        final response = await http.put(Uri.parse(url));
+                                    }
+                                   
+
+                                    if(user_type == 'owner'){
+                                      Navigator.pushNamed(
                                         context, '/view_owned_accomms');
+                                    }
+
+                                    if(user_type == 'admin'){
+                                      Navigator.pushNamed(
+                                        context, '/admin/view_accomms');
+                                    }
+                                    
                                   },
                                   style: ElevatedButton.styleFrom(
                                     shape: const CircleBorder(),
