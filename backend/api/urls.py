@@ -38,9 +38,13 @@ urlpatterns = [
     path('delete-room/<str:pk>/', views.delete_room),
 
     path('view-all-users/', views.view_all_users),
-    path('view-all-registered-users/', views.view_all_verified_users),
+    path('view-all-verified-users/', views.view_all_verified_users),
     path('view-all-unverified-users/', views.view_all_unverified_users),
     path('view-all-archived-users/', views.view_all_archived_users),
+
+    path('view-all-modifVerified-users/', views.view_all_modifVerified_users),
+    path('view-all-modifArchived-users/', views.view_all_modifArchived_users),
+
 
     path('view-all-verified-establishments/', views.view_all_verified_establishments),
     path('view-all-archived-establishments/', views.view_all_archived_establishments),
@@ -51,5 +55,7 @@ urlpatterns = [
     path('archive-user/<str:pk>/', views.archive_user),
     path('unarchive-user/<str:pk>/', views.unarchive_user),
 
+
     path('get-one-user-using-id/<str:pk>/', views.get_one_user_using_id),
+
  ]
