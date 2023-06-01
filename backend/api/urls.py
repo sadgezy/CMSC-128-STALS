@@ -42,6 +42,7 @@ urlpatterns = [
     path('view-all-unverified-users/', views.view_all_unverified_users),
     path('view-all-archived-users/', views.view_all_archived_users),
 
+    path('view-all-modifUnverified-users/', views.view_all_modifUnverified_users),
     path('view-all-modifVerified-users/', views.view_all_modifVerified_users),
     path('view-all-modifArchived-users/', views.view_all_modifArchived_users),
 
