@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 import 'dart:io';
+import 'package:toggle_switch/toggle_switch.dart';
 
 class EditAccomm extends StatefulWidget {
   const EditAccomm({super.key});
@@ -16,9 +17,12 @@ class EditAccomm extends StatefulWidget {
 /*
 Edit Accom: Basically the same as Accom page but
 : with textfieldforms for title/information/descripts/etc.. text boxes basically
-: Add Card button? for Room information in the card carousel
 : remove/add Highlight features
+
 */
+
+const _checkurl = 'https://img.icons8.com/?size=512&id=11695&format=png';
+const _noturl = 'https://img.icons8.com/?size=512&id=TfRrgMHDWJk3&format=png';
 
 //data information:
 class Item1 extends StatelessWidget {
@@ -38,35 +42,102 @@ class Item1 extends StatelessWidget {
               Color(0xffff4000),
               Color(0xffffcc66),
             ]),
+        image: DecorationImage(
+            fit: BoxFit.scaleDown,
+            scale: 0.5,
+            alignment: Alignment.center,
+            image: NetworkImage(_checkurl)),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Icon(
-            Icons.single_bed_outlined,
-            color: Color.fromARGB(255, 255, 255, 255),
-            size: 75,
+          const Icon(
+            Icons.king_bed_outlined,
+            color: Colors.white,
+            size: 50,
           ),
-          Text("1 Bedroom",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold)),
-          Text("Max Capacity : 4",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17.0,
-                  fontWeight: FontWeight.w600)),
-          Text("Price: Php69,420",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17.0,
-                  fontWeight: FontWeight.w600)),
-          Text("Available : Yes",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17.0,
-                  fontWeight: FontWeight.w600))
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(fontSize: 12, color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(2),
+                  labelText: '# Rooms',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(5),
+                  labelText: 'Bedroom Details',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(5),
+                  labelText: 'Max Capacity',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(5),
+                  labelText: 'Price ',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          const Text('Is this Room Available?',
+              style: TextStyle(color: Colors.white)),
+          const SizedBox(
+            width: 20,
+          ),
+          ToggleSwitch(
+            minWidth: 90.0,
+            cornerRadius: 20.0,
+            activeBgColors: [
+              [Colors.green[800]!],
+              [Colors.red[800]!]
+            ],
+            activeFgColor: Colors.white,
+            inactiveBgColor: Colors.grey,
+            inactiveFgColor: Colors.white,
+            initialLabelIndex: 1,
+            totalSwitches: 2,
+            labels: const ['Yes', 'No'],
+            radiusStyle: true,
+            onToggle: (index) {},
+          ),
         ],
       ),
     );
@@ -79,40 +150,107 @@ class Item2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            stops: [0.3, 1],
-            colors: [Color(0xff5f2c82), Color(0xff49a09d)]),
-      ),
+          gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              stops: [0.3, 1],
+              colors: [Color(0xff5f2c82), Color(0xff49a09d)]),
+          image: DecorationImage(
+              fit: BoxFit.scaleDown,
+              scale: 0.5,
+              alignment: Alignment.center,
+              //couldnt use the image asset for some reason
+              image: NetworkImage(_noturl))),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Icon(
+          const Icon(
             Icons.king_bed_outlined,
             color: Colors.white,
-            size: 75,
+            size: 50,
           ),
-          Text("2 Bedroom",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold)),
-          Text("Max Capacity : 6",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17.0,
-                  fontWeight: FontWeight.w600)),
-          Text("Price: Php69,420",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17.0,
-                  fontWeight: FontWeight.w600)),
-          Text("Available : No",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17.0,
-                  fontWeight: FontWeight.w600))
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(fontSize: 12, color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(2),
+                  labelText: '# Rooms',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(5),
+                  labelText: 'Bedroom Details',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(5),
+                  labelText: 'Max Capacity',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(5),
+                  labelText: 'Price ',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          const Text('Is this Room Available?',
+              style: TextStyle(color: Colors.white)),
+          const SizedBox(
+            width: 20,
+          ),
+          ToggleSwitch(
+            minWidth: 90.0,
+            cornerRadius: 20.0,
+            activeBgColors: [
+              [Colors.green[800]!],
+              [Colors.red[800]!]
+            ],
+            activeFgColor: Colors.white,
+            inactiveBgColor: Colors.grey,
+            inactiveFgColor: Colors.white,
+            initialLabelIndex: 1,
+            totalSwitches: 2,
+            labels: const ['Yes', 'No'],
+            radiusStyle: true,
+            onToggle: (index) {},
+          ),
         ],
       ),
     );
@@ -125,26 +263,112 @@ class Item3 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            stops: [
-              0.3,
-              1
-            ],
-            colors: [
-              Color(0xffff4000),
-              Color(0xffffcc66),
-            ]),
-      ),
+          gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              stops: [
+                0.3,
+                1
+              ],
+              colors: [
+                Color(0xffff4000),
+                Color(0xffffcc66),
+              ]),
+          image: DecorationImage(
+              fit: BoxFit.scaleDown,
+              scale: 0.5,
+              alignment: Alignment.center,
+              image: NetworkImage(_checkurl))),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Image.asset(
-            'assets/images/bed.png',
-            height: 180.0,
-            fit: BoxFit.cover,
-          )
+          const Icon(
+            Icons.king_bed_outlined,
+            color: Colors.white,
+            size: 50,
+          ),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(fontSize: 12, color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(2),
+                  labelText: '# Rooms',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(5),
+                  labelText: 'Bedroom Details',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(5),
+                  labelText: 'Max Capacity',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(5),
+                  labelText: 'Price ',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          const Text('Is this Room Available?',
+              style: TextStyle(color: Colors.white)),
+          const SizedBox(
+            width: 20,
+          ),
+          ToggleSwitch(
+            minWidth: 90.0,
+            cornerRadius: 20.0,
+            activeBgColors: [
+              [Colors.green[800]!],
+              [Colors.red[800]!]
+            ],
+            activeFgColor: Colors.white,
+            inactiveBgColor: Colors.grey,
+            inactiveFgColor: Colors.white,
+            initialLabelIndex: 1,
+            totalSwitches: 2,
+            labels: const ['Yes', 'No'],
+            radiusStyle: true,
+            onToggle: (index) {},
+          ),
         ],
       ),
     );
@@ -152,33 +376,462 @@ class Item3 extends StatelessWidget {
 }
 
 class Item4 extends StatelessWidget {
-  Item4({Key? key}) : super(key: key);
+  const Item4({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: const BoxDecoration(
+          image: DecorationImage(
+              fit: BoxFit.scaleDown,
+              scale: 0.5,
+              alignment: Alignment.center,
+              image: NetworkImage(_checkurl))),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text("Hanse",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold)),
-          Text("Papasok kaba",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17.0,
-                  fontWeight: FontWeight.w600)),
-          Text("Syempre hindi",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold)),
-          Text("Tara kain",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17.0,
-                  fontWeight: FontWeight.w600)),
+          const Icon(
+            Icons.king_bed_outlined,
+            color: Colors.white,
+            size: 50,
+          ),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(fontSize: 12, color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(2),
+                  labelText: '# Rooms',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(5),
+                  labelText: 'Bedroom Details',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(5),
+                  labelText: 'Max Capacity',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(5),
+                  labelText: 'Price ',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          const Text('Is this Room Available?',
+              style: TextStyle(color: Colors.white)),
+          const SizedBox(
+            width: 20,
+          ),
+          ToggleSwitch(
+            minWidth: 90.0,
+            cornerRadius: 20.0,
+            activeBgColors: [
+              [Colors.green[800]!],
+              [Colors.red[800]!]
+            ],
+            activeFgColor: Colors.white,
+            inactiveBgColor: Colors.grey,
+            inactiveFgColor: Colors.white,
+            initialLabelIndex: 1,
+            totalSwitches: 2,
+            labels: const ['Yes', 'No'],
+            radiusStyle: true,
+            onToggle: (index) {},
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class Item5 extends StatelessWidget {
+  const Item5({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              stops: [
+                0.3,
+                1
+              ],
+              colors: [
+                Color.fromARGB(255, 210, 80, 184),
+                Color.fromARGB(255, 226, 203, 100)
+              ]),
+          image: DecorationImage(
+              fit: BoxFit.scaleDown,
+              scale: 0.5,
+              alignment: Alignment.center,
+              image: NetworkImage(_noturl))),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          const Icon(
+            Icons.king_bed_outlined,
+            color: Colors.white,
+            size: 50,
+          ),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(fontSize: 12, color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(2),
+                  labelText: '# Rooms',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(5),
+                  labelText: 'Bedroom Details',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(5),
+                  labelText: 'Max Capacity',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(5),
+                  labelText: 'Price ',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          const Text('Is this Room Available?',
+              style: TextStyle(color: Colors.white)),
+          const SizedBox(
+            width: 20,
+          ),
+          ToggleSwitch(
+            minWidth: 90.0,
+            cornerRadius: 20.0,
+            activeBgColors: [
+              [Colors.green[800]!],
+              [Colors.red[800]!]
+            ],
+            activeFgColor: Colors.white,
+            inactiveBgColor: Colors.grey,
+            inactiveFgColor: Colors.white,
+            initialLabelIndex: 1,
+            totalSwitches: 2,
+            labels: const ['Yes', 'No'],
+            radiusStyle: true,
+            onToggle: (index) {},
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class Item6 extends StatelessWidget {
+  const Item6({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              stops: [
+                0.3,
+                1
+              ],
+              colors: [
+                Color.fromARGB(255, 71, 151, 194),
+                Color.fromARGB(255, 72, 210, 157)
+              ]),
+          image: DecorationImage(
+              fit: BoxFit.scaleDown,
+              scale: 0.5,
+              alignment: Alignment.center,
+              image: NetworkImage(_checkurl))),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          const Icon(
+            Icons.king_bed_outlined,
+            color: Colors.white,
+            size: 50,
+          ),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(fontSize: 12, color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(2),
+                  labelText: '# Rooms',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(5),
+                  labelText: 'Bedroom Details',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(5),
+                  labelText: 'Max Capacity',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(5),
+                  labelText: 'Price ',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          const Text('Is this Room Available?',
+              style: TextStyle(color: Colors.white)),
+          const SizedBox(
+            width: 20,
+          ),
+          ToggleSwitch(
+            minWidth: 90.0,
+            cornerRadius: 20.0,
+            activeBgColors: [
+              [Colors.green[800]!],
+              [Colors.red[800]!]
+            ],
+            activeFgColor: Colors.white,
+            inactiveBgColor: Colors.grey,
+            inactiveFgColor: Colors.white,
+            initialLabelIndex: 1,
+            totalSwitches: 2,
+            labels: const ['Yes', 'No'],
+            radiusStyle: true,
+            onToggle: (index) {},
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class Item7 extends StatelessWidget {
+  const Item7({Key? key}) : super(key: key);
+
+  get onToggleButton => null;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              stops: [
+                0.3,
+                1
+              ],
+              colors: [
+                Color.fromARGB(255, 125, 85, 217),
+                Color.fromARGB(255, 88, 111, 57)
+              ]),
+          image: DecorationImage(
+              fit: BoxFit.scaleDown,
+              scale: 0.5,
+              alignment: Alignment.center,
+              image: NetworkImage(_checkurl))),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          const Icon(
+            Icons.king_bed_outlined,
+            color: Colors.white,
+            size: 50,
+          ),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(fontSize: 12, color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(2),
+                  labelText: '# Rooms',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(5),
+                  labelText: 'Bedroom Details',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(5),
+                  labelText: 'Max Capacity',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(5),
+                  labelText: 'Price ',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          const Text('Is this Room Available?',
+              style: TextStyle(color: Colors.white)),
+          const SizedBox(
+            width: 20,
+          ),
+          ToggleSwitch(
+            minWidth: 90.0,
+            cornerRadius: 20.0,
+            activeBgColors: [
+              [Colors.green[800]!],
+              [Colors.red[800]!]
+            ],
+            activeFgColor: Colors.white,
+            inactiveBgColor: Colors.grey,
+            inactiveFgColor: Colors.white,
+            initialLabelIndex: 1,
+            totalSwitches: 2,
+            labels: const ['Yes', 'No'],
+            radiusStyle: true,
+            onToggle: (index) {},
+          ),
         ],
       ),
     );
@@ -192,7 +845,15 @@ class _EditAccommState extends State<EditAccomm> {
   int _currentIndex = 0;
   TextEditingController _controller = TextEditingController();
   String userInput = "NA";
-  List cardList = [ Item1(), Item2(), Item3(), Item4()];
+  List cardList = [
+    const Item1(),
+    const Item2(),
+    const Item3(),
+    const Item4(),
+    const Item5(),
+    const Item6(),
+    const Item7()
+  ];
 
   List<T> map<T>(List list, Function handler) {
     List<T> result = [];
@@ -201,6 +862,14 @@ class _EditAccommState extends State<EditAccomm> {
     }
     return result;
   }
+
+  // onToggleButton(int index) {
+  //   setState(() {
+  //     if (index == 0) {
+
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -296,7 +965,7 @@ class _EditAccommState extends State<EditAccomm> {
                         height: 50,
                         width: 200,
                         child: TextFormField(
-                          controller: _controller,
+                          // controller: _controller,
                           decoration: const InputDecoration(
                               hintText: 'Edit Establishment Name',
                               //label text should be the value before editting
@@ -356,7 +1025,7 @@ class _EditAccommState extends State<EditAccomm> {
                             height: 50,
                             width: 200,
                             child: TextFormField(
-                              controller: _controller,
+                              // controller: _controller,
                               decoration: const InputDecoration(
                                   hintText: 'Edit Owner Name',
                                   labelText: 'Previous Owner Name'),
@@ -405,7 +1074,7 @@ class _EditAccommState extends State<EditAccomm> {
                             height: 50,
                             width: 200,
                             child: TextFormField(
-                              controller: _controller,
+                              // controller: _controller,
                               decoration: const InputDecoration(
                                   hintText: 'Edit Contact Details',
                                   labelText: 'Previous Contact Details'),
@@ -449,8 +1118,8 @@ class _EditAccommState extends State<EditAccomm> {
                       // ]),
                       CarouselSlider(
                         options: CarouselOptions(
-                          height: 200.0,
-                          autoPlay: true,
+                          height: 275.0,
+                          autoPlay: false,
                           autoPlayInterval: const Duration(seconds: 5),
                           autoPlayAnimationDuration:
                               const Duration(milliseconds: 1000),
@@ -535,7 +1204,7 @@ class _EditAccommState extends State<EditAccomm> {
                             width: 600,
                             child: TextFormField(
                               maxLines: 5,
-                              controller: _controller,
+                              // controller: _controller,
                               decoration: const InputDecoration(
                                   hintText:
                                       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"
@@ -567,7 +1236,7 @@ class _EditAccommState extends State<EditAccomm> {
                           fontSize: 22, fontWeight: FontWeight.normal),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                       height: 2000,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

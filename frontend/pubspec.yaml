@@ -49,6 +49,7 @@ dependencies:
   open_document: ^1.0.6
   # pdf: ^3.10.3
   path_provider: ^2.0.15
+  toggle_switch: ^1.2.0
   # syncfusion_flutter_pdfviewer: ^21.2.3
 
 dev_dependencies:
