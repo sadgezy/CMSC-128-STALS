@@ -177,7 +177,14 @@ class _ViewAllUsersPageState extends State<ViewUsersPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (!context.watch<UserProvider>().isAdmin) {
+      //Navigator.pop(context);
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        Navigator.of(context).pushReplacementNamed('/');
+      });
 
+      return const CircularProgressIndicator();
+    }
     return MaterialApp(
       home: Scaffold(
           key: scaffoldKey,

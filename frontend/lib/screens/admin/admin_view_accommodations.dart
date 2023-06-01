@@ -37,23 +37,11 @@ class _AdminViewAccommodationsState extends State<AdminViewAccommodations> {
     //check if admin
     if (!context.watch<UserProvider>().isAdmin) {
       //Navigator.pop(context);
-      if (context.watch<UserProvider>().isGuest) {
-        //Navigator.pushNamed(context, '/homepage');
-        //return const UnregisteredHomepage();
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const UnregisteredHomepage(),
-          ),
-        );
-      } else {
-        //Navigator.pushNamed(context, '/signed_homepage');
-        //return const RegisteredHomepage();
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const RegisteredHomepage(),
-          ),
-        );
-      }
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        Navigator.of(context).pushReplacementNamed('/');
+      });
+
+      return const CircularProgressIndicator();
     }
 
     return Scaffold(

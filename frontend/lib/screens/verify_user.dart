@@ -108,7 +108,6 @@ class _VerificationPageState extends State<VerificationPage> {
               onChanged: (value) => _idNumber = value,
             ),
             if (_imageFile != null)
-             
               Image.memory(
                 Uint8List.fromList(_imageFile!.bytes!),
                 width: 200,
@@ -138,8 +137,8 @@ class _VerificationPageState extends State<VerificationPage> {
                 final response;
                 if (args.suffix == null) {
                   String url = "http://127.0.0.1:8000/signup/";
-                  response = await json.decode((await http
-                          .post(Uri.parse(url), body: {
+                  response =
+                      await json.decode((await http.post(Uri.parse(url), body: {
                     'first_name': args.firstName,
                     'last_name': args.lastName,
                     'middle_initial': args.middleName,
@@ -152,12 +151,11 @@ class _VerificationPageState extends State<VerificationPage> {
                     'id_number': _idNumber,
                     'id_picture': base64Image
                   }))
-                      .body);
-                }
-                else {
+                          .body);
+                } else {
                   String url = "http://127.0.0.1:8000/signup/";
-                  response = await json.decode((await http
-                          .post(Uri.parse(url), body: {
+                  response =
+                      await json.decode((await http.post(Uri.parse(url), body: {
                     'first_name': args.firstName,
                     'last_name': args.lastName,
                     'middle_initial': args.middleName,
@@ -171,16 +169,14 @@ class _VerificationPageState extends State<VerificationPage> {
                     'id_number': _idNumber,
                     'id_picture': base64Image
                   }))
-                      .body);
+                          .body);
                 }
 
                 //print(response);
                 base64Image = response['data']['id_picture'];
                 //print(base64Image);
                 uploadedImage = true;
-                setState(() {
-                  
-                });
+                setState(() {});
               },
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
@@ -190,12 +186,13 @@ class _VerificationPageState extends State<VerificationPage> {
               child: const Text('Submit'),
             ),
             // DONT REMOVE. IMPORTANT FOR TESTING
-            if (uploadedImage) Column(
-              children: [
-                Text("If you see this picture, this was from the database!"),
-                Image.memory(Uri.parse(base64Image).data!.contentAsBytes())
-              ],
-            ),
+            if (uploadedImage)
+              Column(
+                children: [
+                  Text("If you see this picture, this was from the database!"),
+                  Image.memory(Uri.parse(base64Image).data!.contentAsBytes())
+                ],
+              ),
           ],
         ),
       ),
@@ -211,12 +208,12 @@ class _VerificationPageState extends State<VerificationPage> {
   void _chooseImage() async {
     //ImagePicker picker = ImagePicker();
     //XFile? image = await picker.pickImage(source: ImageSource.gallery);
-    FilePickerResult? result = await FilePicker.platform
-        .pickFiles(withData: true, type: FileType.custom, allowedExtensions: ['jpg', 'png']);
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+        withData: true,
+        type: FileType.custom,
+        allowedExtensions: ['jpg', 'png']);
 
     if (result != null) {
-      
-
       var bytes = result.files.first.bytes;
       bytes ??= File(result.files.single.path!).readAsBytesSync();
       double fileSize = (bytes.lengthInBytes / (1024 * 1024));
@@ -228,21 +225,23 @@ class _VerificationPageState extends State<VerificationPage> {
         });
 
         ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Image too large'),
-        ),
-      );
+          const SnackBar(
+            content: Text('Image too large'),
+          ),
+        );
       } else {
         setState(() {
           _imageFile = result.files.first;
         });
         String extn = result.files.first.name.split('.').last;
         if (extn == 'png' || extn == 'PNG') {
-          base64Image = "data:image/png;base64," + base64Encode(bytes!.toList());
+          base64Image =
+              "data:image/png;base64," + base64Encode(bytes!.toList());
         } else {
-          base64Image = "data:image/jpeg;base64," + base64Encode(bytes!.toList());
+          base64Image =
+              "data:image/jpeg;base64," + base64Encode(bytes!.toList());
         }
-    
+
         //print(result.files.first.name);
         //print("img_pan : $base64Image");
         //setState(() {});
@@ -255,7 +254,7 @@ class _VerificationPageState extends State<VerificationPage> {
         //String base64Image =  "data:image/png;base64,"+base64Encode(bytes);
 
         //print(base64Image);
-      }  
+      }
     } else {
       setState(() {
         _imageFile = null;
