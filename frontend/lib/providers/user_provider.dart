@@ -34,4 +34,8 @@ class UserProvider with ChangeNotifier {
   bool get isAdmin {
     return UserProvider()._type == "admin";
   }
+
+  bool get isGuest {
+    return UserProvider()._type == "guest";
+  }
 }
