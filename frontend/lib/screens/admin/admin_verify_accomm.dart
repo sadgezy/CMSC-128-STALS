@@ -7,14 +7,14 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:stals_frontend/UI_parameters.dart' as UIParams;
-import '../components/report_listing.dart';
+import 'package:stals_frontend/components/report_listing.dart';
 import 'package:stals_frontend/screens/review.dart';
 import 'package:stals_frontend/screens/owner/add_room.dart';
 
-class AccommPage extends StatefulWidget {
-  AccommPage({super.key});
+class AccommPageProof extends StatefulWidget {
+  AccommPageProof({super.key});
   @override
-  _AccommPageState createState() => _AccommPageState();
+  _AccommPageProofState createState() => _AccommPageProofState();
 }
 
 /*possible values:
@@ -148,7 +148,7 @@ class _ItemState extends State<Item> {
   }
 }
 
-class _AccommPageState extends State<AccommPage> {
+class _AccommPageProofState extends State<AccommPageProof> {
   double rating = 4.0;
   int _index = 1;
   bool favorite = false;
@@ -184,6 +184,9 @@ class _AccommPageState extends State<AccommPage> {
   String loc_picture = "";
   String description = "";
   List selectedReason = [];
+  String proof_type = "";
+  String proof_number = "";
+  String proof_picture = "";
 
   @override
   Widget build(BuildContext context) {
@@ -213,6 +216,9 @@ class _AccommPageState extends State<AccommPage> {
       var responseData = json.decode(response.body);
       loc_picture = responseData["loc_picture"];
       description = responseData["description"];
+      proof_type = responseData["proof_type"];
+      proof_number = responseData["proof_number"];
+      proof_picture = responseData["proof_picture"];
 
       owner_id = responseData['owner'];
       // print(owner_id);
@@ -288,9 +294,8 @@ class _AccommPageState extends State<AccommPage> {
           },
           color: Colors.black,
         ),
-        title: 
-        Text(
-          "Return to Homepage",
+        title: Text(
+          "",
           style: TextStyle(color: Colors.black),
         ),
         backgroundColor: Colors.white,
@@ -427,9 +432,13 @@ class _AccommPageState extends State<AccommPage> {
                                 ElevatedButton(
                                   onPressed: () async {
                                     // Action for the fourth icon button
-                                    showDialog(context: context, builder: (context) {
-                                      return AddRoom(estabId: id, estabName: response_Name);
-                                    });
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return AddRoom(
+                                              estabId: id,
+                                              estabName: response_Name);
+                                        });
                                   },
                                   style: ElevatedButton.styleFrom(
                                     shape: const CircleBorder(),
@@ -610,7 +619,8 @@ class _AccommPageState extends State<AccommPage> {
                                                 child: SizedBox(
                                                   width: 200,
                                                   child: TextFormField(
-                                                    controller: reportController,
+                                                    controller:
+                                                        reportController,
                                                     style:
                                                         TextStyle(fontSize: 13),
                                                     decoration:
@@ -630,29 +640,50 @@ class _AccommPageState extends State<AccommPage> {
                                               ElevatedButton(
                                                 onPressed: () async {
                                                   print(tagsController.text);
-                                                  switch(tagsController.text) {
+                                                  switch (tagsController.text) {
                                                     case "1":
-                                                      selectedReason = ["Inactive Owner"];
+                                                      selectedReason = [
+                                                        "Inactive Owner"
+                                                      ];
                                                       break;
                                                     case "2":
-                                                      selectedReason = ["Inaccurate Details"];
+                                                      selectedReason = [
+                                                        "Inaccurate Details"
+                                                      ];
                                                       break;
                                                     case "3":
-                                                      selectedReason = ["Fraudulent Listing"];
+                                                      selectedReason = [
+                                                        "Fraudulent Listing"
+                                                      ];
                                                       break;
                                                     case "4":
-                                                      selectedReason = ["Offensive Content"];
+                                                      selectedReason = [
+                                                        "Offensive Content"
+                                                      ];
                                                       break;
                                                     case "5":
-                                                      selectedReason = ["Other Reason"];
+                                                      selectedReason = [
+                                                        "Other Reason"
+                                                      ];
                                                       break;
                                                   }
-                                                  
-                                                  String url5 = "http://127.0.0.1:8000/report-establishment/";
-                                                  final response5 = await json.decode(
-                                                      (await http.post(Uri.parse(url5), body: {"establishment_id": id, "user_id": user_id, "tags": "'${selectedReason.toString()}'", "description": reportController.text}))
+
+                                                  String url5 =
+                                                      "http://127.0.0.1:8000/report-establishment/";
+                                                  final response5 = await json
+                                                      .decode((await http.post(
+                                                              Uri.parse(url5),
+                                                              body: {
+                                                        "establishment_id": id,
+                                                        "user_id": user_id,
+                                                        "tags":
+                                                            "'${selectedReason.toString()}'",
+                                                        "description":
+                                                            reportController
+                                                                .text
+                                                      }))
                                                           .body);
-                                                  
+
                                                   reportController.clear();
                                                   Navigator.pop(context);
                                                 },
@@ -697,7 +728,6 @@ class _AccommPageState extends State<AccommPage> {
                                         estabId: id,
                                         username: username,
                                         userId: user_id);
-                                  
                                   },
                                 );
                               },
@@ -740,7 +770,8 @@ class _AccommPageState extends State<AccommPage> {
                           items: cardList.map((card) {
                             return Builder(builder: (BuildContext context) {
                               return SizedBox(
-                                height: MediaQuery.of(context).size.height * 0.30,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.30,
                                 width: MediaQuery.of(context).size.width,
                                 child: Card(
                                   color: Colors.blueAccent,
@@ -750,25 +781,25 @@ class _AccommPageState extends State<AccommPage> {
                             });
                           }).toList(),
                         ),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.center,
-                      //   children: map<Widget>(cardList, (index, url) {
-                      //     return Container(
-                      //       width: 10.0,
-                      //       height: 10.0,
-                      //       margin: EdgeInsets.symmetric(
-                      //           vertical: 10.0, horizontal: 2.0),
-                      //       decoration: BoxDecoration(
-                      //         shape: BoxShape.circle,
-                      //         color: _currentIndex == index
-                      //             ? Colors.blueAccent
-                      //             : Colors.grey,
-                      //       ),
-                      //     );
-                      //   }),
-                      // ),
-                    ],
-                  ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   children: map<Widget>(cardList, (index, url) {
+                        //     return Container(
+                        //       width: 10.0,
+                        //       height: 10.0,
+                        //       margin: EdgeInsets.symmetric(
+                        //           vertical: 10.0, horizontal: 2.0),
+                        //       decoration: BoxDecoration(
+                        //         shape: BoxShape.circle,
+                        //         color: _currentIndex == index
+                        //             ? Colors.blueAccent
+                        //             : Colors.grey,
+                        //       ),
+                        //     );
+                        //   }),
+                        // ),
+                      ],
+                    ),
                   //End of Cards
                   if (cardList.isNotEmpty)
                     const SizedBox(
@@ -811,6 +842,33 @@ class _AccommPageState extends State<AccommPage> {
                   Divider(
                     color: Colors.black,
                   ),
+
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        Text.rich(
+                          TextSpan(
+                            children: [
+                              const TextSpan(
+                                  text: "Proof Type: ",
+                                  style: TextStyle(fontWeight: FontWeight.bold)),
+                              TextSpan(text: "$proof_type\n"),
+                              const TextSpan(
+                                  text: "Proof No: ",
+                                  style: TextStyle(fontWeight: FontWeight.bold)),
+                              TextSpan(text: "$proof_number\n"),
+                              const TextSpan(
+                                  text: "Proof Picture: \n",
+                                  style: TextStyle(fontWeight: FontWeight.bold)),
+                            ],
+                            style: const TextStyle(fontSize: 18),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Image.memory(Uri.parse(proof_picture).data!.contentAsBytes())
 
                   //Highlights
                   // FittedBox(
@@ -1139,52 +1197,6 @@ class _AccommPageState extends State<AccommPage> {
                   //   ],
                   // )),
                   //End of Highlights
-
-                  //View Reviews
-                  Column(
-                    children: [
-                      const Text(
-                        "Reviews",
-                        style: TextStyle(
-                            fontSize: 22, fontWeight: FontWeight.normal),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height / 60,
-                      ),
-                      if (reviewList.isNotEmpty)
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height / 6,
-                          child: ListView.builder(
-                              itemCount: reviewList.length,
-                              itemBuilder: (BuildContext context, int index) {
-                            return Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                      child: Text(reviewList[index]["username"]),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                      child: Text(reviewList[index]["date_submitted"].substring(0,10) + " " + reviewList[index]["date_submitted"].substring(11,19)),
-                                    )
-                                  ],),
-                                  Row(
-                                    children: [Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(reviewList[index]["body"]),
-                                    )],
-                                  )
-                                ]
-                              );
-                          }),
-                        ),
-                      if (reviewList.isEmpty)
-                        Text("No reviews yet"),
-                    ],
-                  ),
-                  //end of View Reviews
                 ],
               ),
             );

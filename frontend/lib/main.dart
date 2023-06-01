@@ -4,6 +4,7 @@ import 'package:stals_frontend/screens/admin/admin_dashboard.dart';
 import 'package:stals_frontend/screens/admin/admin_view_accommodations.dart';
 import 'package:stals_frontend/screens/admin/admin_view_pending_approved.dart';
 import 'package:stals_frontend/screens/admin/admin_view_users.dart';
+import 'package:stals_frontend/screens/admin/admin_verify_accomm.dart';
 import 'package:stals_frontend/screens/owner/add_accomm.dart';
 import 'package:stals_frontend/screens/owner/edit_accomm.dart';
 import 'package:stals_frontend/screens/owner/owned_accomm.dart';
@@ -56,6 +57,7 @@ class MyApp extends StatelessWidget {
         '/owned/accomm/edit': (context) => const EditAccomm(),
         '/admin/view_users': (context) => const ViewUsersPage(),
         '/admin/view_accomms': (context) => const AdminViewAccommodations(),
+        '/admin/verify_accomm': (context) => AccommPageProof(),
       },
       theme: ThemeData(
         fontFamily: 'SFProDisplayRegular',
