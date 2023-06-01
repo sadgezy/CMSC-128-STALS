@@ -180,11 +180,78 @@ class _ViewReportsPageState extends State<ViewReportsPage> {
                     itemBuilder: (context, index) {
                       return Column(children: [
                         //--------------------------------------------------
-                        TicketCard(
-                          name: '${allTickets[index]["description"]}',
-                          ticketId: '${allTickets[index]["_id"]}',
-                          resolved: allTickets[index]["resolved"],
-                          fetchAllTickets: fetchAllTickets,
+                        InkWell(
+                          onTap: () async {
+                            String url2 =
+                                "http://127.0.0.1:8000/get-one-user-using-id/${allTickets[index]['user_id']}/";
+                            final response2 = await json
+                                .decode((await http.get(Uri.parse(url2))).body);
+
+                            String url3 =
+                                "http://127.0.0.1:8000/view-establishment/${allTickets[index]['establishment_id']}/";
+                            final response3 = await json
+                                .decode((await http.get(Uri.parse(url3))).body);
+
+                            if (!context.mounted) return;
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    scrollable: true,
+                                    title: Text(allTickets[index]["tags"]
+                                        .substring(
+                                            2,
+                                            allTickets[index]["tags"].length -
+                                                2)),
+                                    content: Padding(
+                                      padding: const EdgeInsets.all(4),
+                                      child: Column(
+                                        children: [
+                                          
+                                          Text.rich(
+                                            TextSpan(
+                                              children: [
+                                                const TextSpan(
+                                                    text: "User: ",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                                TextSpan(
+                                                    text:
+                                                        "${response2["first_name"]} ${response2["last_name"]}\n"),
+                                                const TextSpan(
+                                                    text: "Establishment: ",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                                TextSpan(
+                                                    text:
+                                                        "${response3["name"]}\n\n"),
+                                                const TextSpan(
+                                                    text: "Description: \n",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                                TextSpan(
+                                                    text:
+                                                        "${allTickets[index]['description']}\n"),
+                                              ],
+                                              style:
+                                                  const TextStyle(fontSize: 18),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                });
+                          },
+                          child: TicketCard(
+                            name: '${allTickets[index]["description"]}',
+                            ticketId: '${allTickets[index]["_id"]}',
+                            resolved: allTickets[index]["resolved"],
+                            fetchAllTickets: fetchAllTickets,
+                          ),
                         ),
 
                         //--------------------------------------------------
