@@ -269,7 +269,9 @@ class _ViewAllUsersPageState extends State<ViewUsersPage> {
                 Provider.of<UserProvider>(context, listen: false)
                     .removeUser("DO NOT REMOVE THIS PARAM");
 
-                Navigator.pushNamed(context, '/signin');
+                Navigator.pop(context);
+                Navigator.pop(context);
+                Navigator.pop(context);
               },
             ),
 
