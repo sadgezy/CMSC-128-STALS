@@ -55,7 +55,7 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
 
        // Apply the filter
       List<AccomCardDetails> filteredAccommodations = accommodations
-          .where((accommodation) => accommodation.owner == id && accommodation.verified)
+          .where((accommodation) => accommodation.owner == id)// && accommodation.verified)
           .toList();
       
       return filteredAccommodations;
@@ -133,7 +133,8 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
                   Provider.of<UserProvider>(context, listen: false)
                       .removeUser("DO NOT REMOVE THIS PARAM");
 
-                  Navigator.pushNamed(context, '/signin');
+                  Navigator.pop(context);
+                  Navigator.pop(context);
                 },
               )
             ],
@@ -144,11 +145,10 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
         child: FutureBuilder<List<AccomCardDetails>>(
           future: _accommodationsFuture,
           builder: (context, snapshot) {
-            if (snapshot.hasData) {
+            if (snapshot.hasData && snapshot.data!.isNotEmpty) {
               print("RAN");
-              print(snapshot);
               List<AccomCardDetails> accommodations = snapshot.data!;
-              print(accommodations);
+              // print(accommodations[0].getImage());
               return Column(
                 children: accommodations.map((accommodation) {
                   return Padding(
@@ -171,7 +171,7 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
                       ),
                       const Padding(
                           padding: EdgeInsets.symmetric(vertical: 10)),
-                      Text("No Accommodations in database ")
+                      Text("No establishments added yet")
                     ],
                   ),
                 ),

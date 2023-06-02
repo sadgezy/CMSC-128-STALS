@@ -5,6 +5,7 @@ import 'package:stals_frontend/providers/token_provider.dart';
 import 'package:stals_frontend/providers/user_provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:async';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -96,12 +97,15 @@ class _SignInPageState extends State<SignInPage> {
           }
 
         if(user_type == "user"){
+            Navigator.pop(context);
             Navigator.pushNamed(context, '/signed_homepage');
         }
         else if(user_type == 'admin'){
+            Navigator.pop(context);
             Navigator.pushNamed(context, '/admin');
         }
         else{
+            Navigator.pop(context);
             Navigator.pushNamed(context, '/view_owned_accomms');
         }
 
@@ -220,6 +224,11 @@ class _SignInPageState extends State<SignInPage> {
           );
     } else {
       // print(Provider.of<UserProvider>(context, listen: false).userInfo);
+      // Timer(const Duration(milliseconds: 500), () {
+      //   Provider.of<TokenProvider>(context, listen: false).removeToken("");
+      //   Provider.of<UserProvider>(context, listen: false).removeUser("");
+      // });
+      
       return Center(child: CircularProgressIndicator());
     }
   }

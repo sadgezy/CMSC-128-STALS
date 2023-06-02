@@ -84,10 +84,11 @@ class _AdminDashBoardState extends State<AdminDashBoard> {
           },
         ),
         ListTile(
-          title: const Text('Reviews'),
-          leading: const Icon(Icons.reviews),
+          title: const Text('Reports'),
+          leading: const Icon(Icons.flag),
           onTap: () {
             // TODO
+            Navigator.pushNamed(context, '/admin/view_reports');
           },
         ),
         ListTile(
@@ -100,7 +101,8 @@ class _AdminDashBoardState extends State<AdminDashBoard> {
             Provider.of<UserProvider>(context, listen: false)
                 .removeUser("DO NOT REMOVE THIS PARAM");
 
-            Navigator.pushNamed(context, '/signin');
+            Navigator.pop(context);
+            Navigator.pop(context);
           },
         ),
       ])),

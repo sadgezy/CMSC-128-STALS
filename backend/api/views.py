@@ -150,6 +150,7 @@ def login(request):
     
   
     if user is not None:
+        
         #Token.objects.create(user=user)
         response = {
             "message": "Login Successful",
@@ -355,8 +356,12 @@ def unarchive_establishment(request, pk):
 
 @api_view(['POST'])
 def add_room_to_establishment(request):
-
-    serializer = RoomSerializer(data=request.data)
+    req = {}
+    req["capacity"] = int(request.data["capacity"])
+    req["price_lower"] = int(request.data["price_lower"])
+    req["price_upper"] = int(request.data["price_upper"])
+    req["establishment_id"] = request.data["establishment_id"]
+    serializer = RoomSerializer(data=req)
     
     if serializer.is_valid():
         try:
@@ -413,11 +418,30 @@ def delete_room(request, pk):
 def getticketdetails(request):
     ticket = Ticket.objects.all()
     serializer = ticketSerializer(ticket, many=True)
+    print(serializer.data)
     return Response(serializer.data)
 
 @api_view(['POST'])
+def resolve_ticket(request):
+    ticket = Ticket.objects.get(pk=ObjectId(request.data["_id"]))
+    ticket.resolved = True
+    ticket.save()
+    return Response(data={"message": "Successfully resolved report"})
+
+@api_view(['POST'])
+def delete_ticket(request):
+    ticket = Ticket.objects.get(pk=ObjectId(request.data["_id"]))
+    ticket.delete()
+    return Response(data={"message": "Successfully deleted report"})
+
+@api_view(['POST'])
 def report_establishment(request): #can be used for other types of tickets
-    serializer = ticketSerializer(data=request.data)
+    req = {}
+    req["tags"] = [request.data["tags"][2:-2]]
+    req["user_id"] = request.data["user_id"]
+    req["establishment_id"] = request.data["establishment_id"]
+    req["description"] = request.data["description"]
+    serializer = ticketSerializer(data=req)
 
     if serializer.is_valid():
         try:
@@ -439,9 +463,10 @@ def report_establishment(request): #can be used for other types of tickets
 # REVIEW ACTIONS
 
 # takes the list of reviews and requests them
-@api_view(['GET'])
+@api_view(['POST'])
 def getreviewdetails(request):
-    review = Review.objects.all()
+    estab = Establishment.objects.get(pk=ObjectId(request.data["establishment_id"]))
+    review = Review.objects.filter(pk__in=[ObjectId(d) for d in estab.reviews])
     serializer = reviewSerializer(review, many=True)
     return Response(serializer.data)
 
@@ -454,12 +479,16 @@ def review_establishment(request):
             serializer.save()
             estab = Establishment.objects.get(pk=ObjectId(serializer.data['establishment_id']))
         except Establishment.DoesNotExist:
-            review = Review.objects.get(pk=ObjectId(serializer.data['review_id']))
+            review = Review.objects.get(pk=ObjectId(serializer.data['_id']))
             review.delete()
             return Response(data={"message": "Establishment not found"}, status=status.HTTP_404_NOT_FOUND)
         
-        estab.append(serializer.data['_id'])
+        estab.reviews.append(serializer.data['_id'])
         estab.save()
+
+        user = User.objects.get(pk=ObjectId(serializer.data['user_id']))
+        user.reviews.append(serializer.data['_id'])
+        user.save()
 
         return Response(serializer.data, status=201)
     return Response(data={"message": "Failed creating a review"})
@@ -499,6 +528,8 @@ def search_room(request):
     price_upper = request.data.get('price_upper')
     capacity = request.data.get('capacity')
 
+    #user_type = request.data.get('user_type')
+
     rooms = Room.objects.all()
 
     if establishment_id:
@@ -512,8 +543,11 @@ def search_room(request):
 
     serializer = RoomSerializer(rooms, many=True)
 
-    available = [d for d in serializer.data if d['availability'] == True]
-    return Response(available)
+    # if user_type == "user":
+    #     available = [d for d in serializer.data if d['availability'] == True]
+    #     return Response(available)
+    # else:
+    return Response(serializer.data)
 
 #----------------------------------------------------------------------------------------------
 @api_view(['POST'])
@@ -524,6 +558,8 @@ def search_establishment(request):
     location_approx = request.data.get('location_approx')
     establishment_type = request.data.get('establishment_type', None)
     tenant_type = request.data.get('tenant_type', None)
+    if (name == ''):
+        name = None
     if (location_exact == ''):
         location_exact = None
     if (location_approx == ''):
@@ -539,7 +575,6 @@ def search_establishment(request):
 
     if name:
         establishments = establishments.filter(name__icontains=name)
-        
     if location_approx:
         establishments = establishments.filter(location_approx=location_approx)
 
@@ -584,24 +619,23 @@ def search_establishment(request):
         rooms = rooms.filter(capacity=capacity)
 
     serializer_room = RoomSerializer(rooms, many=True)
-    print(serializer_room.data)
     estab_ids = [d["establishment_id"] for d in serializer_room.data if d['availability'] == True and d['establishment_id'] in valid_estab_criteria]
     unique_estab_ids = list(dict.fromkeys(estab_ids))
     
     actual_estab_results = [d for d in serializer_estab_full.data if str(d['_id']) in unique_estab_ids]
-    
+    #print(actual_estab_results)
     return Response(actual_estab_results)
     
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def view_all_users(request):
     user = User.objects.all()
     serializer = userSerializer(user, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def view_all_verified_users(request):                                         
 
     user = User.objects.all()
@@ -610,7 +644,7 @@ def view_all_verified_users(request):
     return Response (query)
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def view_all_unverified_users(request):                                         
 
     user = User.objects.all()
@@ -619,7 +653,7 @@ def view_all_unverified_users(request):
     return Response (query)
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def view_all_archived_users(request):                                         
 
     user = User.objects.all()
@@ -627,8 +661,31 @@ def view_all_archived_users(request):
     query = [d for d in serializer.data if d['archived'] == True]
     return Response (query)
 
+
+@api_view(['GET'])
+def view_all_modifUnverified_users(request):
+    user = User.objects.all()
+    serializer = userSerializer(user, many=True)
+    query = [d for d in serializer.data if d['verified'] == False and d['archived'] == False and d['user_type'] !="admin"]
+    return Response(query)
+
+@api_view(['GET'])
+def view_all_modifVerified_users(request):
+    user = User.objects.all()
+    serializer = userSerializer(user, many=True)
+    query = [d for d in serializer.data if d['verified'] == True and d['archived'] == False and d['user_type'] !="admin"]
+    return Response(query)
+
+@api_view(['GET'])
+def view_all_modifArchived_users(request):
+    user = User.objects.all()
+    serializer = userSerializer(user, many=True)
+    query = [d for d in serializer.data if d['archived'] == True and d['verified'] == True and d['user_type'] !="admin"]
+    return Response(query)
+
+
 @api_view(['GET'])     
-@permission_classes([IsAuthenticated])                                                         
+# @permission_classes([IsAuthenticated])                                                         
 def view_all_verified_establishments(request):
 
     establishment = Establishment.objects.all()
@@ -637,10 +694,42 @@ def view_all_verified_establishments(request):
     return Response (query)
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def view_all_archived_establishments(request):                                  
     
     establishment = Establishment.objects.all()
     serializer = EstablishmentSerializer(establishment, many=True)
     query = [d for d in serializer.data if d['archived'] == True]
     return Response (query)
+
+
+@api_view(['PUT'])
+# @permission_classes([IsAuthenticated])
+def archive_user(request, pk):   
+
+    try:
+        user = User.objects.get(pk=ObjectId(pk))
+
+    except User.DoesNotExist:
+         return Response(data={"message": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    user.archived = True
+    user.save()
+
+    return Response(data={"message": "Successfully archived user"})
+
+
+@api_view(['PUT'])
+# @permission_classes([IsAuthenticated])
+def unarchive_user(request, pk):   
+
+    try:
+        user = User.objects.get(pk=ObjectId(pk))
+
+    except User.DoesNotExist:
+         return Response(data={"message": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    user.archived = False
+    user.save()
+
+    return Response(data={"message": "Successfully unarchived user"})

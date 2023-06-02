@@ -31,16 +31,20 @@ urlpatterns = [
     path('archive-establishment/<str:pk>/', views.archive_establishment),
     path('unarchive-establishment/<str:pk>/', views.unarchive_establishment),
     path('report-establishment/', views.report_establishment),
-    path('review-establishment/<str:pk>/', views.review_establishment),
+    path('review-establishment/', views.review_establishment),
 
     path('add-room/', views.add_room_to_establishment), 
     path('edit-room/<str:pk>/', views.edit_room), 
     path('delete-room/<str:pk>/', views.delete_room),
 
     path('view-all-users/', views.view_all_users),
-    path('view-all-registered-users/', views.view_all_verified_users),
+    path('view-all-verified-users/', views.view_all_verified_users),
     path('view-all-unverified-users/', views.view_all_unverified_users),
     path('view-all-archived-users/', views.view_all_archived_users),
+
+    path('view-all-modifUnverified-users/', views.view_all_modifUnverified_users),
+    path('view-all-modifVerified-users/', views.view_all_modifVerified_users),
+    path('view-all-modifArchived-users/', views.view_all_modifArchived_users),
 
 
     path('view-all-verified-establishments/', views.view_all_verified_establishments),
@@ -49,10 +53,13 @@ urlpatterns = [
     path('search-room/', views.search_room),
     path('search-establishment/', views.search_establishment),
     
-    path('view-all-users/', views.view_all_users),
-    path('view-all-verified-users/', views.view_all_verified_users),
-    path('view-all-verified-establishments/', views.view_all_verified_establishments),
-    path('view-all-archived-establishments/', views.view_all_archived_establishments),
+    path('archive-user/<str:pk>/', views.archive_user),
+    path('unarchive-user/<str:pk>/', views.unarchive_user),
+
+    path('resolve-report/', views.resolve_ticket),
+    path('delete-report/', views.delete_ticket),
+
 
     path('get-one-user-using-id/<str:pk>/', views.get_one_user_using_id),
+
  ]
