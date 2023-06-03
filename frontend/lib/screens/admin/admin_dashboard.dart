@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:stals_frontend/main.dart';
+import 'package:stals_frontend/screens/homepage.dart';
+import 'package:stals_frontend/screens/registered_user/homepage_signed.dart';
 import '../../UI_parameters.dart' as UIParameter;
 import 'package:provider/provider.dart';
 import 'package:stals_frontend/providers/token_provider.dart';
@@ -13,8 +16,19 @@ class AdminDashBoard extends StatefulWidget {
 
 class _AdminDashBoardState extends State<AdminDashBoard> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
+    //check if admin
+    if (!context.watch<UserProvider>().isAdmin) {
+      //Navigator.pop(context);
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        Navigator.of(context).pushReplacementNamed('/');
+      });
+
+      return const CircularProgressIndicator();
+    }
+
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
@@ -76,7 +90,8 @@ class _AdminDashBoardState extends State<AdminDashBoard> {
           title: const Text('Accommodations'),
           leading: const Icon(Icons.apartment),
           onTap: () {
-            if (ModalRoute.of(context)?.settings.name != '/admin/view_accomms') {
+            if (ModalRoute.of(context)?.settings.name !=
+                '/admin/view_accomms') {
               Navigator.pushNamed(context, '/admin/view_accomms');
             } else {
               Navigator.pop(context);

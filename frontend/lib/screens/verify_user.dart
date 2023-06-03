@@ -277,60 +277,60 @@ class _VerificationPageState extends State<VerificationPage> {
                 ),
               ),
               const SizedBox(height: 10),
-              // MaterialButton(
-              //   onPressed: () async {
-              //     // TODO: Submit the verification form.
-              //     final response;
-              //     if (args.suffix == null) {
-              //       String url = "http://127.0.0.1:8000/signup/";
-              //       response =
-              //           await json.decode((await http.post(Uri.parse(url), body: {
-              //         'first_name': args.firstName,
-              //         'last_name': args.lastName,
-              //         'middle_initial': args.middleName,
-              //         'username': args.username,
-              //         'password': args.password,
-              //         'email': args.email,
-              //         'phone_no': args.phoneNo,
-              //         'user_type': args.userType,
-              //         'id_type': _idType,
-              //         'id_number': _idNumber,
-              //         'id_picture': base64Image
-              //       }))
-              //               .body);
-              //     } else {
-              //       String url = "http://127.0.0.1:8000/signup/";
-              //       response =
-              //           await json.decode((await http.post(Uri.parse(url), body: {
-              //         'first_name': args.firstName,
-              //         'last_name': args.lastName,
-              //         'middle_initial': args.middleName,
-              //         'suffix': args.suffix,
-              //         'username': args.username,
-              //         'password': args.password,
-              //         'email': args.email,
-              //         'phone_no': args.phoneNo,
-              //         'user_type': args.userType,
-              //         'id_type': _idType,
-              //         'id_number': _idNumber,
-              //         'id_picture': base64Image
-              //       }))
-              //               .body);
-              //     }
+              MaterialButton(
+                onPressed: () async {
+                  // TODO: Submit the verification form.
+                  final response;
+                  if (args.suffix == null) {
+                    String url = "http://127.0.0.1:8000/signup/";
+                    response =
+                        await json.decode((await http.post(Uri.parse(url), body: {
+                      'first_name': args.firstName,
+                      'last_name': args.lastName,
+                      'middle_initial': args.middleName,
+                      'username': args.username,
+                      'password': args.password,
+                      'email': args.email,
+                      'phone_no': args.phoneNo,
+                      'user_type': args.userType,
+                      'id_type': _idType,
+                      'id_number': _idNumber,
+                      'id_picture': base64Image
+                    }))
+                            .body);
+                  } else {
+                    String url = "http://127.0.0.1:8000/signup/";
+                    response =
+                        await json.decode((await http.post(Uri.parse(url), body: {
+                      'first_name': args.firstName,
+                      'last_name': args.lastName,
+                      'middle_initial': args.middleName,
+                      'suffix': args.suffix,
+                      'username': args.username,
+                      'password': args.password,
+                      'email': args.email,
+                      'phone_no': args.phoneNo,
+                      'user_type': args.userType,
+                      'id_type': _idType,
+                      'id_number': _idNumber,
+                      'id_picture': base64Image
+                    }))
+                            .body);
+                  }
 
-              //     //print(response);
-              //     base64Image = response['data']['id_picture'];
-              //     //print(base64Image);
-              //     uploadedImage = true;
-              //     setState(() {});
-              //   },
-              //   shape: RoundedRectangleBorder(
-              //     borderRadius: BorderRadius.circular(20),
-              //     side: const BorderSide(
-              //         color: Color.fromARGB(255, 196, 94, 250), width: 2),
-              //   ),
-              //   child: const Text('Submit'),
-              // ),
+                  //print(response);
+                  base64Image = response['data']['id_picture'];
+                  //print(base64Image);
+                  uploadedImage = true;
+                  setState(() {});
+                },
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  side: const BorderSide(
+                      color: Color.fromARGB(255, 196, 94, 250), width: 2),
+                ),
+                child: const Text('Submit'),
+              ),
               // DONT REMOVE. IMPORTANT FOR TESTING
               if (uploadedImage)
                 Column(

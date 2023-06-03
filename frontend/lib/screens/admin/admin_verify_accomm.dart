@@ -190,6 +190,14 @@ class _AccommPageProofState extends State<AccommPageProof> {
 
   @override
   Widget build(BuildContext context) {
+    if (!context.watch<UserProvider>().isAdmin) {
+      //Navigator.pop(context);
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        Navigator.of(context).pushReplacementNamed('/');
+      });
+
+      return const CircularProgressIndicator();
+    }
     reviewList = [];
     Future<void> fetchData() async {
       // controller: emailController;
