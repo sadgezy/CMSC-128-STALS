@@ -26,6 +26,8 @@ class _AddAccommPageState extends State<AddAccommPage> {
   String _idNumber = '';
   bool showGuestTypeError = false;
   bool showAccommTypeError = false;
+  bool showAccommImageError = false;
+  bool showProofUploadError = false;
   XFile? _idImage;
   PlatformFile? _imageFile;
   PlatformFile? _imageFile2;
@@ -68,6 +70,28 @@ class _AddAccommPageState extends State<AddAccommPage> {
       child: Text(
         "Please select a guest type.",
         style: TextStyle(color: Color(0xff7B2D26)),
+      ),
+    );
+
+    const accommImageError = Padding(
+      padding: EdgeInsets.only(top: 10),
+      child: SizedBox(
+        height: 16,
+        child: Text(
+          "Please upload an image of your accommodation",
+          style: TextStyle(color: Color(0xff7B2D26)),
+        ),
+      ),
+    );
+
+    const proofUploadError = Padding(
+      padding: EdgeInsets.only(top: 10),
+      child: SizedBox(
+        height: 16,
+        child: Text(
+          "Please provide proof of your business",
+          style: TextStyle(color: Color(0xff7B2D26)),
+        ),
       ),
     );
 
@@ -121,6 +145,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
     //     return null;
     //   }
     // }
+
     void _chooseImage(int image) async {
       //ImagePicker picker = ImagePicker();
       //XFile? image = await picker.pickImage(source: ImageSource.gallery);
@@ -149,6 +174,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
           if (image == 1) {
             setState(() {
               _imageFile = result.files.first;
+              setState(() => showAccommImageError = false);
             });
             String extn = result.files.first.name.split('.').last;
             if (extn == 'png' || extn == 'PNG') {
@@ -161,6 +187,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
           } else {
             setState(() {
               _imageFile2 = result.files.first;
+              setState(() => showProofUploadError = false);
             });
             String extn = result.files.first.name.split('.').last;
             if (extn == 'png' || extn == 'PNG') {
@@ -762,8 +789,8 @@ class _AddAccommPageState extends State<AddAccommPage> {
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            SizedBox(
-                              width: 200,
+                            Flexible(
+                              flex: 5,
                               child: TextFormField(
                                 controller: provinceController,
                                 decoration: InputDecoration(
@@ -798,8 +825,9 @@ class _AddAccommPageState extends State<AddAccommPage> {
                                 }),
                               ),
                             ),
-                            SizedBox(
-                              width: 150,
+                            const Spacer(flex: 1),
+                            Flexible(
+                              flex: 3,
                               child: TextFormField(
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
@@ -835,6 +863,9 @@ class _AddAccommPageState extends State<AddAccommPage> {
                                 validator: ((value) {
                                   if (value != null && value.trim().isEmpty) {
                                     return "Zip Code required";
+                                  } else if (value != null &&
+                                      value.length != 4) {
+                                    return "Must be 4 digits long";
                                   }
                                 }),
                               ),
@@ -1056,6 +1087,9 @@ class _AddAccommPageState extends State<AddAccommPage> {
                                         child: const Text("Upload image")),
                               ),
                             ),
+                            showAccommImageError
+                                ? accommImageError
+                                : const SizedBox(height: 16),
                           ],
                         ),
                       ),
@@ -1154,6 +1188,11 @@ class _AddAccommPageState extends State<AddAccommPage> {
                                 ),
                               ],
                               onChanged: (value) => _idType = value!,
+                              validator: ((value) {
+                                if (value?.isEmpty ?? true) {
+                                  return 'Please select a proof type';
+                                }
+                              }),
                             ),
                           ],
                         ),
@@ -1170,7 +1209,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
                               height: 5,
                             ),
                             TextFormField(
-                              controller: nameController,
+                              controller: idnoController,
                               validator: ((value) {
                                 if (value != null && value.trim().isEmpty) {
                                   return "ID Number required";
@@ -1239,9 +1278,12 @@ class _AddAccommPageState extends State<AddAccommPage> {
                       const Text(
                         'Only photos 4mb and below are allowed.',
                         style: TextStyle(
-                          color: const Color.fromARGB(255, 25, 83, 95),
+                          color: Color.fromARGB(255, 25, 83, 95),
                         ),
                       ),
+                      showProofUploadError
+                          ? proofUploadError
+                          : const SizedBox(height: 16),
                       // Padding(
                       //   padding: const EdgeInsets.symmetric(vertical: 7),
                       //   child: _idImage == null
@@ -1340,44 +1382,51 @@ class _AddAccommPageState extends State<AddAccommPage> {
                       onPressed: () async {
                         if (user_type == "owner") {
                           if (_formKey2.currentState!.validate()) {
-                            print("Add accommodation complete.");
-                            String url =
-                                "http://127.0.0.1:8000/create-establishment/";
-                            final Map<String, dynamic> requestBody = {
-                              "owner": id,
-                              "name": nameController.text,
-                              "location_exact": houseNoController.text +
-                                  " " +
-                                  streetController.text +
-                                  " " +
-                                  cityController.text +
-                                  " " +
-                                  provinceController.text +
-                                  " " +
-                                  countryController.text,
-                              "location_approx": "Maybe inside Campus",
-                              "establishment_type": accommType,
-                              "tenant_type": guestType,
-                              "utilities": [],
-                              "description": descriptionController.text,
-                              "photos": [],
-                              "proof_type": "None",
-                              "proof_number": "None",
-                              "loc_picture": base64Image1,
-                              "proof_picture": base64Image2,
-                              "reviews": [],
-                              "verified": false,
-                              "archived": false,
-                              "accommodations": []
-                            };
-                            final headers = {
-                              'Content-Type': 'application/json',
-                            };
-                            final response = await http.post(Uri.parse(url),
-                                headers: headers,
-                                body: json.encode(requestBody));
-                            final decodedResponse = json.decode(response.body);
-                            Navigator.pop(context);
+                            if (base64Image1 == '') {
+                              setState(() => showAccommImageError = true);
+                            } else if (base64Image2 == '') {
+                              setState(() => showProofUploadError = true);
+                            } else {
+                              print("Add accommodation complete.");
+                              String url =
+                                  "http://127.0.0.1:8000/create-establishment/";
+                              final Map<String, dynamic> requestBody = {
+                                "owner": id,
+                                "name": nameController.text,
+                                "location_exact": houseNoController.text +
+                                    " " +
+                                    streetController.text +
+                                    " " +
+                                    cityController.text +
+                                    " " +
+                                    provinceController.text +
+                                    " " +
+                                    countryController.text,
+                                "location_approx": "Maybe inside Campus",
+                                "establishment_type": accommType,
+                                "tenant_type": guestType,
+                                "utilities": [],
+                                "description": descriptionController.text,
+                                "photos": [],
+                                "proof_type": "None",
+                                "proof_number": "None",
+                                "loc_picture": base64Image1,
+                                "proof_picture": base64Image2,
+                                "reviews": [],
+                                "verified": false,
+                                "archived": false,
+                                "accommodations": []
+                              };
+                              final headers = {
+                                'Content-Type': 'application/json',
+                              };
+                              final response = await http.post(Uri.parse(url),
+                                  headers: headers,
+                                  body: json.encode(requestBody));
+                              final decodedResponse =
+                                  json.decode(response.body);
+                              Navigator.pop(context);
+                            }
                           }
                         } else {
                           print("Not an owner");
@@ -1415,7 +1464,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
     }
 
     return Scaffold(
-      backgroundColor: Color(0xffF0F3F5),
+      backgroundColor: const Color(0xffF0F3F5),
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(child: Center(child: getStep())),
     );
