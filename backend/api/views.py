@@ -418,7 +418,21 @@ def delete_room(request, pk):
 def getticketdetails(request):
     ticket = Ticket.objects.all()
     serializer = ticketSerializer(ticket, many=True)
+    print(serializer.data)
     return Response(serializer.data)
+
+@api_view(['POST'])
+def resolve_ticket(request):
+    ticket = Ticket.objects.get(pk=ObjectId(request.data["_id"]))
+    ticket.resolved = True
+    ticket.save()
+    return Response(data={"message": "Successfully resolved report"})
+
+@api_view(['POST'])
+def delete_ticket(request):
+    ticket = Ticket.objects.get(pk=ObjectId(request.data["_id"]))
+    ticket.delete()
+    return Response(data={"message": "Successfully deleted report"})
 
 @api_view(['POST'])
 def report_establishment(request): #can be used for other types of tickets

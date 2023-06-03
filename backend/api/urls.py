@@ -56,6 +56,9 @@ urlpatterns = [
     path('archive-user/<str:pk>/', views.archive_user),
     path('unarchive-user/<str:pk>/', views.unarchive_user),
 
+    path('resolve-report/', views.resolve_ticket),
+    path('delete-report/', views.delete_ticket),
+
 
     path('get-one-user-using-id/<str:pk>/', views.get_one_user_using_id),
 
