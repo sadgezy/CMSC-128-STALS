@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 import '../UI_parameters.dart' as UIParameter;
 
-class SearchBar extends StatelessWidget {
+class CustomSearchBar extends StatelessWidget {
   final String hintText;
   final ValueChanged<String> onChanged;
-  const SearchBar({
+  const CustomSearchBar({
     Key? key,
     required this.hintText,
     required this.onChanged,
@@ -14,7 +14,7 @@ class SearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        //margin: const EdgeInsets.symmetric(vertical: 10),
+        margin: const EdgeInsets.symmetric(vertical: 10),
         padding: const EdgeInsets.symmetric(horizontal: 20),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -22,8 +22,10 @@ class SearchBar extends StatelessWidget {
         ),
         child: TextField(
           onChanged: onChanged,
-          cursorColor: Colors.green,
-          style: const TextStyle(fontSize: UIParameter.FONT_BODY_SIZE),
+          cursorColor: UIParameter.LIGHT_TEAL,
+          style: const TextStyle(
+              fontSize: UIParameter.FONT_BODY_SIZE,
+              fontFamily: UIParameter.FONT_REGULAR),
           decoration: InputDecoration(
             isDense: true,
             hintText: hintText,
