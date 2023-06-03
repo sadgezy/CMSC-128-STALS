@@ -1,17 +1,23 @@
 import 'package:stals_frontend/components/rating.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:stals_frontend/providers/user_provider.dart';
 import 'package:provider/provider.dart';
+import '../../UI_parameters.dart' as UIParameter;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 import 'dart:io';
+
+import '../../classes.dart';
 
 class EditAccomm extends StatefulWidget {
   const EditAccomm({super.key});
   @override
   _EditAccommState createState() => _EditAccommState();
 }
+
+ 
 
 /*
 Edit Accom: Basically the same as Accom page but
@@ -39,7 +45,7 @@ class Item1 extends StatelessWidget {
               Color(0xffffcc66),
             ]),
       ),
-      child: const Column(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Icon(
@@ -85,7 +91,7 @@ class Item2 extends StatelessWidget {
             stops: [0.3, 1],
             colors: [Color(0xff5f2c82), Color(0xff49a09d)]),
       ),
-      child: const Column(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Icon(
@@ -152,11 +158,11 @@ class Item3 extends StatelessWidget {
 }
 
 class Item4 extends StatelessWidget {
-  const Item4({Key? key}) : super(key: key);
+  Item4({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: const Column(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text("Hanse",
@@ -190,9 +196,73 @@ class _EditAccommState extends State<EditAccomm> {
   int _index = 1;
   bool favorite = false;
   int _currentIndex = 0;
+  Future<List<AccomCardDetails>>? _accommodationsFuture;
   TextEditingController _controller = TextEditingController();
+  TextEditingController _newEstablishmentNameController = TextEditingController();
+  TextEditingController _newEstablishmentLocationController = TextEditingController();
+  TextEditingController _newEstablishmentDescriptionController = TextEditingController();
+  var responseData;
+  List<String> user = [];
+     String user_id = '';
+     String email = '';
+     String username = '';
+     String user_type = '';
+     String response_Address = "";
+     String response_Owner = "";
+     String response_phoneNo = "";
+     String response_Name = "";
+     String owner_id = "";
+     String id = "";
+     String response_Description = "";
+
+  Future<void> fetchData() async {
+      // controller: emailController;
+      List<String> user =
+          Provider.of<UserProvider>(context, listen: false).userInfo;
+      user_id = user[0];
+      email = user[1];
+      username = user[2];
+      user_type = user[3];
+
+      // print(id);
+      // print(email);
+      // print(username);
+      // print(user_type);
+      final arguments = ModalRoute.of(context)!.settings.arguments;
+      if (arguments != null) {
+        // Do something with the passed data
+        final card_id = arguments as String;
+        id = card_id;
+        // print('Received ID: id');
+      }
+      String url1 = "http://127.0.0.1:8000/view-establishment/" + id + "/";
+      final response = await http.get(Uri.parse(url1));
+      responseData = json.decode(response.body);
+      response_Name = responseData['name'];
+      response_Address = responseData['location_exact'];
+      owner_id = responseData['owner'];
+      response_Description = responseData['description'];
+
+
+      String url2 =
+        "http://127.0.0.1:8000/get-one-user-using-id/" + owner_id + "/";
+      final response2 = await http.get(Uri.parse(url2));
+      var responseData2 = json.decode(response2.body);
+      response_phoneNo = responseData2['phone_no'];
+      // print(owner_id);
+      // print("http://127.0.0.1:8000/get-one-user-using-id/" + owner_id + "/");
+     
+    }
+
+   @override
+  void initState() {
+    super.initState();
+    
+    // _userInfoFuture = fetchOwnedAccommodations();
+  }
+
   String userInput = "NA";
-  List cardList = [const Item1(), const Item2(), const Item3(), const Item4()];
+  List cardList = [ Item1(), Item2(), Item3(), Item4()];
 
   List<T> map<T>(List list, Function handler) {
     List<T> result = [];
@@ -204,6 +274,7 @@ class _EditAccommState extends State<EditAccomm> {
 
   @override
   Widget build(BuildContext context) {
+    fetchData();
     return Scaffold(
         //App bar start
         appBar: AppBar(
@@ -261,10 +332,38 @@ class _EditAccommState extends State<EditAccomm> {
                             ),
                           ),
                           ElevatedButton(
-                              onPressed: () {
+                              onPressed: () async  {
                                 //on button pushed it saves the editted details and routes back the owned accoms page
                                 //setState(() {});
-                                Navigator.pushNamed(context, '/owned/accomm');
+                                 print("edit accommodation complete.");
+                                String url = "http://127.0.0.1:8000/edit-establishment/" + id + "/";
+                                  final Map<String, dynamic> requestBody = {
+                                    "owner": owner_id,
+                                    "name": _newEstablishmentNameController.text,
+                                    "location_exact": _newEstablishmentLocationController.text,
+                                    "location_approx": responseData['location_approx'],
+                                    "establishment_type": responseData['establishment_type'],
+                                    "tenant_type": responseData['tenant_type'],
+                                    "utilities": [],
+                                    "description": _newEstablishmentDescriptionController.text,
+                                    "photos": [],
+                                    "proof_type": responseData['proof_type'],
+                                    "proof_number": responseData['proof_number'],
+                                    "loc_picture": responseData['loc_picture'],
+                                    "proof_picture": responseData['loc_picture'],
+                                    "reviews": responseData['reviews'],
+                                    "verified": responseData['verified'],
+                                    "archived": responseData['archived'],
+                                    "accommodations": responseData['accommodations']
+                                  };
+                              final headers = {
+                                'Content-Type': 'application/json',
+                              };  
+                              final response = await http.put(Uri.parse(url), headers: headers, body: json.encode(requestBody));
+                              // final decodedResponse = json.decode(response.body);
+                              // Navigator.pop(context);
+                              Navigator.pushNamed(context, '/view_owned_accomms');
+                              
                               },
                               style: ElevatedButton.styleFrom(
                                   shape: const CircleBorder(),
@@ -296,11 +395,11 @@ class _EditAccommState extends State<EditAccomm> {
                         height: 50,
                         width: 200,
                         child: TextFormField(
-                          controller: _controller,
-                          decoration: const InputDecoration(
-                              hintText: 'Edit Establishment Name',
+                          controller: _newEstablishmentNameController,
+                          decoration: InputDecoration(
+                              hintText: response_Name,
                               //label text should be the value before editting
-                              labelText: 'Previous Establishment Name'),
+                              labelText: 'Edit Establishment Name'),
                         ),
                       ),
                       const SizedBox(
@@ -355,11 +454,11 @@ class _EditAccommState extends State<EditAccomm> {
                           SizedBox(
                             height: 50,
                             width: 200,
-                            child: TextFormField(
-                              controller: _controller,
-                              decoration: const InputDecoration(
-                                  hintText: 'Edit Owner Name',
-                                  labelText: 'Previous Owner Name'),
+                            child:Text(
+                              username,
+                              style: const TextStyle(
+                                  fontSize: UIParameter.FONT_BODY_SIZE,
+                                  fontFamily: UIParameter.FONT_REGULAR),
                             ),
                           ),
                         ],
@@ -379,10 +478,10 @@ class _EditAccommState extends State<EditAccomm> {
                             height: 50,
                             width: 200,
                             child: TextFormField(
-                              controller: _controller,
-                              decoration: const InputDecoration(
-                                  hintText: 'Edit Location Details',
-                                  labelText: 'Previous Location Details'),
+                              controller: _newEstablishmentLocationController,
+                              decoration: InputDecoration(
+                                  hintText: response_Address,
+                                  labelText: 'Edit Location Details'),
                             ),
                           ),
                         ],
@@ -406,9 +505,9 @@ class _EditAccommState extends State<EditAccomm> {
                             width: 200,
                             child: TextFormField(
                               controller: _controller,
-                              decoration: const InputDecoration(
-                                  hintText: 'Edit Contact Details',
-                                  labelText: 'Previous Contact Details'),
+                              decoration: InputDecoration(
+                                  hintText: response_phoneNo,
+                                  labelText: 'Edit Contact Details'),
                             ),
                           ),
                         ],
@@ -535,14 +634,10 @@ class _EditAccommState extends State<EditAccomm> {
                             width: 600,
                             child: TextFormField(
                               maxLines: 5,
-                              controller: _controller,
-                              decoration: const InputDecoration(
+                              controller: _newEstablishmentDescriptionController,
+                              decoration: InputDecoration(
                                   hintText:
-                                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"
-                                      " do eiusmod tempor incididunt ut labore et dolore magna "
-                                      "aliqua. Ut enim ad minim veniam, quis nostrud "
-                                      "exercitation ullamco laboris nisi ut aliquip ex ea "
-                                      "commodo consequat.",
+                                      response_Description,
                                   labelText: 'Edit Description'),
                             ),
                           ),
@@ -567,7 +662,7 @@ class _EditAccommState extends State<EditAccomm> {
                           fontSize: 22, fontWeight: FontWeight.normal),
                     ),
                   ),
-                  const SizedBox(
+                  SizedBox(
                       height: 2000,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

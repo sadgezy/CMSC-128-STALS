@@ -418,7 +418,21 @@ def delete_room(request, pk):
 def getticketdetails(request):
     ticket = Ticket.objects.all()
     serializer = ticketSerializer(ticket, many=True)
+    print(serializer.data)
     return Response(serializer.data)
+
+@api_view(['POST'])
+def resolve_ticket(request):
+    ticket = Ticket.objects.get(pk=ObjectId(request.data["_id"]))
+    ticket.resolved = True
+    ticket.save()
+    return Response(data={"message": "Successfully resolved report"})
+
+@api_view(['POST'])
+def delete_ticket(request):
+    ticket = Ticket.objects.get(pk=ObjectId(request.data["_id"]))
+    ticket.delete()
+    return Response(data={"message": "Successfully deleted report"})
 
 @api_view(['POST'])
 def report_establishment(request): #can be used for other types of tickets
@@ -649,17 +663,24 @@ def view_all_archived_users(request):
 
 
 @api_view(['GET'])
+def view_all_modifUnverified_users(request):
+    user = User.objects.all()
+    serializer = userSerializer(user, many=True)
+    query = [d for d in serializer.data if d['verified'] == False and d['archived'] == False and d['user_type'] !="admin"]
+    return Response(query)
+
+@api_view(['GET'])
 def view_all_modifVerified_users(request):
     user = User.objects.all()
     serializer = userSerializer(user, many=True)
-    query = [d for d in serializer.data if d['verified'] == True and d['archived'] == False]
+    query = [d for d in serializer.data if d['verified'] == True and d['archived'] == False and d['user_type'] !="admin"]
     return Response(query)
 
 @api_view(['GET'])
 def view_all_modifArchived_users(request):
     user = User.objects.all()
     serializer = userSerializer(user, many=True)
-    query = [d for d in serializer.data if d['archived'] == True and d['verified'] == True]
+    query = [d for d in serializer.data if d['archived'] == True and d['verified'] == True and d['user_type'] !="admin"]
     return Response(query)
 
 

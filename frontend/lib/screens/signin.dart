@@ -104,7 +104,7 @@ class _SignInPageState extends State<SignInPage> {
             Navigator.pop(context);
             Navigator.pushNamed(context, '/admin');
         }
-        else{
+        else if (user_type == 'owner'){
             Navigator.pop(context);
             Navigator.pushNamed(context, '/view_owned_accomms');
         }

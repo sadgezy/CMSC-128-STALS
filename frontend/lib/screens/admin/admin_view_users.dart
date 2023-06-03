@@ -35,7 +35,7 @@ class _ViewAllUsersPageState extends State<ViewUsersPage> {
   // String apiUrl_allUsers = 'http://127.0.0.1:8000/view-all-users/';
   
   String apiUrl_allUnverifiedUsers =
-      'http://127.0.0.1:8000/view-all-unverified-users/';
+      'http://127.0.0.1:8000/view-all-modifUnverified-users/';
 
   String apiUrl_allVerifiedUsers =
       'http://127.0.0.1:8000/view-all-modifVerified-users/';
@@ -89,11 +89,11 @@ class _ViewAllUsersPageState extends State<ViewUsersPage> {
       // Dio dio = new Dio();
       // dio.options.headers["Authorization"] = 'Token ${Provider.of<TokenProvider>(context, listen: false).currToken}';
       // Response response = await dio.get(apiUrl);
-      print(response.data);
+      //print(response.data);
 
       if (response.statusCode == 200) {
         List<dynamic> data = response.data;
-        print(data);
+        //print(data);
 
         List<User> fetchedVerifiedUsers =
             data.map((user) => User.fromJson(user)).toList();
@@ -116,11 +116,11 @@ class _ViewAllUsersPageState extends State<ViewUsersPage> {
   Future<void> fetchAllUnverifiedUsers() async {
     try {
       Response response = await Dio().get(apiUrl_allUnverifiedUsers);
-      print(response.data);
+      //print(response.data);
 
       if (response.statusCode == 200) {
         List<dynamic> data = response.data;
-        print(data);
+        //print(data);
 
         
         List<User> fetchAllUnverifiedUsers =
@@ -144,11 +144,11 @@ class _ViewAllUsersPageState extends State<ViewUsersPage> {
   Future<void> fetchAllArchivedUsers() async {
     try {
       Response response = await Dio().get(apiUrl_allArchivedUsers);
-      print(response.data);
+      //print(response.data);
 
       if (response.statusCode == 200) {
         List<dynamic> data = response.data;
-        print(data);
+        //print(data);
 
         List<User> fetchedArchivedUsers =
             data.map((user) => User.fromJson(user)).toList();
@@ -253,10 +253,13 @@ class _ViewAllUsersPageState extends State<ViewUsersPage> {
               },
             ),
             ListTile(
-              title: const Text('Reviews'),
-              leading: const Icon(Icons.reviews),
+              title: const Text('Reports'),
+              leading: const Icon(Icons.flag),
               onTap: () {
                 // TODO
+                Navigator.pop(context);
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/admin/view_reports');
               },
             ),
             ListTile(

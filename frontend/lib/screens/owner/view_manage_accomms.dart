@@ -148,7 +148,7 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
             if (snapshot.hasData && snapshot.data!.isNotEmpty) {
               print("RAN");
               List<AccomCardDetails> accommodations = snapshot.data!;
-              print(accommodations[0].getImage());
+              // print(accommodations[0].getImage());
               return Column(
                 children: accommodations.map((accommodation) {
                   return Padding(
