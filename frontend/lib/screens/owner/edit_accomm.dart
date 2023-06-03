@@ -17,8 +17,6 @@ class EditAccomm extends StatefulWidget {
   _EditAccommState createState() => _EditAccommState();
 }
 
- 
-
 /*
 Edit Accom: Basically the same as Accom page but
 : with textfieldforms for title/information/descripts/etc.. text boxes basically
@@ -198,71 +196,72 @@ class _EditAccommState extends State<EditAccomm> {
   int _currentIndex = 0;
   Future<List<AccomCardDetails>>? _accommodationsFuture;
   TextEditingController _controller = TextEditingController();
-  TextEditingController _newEstablishmentNameController = TextEditingController();
-  TextEditingController _newEstablishmentLocationController = TextEditingController();
-  TextEditingController _newEstablishmentDescriptionController = TextEditingController();
+  TextEditingController _newEstablishmentNameController =
+      TextEditingController();
+  TextEditingController _newEstablishmentLocationController =
+      TextEditingController();
+  TextEditingController _newEstablishmentDescriptionController =
+      TextEditingController();
   var responseData;
   List<String> user = [];
-     String user_id = '';
-     String email = '';
-     String username = '';
-     String user_type = '';
-     String response_Address = "";
-     String response_Owner = "";
-     String response_phoneNo = "";
-     String response_Name = "";
-     String owner_id = "";
-     String id = "";
-     String response_Description = "";
+  String user_id = '';
+  String email = '';
+  String username = '';
+  String user_type = '';
+  String response_Address = "";
+  String response_Owner = "";
+  String response_phoneNo = "";
+  String response_Name = "";
+  String owner_id = "";
+  String id = "";
+  String response_Description = "";
 
   Future<void> fetchData() async {
-      // controller: emailController;
-      List<String> user =
-          Provider.of<UserProvider>(context, listen: false).userInfo;
-      user_id = user[0];
-      email = user[1];
-      username = user[2];
-      user_type = user[3];
+    // controller: emailController;
+    List<String> user =
+        Provider.of<UserProvider>(context, listen: false).userInfo;
+    user_id = user[0];
+    email = user[1];
+    username = user[2];
+    user_type = user[3];
 
-      // print(id);
-      // print(email);
-      // print(username);
-      // print(user_type);
-      final arguments = ModalRoute.of(context)!.settings.arguments;
-      if (arguments != null) {
-        // Do something with the passed data
-        final card_id = arguments as String;
-        id = card_id;
-        // print('Received ID: id');
-      }
-      String url1 = "http://127.0.0.1:8000/view-establishment/" + id + "/";
-      final response = await http.get(Uri.parse(url1));
-      responseData = json.decode(response.body);
-      response_Name = responseData['name'];
-      response_Address = responseData['location_exact'];
-      owner_id = responseData['owner'];
-      response_Description = responseData['description'];
-
-
-      String url2 =
-        "http://127.0.0.1:8000/get-one-user-using-id/" + owner_id + "/";
-      final response2 = await http.get(Uri.parse(url2));
-      var responseData2 = json.decode(response2.body);
-      response_phoneNo = responseData2['phone_no'];
-      // print(owner_id);
-      // print("http://127.0.0.1:8000/get-one-user-using-id/" + owner_id + "/");
-     
+    // print(id);
+    // print(email);
+    // print(username);
+    // print(user_type);
+    final arguments = ModalRoute.of(context)!.settings.arguments;
+    if (arguments != null) {
+      // Do something with the passed data
+      final card_id = arguments as String;
+      id = card_id;
+      // print('Received ID: id');
     }
+    String url1 = "http://127.0.0.1:8000/view-establishment/" + id + "/";
+    final response = await http.get(Uri.parse(url1));
+    responseData = json.decode(response.body);
+    response_Name = responseData['name'];
+    response_Address = responseData['location_exact'];
+    owner_id = responseData['owner'];
+    response_Description = responseData['description'];
 
-   @override
+    String url2 =
+        "http://127.0.0.1:8000/get-one-user-using-id/" + owner_id + "/";
+    final response2 = await http.get(Uri.parse(url2));
+    var responseData2 = json.decode(response2.body);
+    response_phoneNo = responseData2['phone_no'];
+    // print(owner_id);
+    // print("http://127.0.0.1:8000/get-one-user-using-id/" + owner_id + "/");
+  }
+
+  @override
   void initState() {
     super.initState();
-    
+
     // _userInfoFuture = fetchOwnedAccommodations();
   }
 
   String userInput = "NA";
-  List cardList = [ Item1(), Item2(), Item3(), Item4()];
+  List cardList = [Item1(), Item2(), Item3(), Item4()];
 
   List<T> map<T>(List list, Function handler) {
     List<T> result = [];
@@ -332,38 +331,49 @@ class _EditAccommState extends State<EditAccomm> {
                             ),
                           ),
                           ElevatedButton(
-                              onPressed: () async  {
+                              onPressed: () async {
                                 //on button pushed it saves the editted details and routes back the owned accoms page
                                 //setState(() {});
-                                 print("edit accommodation complete.");
-                                String url = "http://127.0.0.1:8000/edit-establishment/" + id + "/";
-                                  final Map<String, dynamic> requestBody = {
-                                    "owner": owner_id,
-                                    "name": _newEstablishmentNameController.text,
-                                    "location_exact": _newEstablishmentLocationController.text,
-                                    "location_approx": responseData['location_approx'],
-                                    "establishment_type": responseData['establishment_type'],
-                                    "tenant_type": responseData['tenant_type'],
-                                    "utilities": [],
-                                    "description": _newEstablishmentDescriptionController.text,
-                                    "photos": [],
-                                    "proof_type": responseData['proof_type'],
-                                    "proof_number": responseData['proof_number'],
-                                    "loc_picture": responseData['loc_picture'],
-                                    "proof_picture": responseData['loc_picture'],
-                                    "reviews": responseData['reviews'],
-                                    "verified": responseData['verified'],
-                                    "archived": responseData['archived'],
-                                    "accommodations": responseData['accommodations']
-                                  };
-                              final headers = {
-                                'Content-Type': 'application/json',
-                              };  
-                              final response = await http.put(Uri.parse(url), headers: headers, body: json.encode(requestBody));
-                              // final decodedResponse = json.decode(response.body);
-                              // Navigator.pop(context);
-                              Navigator.pushNamed(context, '/view_owned_accomms');
-                              
+                                print("edit accommodation complete.");
+                                String url =
+                                    "http://127.0.0.1:8000/edit-establishment/" +
+                                        id +
+                                        "/";
+                                final Map<String, dynamic> requestBody = {
+                                  "owner": owner_id,
+                                  "name": _newEstablishmentNameController.text,
+                                  "location_exact":
+                                      _newEstablishmentLocationController.text,
+                                  "location_approx":
+                                      responseData['location_approx'],
+                                  "establishment_type":
+                                      responseData['establishment_type'],
+                                  "tenant_type": responseData['tenant_type'],
+                                  "utilities": [],
+                                  "description":
+                                      _newEstablishmentDescriptionController
+                                          .text,
+                                  "photos": [],
+                                  "proof_type": responseData['proof_type'],
+                                  "proof_number": responseData['proof_number'],
+                                  "loc_picture": responseData['loc_picture'],
+                                  "proof_picture": responseData['loc_picture'],
+                                  "reviews": responseData['reviews'],
+                                  "verified": responseData['verified'],
+                                  "archived": responseData['archived'],
+                                  "accommodations":
+                                      responseData['accommodations']
+                                };
+                                final headers = {
+                                  'Content-Type': 'application/json',
+                                };
+                                final response = await http.put(Uri.parse(url),
+                                    headers: headers,
+                                    body: json.encode(requestBody));
+                                // final decodedResponse = json.decode(response.body);
+                                // Navigator.pop(context);
+                                Navigator.pushNamed(
+                                    context, '/view_owned_accomms');
                               },
                               style: ElevatedButton.styleFrom(
                                   shape: const CircleBorder(),
@@ -454,7 +464,7 @@ class _EditAccommState extends State<EditAccomm> {
                           SizedBox(
                             height: 50,
                             width: 200,
-                            child:Text(
+                            child: Text(
                               username,
                               style: const TextStyle(
                                   fontSize: UIParameter.FONT_BODY_SIZE,
@@ -634,10 +644,10 @@ class _EditAccommState extends State<EditAccomm> {
                             width: 600,
                             child: TextFormField(
                               maxLines: 5,
-                              controller: _newEstablishmentDescriptionController,
+                              controller:
+                                  _newEstablishmentDescriptionController,
                               decoration: InputDecoration(
-                                  hintText:
-                                      response_Description,
+                                  hintText: response_Description,
                                   labelText: 'Edit Description'),
                             ),
                           ),

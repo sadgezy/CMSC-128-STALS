@@ -60,7 +60,6 @@ class MyApp extends StatelessWidget {
         '/admin/view_accomms': (context) => const AdminViewAccommodations(),
         '/admin/verify_accomm': (context) => AccommPageProof(),
         '/admin/view_reports': (context) => const ViewReportsPage(),
-
       },
       theme: ThemeData(
         fontFamily: 'SFProDisplayRegular',
