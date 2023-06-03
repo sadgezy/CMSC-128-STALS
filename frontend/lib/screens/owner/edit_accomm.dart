@@ -273,6 +273,14 @@ class _EditAccommState extends State<EditAccomm> {
 
   @override
   Widget build(BuildContext context) {
+    if (!context.watch<UserProvider>().isOwner) {
+      //Navigator.pop(context);
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        Navigator.of(context).pushReplacementNamed('/');
+      });
+
+      return const CircularProgressIndicator();
+    }
     fetchData();
     return Scaffold(
         //App bar start

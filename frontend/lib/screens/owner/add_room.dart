@@ -127,7 +127,8 @@ class _AddRoomState extends State<AddRoom> {
                             fontFamily: UIParameter.FONT_REGULAR,
                           ),
                           decoration: const InputDecoration(
-                              hintText: "Capacity", border: InputBorder.none),
+                              hintText: "Capacity",
+                              border: InputBorder.none),
                         ),
                       ),
                     ],
@@ -139,18 +140,13 @@ class _AddRoomState extends State<AddRoom> {
                         onPressed: () async {
                           // FUNCTION TO DO WHEN PRESSED/CLICKED
                           String url = "http://127.0.0.1:8000/add-room/";
-                          final response = await json
-                              .decode((await http.post(Uri.parse(url), body: {
-                            "establishment_id": widget.estabId,
-                            "price_lower": minController.text,
-                            "price_upper": maxController.text,
-                            "capacity": capacityController.text
-                          }))
-                                  .body);
+                          final response = await json.decode((await http.post(Uri.parse(url),
+                                  body: {"establishment_id": widget.estabId, "price_lower": minController.text, "price_upper": maxController.text, "capacity": capacityController.text}))
+                              .body);
                           Navigator.pop(context);
                           Navigator.pop(context);
                           Navigator.pushNamed(context, '/accomm',
-                              arguments: widget.estabId);
+                            arguments: widget.estabId);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: UIParameter.MAROON,

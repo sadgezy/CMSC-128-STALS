@@ -1,6 +1,8 @@
 import 'package:stals_frontend/components/rating.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:stals_frontend/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class OwnedAccommPage extends StatefulWidget {
   OwnedAccommPage({super.key});
@@ -219,6 +221,14 @@ class _OwnedAccommPageState extends State<OwnedAccommPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (!context.watch<UserProvider>().isOwner) {
+      //Navigator.pop(context);
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        Navigator.of(context).pushReplacementNamed('/');
+      });
+
+      return const CircularProgressIndicator();
+    }
     return Scaffold(
         //App bar start
         appBar: AppBar(

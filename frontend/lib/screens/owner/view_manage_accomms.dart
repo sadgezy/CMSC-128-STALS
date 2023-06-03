@@ -68,6 +68,14 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
 
   @override
   Widget build(BuildContext context) {
+    if (!context.watch<UserProvider>().isOwner) {
+      //Navigator.pop(context);
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        Navigator.of(context).pushReplacementNamed('/');
+      });
+
+      return const CircularProgressIndicator();
+    }
     // var accom = AccomCardDetails("jk23fvgw23", "Centtro Residences",
     //     "Example Description", "assets/images/room_stock.jpg", 3, true, false);
     getUserInfo();
