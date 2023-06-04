@@ -41,21 +41,21 @@ class _VerificationPageState extends State<VerificationPage> {
     );
 
     Widget navigationButtons =
-        Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-      // ElevatedButton(
-      //   onPressed: () {
-      //     Navigator.pop(context);
-      //   },
-      //   style: ElevatedButton.styleFrom(
-      //     elevation: 0,
-      //     backgroundColor: const Color(0xff7B2D26),
-      //     minimumSize: const Size(100, 50),
-      //     shape: RoundedRectangleBorder(
-      //       borderRadius: BorderRadius.circular(10),
-      //     ),
-      //   ),
-      //   child: const Text("Back", style: TextStyle(fontSize: 17)),
-      // ),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+      ElevatedButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        style: ElevatedButton.styleFrom(
+          elevation: 0,
+          backgroundColor: const Color(0xff7B2D26),
+          minimumSize: const Size(100, 50),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+        child: const Text("Back", style: TextStyle(fontSize: 17)),
+      ),
       ElevatedButton(
         onPressed: () async {
           if (_formKey.currentState!.validate()) {
@@ -147,6 +147,7 @@ class _VerificationPageState extends State<VerificationPage> {
                     ),
                     const SizedBox(height: 5),
                     DropdownButtonFormField(
+                      isExpanded: true,
                       items: const [
                         DropdownMenuItem(
                           value: 'UMID',
@@ -373,7 +374,7 @@ class _VerificationPageState extends State<VerificationPage> {
                   //         Uri.parse(base64Image).data!.contentAsBytes())
                   //   ],
                   // ),
-                const SizedBox(height: 70),
+                  const SizedBox(height: 70),
                 navigationButtons
               ],
             ),
