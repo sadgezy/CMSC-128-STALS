@@ -50,7 +50,7 @@ class _SignUpFormState extends State<SignUpForm> {
             borderRadius: BorderRadius.circular(10),
           ),
         ),
-        child: const Text("Cancel", style: TextStyle(fontSize: 17)),
+        child: const Text("Back", style: TextStyle(fontSize: 17)),
       ),
       ElevatedButton(
         onPressed: () {
