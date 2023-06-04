@@ -138,10 +138,10 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
               ListTile(
                 title: const Text('Logout'),
                 trailing: const Icon(Icons.logout),
-                onTap: () {
-                  Provider.of<TokenProvider>(context, listen: false)
+                onTap: () async {
+                  await Provider.of<TokenProvider>(context, listen: false)
                       .removeToken("DO NOT REMOVE THIS PARAM");
-                  Provider.of<UserProvider>(context, listen: false)
+                  await Provider.of<UserProvider>(context, listen: false)
                       .removeUser("DO NOT REMOVE THIS PARAM");
 
                   Navigator.pop(context);
