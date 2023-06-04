@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 import 'dart:io';
+import 'package:toggle_switch/toggle_switch.dart';
 
 import '../../classes.dart';
 
@@ -17,14 +18,18 @@ class EditAccomm extends StatefulWidget {
   _EditAccommState createState() => _EditAccommState();
 }
 
- 
-
 /*
 Edit Accom: Basically the same as Accom page but
 : with textfieldforms for title/information/descripts/etc.. text boxes basically
-: Add Card button? for Room information in the card carousel
 : remove/add Highlight features
+
 */
+
+//These checkurl is a check mark png if its available
+// noturl is a not avaiable png
+//not yet implemented to change so i'll comment out the image
+const _checkurl = 'https://img.icons8.com/?size=512&id=11695&format=png';
+const _noturl = 'https://img.icons8.com/?size=512&id=TfRrgMHDWJk3&format=png';
 
 //data information:
 class Item1 extends StatelessWidget {
@@ -32,50 +37,113 @@ class Item1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            stops: [
-              0.3,
-              1
-            ],
-            colors: [
-              Color(0xffff4000),
-              Color(0xffffcc66),
-            ]),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Icon(
-            Icons.single_bed_outlined,
-            color: Color.fromARGB(255, 255, 255, 255),
-            size: 75,
-          ),
-          Text("1 Bedroom",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold)),
-          Text("Max Capacity : 4",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17.0,
-                  fontWeight: FontWeight.w600)),
-          Text("Price: Php69,420",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17.0,
-                  fontWeight: FontWeight.w600)),
-          Text("Available : Yes",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17.0,
-                  fontWeight: FontWeight.w600))
-        ],
-      ),
-    );
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.white, width: 2),
+          gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              stops: [
+                0.3,
+                1
+              ],
+              colors: [
+                Color(0xffff4000),
+                Color(0xffffcc66),
+              ]),
+          // image: DecorationImage(
+          //     fit: BoxFit.scaleDown,
+          //     scale: 0.5,
+          //     alignment: Alignment.center,
+          //     image: NetworkImage(_checkurl)),
+        ),
+        child: Column(
+          children: [
+            SizedBox(
+                width: 1000,
+                child: Column(
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        const Icon(
+                          Icons.king_bed_outlined,
+                          color: Colors.white,
+                          size: 50,
+                        ),
+                        const SizedBox(height: 5),
+                        SizedBox(
+                          height: 25,
+                          width: 250,
+                          child: TextFormField(
+                            style: const TextStyle(
+                                fontSize: 12, color: Colors.white),
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                contentPadding: EdgeInsets.all(2),
+                                labelText: 'Max Capacity',
+                                labelStyle: TextStyle(color: Colors.white)),
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        SizedBox(
+                          height: 25,
+                          width: 250,
+                          child: TextFormField(
+                            style: const TextStyle(color: Colors.white),
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                contentPadding: EdgeInsets.all(5),
+                                labelText: 'Min-Price ',
+                                labelStyle: TextStyle(color: Colors.white)),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 25,
+                          width: 250,
+                          child: TextFormField(
+                            style: const TextStyle(color: Colors.white),
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                contentPadding: EdgeInsets.all(5),
+                                labelText: 'Max-Price ',
+                                labelStyle: TextStyle(color: Colors.white)),
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        const Text('Is this Room Available?',
+                            style: TextStyle(color: Colors.white)),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        ToggleSwitch(
+                          minWidth: 90.0,
+                          cornerRadius: 20.0,
+                          activeBgColors: [
+                            [Colors.green[800]!],
+                            [Colors.red[800]!]
+                          ],
+                          activeFgColor: Colors.white,
+                          inactiveBgColor: Colors.grey,
+                          inactiveFgColor: Colors.white,
+                          initialLabelIndex: 1,
+                          totalSwitches: 2,
+                          labels: const ['Yes', 'No'],
+                          radiusStyle: true,
+                          onToggle: (index) {},
+                        ),
+                      ],
+                    ),
+                  ],
+                ))
+          ],
+        ));
   }
 }
 
@@ -90,35 +158,87 @@ class Item2 extends StatelessWidget {
             end: Alignment.bottomRight,
             stops: [0.3, 1],
             colors: [Color(0xff5f2c82), Color(0xff49a09d)]),
+        // image: DecorationImage(
+        //     fit: BoxFit.scaleDown,
+        //     scale: 0.5,
+        //     alignment: Alignment.center,
+        //     //couldnt use the image asset for some reason
+        //     image: NetworkImage(_noturl))
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Icon(
+          const Icon(
             Icons.king_bed_outlined,
             color: Colors.white,
-            size: 75,
+            size: 50,
           ),
-          Text("2 Bedroom",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold)),
-          Text("Max Capacity : 6",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17.0,
-                  fontWeight: FontWeight.w600)),
-          Text("Price: Php69,420",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17.0,
-                  fontWeight: FontWeight.w600)),
-          Text("Available : No",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17.0,
-                  fontWeight: FontWeight.w600))
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(fontSize: 12, color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(2),
+                  labelText: 'Max Capacity',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(5),
+                  labelText: 'Min-Price ',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(5),
+                  labelText: 'Max-Price ',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          const Text('Is this Room Available?',
+              style: TextStyle(color: Colors.white)),
+          const SizedBox(
+            width: 20,
+          ),
+          ToggleSwitch(
+            minWidth: 90.0,
+            cornerRadius: 20.0,
+            activeBgColors: [
+              [Colors.green[800]!],
+              [Colors.red[800]!]
+            ],
+            activeFgColor: Colors.white,
+            inactiveBgColor: Colors.grey,
+            inactiveFgColor: Colors.white,
+            initialLabelIndex: 1,
+            totalSwitches: 2,
+            labels: const ['Yes', 'No'],
+            radiusStyle: true,
+            onToggle: (index) {},
+          ),
         ],
       ),
     );
@@ -142,15 +262,86 @@ class Item3 extends StatelessWidget {
               Color(0xffff4000),
               Color(0xffffcc66),
             ]),
+        // image: DecorationImage(
+        //     fit: BoxFit.scaleDown,
+        //     scale: 0.5,
+        //     alignment: Alignment.center,
+        //     image: NetworkImage(_checkurl))
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Image.asset(
-            'assets/images/bed.png',
-            height: 180.0,
-            fit: BoxFit.cover,
-          )
+          const Icon(
+            Icons.king_bed_outlined,
+            color: Colors.white,
+            size: 50,
+          ),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(fontSize: 12, color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(2),
+                  labelText: 'Max Capacity',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(5),
+                  labelText: 'Min-Price ',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(5),
+                  labelText: 'Max-Price ',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          const Text('Is this Room Available?',
+              style: TextStyle(color: Colors.white)),
+          const SizedBox(
+            width: 20,
+          ),
+          ToggleSwitch(
+            minWidth: 90.0,
+            cornerRadius: 20.0,
+            activeBgColors: [
+              [Colors.green[800]!],
+              [Colors.red[800]!]
+            ],
+            activeFgColor: Colors.white,
+            inactiveBgColor: Colors.grey,
+            inactiveFgColor: Colors.white,
+            initialLabelIndex: 1,
+            totalSwitches: 2,
+            labels: const ['Yes', 'No'],
+            radiusStyle: true,
+            onToggle: (index) {},
+          ),
         ],
       ),
     );
@@ -158,33 +349,419 @@ class Item3 extends StatelessWidget {
 }
 
 class Item4 extends StatelessWidget {
-  Item4({Key? key}) : super(key: key);
+  const Item4({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: const BoxDecoration(
+          // image: DecorationImage(
+          //     fit: BoxFit.scaleDown,
+          //     scale: 0.5,
+          //     alignment: Alignment.center,
+          //     image: NetworkImage(_checkurl))
+          ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          const Icon(
+            Icons.king_bed_outlined,
+            color: Colors.white,
+            size: 50,
+          ),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(fontSize: 12, color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(2),
+                  labelText: 'Max Capacity',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(5),
+                  labelText: 'Min-Price ',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(5),
+                  labelText: 'Max-Price ',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          const Text('Is this Room Available?',
+              style: TextStyle(color: Colors.white)),
+          const SizedBox(
+            width: 20,
+          ),
+          ToggleSwitch(
+            minWidth: 90.0,
+            cornerRadius: 20.0,
+            activeBgColors: [
+              [Colors.green[800]!],
+              [Colors.red[800]!]
+            ],
+            activeFgColor: Colors.white,
+            inactiveBgColor: Colors.grey,
+            inactiveFgColor: Colors.white,
+            initialLabelIndex: 1,
+            totalSwitches: 2,
+            labels: const ['Yes', 'No'],
+            radiusStyle: true,
+            onToggle: (index) {},
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class Item5 extends StatelessWidget {
+  const Item5({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: [
+              0.3,
+              1
+            ],
+            colors: [
+              Color.fromARGB(255, 210, 80, 184),
+              Color.fromARGB(255, 226, 203, 100)
+            ]),
+        // image: DecorationImage(
+        //     fit: BoxFit.scaleDown,
+        //     scale: 0.5,
+        //     alignment: Alignment.center,
+        //     image: NetworkImage(_noturl))
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          const Icon(
+            Icons.king_bed_outlined,
+            color: Colors.white,
+            size: 50,
+          ),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(fontSize: 12, color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(2),
+                  labelText: 'Max Capacity',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 25,
+                width: 75,
+                child: TextFormField(
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      contentPadding: EdgeInsets.all(5),
+                      labelText: 'Min-Price ',
+                      labelStyle: TextStyle(color: Colors.white)),
+                ),
+              ),
+              SizedBox(
+                height: 25,
+                width: 75,
+                child: TextFormField(
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      contentPadding: EdgeInsets.all(5),
+                      labelText: 'Max-Price ',
+                      labelStyle: TextStyle(color: Colors.white)),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 5),
+          const Text('Is this Room Available?',
+              style: TextStyle(color: Colors.white)),
+          const SizedBox(
+            width: 20,
+          ),
+          ToggleSwitch(
+            minWidth: 90.0,
+            cornerRadius: 20.0,
+            activeBgColors: [
+              [Colors.green[800]!],
+              [Colors.red[800]!]
+            ],
+            activeFgColor: Colors.white,
+            inactiveBgColor: Colors.grey,
+            inactiveFgColor: Colors.white,
+            initialLabelIndex: 1,
+            totalSwitches: 2,
+            labels: const ['Yes', 'No'],
+            radiusStyle: true,
+            onToggle: (index) {},
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class Item6 extends StatelessWidget {
+  const Item6({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: [
+              0.3,
+              1
+            ],
+            colors: [
+              Color.fromARGB(255, 71, 151, 194),
+              Color.fromARGB(255, 72, 210, 157)
+            ]),
+        // image: DecorationImage(
+        //     fit: BoxFit.scaleDown,
+        //     scale: 0.5,
+        //     alignment: Alignment.center,
+        //     image: NetworkImage(_checkurl))
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text("Hanse",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold)),
-          Text("Papasok kaba",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17.0,
-                  fontWeight: FontWeight.w600)),
-          Text("Syempre hindi",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold)),
-          Text("Tara kain",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17.0,
-                  fontWeight: FontWeight.w600)),
+          const Icon(
+            Icons.king_bed_outlined,
+            color: Colors.white,
+            size: 50,
+          ),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(fontSize: 12, color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(2),
+                  labelText: 'Max Capacity',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 25,
+                width: 75,
+                child: TextFormField(
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      contentPadding: EdgeInsets.all(5),
+                      labelText: 'Min-Price ',
+                      labelStyle: TextStyle(color: Colors.white)),
+                ),
+              ),
+              SizedBox(
+                height: 25,
+                width: 75,
+                child: TextFormField(
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      contentPadding: EdgeInsets.all(5),
+                      labelText: 'Max-Price ',
+                      labelStyle: TextStyle(color: Colors.white)),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 5),
+          const Text('Is this Room Available?',
+              style: TextStyle(color: Colors.white)),
+          const SizedBox(
+            width: 20,
+          ),
+          ToggleSwitch(
+            minWidth: 90.0,
+            cornerRadius: 20.0,
+            activeBgColors: [
+              [Colors.green[800]!],
+              [Colors.red[800]!]
+            ],
+            activeFgColor: Colors.white,
+            inactiveBgColor: Colors.grey,
+            inactiveFgColor: Colors.white,
+            initialLabelIndex: 1,
+            totalSwitches: 2,
+            labels: const ['Yes', 'No'],
+            radiusStyle: true,
+            onToggle: (index) {},
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class Item7 extends StatelessWidget {
+  const Item7({Key? key}) : super(key: key);
+
+  get onToggleButton => null;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: [
+              0.3,
+              1
+            ],
+            colors: [
+              Color.fromARGB(255, 125, 85, 217),
+              Color.fromARGB(255, 88, 111, 57)
+            ]),
+        // image: DecorationImage(
+        //     fit: BoxFit.scaleDown,
+        //     scale: 0.5,
+        //     alignment: Alignment.center,
+        //     image: NetworkImage(_checkurl))
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          const Icon(
+            Icons.king_bed_outlined,
+            color: Colors.white,
+            size: 50,
+          ),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(fontSize: 12, color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(2),
+                  labelText: 'Max Capacity',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          const SizedBox(height: 5),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 25,
+                width: 75,
+                child: TextFormField(
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      contentPadding: EdgeInsets.all(5),
+                      labelText: 'Min-Price ',
+                      labelStyle: TextStyle(color: Colors.white)),
+                ),
+              ),
+              SizedBox(
+                height: 25,
+                width: 75,
+                child: TextFormField(
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      contentPadding: EdgeInsets.all(5),
+                      labelText: 'Max-Price ',
+                      labelStyle: TextStyle(color: Colors.white)),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 5),
+          const Text('Is this Room Available?',
+              style: TextStyle(color: Colors.white)),
+          const SizedBox(
+            width: 20,
+          ),
+          ToggleSwitch(
+            minWidth: 90.0,
+            cornerRadius: 20.0,
+            activeBgColors: [
+              [Colors.green[800]!],
+              [Colors.red[800]!]
+            ],
+            activeFgColor: Colors.white,
+            inactiveBgColor: Colors.grey,
+            inactiveFgColor: Colors.white,
+            initialLabelIndex: 1,
+            totalSwitches: 2,
+            labels: const ['Yes', 'No'],
+            radiusStyle: true,
+            onToggle: (index) {},
+          ),
         ],
       ),
     );
@@ -198,71 +775,81 @@ class _EditAccommState extends State<EditAccomm> {
   int _currentIndex = 0;
   Future<List<AccomCardDetails>>? _accommodationsFuture;
   TextEditingController _controller = TextEditingController();
-  TextEditingController _newEstablishmentNameController = TextEditingController();
-  TextEditingController _newEstablishmentLocationController = TextEditingController();
-  TextEditingController _newEstablishmentDescriptionController = TextEditingController();
+  TextEditingController _newEstablishmentNameController =
+      TextEditingController();
+  TextEditingController _newEstablishmentLocationController =
+      TextEditingController();
+  TextEditingController _newEstablishmentDescriptionController =
+      TextEditingController();
   var responseData;
   List<String> user = [];
-     String user_id = '';
-     String email = '';
-     String username = '';
-     String user_type = '';
-     String response_Address = "";
-     String response_Owner = "";
-     String response_phoneNo = "";
-     String response_Name = "";
-     String owner_id = "";
-     String id = "";
-     String response_Description = "";
+  String user_id = '';
+  String email = '';
+  String username = '';
+  String user_type = '';
+  String response_Address = "";
+  String response_Owner = "";
+  String response_phoneNo = "";
+  String response_Name = "";
+  String owner_id = "";
+  String id = "";
+  String response_Description = "";
 
   Future<void> fetchData() async {
-      // controller: emailController;
-      List<String> user =
-          Provider.of<UserProvider>(context, listen: false).userInfo;
-      user_id = user[0];
-      email = user[1];
-      username = user[2];
-      user_type = user[3];
+    // controller: emailController;
+    List<String> user =
+        Provider.of<UserProvider>(context, listen: false).userInfo;
+    user_id = user[0];
+    email = user[1];
+    username = user[2];
+    user_type = user[3];
 
-      // print(id);
-      // print(email);
-      // print(username);
-      // print(user_type);
-      final arguments = ModalRoute.of(context)!.settings.arguments;
-      if (arguments != null) {
-        // Do something with the passed data
-        final card_id = arguments as String;
-        id = card_id;
-        // print('Received ID: id');
-      }
-      String url1 = "http://127.0.0.1:8000/view-establishment/" + id + "/";
-      final response = await http.get(Uri.parse(url1));
-      responseData = json.decode(response.body);
-      response_Name = responseData['name'];
-      response_Address = responseData['location_exact'];
-      owner_id = responseData['owner'];
-      response_Description = responseData['description'];
-
-
-      String url2 =
-        "http://127.0.0.1:8000/get-one-user-using-id/" + owner_id + "/";
-      final response2 = await http.get(Uri.parse(url2));
-      var responseData2 = json.decode(response2.body);
-      response_phoneNo = responseData2['phone_no'];
-      // print(owner_id);
-      // print("http://127.0.0.1:8000/get-one-user-using-id/" + owner_id + "/");
-     
+    // print(id);
+    // print(email);
+    // print(username);
+    // print(user_type);
+    final arguments = ModalRoute.of(context)!.settings.arguments;
+    if (arguments != null) {
+      // Do something with the passed data
+      final card_id = arguments as String;
+      id = card_id;
+      // print('Received ID: id');
     }
+    String url1 = "http://127.0.0.1:8000/view-establishment/" + id + "/";
+    final response = await http.get(Uri.parse(url1));
+    responseData = json.decode(response.body);
+    response_Name = responseData['name'];
+    response_Address = responseData['location_exact'];
+    owner_id = responseData['owner'];
+    response_Description = responseData['description'];
 
-   @override
+    String url2 =
+        "http://127.0.0.1:8000/get-one-user-using-id/" + owner_id + "/";
+    final response2 = await http.get(Uri.parse(url2));
+    var responseData2 = json.decode(response2.body);
+    response_phoneNo = responseData2['phone_no'];
+    // print(owner_id);
+    // print("http://127.0.0.1:8000/get-one-user-using-id/" + owner_id + "/");
+  }
+
+  @override
   void initState() {
     super.initState();
-    
+
     // _userInfoFuture = fetchOwnedAccommodations();
   }
 
   String userInput = "NA";
-  List cardList = [ Item1(), Item2(), Item3(), Item4()];
+
+  List cardList = [
+    const Item1(),
+    const Item2(),
+    const Item3(),
+    const Item4(),
+    const Item5(),
+    const Item6(),
+    const Item7()
+  ];
 
   List<T> map<T>(List list, Function handler) {
     List<T> result = [];
@@ -272,8 +859,24 @@ class _EditAccommState extends State<EditAccomm> {
     return result;
   }
 
+  // onToggleButton(int index) {
+  //   setState(() {
+  //     if (index == 0) {
+
+  //     }
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
+    if (!context.watch<UserProvider>().isOwner) {
+      //Navigator.pop(context);
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        Navigator.of(context).pushReplacementNamed('/');
+      });
+
+      return const CircularProgressIndicator();
+    }
     fetchData();
     return Scaffold(
         //App bar start
@@ -332,38 +935,49 @@ class _EditAccommState extends State<EditAccomm> {
                             ),
                           ),
                           ElevatedButton(
-                              onPressed: () async  {
+                              onPressed: () async {
                                 //on button pushed it saves the editted details and routes back the owned accoms page
                                 //setState(() {});
-                                 print("edit accommodation complete.");
-                                String url = "http://127.0.0.1:8000/edit-establishment/" + id + "/";
-                                  final Map<String, dynamic> requestBody = {
-                                    "owner": owner_id,
-                                    "name": _newEstablishmentNameController.text,
-                                    "location_exact": _newEstablishmentLocationController.text,
-                                    "location_approx": responseData['location_approx'],
-                                    "establishment_type": responseData['establishment_type'],
-                                    "tenant_type": responseData['tenant_type'],
-                                    "utilities": [],
-                                    "description": _newEstablishmentDescriptionController.text,
-                                    "photos": [],
-                                    "proof_type": responseData['proof_type'],
-                                    "proof_number": responseData['proof_number'],
-                                    "loc_picture": responseData['loc_picture'],
-                                    "proof_picture": responseData['loc_picture'],
-                                    "reviews": responseData['reviews'],
-                                    "verified": responseData['verified'],
-                                    "archived": responseData['archived'],
-                                    "accommodations": responseData['accommodations']
-                                  };
-                              final headers = {
-                                'Content-Type': 'application/json',
-                              };  
-                              final response = await http.put(Uri.parse(url), headers: headers, body: json.encode(requestBody));
-                              // final decodedResponse = json.decode(response.body);
-                              // Navigator.pop(context);
-                              Navigator.pushNamed(context, '/view_owned_accomms');
-                              
+                                print("edit accommodation complete.");
+                                String url =
+                                    "http://127.0.0.1:8000/edit-establishment/" +
+                                        id +
+                                        "/";
+                                final Map<String, dynamic> requestBody = {
+                                  "owner": owner_id,
+                                  "name": _newEstablishmentNameController.text,
+                                  "location_exact":
+                                      _newEstablishmentLocationController.text,
+                                  "location_approx":
+                                      responseData['location_approx'],
+                                  "establishment_type":
+                                      responseData['establishment_type'],
+                                  "tenant_type": responseData['tenant_type'],
+                                  "utilities": [],
+                                  "description":
+                                      _newEstablishmentDescriptionController
+                                          .text,
+                                  "photos": [],
+                                  "proof_type": responseData['proof_type'],
+                                  "proof_number": responseData['proof_number'],
+                                  "loc_picture": responseData['loc_picture'],
+                                  "proof_picture": responseData['loc_picture'],
+                                  "reviews": responseData['reviews'],
+                                  "verified": responseData['verified'],
+                                  "archived": responseData['archived'],
+                                  "accommodations":
+                                      responseData['accommodations']
+                                };
+                                final headers = {
+                                  'Content-Type': 'application/json',
+                                };
+                                final response = await http.put(Uri.parse(url),
+                                    headers: headers,
+                                    body: json.encode(requestBody));
+                                // final decodedResponse = json.decode(response.body);
+                                // Navigator.pop(context);
+                                Navigator.pushNamed(
+                                    context, '/view_owned_accomms');
                               },
                               style: ElevatedButton.styleFrom(
                                   shape: const CircleBorder(),
@@ -454,7 +1068,7 @@ class _EditAccommState extends State<EditAccomm> {
                           SizedBox(
                             height: 50,
                             width: 200,
-                            child:Text(
+                            child: Text(
                               username,
                               style: const TextStyle(
                                   fontSize: UIParameter.FONT_BODY_SIZE,
@@ -527,29 +1141,10 @@ class _EditAccommState extends State<EditAccomm> {
                   //Alternative Cards
                   Column(
                     children: [
-                      // Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                      //   const Text("Click Here to add Room details",
-                      //       style: TextStyle(color: Colors.black)),
-                      //   //this button should reroute to the Add Rooms route?
-                      //   ElevatedButton(
-                      //       onPressed: () {
-                      //         Navigator.pushNamed(
-                      //             context, '/add_accommodation');
-                      //       },
-                      //       style: ElevatedButton.styleFrom(
-                      //           shape: const CircleBorder(),
-                      //           backgroundColor: Colors.white,
-                      //           foregroundColor:
-                      //               const Color.fromARGB(255, 25, 83, 95)),
-                      //       child: const Icon(
-                      //         Icons.save_as,
-                      //         size: 20,
-                      //       )),
-                      // ]),
                       CarouselSlider(
                         options: CarouselOptions(
-                          height: 200.0,
-                          autoPlay: true,
+                          height: 275.0,
+                          autoPlay: false,
                           autoPlayInterval: const Duration(seconds: 5),
                           autoPlayAnimationDuration:
                               const Duration(milliseconds: 1000),
@@ -565,13 +1160,64 @@ class _EditAccommState extends State<EditAccomm> {
                         items: cardList.map((card) {
                           return Builder(builder: (BuildContext context) {
                             return SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.30,
-                              width: MediaQuery.of(context).size.width,
-                              child: Card(
-                                color: Colors.blueAccent,
-                                child: card,
-                              ),
-                            );
+                                height:
+                                    MediaQuery.of(context).size.height * 0.30,
+                                width: MediaQuery.of(context).size.width,
+                                child: Card(
+                                  color: const Color.fromARGB(255, 25, 83, 95),
+                                  shape: RoundedRectangleBorder(
+                                      side: BorderSide(color: Colors.white),
+                                      borderRadius:
+                                          BorderRadius.circular(20.0)),
+                                  margin: const EdgeInsets.all(12),
+                                  elevation: 4,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 8.0, horizontal: 16),
+                                    child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          //Button for edit
+                                          Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                const Text("Edit Room Details",
+                                                    style: TextStyle(
+                                                        color: Color.fromARGB(
+                                                            255,
+                                                            225,
+                                                            225,
+                                                            225))),
+                                                //this button should reroute to the Add Rooms route?
+                                                ElevatedButton(
+                                                    onPressed: () {
+                                                      Navigator.pushNamed(
+                                                          context,
+                                                          '/add_accommodation');
+                                                    },
+                                                    style: ElevatedButton.styleFrom(
+                                                        shape:
+                                                            const CircleBorder(),
+                                                        backgroundColor: Colors
+                                                            .white,
+                                                        foregroundColor:
+                                                            const Color
+                                                                    .fromARGB(
+                                                                255,
+                                                                25,
+                                                                83,
+                                                                95)),
+                                                    child: const Icon(
+                                                      Icons.save_as,
+                                                      size: 20,
+                                                    )),
+                                              ]),
+                                          //the actual card information
+                                          card,
+                                        ]),
+                                  ),
+                                ));
                           });
                         }).toList(),
                       ),
@@ -634,10 +1280,10 @@ class _EditAccommState extends State<EditAccomm> {
                             width: 600,
                             child: TextFormField(
                               maxLines: 5,
-                              controller: _newEstablishmentDescriptionController,
+                              controller:
+                                  _newEstablishmentDescriptionController,
                               decoration: InputDecoration(
-                                  hintText:
-                                      response_Description,
+                                  hintText: response_Description,
                                   labelText: 'Edit Description'),
                             ),
                           ),
@@ -662,7 +1308,7 @@ class _EditAccommState extends State<EditAccomm> {
                           fontSize: 22, fontWeight: FontWeight.normal),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                       height: 2000,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

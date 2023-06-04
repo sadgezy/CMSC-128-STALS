@@ -193,7 +193,7 @@ def getuserdetails(request):
 @api_view(['POST'])
 def get_one_user(request):
     user = User.objects.filter(email=request.data['email'])
-    serializer = LimitedUserSerializer(user, many=True)
+    serializer = userSerializer(user, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])

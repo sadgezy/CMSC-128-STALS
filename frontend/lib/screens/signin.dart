@@ -179,6 +179,7 @@ class _SignInPageState extends State<SignInPage> {
 
     if (Provider.of<TokenProvider>(context, listen: false).currToken == "") {
       return Scaffold(
+          resizeToAvoidBottomInset: false,
           body: SingleChildScrollView(
               child: Column(
         children: [

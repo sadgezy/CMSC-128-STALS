@@ -1,5 +1,5 @@
 class User {
-  final String id;                  //note
+  final String id; //note
   final String firstName;
   final String lastName;
   final String? middleInitial;
@@ -10,7 +10,7 @@ class User {
   final bool verified;
   final bool archived;
 
-   User({
+  User({
     required this.id,
     required this.firstName,
     required this.lastName,
@@ -18,10 +18,11 @@ class User {
     this.suffix,
     required this.username,
     required this.email,
-    required String userType,                                                     //!
+    required String userType, //!
     required this.verified,
     required this.archived,
-  }) : userType = userType.substring(0, 1).toUpperCase() + userType.substring(1); //!
+  }) : userType =
+            userType.substring(0, 1).toUpperCase() + userType.substring(1); //!
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(

@@ -3,13 +3,13 @@ import 'package:dio/dio.dart';
 import 'package:provider/provider.dart';
 import 'package:stals_frontend/providers/token_provider.dart';
 import 'package:stals_frontend/providers/user_provider.dart';
-import 'package:stals_frontend/providers/token_provider.dart';
 //import 'dart:html' as html;
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'package:stals_frontend/UI_parameters.dart' as UIParameter;
 import 'package:stals_frontend/screens/admin/admin_viewusers_card.dart';
+import 'package:stals_frontend/screens/homepage.dart';
 
 import '../../models/user_model.dart';
 
@@ -110,9 +110,11 @@ class _ViewReportsPageState extends State<ViewReportsPage> {
             leading: const Icon(Icons.home),
             onTap: () {
               if (ModalRoute.of(context)?.settings.name != '/admin') {
+                Navigator.pop(context);
+                Navigator.pop(context);
                 Navigator.pushNamed(context, '/admin');
               } else {
-                Navigator.pop(context);
+                scaffoldKey.currentState!.closeDrawer();
               }
             },
           ),
@@ -122,9 +124,11 @@ class _ViewReportsPageState extends State<ViewReportsPage> {
             onTap: () {
               if (ModalRoute.of(context)?.settings.name !=
                   '/admin/view_users') {
+                Navigator.pop(context);
+                Navigator.pop(context);
                 Navigator.pushNamed(context, '/admin/view_users');
               } else {
-                Navigator.pop(context);
+                scaffoldKey.currentState!.closeDrawer();
               }
             },
           ),
@@ -134,9 +138,11 @@ class _ViewReportsPageState extends State<ViewReportsPage> {
             onTap: () {
               if (ModalRoute.of(context)?.settings.name !=
                   '/admin/view_accomms') {
+                Navigator.pop(context);
+                Navigator.pop(context);
                 Navigator.pushNamed(context, '/admin/view_accomms');
               } else {
-                Navigator.pop(context);
+                scaffoldKey.currentState!.closeDrawer();
               }
             },
           ),
@@ -145,7 +151,14 @@ class _ViewReportsPageState extends State<ViewReportsPage> {
             leading: const Icon(Icons.flag),
             onTap: () {
               // TODO
+              if (ModalRoute.of(context)?.settings.name !=
+                '/admin/view_reports') {
               Navigator.pop(context);
+              Navigator.pop(context);
+              Navigator.pushNamed(context, '/admin/view_reports');
+            } else {
+              scaffoldKey.currentState!.closeDrawer();
+            }
             },
           ),
           ListTile(
@@ -158,9 +171,13 @@ class _ViewReportsPageState extends State<ViewReportsPage> {
               Provider.of<UserProvider>(context, listen: false)
                   .removeUser("DO NOT REMOVE THIS PARAM");
 
+              scaffoldKey.currentState!.closeDrawer();
               Navigator.pop(context);
               Navigator.pop(context);
+
               Navigator.pop(context);
+              //Navigator.push(context, MaterialPageRoute(builder: (context) => const UnregisteredHomepage()));
+              Navigator.pushNamed(context, '/homepage');
             },
           ),
         ])),

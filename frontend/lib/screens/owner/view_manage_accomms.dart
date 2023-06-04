@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 import 'dart:io';
+import 'package:stals_frontend/screens/homepage.dart';
 
 // COMPONENTS
 import '../../components/accom_card.dart';
@@ -25,12 +26,12 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
   Future<List<AccomCardDetails>>? _accommodationsFuture;
 
   List<String> user = [];
-     String id = '';
-     String email = '';
-     String username = '';
-     String user_type = '';
+  String id = '';
+  String email = '';
+  String username = '';
+  String user_type = '';
 
-   @override
+  @override
   void initState() {
     super.initState();
     _accommodationsFuture = fetchOwnedAccommodations();
@@ -45,7 +46,8 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
   }
 
   Future<List<AccomCardDetails>> fetchOwnedAccommodations() async {
-    final response = await http.get(Uri.parse('http://127.0.0.1:8000/view-all-establishment/'));
+    final response = await http
+        .get(Uri.parse('http://127.0.0.1:8000/view-all-establishment/'));
 
     if (response.statusCode == 200) {
       List jsonResponse = jsonDecode(response.body);
@@ -53,11 +55,12 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
           .map((accommodation) => AccomCardDetails.fromJson(accommodation))
           .toList();
 
-       // Apply the filter
+      // Apply the filter
       List<AccomCardDetails> filteredAccommodations = accommodations
-          .where((accommodation) => accommodation.owner == id)// && accommodation.verified)
+          .where((accommodation) =>
+              accommodation.owner == id) // && accommodation.verified)
           .toList();
-      
+
       return filteredAccommodations;
     } else {
       throw Exception('Failed to load accommodations');
@@ -66,82 +69,94 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
 
   @override
   Widget build(BuildContext context) {
+    if (!context.watch<UserProvider>().isOwner) {
+      //Navigator.pop(context);
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        Navigator.of(context).pushReplacementNamed('/');
+      });
+
+      return const CircularProgressIndicator();
+    }
     // var accom = AccomCardDetails("jk23fvgw23", "Centtro Residences",
     //     "Example Description", "assets/images/room_stock.jpg", 3, true, false);
     getUserInfo();
 
     return Scaffold(
-        key: scaffoldKey,
-        appBar: AppBar(
-          backgroundColor: UIParameter.WHITE,
-          elevation: 0,
-          // hamburger icon for profile
-          // opens left drawer on tap
-          leading: IconButton(
-            icon: const Icon(Icons.menu),
-            color: UIParameter.LIGHT_TEAL,
-            onPressed: () {
-              if (scaffoldKey.currentState!.isDrawerOpen) {
-                //scaffoldKey.currentState!.closeDrawer();
-                //close drawer, if drawer is open
-              } else {
-                scaffoldKey.currentState!.openDrawer();
-                //open drawer, if drawer is closed
-              }
-            },
-          ),
+      key: scaffoldKey,
+      appBar: AppBar(
+        backgroundColor: UIParameter.WHITE,
+        elevation: 0,
+        // hamburger icon for profile
+        // opens left drawer on tap
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          color: UIParameter.LIGHT_TEAL,
+          onPressed: () {
+            if (scaffoldKey.currentState!.isDrawerOpen) {
+              //scaffoldKey.currentState!.closeDrawer();
+              //close drawer, if drawer is open
+            } else {
+              scaffoldKey.currentState!.openDrawer();
+              //open drawer, if drawer is closed
+            }
+          },
         ),
-        // the left drawer
-        drawer: Drawer(
-          // Add a ListView to the drawer. This ensures the user can scroll
-          // through the options in the drawer if there isn't enough vertical
-          // space to fit everything.
-          child: ListView(
-            // Important: Remove any padding from the ListView.
-            padding: EdgeInsets.zero,
-            children: [
-              SizedBox(
-                height: 100,
-                child: DrawerHeader(
-                  decoration: BoxDecoration(
-                    color: UIParameter.LIGHT_TEAL,
-                  ),
-                  child: const Text('PROFILE'),
+      ),
+      // the left drawer
+      drawer: Drawer(
+        // Add a ListView to the drawer. This ensures the user can scroll
+        // through the options in the drawer if there isn't enough vertical
+        // space to fit everything.
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: [
+            SizedBox(
+              height: 100,
+              child: DrawerHeader(
+                decoration: BoxDecoration(
+                  color: UIParameter.LIGHT_TEAL,
                 ),
+                child: const Text('PROFILE'),
               ),
-              ListTile(
-                title: const Text('Edit Accommodationomm'),
-                onTap: () {
-                  // Update the state of the app.
-                  // ...
-                  Navigator.pushNamed(context, '/owned/accomm/edit');
-                },
-              ),
-              ListTile(
-                title: const Text('Add Accommodation'),
-                onTap: () {
-                  // Update the state of the app.
-                    Navigator.pushNamed(context, '/add_accommodation');
-                },
-              ),
-              ListTile(
-                title: const Text('Logout'),
-                trailing: const Icon(Icons.logout),
-                onTap: () {
-                  Provider.of<TokenProvider>(context, listen: false)
-                      .removeToken("DO NOT REMOVE THIS PARAM");
-                  Provider.of<UserProvider>(context, listen: false)
-                      .removeUser("DO NOT REMOVE THIS PARAM");
+            ),
+            ListTile(
+              title: const Text('Edit Accommodationomm'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+                Navigator.pushNamed(context, '/owned/accomm/edit');
+              },
+            ),
+            ListTile(
+              title: const Text('Add Accommodation'),
+              onTap: () {
+                // Update the state of the app.
+                Navigator.pushNamed(context, '/add_accommodation');
+              },
+            ),
+            ListTile(
+              title: const Text('Logout'),
+              trailing: const Icon(Icons.logout),
+              onTap: () {
+                Provider.of<TokenProvider>(context, listen: false)
+                    .removeToken("DO NOT REMOVE THIS PARAM");
+                Provider.of<UserProvider>(context, listen: false)
+                    .removeUser("DO NOT REMOVE THIS PARAM");
 
                   Navigator.pop(context);
                   Navigator.pop(context);
+
+                  Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const UnregisteredHomepage()));
                 },
               )
             ],
           ),
         ),
-        // the right drawer
-        body: SingleChildScrollView(
+      ),
+      // the right drawer
+      body: SingleChildScrollView(
         child: FutureBuilder<List<AccomCardDetails>>(
           future: _accommodationsFuture,
           builder: (context, snapshot) {
@@ -180,7 +195,8 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
               return Text('Error: ${snapshot.error}');
             }
             return Center(
-              child: CircularProgressIndicator(), // Or any loading indicator widget
+              child:
+                  CircularProgressIndicator(), // Or any loading indicator widget
             );
           },
         ),
