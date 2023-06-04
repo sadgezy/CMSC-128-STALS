@@ -100,8 +100,8 @@ class PDFViewScreen extends StatelessWidget {
                               pw.Text(
                                   estab.estabType + " for " + estab.tenantType),
                               // pw.Text(estab.tenantType),
-                              pw.SizedBox(height: 10),
-                              pw.Text(estab.utilities),
+                              //pw.SizedBox(height: 10),
+                              //pw.Text(estab.utilities),
                               pw.SizedBox(height: 10),
                               pw.Text("Owner Information",
                                   style: pw.Theme.of(context)
