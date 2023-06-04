@@ -10,6 +10,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:toggle_switch/toggle_switch.dart';
 
+
 import '../../classes.dart';
 
 class EditAccomm extends StatefulWidget {
@@ -770,16 +771,301 @@ class Item7 extends StatelessWidget {
   }
 }
 
+class Item extends StatefulWidget {
+  const Item(
+      {Key? key,
+      required this.id,
+      required this.availability,
+      required this.priceLower,
+      required this.priceUpper,
+      required this.capacity,
+      required this.index})
+      : super(key: key);
+  final String id;
+  final int priceLower;
+  final int priceUpper;
+  final bool availability;
+  final int capacity;
+  final int index;
+
+  @override
+  State<Item> createState() => _ItemState();
+}
+
+// hintText: "${widget.capacity}",
+// hintText: "${widget.priceLower} -  ${widget.priceUpper}",
+// hintText: "${widget.priceUpper}",
+
+class _ItemState extends State<Item> {
+  String available = "";
+  late Color color1;
+  late Color color2;
+  bool isAvailable = false;
+
+  final TextEditingController maxTenantsController = TextEditingController();
+  final TextEditingController priceLowerController = TextEditingController();
+  final TextEditingController priceUpperController = TextEditingController();
+  final TextEditingController priceController = TextEditingController();
+  final TextEditingController availability = TextEditingController();
+
+  bool isEditing = false; // Track editing state
+  bool switchValue = false;
+
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize switchValue based on widget.availability
+    switchValue = widget.availability;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    
+    if (widget.index % 4 == 0) {
+      color1 = const Color(0xffff4000);
+      color2 = const Color(0xffffcc66);
+    } else if (widget.index % 4 == 1) {
+      color1 = const Color(0xff5f2c82);
+      color2 = const Color(0xff49a09d);
+    } else if (widget.index % 4 == 2) {
+      color1 = const Color.fromARGB(255, 17, 149, 21);
+      color2 = const Color.fromARGB(255, 85, 94, 120);
+    } else {
+      color1 = Color.fromARGB(255, 32, 27, 26);
+      color2 = Color.fromARGB(255, 232, 154, 53);
+    }
+
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          stops: [0.3, 1],
+          colors: [color1, color2],
+        ),
+      ),
+      child: Stack(
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.king_bed_outlined,
+                    color: Color.fromARGB(255, 255, 255, 255),
+                    size: 75,
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width / 50,
+                  ),
+                  Text(
+                    "${widget.index + 1}",
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 50.0,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 650.0),
+                child: TextField(
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    labelText: "Max Capacity",
+                    labelStyle: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 17.0,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
+                  ), // Enable/disable editing based on isEditing flag
+                  controller: maxTenantsController,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              if (widget.priceLower == widget.priceUpper)
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 650.0),
+                  child: TextField(
+                    textAlign: TextAlign.center,
+                    decoration: InputDecoration(
+                      labelText: "Price",
+                      labelStyle: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 17.0,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
+                    ), // Enable/disable editing based on isEditing flag
+                    controller: priceController,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                )
+              else
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 300.0),
+                        child: TextField(
+                          textAlign: TextAlign.center,
+                          decoration: InputDecoration(
+                            labelText: "Price Lower",
+                            labelStyle: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 17.0,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
+                          ),// Enable/disable editing based on isEditing flag
+                          controller: priceLowerController,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 8.0),
+                    Expanded(
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 300.0),
+                        child: TextField(
+                          textAlign: TextAlign.center,
+                          decoration: InputDecoration(
+                            labelText: "Price Upper",
+                            labelStyle: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 17.0,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
+                          ),// Enable/disable editing based on isEditing flag
+                          controller: priceUpperController,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 40.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Available",
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 17.0,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    SizedBox(width: 8.0),
+                    Switch(
+                      value: switchValue,
+                      onChanged: (value) {
+                        setState(() {
+                          switchValue = value;
+                        });
+                      },
+                      activeColor: Colors.white,
+                      activeTrackColor: Colors.white.withOpacity(0.5),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Positioned(
+            top: 10,
+            right: 10,
+            child: ElevatedButton(
+              onPressed: () async {
+                String url = "http://127.0.0.1:8000/edit-room/" + widget.id + "/";
+                if(widget.priceLower == widget.priceUpper){
+                      final Map<String, dynamic> requestBody = {
+                        "availability": isAvailable,
+                        "price_lower": priceController.text,
+                        "price_upper": priceController.text,
+                        "capacity": maxTenantsController.text,
+                      };
+                  final headers = {
+                    'Content-Type': 'application/json',
+                  };  
+                  final response = await http.put(Uri.parse(url), headers: headers, body: json.encode(requestBody));
+                  
+                }
+                else{
+                      final Map<String, dynamic> requestBody = {
+                        "availability": isAvailable,
+                        "price_lower": priceLowerController.text,
+                        "price_upper": priceUpperController.text,
+                        "capacity": maxTenantsController.text,
+                      };
+                  final headers = {
+                    'Content-Type': 'application/json',
+                  };  
+                  final response = await http.put(Uri.parse(url), headers: headers, body: json.encode(requestBody));
+                }
+                Navigator.pushNamed(context, '/view_owned_accomms');
+              },
+              child: const Icon(
+                Icons.edit,
+                color: Colors.white,
+                size: 24,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+
+
+
 class _EditAccommState extends State<EditAccomm> {
   double rating = 4.0;
   int _index = 1;
   bool favorite = false;
   int _currentIndex = 0;
-  Future<List<AccomCardDetails>>? _accommodationsFuture;
+  Future<void>? _accommodationsFuture;
   TextEditingController _controller = TextEditingController();
   TextEditingController _newEstablishmentNameController = TextEditingController();
   TextEditingController _newEstablishmentLocationController = TextEditingController();
   TextEditingController _newEstablishmentDescriptionController = TextEditingController();
+  List cardList = [
+    // const Item1(),
+    // const Item2(),
+    // const Item3(),
+    // const Item4(),
+    // const Item5(),
+    // const Item6(),
+    // const Item7()
+  ];
+  bool isLoading = true;
+
   var responseData;
   List<String> user = [];
      String user_id = '';
@@ -793,6 +1079,14 @@ class _EditAccommState extends State<EditAccomm> {
      String owner_id = "";
      String id = "";
      String response_Description = "";
+
+  @override
+  void initState() {
+    super.initState();
+    // _accommodationsFuture = fetchData();
+    // _userInfoFuture = fetchOwnedAccommodations();
+  }
+
 
   Future<void> fetchData() async {
       // controller: emailController;
@@ -830,26 +1124,31 @@ class _EditAccommState extends State<EditAccomm> {
       response_phoneNo = responseData2['phone_no'];
       // print(owner_id);
       // print("http://127.0.0.1:8000/get-one-user-using-id/" + owner_id + "/");
+
+      String url3 = "http://127.0.0.1:8000/search-room/";
+      final response3 = await json.decode((await http.post(Uri.parse(url3),
+              body: {"establishment_id": id, "user_type": user_type}))
+          .body);
+
+      for (int i = 0; i < response3.length; i++) {
+        cardList.add( Item(
+            id : response3[i]["_id"],
+            availability: response3[i]["availability"],
+            priceLower: response3[i]["price_lower"],
+            priceUpper: response3[i]["price_upper"],
+            capacity: response3[i]["capacity"],
+            index: i));
+      }
+
+      // await Future.delayed(Duration(seconds: 1));
+
+      // setState(() {
+      //   isLoading = false;
+      //  });
      
     }
-
-   @override
-  void initState() {
-    super.initState();
-    
-    // _userInfoFuture = fetchOwnedAccommodations();
-  }
-
   String userInput = "NA";
-  List cardList = [
-    const Item1(),
-    const Item2(),
-    const Item3(),
-    const Item4(),
-    const Item5(),
-    const Item6(),
-    const Item7()
-  ];
+
 
   List<T> map<T>(List list, Function handler) {
     List<T> result = [];
@@ -909,7 +1208,18 @@ class _EditAccommState extends State<EditAccomm> {
 
         */
 
-        body: SingleChildScrollView(
+        body: FutureBuilder(
+        future:
+            fetchData(), // Replace fetchData with your actual future function
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            // While the data is being fetched, show a loading indicator
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            // If there's an error, display an error message
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else { return
+         SingleChildScrollView(
           child: Column(children: [
             SizedBox(
                 height: 2000,
@@ -1052,7 +1362,7 @@ class _EditAccommState extends State<EditAccomm> {
                             child:Text(
                               username,
                               style: const TextStyle(
-                                  fontSize: UIParameter.FONT_BODY_SIZE,
+                                  fontSize: UIParameter.FONT_BODY_SIZE + 12,
                                   fontFamily: UIParameter.FONT_REGULAR),
                             ),
                           ),
@@ -1098,11 +1408,11 @@ class _EditAccommState extends State<EditAccomm> {
                           SizedBox(
                             height: 50,
                             width: 200,
-                            child: TextFormField(
-                              controller: _controller,
-                              decoration: InputDecoration(
-                                  hintText: response_phoneNo,
-                                  labelText: 'Edit Contact Details'),
+                            child: Text(
+                              response_phoneNo,
+                              style: const TextStyle(
+                                  fontSize: UIParameter.FONT_BODY_SIZE + 12,
+                                  fontFamily: UIParameter.FONT_REGULAR),
                             ),
                           ),
                         ],
@@ -1133,9 +1443,9 @@ class _EditAccommState extends State<EditAccomm> {
                           pauseAutoPlayOnTouch: true,
                           aspectRatio: 2.0,
                           onPageChanged: (index, reason) {
-                            setState(() {
-                              _currentIndex = index;
-                            });
+                            // setState(() {
+                            //   _currentIndex = index;
+                            // });
                           },
                         ),
                         items: cardList.map((card) {
@@ -1145,79 +1455,13 @@ class _EditAccommState extends State<EditAccomm> {
                                     MediaQuery.of(context).size.height * 0.30,
                                 width: MediaQuery.of(context).size.width,
                                 child: Card(
-                                  color: const Color.fromARGB(255, 25, 83, 95),
-                                  shape: RoundedRectangleBorder(
-                                      side: BorderSide(color: Colors.white),
-                                      borderRadius:
-                                          BorderRadius.circular(20.0)),
+                                  color: const Color.fromARGB(255, 25, 83, 95),  
                                   margin: const EdgeInsets.all(12),
                                   elevation: 4,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 8.0, horizontal: 16),
-                                    child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          //Button for edit
-                                          Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: [
-                                                const Text("Edit Room Details",
-                                                    style: TextStyle(
-                                                        color: Color.fromARGB(
-                                                            255,
-                                                            225,
-                                                            225,
-                                                            225))),
-                                                //this button should reroute to the Add Rooms route?
-                                                ElevatedButton(
-                                                    onPressed: () {
-                                                      Navigator.pushNamed(
-                                                          context,
-                                                          '/add_accommodation');
-                                                    },
-                                                    style: ElevatedButton.styleFrom(
-                                                        shape:
-                                                            const CircleBorder(),
-                                                        backgroundColor: Colors
-                                                            .white,
-                                                        foregroundColor:
-                                                            const Color
-                                                                    .fromARGB(
-                                                                255,
-                                                                25,
-                                                                83,
-                                                                95)),
-                                                    child: const Icon(
-                                                      Icons.save_as,
-                                                      size: 20,
-                                                    )),
-                                              ]),
-                                          //the actual card information
-                                          card,
-                                        ]),
-                                  ),
+                                  child: card
                                 ));
                           });
                         }).toList(),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: map<Widget>(cardList, (index, url) {
-                          return Container(
-                            width: 10.0,
-                            height: 10.0,
-                            margin: const EdgeInsets.symmetric(
-                                vertical: 10.0, horizontal: 2.0),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: _currentIndex == index
-                                  ? Colors.blueAccent
-                                  : Colors.grey,
-                            ),
-                          );
-                        }),
                       ),
                     ],
                   ),
@@ -1610,6 +1854,6 @@ class _EditAccommState extends State<EditAccomm> {
                   //End of Highlights
                 ]))
           ]),
-        ));
+  );}}));
   }
 }
