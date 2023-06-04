@@ -25,7 +25,7 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   Future<List<AccomCardDetails>>? _accommodationsFuture;
 
-  List<String> user = [];
+  List<dynamic> user = [];
   String id = '';
   String email = '';
   String username = '';

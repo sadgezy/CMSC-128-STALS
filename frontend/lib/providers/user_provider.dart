@@ -5,14 +5,14 @@ class UserProvider with ChangeNotifier {
   String _email = "";
   String _username = "";
   String _type = "guest";
-  String _verified = "false";
+  bool _verified = false;
 
-  List<String> get userInfo {
+  List<dynamic> get userInfo {
     return [_id, _email, _username, _type, _verified];
   }
 
   void setUser(
-      String id, String email, String username, String type, String verified) {
+      String id, String email, String username, String type, bool verified) {
     _id = id;
     _email = email;
     _username = username;
@@ -26,7 +26,7 @@ class UserProvider with ChangeNotifier {
     _email = "";
     _username = "";
     _type = "guest";
-    _verified = "rejected";
+    _verified = false;
     print("XXXXXXXXXXXXXXXXXXXXXXXXXXXX");
     notifyListeners();
   }
@@ -48,6 +48,6 @@ class UserProvider with ChangeNotifier {
   }
 
   bool get isVerified {
-    return this._verified != "";
+    return this._verified;
   }
 }
