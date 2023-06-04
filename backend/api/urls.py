@@ -58,6 +58,8 @@ urlpatterns = [
     
     path('search-room/', views.search_room),
     path('search-establishment/', views.search_establishment),
+
+    path('set-reject-establishment/', views.set_reject_estab),
     
     path('archive-user/<str:pk>/', views.archive_user),
     path('unarchive-user/<str:pk>/', views.unarchive_user),

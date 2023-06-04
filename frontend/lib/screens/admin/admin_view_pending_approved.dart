@@ -49,6 +49,14 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
       Uri.parse('http://127.0.0.1:8000/archive-establishment/$id/'),
     );
 
+    String url2 = "http://127.0.0.1:8000/set-reject-establishment/";
+      final response2 =
+          await json.decode((await http.post(Uri.parse(url2), body: {
+        '_id': id,
+        'rejected': "True"
+      }))
+              .body);
+
     if (response.statusCode != 200) {
       throw Exception('Failed to archive accommodation');
     }

@@ -842,3 +842,22 @@ def set_reject_user(request):
     user.save()
 
     return Response(data={"message": "Successfully set reject status of user"})
+
+@api_view(['POST'])
+# @permission_classes([IsAuthenticated])
+def set_reject_estab(request):   
+    print(request.data)
+    try:
+        estab = Establishment.objects.get(pk=ObjectId(request.data["_id"]))
+
+    except Establishment.DoesNotExist:
+         return Response(data={"message": "Establishment not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    if  (request.data["rejected"] == "True"):
+        status = True
+    else:
+        status = False 
+    estab.rejected = status
+    estab.save()
+
+    return Response(data={"message": "Successfully set reject status of establishment"})
