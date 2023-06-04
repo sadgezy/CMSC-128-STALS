@@ -74,11 +74,21 @@ Future<PDFData> createPDFData(String estabID) async {
   List<Room> R = [];
 
   for (int i = 0; i < response3.length; i++) {
-    R.add(Room(
-        response3[i]["price_lower"].toString(),
-        response3[i]["price_upper"].toString(),
-        response3[i]["capacity"].toString(),
-        response3[i]["availability"]));
+    if (response3[i]["availability"]) {
+      R.insert(
+          0,
+          Room(
+              response3[i]["price_lower"].toString(),
+              response3[i]["price_upper"].toString(),
+              response3[i]["capacity"].toString(),
+              response3[i]["availability"]));
+    } else {
+      R.add(Room(
+          response3[i]["price_lower"].toString(),
+          response3[i]["price_upper"].toString(),
+          response3[i]["capacity"].toString(),
+          response3[i]["availability"]));
+    }
   }
 
   return PDFData(estabName, image, exactLoc, description, estabType, tenantType,
