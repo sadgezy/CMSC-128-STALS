@@ -438,7 +438,7 @@ class _VerificationPageState extends State<VerificationPage> {
         //final bytes = File(imageFile.name).readAsBytesSync();
         //String base64Image =  "data:image/png;base64,"+base64Encode(bytes);
 
-        //print(base64Image);
+        // print(base64Image);
       }
     } else {
       setState(() {
