@@ -10,6 +10,11 @@ import 'package:stals_frontend/UI_parameters.dart' as UIParams;
 import '../components/report_listing.dart';
 import 'package:stals_frontend/screens/review.dart';
 import 'package:stals_frontend/screens/owner/add_room.dart';
+import 'dart:async';
+import 'dart:io';
+import 'package:file_picker/file_picker.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:flutter/services.dart';
 
 class AccommPage extends StatefulWidget {
   AccommPage({super.key});
@@ -172,6 +177,8 @@ class _AccommPageState extends State<AccommPage> {
   String response_Name = "";
   String response_Address = "";
   bool? response_archived;
+  bool? response_verified;
+  bool? response_rejected;
   String owner_id = "";
   String response2_ownerName = "";
   String response2_phone_no = "";
@@ -185,6 +192,19 @@ class _AccommPageState extends State<AccommPage> {
   String loc_picture = "";
   String description = "";
   List selectedReason = [];
+
+  String _idType = '';
+  bool showAccommTypeError = false;
+  bool showAccommImageError = false;
+  bool showProofUploadError = false;
+  XFile? _idImage;
+  PlatformFile? _imageFile;
+  PlatformFile? _imageFile2;
+  bool uploadedImage = false;
+  String base64Image1 = '';
+  String base64Image2 = '';
+
+  final TextEditingController idnoController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -215,6 +235,8 @@ class _AccommPageState extends State<AccommPage> {
       loc_picture = responseData["loc_picture"];
       description = responseData["description"];
       response_archived = responseData["archived"];
+      response_verified = responseData["verified"];
+      response_rejected = responseData["rejected"];
 
       owner_id = responseData['owner'];
       // print(owner_id);
@@ -276,6 +298,94 @@ class _AccommPageState extends State<AccommPage> {
         return const Icon(
           Icons.bookmark,
           size: 20,
+        );
+      }
+    }
+
+    const proofUploadError = Padding(
+      padding: EdgeInsets.only(top: 10),
+      child: SizedBox(
+        height: 16,
+        child: Text(
+          "Please provide proof of your business",
+          style: TextStyle(color: Color(0xff7B2D26)),
+        ),
+      ),
+    );
+
+    void _chooseImage(int image) async {
+      //ImagePicker picker = ImagePicker();
+      //XFile? image = await picker.pickImage(source: ImageSource.gallery);
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+          withData: true,
+          type: FileType.custom,
+          allowedExtensions: ['jpg', 'png']);
+
+      if (result != null) {
+        var bytes = result.files.first.bytes;
+        bytes ??= File(result.files.single.path!).readAsBytesSync();
+        double fileSize = (bytes.lengthInBytes / (1024 * 1024));
+        //print(bytes.lengthInBytes);
+        //print(fileSize);
+        if (fileSize > 4) {
+          setState(() {
+            _imageFile = null;
+          });
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Image too large'),
+            ),
+          );
+        } else {
+          if (image == 1) {
+            setState(() {
+              _imageFile = result.files.first;
+              setState(() => showAccommImageError = false);
+            });
+            String extn = result.files.first.name.split('.').last;
+            if (extn == 'png' || extn == 'PNG') {
+              base64Image1 =
+                  "data:image/png;base64," + base64Encode(bytes!.toList());
+            } else {
+              base64Image1 =
+                  "data:image/jpeg;base64," + base64Encode(bytes!.toList());
+            }
+          } else {
+            setState(() {
+              _imageFile2 = result.files.first;
+              setState(() => showProofUploadError = false);
+            });
+            String extn = result.files.first.name.split('.').last;
+            if (extn == 'png' || extn == 'PNG') {
+              base64Image2 =
+                  "data:image/png;base64," + base64Encode(bytes!.toList());
+            } else {
+              base64Image2 =
+                  "data:image/jpeg;base64," + base64Encode(bytes!.toList());
+            }
+          }
+          //print(result.files.first.name);
+          //print("img_pan : $base64Image");
+          //setState(() {});
+          //var imageFile = Image.network(image.path);
+          //html.File(image.path.codeUnits, image.path);
+          //print(imageFile.name);
+
+          //_idImage = image as XFile?;
+          //final bytes = File(imageFile.name).readAsBytesSync();
+          //String base64Image =  "data:image/png;base64,"+base64Encode(bytes);
+
+          //print(base64Image);
+        }
+      } else {
+        setState(() {
+          _imageFile = null;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('No image selected'),
+          ),
         );
       }
     }
@@ -1203,59 +1313,256 @@ class _AccommPageState extends State<AccommPage> {
                   // )),
                   //End of Highlights
 
-                  //View Reviews
-                  Column(
-                    children: [
-                      const Text(
-                        "Reviews",
-                        style: TextStyle(
-                            fontSize: 22, fontWeight: FontWeight.normal),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height / 60,
-                      ),
-                      if (reviewList.isNotEmpty)
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height / 6,
-                          child: ListView.builder(
-                              itemCount: reviewList.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Column(children: [
-                                  Row(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 8.0),
-                                        child:
-                                            Text(reviewList[index]["username"]),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 8.0),
-                                        child: Text(reviewList[index]
-                                                    ["date_submitted"]
-                                                .substring(0, 10) +
-                                            " " +
-                                            reviewList[index]["date_submitted"]
-                                                .substring(11, 19)),
-                                      )
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(reviewList[index]["body"]),
-                                      )
-                                    ],
-                                  )
-                                ]);
-                              }),
+                  if (response_verified == true)
+                    //View Reviews
+                    Column(
+                      children: [
+                        const Text(
+                          "Reviews",
+                          style: TextStyle(
+                              fontSize: 22, fontWeight: FontWeight.normal),
                         ),
-                      if (reviewList.isEmpty) Text("No reviews yet. Add one!"),
-                    ],
-                  ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height / 60,
+                        ),
+                        if (reviewList.isNotEmpty)
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height / 6,
+                            child: ListView.builder(
+                                itemCount: reviewList.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Column(children: [
+                                    Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8.0),
+                                          child: Text(
+                                              reviewList[index]["username"]),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8.0),
+                                          child: Text(reviewList[index]
+                                                      ["date_submitted"]
+                                                  .substring(0, 10) +
+                                              " " +
+                                              reviewList[index]
+                                                      ["date_submitted"]
+                                                  .substring(11, 19)),
+                                        )
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child:
+                                              Text(reviewList[index]["body"]),
+                                        )
+                                      ],
+                                    )
+                                  ]);
+                                }),
+                          ),
+                        if (reviewList.isEmpty)
+                          Text("No reviews yet. Add one!"),
+                      ],
+                    ),
                   //end of View Reviews
+                  if (response_verified == false && response_rejected == false)
+                    const Column(
+                      children: [
+                        Text("STATUS: Verification pending...",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 20)),
+                        SizedBox(
+                          height: 20,
+                        )
+                      ],
+                    ),
+                  if (response_verified == false && response_rejected == true)
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 5, 20, 10),
+                      child: Column(
+                        children: [
+                          Text(
+                              "STATUS: Verification rejected. Please send new proof.",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 20)),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 7),
+                            child: Column(
+                              children: [
+                                const Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Text("Proof Type"),
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                DropdownButtonFormField(
+                                  isExpanded: true,
+                                  items: const [
+                                    DropdownMenuItem(
+                                      value: 'Business Permit',
+                                      child: Text('Business Permit'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'BIR',
+                                      child: Text('BIR'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'Proof of Land Ownership',
+                                      child: Text('Proof of Land Ownership'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'Building Permit',
+                                      child: Text('Building Permit'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'Others',
+                                      child: Text('Others'),
+                                    ),
+                                  ],
+                                  onChanged: (value) => _idType = value!,
+                                  validator: ((value) {
+                                    if (value?.isEmpty ?? true) {
+                                      return 'Please select a proof type';
+                                    }
+                                  }),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 7),
+                            child: Column(
+                              children: [
+                                const Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Text("ID Number")),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                TextFormField(
+                                  controller: idnoController,
+                                  validator: ((value) {
+                                    if (value != null && value.trim().isEmpty) {
+                                      return "ID Number required";
+                                    }
+                                  }),
+                                  decoration: InputDecoration(
+                                    contentPadding:
+                                        const EdgeInsets.fromLTRB(25, 10, 10, 10),
+                                    fillColor: Colors.white,
+                                    filled: true,
+                                    border: const OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.all(Radius.circular(18)),
+                                        borderSide: BorderSide(
+                                            width: 0, style: BorderStyle.none)),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(18),
+                                        borderSide: const BorderSide(
+                                          color: Color.fromARGB(255, 175, 31, 18),
+                                          width: 2,
+                                        )),
+                                    errorBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(18),
+                                        borderSide: const BorderSide(
+                                          color: Color.fromARGB(255, 175, 31, 18),
+                                          width: 1,
+                                        )),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          if (_imageFile2 != null)
+                            Image.memory(
+                              Uint8List.fromList(_imageFile2!.bytes!),
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.cover,
+                            ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 7),
+                            child: Container(
+                              alignment: Alignment.center,
+                              child: _idImage != null
+                                  ? Image.file(_idImage as File)
+                                  : ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        minimumSize: const Size(150, 50),
+                                        maximumSize: const Size(150, 50),
+                                        elevation: 0,
+                                        backgroundColor:
+                                            const Color.fromARGB(255, 25, 83, 95),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        _chooseImage(2);
+                                      },
+                                      child: const Text("Upload image")),
+                            ),
+                          ),
+                          const Text(
+                            'Only photos 4mb and below are allowed.',
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 25, 83, 95),
+                            ),
+                          ),
+                          showProofUploadError
+                              ? proofUploadError
+                              : const SizedBox(height: 16),
+                          ElevatedButton(
+                            onPressed: () async {
+                              if (user_type == "owner") {
+                                if (base64Image2 == '') {
+                                  setState(() => showProofUploadError = true);
+                                } else {
+                                  print("Add accommodation complete.");
+                    
+                                  String url2 =
+                                      "http://127.0.0.1:8000/add-new-proof-establishment/";
+                                  final response2 = await json.decode((await http
+                                          .post(Uri.parse(url2), body: {
+                                    "_id": id,
+                                    "proof_type": _idType,
+                                    "proof_number": idnoController.text,
+                                    "proof_picture": base64Image2,
+                                  }))
+                                      .body);
+                    
+                                  Navigator.pop(context);
+                                }
+                              } else {
+                                print("Not an owner");
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              elevation: 0,
+                              backgroundColor: const Color(0xff0B7A75),
+                              minimumSize: const Size(100, 50),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            child: const Text("Submit",
+                                style: TextStyle(fontSize: 17)),
+                          ),
+                        ],
+                      ),
+                    ),
                 ],
               ),
             );

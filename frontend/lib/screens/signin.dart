@@ -89,7 +89,7 @@ class _SignInPageState extends State<SignInPage> {
               'email': emailController.text,
             }))
                     .body);
-            print(response2);
+            //print(response2);
             user_type = response2[0]["user_type"];
             Provider.of<UserProvider>(context, listen: false).setUser(
                 response2[0]["_id"],

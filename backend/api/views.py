@@ -858,3 +858,21 @@ def set_reject_estab(request):
     estab.save()
 
     return Response(data={"message": "Successfully set reject status of establishment"})
+
+@api_view(['POST'])
+# @permission_classes([IsAuthenticated])
+def add_new_proof_estab(request):   
+    try:
+        estab = Establishment.objects.get(pk=ObjectId(request.data["_id"]))
+
+    except Establishment.DoesNotExist:
+         return Response(data={"message": "Establishment not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    estab.proof_type = request.data["proof_type"]
+    estab.proof_number = request.data["proof_number"]
+    estab.proof_picture = request.data["proof_picture"]
+    estab.archived = False
+    estab.rejected = False
+    estab.save()
+
+    return Response(data={"message": "Successfully add new proof for establishment"})
