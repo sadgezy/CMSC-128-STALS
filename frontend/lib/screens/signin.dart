@@ -95,7 +95,7 @@ class _SignInPageState extends State<SignInPage> {
                 response2[0]["email"],
                 response2[0]["username"],
                 response2[0]["user_type"],
-                response2[0]["verified"].toString());
+                response2[0]["verified"]);
           } else {
             print("Unsuccesful login!");
           }

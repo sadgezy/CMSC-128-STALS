@@ -797,7 +797,7 @@ class _EditAccommState extends State<EditAccomm> {
 
   Future<void> fetchData() async {
     // controller: emailController;
-    List<String> user =
+    List<dynamic> user =
         Provider.of<UserProvider>(context, listen: false).userInfo;
     user_id = user[0];
     email = user[1];

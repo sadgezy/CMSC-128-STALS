@@ -210,8 +210,9 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
     }
 
     String verified = context.watch<UserProvider>().isVerified
-        ? 'Your account’s verification is under review. Please wait.'
-        : 'Your account’s verification was declined. Please resubmit your details by editing your profile';
+        ? ''
+        : 'Your account’s verification is under review. Please wait.';
+        //: 'Your account’s verification was declined. Please resubmit your details by editing your profile';
 
     Color banner =
         context.watch<UserProvider>().isVerified ? Colors.green : Colors.red;
@@ -378,6 +379,7 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
       // the right drawer
       endDrawer: FilterDrawer(filter: accomFilter, callback: getFilter),
       body: Column(children: <Widget>[
+        if (!context.watch<UserProvider>().isVerified)
         Center(
           child: MaterialBanner(
             padding: EdgeInsets.all(5),

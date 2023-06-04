@@ -32,7 +32,7 @@ class _AccomCardState extends State<AccomCard> {
   // temporary holders to determine if post is part of user's favorite, or part of admin's archived accomms
   var isFavorite = false;
 
-  List<String> user = [];
+  List<dynamic> user = [];
     String id = '';
     String email = '';
     String username = '';

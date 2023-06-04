@@ -59,7 +59,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
       return const CircularProgressIndicator();
     }
     double height = MediaQuery.of(context).size.height;
-    List<String> user =
+    List<dynamic> user =
         Provider.of<UserProvider>(context, listen: false).userInfo;
     String id = user[0];
     String email = user[1];
