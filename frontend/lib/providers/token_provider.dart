@@ -12,8 +12,9 @@ class TokenProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void removeToken(String x) {
+  Future<void> removeToken(String x) async {
     _token = "";
     notifyListeners();
   }
+
 }

@@ -8,6 +8,8 @@ import 'package:stals_frontend/providers/token_provider.dart';
 import 'package:stals_frontend/providers/user_provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../homepage.dart';
+
 
 // COMPONENTS
 import '../../components/accom_card.dart';
@@ -369,17 +371,21 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
             ListTile(
               title: const Text('Logout'),
               trailing: const Icon(Icons.logout),
-              onTap: () {
-                Provider.of<TokenProvider>(context, listen: false)
-                    .removeToken("DO NOT REMOVE THIS PARAM");
-                Provider.of<UserProvider>(context, listen: false)
-                    .removeUser("DO NOT REMOVE THIS PARAM");
+                onTap: () async {
+                              await Provider.of<TokenProvider>(context, listen: false)
+                                  .removeToken("DO NOT REMOVE THIS PARAM");
+                              await Provider.of<UserProvider>(context, listen: false)
+                                  .removeUser("DO NOT REMOVE THIS PARAM");
 
-                print("Logged out");
+                              Navigator.pop(context);
+                              Navigator.pop(context);
 
-                Navigator.pop(context);
-                Navigator.pop(context);
-              },
+                              Navigator.pop(context);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const UnregisteredHomepage()));
+                            },
             ),
           ],
         ),

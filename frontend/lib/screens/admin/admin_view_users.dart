@@ -262,20 +262,20 @@ class _ViewAllUsersPageState extends State<ViewUsersPage> {
           ListTile(
             title: const Text('Logout'),
             leading: const Icon(Icons.logout),
-            onTap: () {
-              // TODO
-              Provider.of<TokenProvider>(context, listen: false)
+            onTap: () async {
+              await Provider.of<TokenProvider>(context, listen: false)
                   .removeToken("DO NOT REMOVE THIS PARAM");
-              Provider.of<UserProvider>(context, listen: false)
+              await Provider.of<UserProvider>(context, listen: false)
                   .removeUser("DO NOT REMOVE THIS PARAM");
 
-              scaffoldKey.currentState!.closeDrawer();
               Navigator.pop(context);
               Navigator.pop(context);
 
               Navigator.pop(context);
-              //Navigator.push(context, MaterialPageRoute(builder: (context) => const UnregisteredHomepage()));
-              Navigator.pushNamed(context, '/homepage');
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const UnregisteredHomepage()));
             },
           ),
         ])),
