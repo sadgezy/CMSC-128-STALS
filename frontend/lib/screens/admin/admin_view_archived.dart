@@ -29,6 +29,36 @@ class _ViewArchivedAccommodationsState
     _accommodationsFuture = fetchAccommodations();
   }
 
+  Future<void> deleteAccommodation(String id) async {
+  final response = await http.delete(
+    Uri.parse('http://127.0.0.1:8000/delete-establishment/$id/'),
+  );
+
+  if (response.statusCode == 200) {
+    setState(() {
+      _accommodationsFuture = fetchAccommodations();
+    });
+  } else {
+      // print('Status code: ${response.statusCode}');
+      // print('Response body: ${response.body}');
+    throw Exception('Failed to delete accommodation');
+  }
+  }
+
+  Future<void> unarchiveAccommodation(String id) async {
+  final response = await http.put(
+    Uri.parse('http://127.0.0.1:8000/unarchive-establishment/$id/'),
+  );
+
+  if (response.statusCode == 200) {
+    setState(() {
+      _accommodationsFuture = fetchAccommodations();
+    });
+  } else {
+    throw Exception('Failed to archive accommodation');
+  }
+  }
+
   Future<List<AccomCardDetails>> fetchAccommodations() async {
     final response = await http
         .get(Uri.parse('http://127.0.0.1:8000/view-all-establishment/'));
@@ -99,7 +129,7 @@ class _ViewArchivedAccommodationsState
                                             BorderRadius.circular(10.0),
                                       ),
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () {unarchiveAccommodation(accommodation.ID);},
                                     child: Text(
                                       "RESTORE",
                                       style: TextStyle(
@@ -120,7 +150,7 @@ class _ViewArchivedAccommodationsState
                                             BorderRadius.circular(10.0),
                                       ),
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () {deleteAccommodation(accommodation.ID);},
                                     child: Text(
                                       "DELETE",
                                       style: TextStyle(
