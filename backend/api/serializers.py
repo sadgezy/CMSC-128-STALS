@@ -16,6 +16,7 @@ class SignUpSerializer(serializers.ModelSerializer):
     suffix = serializers.CharField(max_length=10, required=False)
     phone_no = serializers.CharField(max_length=15)
     verified = serializers.BooleanField(default=False)
+    rejected = serializers.BooleanField(default=False)
     id_type = serializers.CharField(max_length=50, required=False)
     id_picture = serializers.CharField(required=False)
     id_number = serializers.CharField(max_length=50, required=False)
@@ -53,8 +54,8 @@ class SignUpSerializer(serializers.ModelSerializer):
     
         if not re.match(password_pattern, password):
             raise ValidationError("Password must contain at least one uppercase letter, one lowercase letter, and one digit!")
-        if not password.isalnum():
-            raise ValidationError("Password must not contain spaces or other special characters!")
+        if ' ' in password:
+            raise ValidationError("Password must not contain spaces!")
 
 
         return super().validate(attrs)

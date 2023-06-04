@@ -7,7 +7,7 @@ from rest_framework.authtoken.models import Token
 # Create your models here.
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self,email,first_name,last_name,middle_initial,suffix,phone_no,username,verified,id_type,id_picture,id_number,archived,tickets,user_type,establishments,reviews,favorites,password,**extra_fields):
+    def create_user(self,email,first_name,last_name,middle_initial,suffix,phone_no,username,verified,rejected,id_type,id_picture,id_number,archived,tickets,user_type,establishments,reviews,favorites,password,**extra_fields):
         email=self.normalize_email(email)
 
         user=self.model(
@@ -20,6 +20,7 @@ class CustomUserManager(BaseUserManager):
             username=username,
             phone_no=phone_no,
             verified=verified,
+            rejected=rejected,
             id_type=id_type,
             id_picture=id_picture,
             id_number=id_number,
@@ -72,6 +73,7 @@ class User(AbstractUser):
     phone_no = models_django.CharField(max_length=15)
     username=models_django.CharField(max_length=45)
     verified = models_django.BooleanField(default=False)
+    rejected = models_django.BooleanField(default=False)
     id_type = models_django.CharField(max_length=50)
     id_picture = models_django.CharField(max_length=9999999)
     id_number = models_django.CharField(max_length=50)
@@ -131,7 +133,7 @@ class Review(models_django.Model):
 
 
 class EstablishmentManager(models_django.Manager):
-    def create_establishment(self,name,owner,location_exact,location_approx,establishment_type,tenant_type,description,utilities,loc_picture,proof_type,proof_number,proof_picture,reviews,verified,archived,accommodations):
+    def create_establishment(self,name,owner,location_exact,location_approx,establishment_type,tenant_type,description,utilities,loc_picture,proof_type,proof_number,proof_picture,reviews,verified,rejected,archived,accommodations):
         # email=self.normalize_email(email)
 
         establishment=self.model(
@@ -149,6 +151,7 @@ class EstablishmentManager(models_django.Manager):
             proof_picture = proof_picture,
             reviews = reviews,
             verified = verified,
+            rejected = rejected,
             archived = archived,
             accommodations = accommodations
         )
@@ -180,6 +183,7 @@ class Establishment(models_django.Model):
     proof_picture = models_django.CharField(max_length=9999999)
     reviews = models_djongo.JSONField(default=list)
     verified = models_django.BooleanField(default=False)
+    rejected = models_django.BooleanField(default=False)
     archived = models_django.BooleanField(default=False)
     accommodations = models_djongo.JSONField(default=list)
 

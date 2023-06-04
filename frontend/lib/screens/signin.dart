@@ -83,32 +83,37 @@ class _SignInPageState extends State<SignInPage> {
             Provider.of<TokenProvider>(context, listen: false).setToken(token);
             setState(() {});
             String url = "http://127.0.0.1:8000/get-one-user/";
-            final response2 = await json.decode((await http.post(Uri.parse(url),
-                    body: {
-                  'email': emailController.text,
-                }))
-                .body);
+            final response2 =
+                await json.decode((await http.post(Uri.parse(url), body: {
+              'email': emailController.text,
+            }))
+                    .body);
             print(response2);
             user_type = response2[0]["user_type"];
-            Provider.of<UserProvider>(context, listen: false).setUser(response2[0]["_id"], response2[0]["email"], response2[0]["username"], response2[0]["user_type"]);
-          }
-          else{
+            Provider.of<UserProvider>(context, listen: false).setUser(
+                response2[0]["_id"],
+                response2[0]["email"],
+                response2[0]["username"],
+                response2[0]["user_type"],
+                response2[0]["verified"],
+                response2[0]["rejected"]);
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                content:
+                    Text("Password is incorrect or account does not exist!")));
             print("Unsuccesful login!");
           }
 
-        if(user_type == "user"){
+          if (user_type == "user") {
             Navigator.pop(context);
             Navigator.pushNamed(context, '/signed_homepage');
-        }
-        else if(user_type == 'admin'){
+          } else if (user_type == 'admin') {
             Navigator.pop(context);
             Navigator.pushNamed(context, '/admin');
-        }
-        else if (user_type == 'owner'){
+          } else if (user_type == 'owner') {
             Navigator.pop(context);
             Navigator.pushNamed(context, '/view_owned_accomms');
-        }
-
+          }
         },
         style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
@@ -182,35 +187,35 @@ class _SignInPageState extends State<SignInPage> {
           resizeToAvoidBottomInset: false,
           body: SingleChildScrollView(
               child: Column(
-        children: [
-          const Padding(padding: EdgeInsets.symmetric(vertical: 70)),
-          SizedBox(
-              child: Image.asset('assets/images/stals_logo2.png',
-                  fit: BoxFit.fill)),
-          const Padding(
-            padding: EdgeInsets.only(left: 45, top: 20),
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: Text(
-                "Welcome Back",
-                style: TextStyle(
-                    fontSize: 28,
-                    // fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 31, 36, 33)),
+            children: [
+              const Padding(padding: EdgeInsets.symmetric(vertical: 70)),
+              SizedBox(
+                  child: Image.asset('assets/images/stals_logo2.png',
+                      fit: BoxFit.fill)),
+              const Padding(
+                padding: EdgeInsets.only(left: 45, top: 20),
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    "Welcome Back",
+                    style: TextStyle(
+                        fontSize: 28,
+                        // fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 31, 36, 33)),
+                  ),
+                ),
               ),
-            ),
-          ),
-          ListView(
-            shrinkWrap: true,
-            padding: const EdgeInsets.only(left: 40.0, right: 40.0),
-            children: <Widget>[
-              // Image.asset('assets/images/stals_logo.png', fit: BoxFit.fill),
-              const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
-              loginFields
+              ListView(
+                shrinkWrap: true,
+                padding: const EdgeInsets.only(left: 40.0, right: 40.0),
+                children: <Widget>[
+                  // Image.asset('assets/images/stals_logo.png', fit: BoxFit.fill),
+                  const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+                  loginFields
+                ],
+              ),
             ],
-          ),
-        ],
-      ))
+          ))
           // decoration: const BoxDecoration(
           //     gradient: LinearGradient(
           //   begin: Alignment.topCenter,
@@ -229,7 +234,7 @@ class _SignInPageState extends State<SignInPage> {
       //   Provider.of<TokenProvider>(context, listen: false).removeToken("");
       //   Provider.of<UserProvider>(context, listen: false).removeUser("");
       // });
-      
+
       return Center(child: CircularProgressIndicator());
     }
   }

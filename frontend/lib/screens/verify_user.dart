@@ -41,21 +41,21 @@ class _VerificationPageState extends State<VerificationPage> {
     );
 
     Widget navigationButtons =
-        Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-      // ElevatedButton(
-      //   onPressed: () {
-      //     Navigator.pop(context);
-      //   },
-      //   style: ElevatedButton.styleFrom(
-      //     elevation: 0,
-      //     backgroundColor: const Color(0xff7B2D26),
-      //     minimumSize: const Size(100, 50),
-      //     shape: RoundedRectangleBorder(
-      //       borderRadius: BorderRadius.circular(10),
-      //     ),
-      //   ),
-      //   child: const Text("Back", style: TextStyle(fontSize: 17)),
-      // ),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+      ElevatedButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        style: ElevatedButton.styleFrom(
+          elevation: 0,
+          backgroundColor: const Color(0xff7B2D26),
+          minimumSize: const Size(100, 50),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+        child: const Text("Back", style: TextStyle(fontSize: 17)),
+      ),
       ElevatedButton(
         onPressed: () async {
           if (_formKey.currentState!.validate()) {
@@ -147,6 +147,7 @@ class _VerificationPageState extends State<VerificationPage> {
                     ),
                     const SizedBox(height: 5),
                     DropdownButtonFormField(
+                      isExpanded: true,
                       items: const [
                         DropdownMenuItem(
                           value: 'UMID',
@@ -365,15 +366,15 @@ class _VerificationPageState extends State<VerificationPage> {
                 // ),
                 // DONT REMOVE. IMPORTANT FOR TESTING
                 if (uploadedImage)
-                  Column(
-                    children: [
-                      Text(
-                          "If you see this picture, this was from the database!"),
-                      Image.memory(
-                          Uri.parse(base64Image).data!.contentAsBytes())
-                    ],
-                  ),
-                const SizedBox(height: 70),
+                  // Column(
+                  //   children: [
+                  //     Text(
+                  //         "If you see this picture, this was from the database!"),
+                  //     Image.memory(
+                  //         Uri.parse(base64Image).data!.contentAsBytes())
+                  //   ],
+                  // ),
+                  const SizedBox(height: 70),
                 navigationButtons
               ],
             ),
@@ -386,7 +387,7 @@ class _VerificationPageState extends State<VerificationPage> {
   @override
   void initState() {
     super.initState();
-    _chooseImage();
+    //_chooseImage();
   }
 
   void _chooseImage() async {
@@ -403,7 +404,7 @@ class _VerificationPageState extends State<VerificationPage> {
       double fileSize = (bytes.lengthInBytes / (1024 * 1024));
       //print(bytes.lengthInBytes);
       //print(fileSize);
-      if (fileSize > 1) {
+      if (fileSize > 4) {
         setState(() {
           _imageFile = null;
         });
@@ -438,7 +439,7 @@ class _VerificationPageState extends State<VerificationPage> {
         //final bytes = File(imageFile.name).readAsBytesSync();
         //String base64Image =  "data:image/png;base64,"+base64Encode(bytes);
 
-        //print(base64Image);
+        // print(base64Image);
       }
     } else {
       setState(() {
@@ -446,7 +447,7 @@ class _VerificationPageState extends State<VerificationPage> {
       });
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('No image selected'),
+          content: Text('No image selected!'),
         ),
       );
     }

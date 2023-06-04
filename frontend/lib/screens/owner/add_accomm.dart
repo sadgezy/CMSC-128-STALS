@@ -50,8 +50,16 @@ class _AddAccommPageState extends State<AddAccommPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (!context.watch<UserProvider>().isOwner) {
+      //Navigator.pop(context);
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        Navigator.of(context).pushReplacementNamed('/');
+      });
+
+      return const CircularProgressIndicator();
+    }
     double height = MediaQuery.of(context).size.height;
-    List<String> user =
+    List<dynamic> user =
         Provider.of<UserProvider>(context, listen: false).userInfo;
     String id = user[0];
     String email = user[1];
@@ -161,7 +169,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
         double fileSize = (bytes.lengthInBytes / (1024 * 1024));
         //print(bytes.lengthInBytes);
         //print(fileSize);
-        if (fileSize > 1) {
+        if (fileSize > 4) {
           setState(() {
             _imageFile = null;
           });
@@ -1409,8 +1417,8 @@ class _AddAccommPageState extends State<AddAccommPage> {
                                 "utilities": [],
                                 "description": descriptionController.text,
                                 "photos": [],
-                                "proof_type": "None",
-                                "proof_number": "None",
+                                "proof_type": _idType,
+                                "proof_number": idnoController.text,
                                 "loc_picture": base64Image1,
                                 "proof_picture": base64Image2,
                                 "reviews": [],

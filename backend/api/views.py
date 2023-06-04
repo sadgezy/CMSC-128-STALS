@@ -193,7 +193,7 @@ def getuserdetails(request):
 @api_view(['POST'])
 def get_one_user(request):
     user = User.objects.filter(email=request.data['email'])
-    serializer = LimitedUserSerializer(user, many=True)
+    serializer = userSerializer(user, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
@@ -575,6 +575,7 @@ def search_establishment(request):
 
     if name:
         establishments = establishments.filter(name__icontains=name)
+    print(establishments)
     if location_approx:
         establishments = establishments.filter(location_approx=location_approx)
 
@@ -618,12 +619,16 @@ def search_establishment(request):
         capacity = eval(capacity)
         rooms = rooms.filter(capacity=capacity)
 
-    serializer_room = RoomSerializer(rooms, many=True)
-    estab_ids = [d["establishment_id"] for d in serializer_room.data if d['availability'] == True and d['establishment_id'] in valid_estab_criteria]
-    unique_estab_ids = list(dict.fromkeys(estab_ids))
+    if (price_lower == None and price_upper == None and capacity == None):
+        actual_estab_results = [d for d in serializer_estab_full.data if str(d['_id']) in valid_estab_criteria]
+    else:
+        serializer_room = RoomSerializer(rooms, many=True)
+        estab_ids = [d["establishment_id"] for d in serializer_room.data if d['availability'] == True and d['establishment_id'] in valid_estab_criteria]
+        unique_estab_ids = list(dict.fromkeys(estab_ids))
+        
+        actual_estab_results = [d for d in serializer_estab_full.data if str(d['_id']) in unique_estab_ids]
     
-    actual_estab_results = [d for d in serializer_estab_full.data if str(d['_id']) in unique_estab_ids]
-    #print(actual_estab_results)
+    
     return Response(actual_estab_results)
     
 
@@ -680,7 +685,15 @@ def view_all_modifVerified_users(request):
 def view_all_modifArchived_users(request):
     user = User.objects.all()
     serializer = userSerializer(user, many=True)
-    query = [d for d in serializer.data if d['archived'] == True and d['verified'] == True and d['user_type'] !="admin"]
+    #query = [d for d in serializer.data if d['archived'] == True and d['verified'] == True and d['user_type'] !="admin"]
+    query = [d for d in serializer.data if d['archived'] == True and d['user_type'] !="admin"]
+    return Response(query)
+
+@api_view(['GET'])
+def view_all_un_users(request):
+    user = User.objects.all()
+    serializer = userSerializer(user, many=True)
+    query = [d for d in serializer.data if d['archived'] == False and d['verified'] == False and d['user_type'] !="admin"]
     return Response(query)
 
 
@@ -733,3 +746,99 @@ def unarchive_user(request, pk):
     user.save()
 
     return Response(data={"message": "Successfully unarchived user"})
+
+@api_view(['GET'])
+def view_one_user(request, pk):
+    try:
+        user = User.objects.get(pk=ObjectId(pk))
+    except User.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND, data={"message": "User not found"})
+
+    serializer = userSerializer(user)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def view_userOwned_establishments(request, pk):
+    try:
+        user = User.objects.get(pk=ObjectId(pk))
+        print('hi2')
+        print(user._id)
+    except User.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND, data={"message": "User not found"})
+
+    establishments = Establishment.objects.filter(owner=str(user._id))
+    serializer = EstablishmentSerializer(establishments, many=True)
+
+    # Include the accommodations and rooms in the response
+    for establishment_data in serializer.data:
+        establishment_id = establishment_data['_id']
+        accommodations = establishment_data['accommodations']
+
+        rooms = Room.objects.filter(establishment_id=str(establishment_id))
+        room_serializer = RoomSerializer(rooms, many=True)
+        establishment_data['accommodations'] = {
+            'accommodations': accommodations,
+            'rooms': room_serializer.data
+        }
+
+        # Print the rooms
+        # print(f"Establishment ID: {establishment_id}")
+        # print("Rooms:")
+        # for room in room_serializer.data:
+        #     room_id = room['_id']
+        #     availability = room['availability']
+        #     price_lower = room['price_lower']
+        #     price_upper = room['price_upper']
+        #     capacity = room['capacity']
+        #     print(f"Room ID: {room_id}, Availability: {availability}, Price Range: {price_lower}-{price_upper}, Capacity: {capacity}")
+
+    return Response(serializer.data)
+
+
+@api_view(['DELETE'])
+def delete_all_userOwned_establishments(request, pk):
+    try:
+        user = User.objects.get(pk=ObjectId(pk))
+    except User.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND, data={"message": "User not found"})
+
+    establishments = Establishment.objects.filter(owner=str(user._id))
+
+    for establishment in establishments:
+        establishment_id = establishment._id
+
+        # Delete rooms
+        rooms = Room.objects.filter(establishment_id=str(establishment_id))
+        rooms.delete()
+
+        # Remove the establishment from the owner's establishments list
+        owner = User.objects.get(pk=ObjectId(establishment.owner))
+        owner.establishments = [estab_id for estab_id in owner.establishments if estab_id != str(establishment._id)]
+        owner.save()
+
+        # Delete estab
+        establishment.delete()
+
+    return Response(data={"message": "All user-owned establishments and rooms have been deleted"})
+
+######
+
+@api_view(['POST'])
+# @permission_classes([IsAuthenticated])
+def set_reject_user(request):   
+
+    try:
+        user = User.objects.get(pk=ObjectId(request.data["_id"]))
+
+    except User.DoesNotExist:
+         return Response(data={"message": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    if  (request.data["rejected"] == "True"):
+        status = True
+    else:
+        status = False 
+    user.rejected = status
+    user.save()
+
+    return Response(data={"message": "Successfully set reject status of user"})

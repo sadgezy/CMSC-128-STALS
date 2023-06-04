@@ -20,6 +20,7 @@ import 'package:provider/provider.dart';
 import 'package:stals_frontend/providers/token_provider.dart';
 import 'package:stals_frontend/providers/user_provider.dart';
 import 'package:stals_frontend/screens/verify_user.dart';
+import 'package:stals_frontend/screens/user_profile.dart';
 
 void main() {
   runApp(
@@ -58,6 +59,7 @@ class MyApp extends StatelessWidget {
         '/admin/view_accomms': (context) => const AdminViewAccommodations(),
         '/admin/verify_accomm': (context) => AccommPageProof(),
         '/admin/view_reports': (context) => const ViewReportsPage(),
+        '/userprofile': (context) => const UserProfile(),
       },
       theme: ThemeData(
         fontFamily: 'SFProDisplayRegular',
