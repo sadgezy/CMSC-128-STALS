@@ -446,10 +446,12 @@ class _AccommPageState extends State<AccommPage> {
                                     onPrimary:
                                         const Color.fromARGB(255, 25, 83, 95),
                                   ),
-                                  child: const Icon(
-                                    Icons.archive,
-                                    size: 20,
-                                  ),
+                                  child: response_archived == false
+                                      ? const Icon(
+                                          Icons.archive,
+                                          size: 20,
+                                        )
+                                      : const Icon(Icons.restore, size: 20),
                                 ),
                               if (user_type == 'owner')
                                 ElevatedButton(
@@ -491,11 +493,35 @@ class _AccommPageState extends State<AccommPage> {
                       ),
                       FittedBox(
                         fit: BoxFit.scaleDown,
-                        child: Text(
-                          response_Name,
-                          style: const TextStyle(
-                              fontSize: 28, fontWeight: FontWeight.bold),
-                        ),
+                        child: Row(mainAxisAlignment: MainAxisAlignment.center , children: [
+                          Text(
+                            response_Name,
+                            style: const TextStyle(
+                                fontSize: 28, fontWeight: FontWeight.bold),
+                          ), const SizedBox(width: 10,),
+                          response_archived == true
+                              ? Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors
+                                        .red, // Choose a color that stands out
+                                    borderRadius: BorderRadius.circular(
+                                        8.0), // Adjust the border radius as per your preference
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 4.0,
+                                      horizontal:
+                                          8.0), // Adjust padding as per your preference
+                                  child: const Text(
+                                    'ARCHIVED',
+                                    style: TextStyle(
+                                      color: Colors
+                                          .white, // Choose a contrasting text color
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                )
+                              : Container()
+                        ]),
                       ),
                       const SizedBox(
                         width: 35,
