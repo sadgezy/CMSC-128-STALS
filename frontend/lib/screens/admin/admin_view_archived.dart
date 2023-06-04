@@ -47,14 +47,14 @@ class _ViewArchivedAccommodationsState
 
   @override
   Widget build(BuildContext context) {
-    // if (!context.watch<UserProvider>().isAdmin) {
-    //   //Navigator.pop(context);
-    //   WidgetsBinding.instance?.addPostFrameCallback((_) {
-    //     Navigator.of(context).pushReplacementNamed('/');
-    //   });
+     if (!context.watch<UserProvider>().isAdmin) {
+       //Navigator.pop(context);
+       WidgetsBinding.instance?.addPostFrameCallback((_) {
+         Navigator.of(context).pushReplacementNamed('/');
+       });
 
-    //   return const CircularProgressIndicator();
-    // }
+       return const CircularProgressIndicator();
+    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: UIParameter.MAROON,
