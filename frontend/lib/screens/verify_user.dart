@@ -365,14 +365,14 @@ class _VerificationPageState extends State<VerificationPage> {
                 // ),
                 // DONT REMOVE. IMPORTANT FOR TESTING
                 if (uploadedImage)
-                  Column(
-                    children: [
-                      Text(
-                          "If you see this picture, this was from the database!"),
-                      Image.memory(
-                          Uri.parse(base64Image).data!.contentAsBytes())
-                    ],
-                  ),
+                  // Column(
+                  //   children: [
+                  //     Text(
+                  //         "If you see this picture, this was from the database!"),
+                  //     Image.memory(
+                  //         Uri.parse(base64Image).data!.contentAsBytes())
+                  //   ],
+                  // ),
                 const SizedBox(height: 70),
                 navigationButtons
               ],
@@ -438,7 +438,7 @@ class _VerificationPageState extends State<VerificationPage> {
         //final bytes = File(imageFile.name).readAsBytesSync();
         //String base64Image =  "data:image/png;base64,"+base64Encode(bytes);
 
-        //print(base64Image);
+        // print(base64Image);
       }
     } else {
       setState(() {

@@ -77,6 +77,11 @@ class _ViewAllUsersPageState extends State<ViewUsersPage> {
 
         List<User> fetchedVerifiedUsers =
             data.map((user) => User.fromJson(user)).toList();
+        
+        fetchedVerifiedUsers = fetchedVerifiedUsers
+          .where((user) =>
+              user.userType != "Admin") // && accommodation.verified)
+          .toList();
 
         setState(() {
 
@@ -103,6 +108,11 @@ class _ViewAllUsersPageState extends State<ViewUsersPage> {
         List<User> fetchAllUnverifiedUsers =
             data.map((user) => User.fromJson(user)).toList();
         
+        // Apply the filter
+        fetchAllUnverifiedUsers = fetchAllUnverifiedUsers
+          .where((user) =>
+              user.userType != "Admin") // && accommodation.verified)
+          .toList();
 
         setState(() {
           allUnverifiedUsersList = fetchAllUnverifiedUsers;
@@ -126,6 +136,11 @@ class _ViewAllUsersPageState extends State<ViewUsersPage> {
 
         List<User> fetchedArchivedUsers =
             data.map((user) => User.fromJson(user)).toList();
+
+        fetchedArchivedUsers = fetchedArchivedUsers
+          .where((user) =>
+              user.userType != "Admin") // && accommodation.verified)
+          .toList();
 
         setState(() {
           allArchivedUsersList = fetchedArchivedUsers;

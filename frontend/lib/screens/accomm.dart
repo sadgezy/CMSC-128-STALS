@@ -290,7 +290,7 @@ class _AccommPageState extends State<AccommPage> {
           },
           color: Colors.black,
         ),
-        title: const Text(
+        title: Text(
           "Return to Homepage",
           style: TextStyle(color: Colors.black),
         ),
@@ -647,8 +647,8 @@ class _AccommPageState extends State<AccommPage> {
                                                   child: TextFormField(
                                                     controller:
                                                         reportController,
-                                                    style: const TextStyle(
-                                                        fontSize: 13),
+                                                    style:
+                                                        TextStyle(fontSize: 13),
                                                     decoration:
                                                         const InputDecoration(
                                                       border:
@@ -693,7 +693,6 @@ class _AccommPageState extends State<AccommPage> {
                                                       ];
                                                       break;
                                                   }
-
                                                   String url5 =
                                                       "http://127.0.0.1:8000/report-establishment/";
                                                   final response5 = await json
@@ -1252,7 +1251,7 @@ class _AccommPageState extends State<AccommPage> {
                                 ]);
                               }),
                         ),
-                      if (reviewList.isEmpty) const Text("No reviews yet"),
+                      if (reviewList.isEmpty) Text("No reviews yet. Add one!"),
                     ],
                   ),
                   //end of View Reviews

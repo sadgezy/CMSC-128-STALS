@@ -1418,7 +1418,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
                                 "description": descriptionController.text,
                                 "photos": [],
                                 "proof_type": _idType,
-                                "proof_number": idnoController,
+                                "proof_number": idnoController.text,
                                 "loc_picture": base64Image1,
                                 "proof_picture": base64Image2,
                                 "reviews": [],

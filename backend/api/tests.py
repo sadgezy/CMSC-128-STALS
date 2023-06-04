@@ -22,6 +22,7 @@ def createSampleUser():
         phone_no=chance.phone(formatted=False),
         username=chance.string(),
         verified=chance.boolean(),
+        rejected=chance.boolean(),
         archived=chance.boolean(),
         tickets=[],
         user_type="user",
@@ -44,6 +45,7 @@ class UserTestCase(TestCase):
             phone_no=self.user.phone_no,
             username=self.user.username,
             verified=self.user.verified,
+            rejected=self.user.rejected,
             id_type=self.user.id_type,
             id_number=self.user.id_number,
             archived=self.user.archived,
@@ -63,6 +65,7 @@ class UserTestCase(TestCase):
         self.assertEqual(user.phone_no, self.user.phone_no)
         self.assertEqual(user.username, self.user.username)
         self.assertEqual(user.verified, self.user.verified)
+        self.assertEqual(user.rejected, self.user.rejected)
         self.assertEqual(user.id_type, self.user.id_type)
         self.assertEqual(user.id_number, self.user.id_number)
         self.assertEqual(user.archived, self.user.archived)
@@ -87,6 +90,7 @@ class SignUpViewTestCase(TestCase):
             "phone_no": self.newUser.phone_no,
             "username": self.newUser.username,
             "verified": self.newUser.verified,
+            "rejected": self.newUser.rejected,
             "id_type": self.newUser.id_type,
             "id_number": self.newUser.id_number,
             "archived": self.newUser.archived,
@@ -113,6 +117,7 @@ class LoginViewTestCase(TestCase):
             "phone_no": self.newUser.phone_no,
             "username": self.newUser.username,
             "verified": self.newUser.verified,
+            "rejected": self.newUser.rejected,
             "id_type": self.newUser.id_type,
             "id_number": self.newUser.id_number,
             "archived": self.newUser.archived,
@@ -150,6 +155,7 @@ class UserDetailViewTestCase(TestCase):
             "phone_no": self.newUser.phone_no,
             "username": self.newUser.username,
             "verified": self.newUser.verified,
+            "rejected": self.newUser.rejected,
             "id_type": self.newUser.id_type,
             "id_number": self.newUser.id_number,
             "archived": self.newUser.archived,
@@ -194,6 +200,7 @@ class EditProfileViewTestCase(TestCase):
             "phone_no": self.newUser.phone_no,
             "username": self.newUser.username,
             "verified": self.newUser.verified,
+            "rejected": self.newUser.rejected,
             "id_type": self.newUser.id_type,
             "id_number": self.newUser.id_number,
             "archived": self.newUser.archived,
@@ -251,6 +258,7 @@ class DeleteUserViewTestCase(TestCase):
             "phone_no": self.newUser.phone_no,
             "username": self.newUser.username,
             "verified": self.newUser.verified,
+            "rejected": self.newUser.rejected,
             "id_type": self.newUser.id_type,
             "id_number": self.newUser.id_number,
             "archived": self.newUser.archived,
@@ -312,6 +320,7 @@ def createSampleEstablishment():
         proof_picture=chance.string(),
         reviews=[],
         verified=chance.boolean(),
+        rejected=chance.boolean(),
         archived=chance.boolean(),
         accommodations=[],
     )
@@ -337,6 +346,7 @@ class EstablishmentTestCase(TestCase):
             proof_picture=self.newEstablishment.proof_picture,
             reviews=self.newEstablishment.reviews,
             verified=self.newEstablishment.verified,
+            rejected=self.newEstablishment.rejected,
             archived=self.newEstablishment.archived,
             accommodations=self.newEstablishment.accommodations,
         )
@@ -357,6 +367,7 @@ class EstablishmentTestCase(TestCase):
         self.assertEqual(establishment.proof_picture, self.newEstablishment.proof_picture)
         self.assertEqual(establishment.reviews, self.newEstablishment.reviews)
         self.assertEqual(establishment.verified, self.newEstablishment.verified)
+        self.assertEqual(establishment.rejected, self.newEstablishment.rejected)
         self.assertEqual(establishment.archived, self.newEstablishment.archived)
         self.assertEqual(establishment.accommodations, self.newEstablishment.accommodations)
 
@@ -382,6 +393,7 @@ class CreateEstablishmentViewTestCase(TestCase):
             "proof_picture": self.newEstablishment.proof_picture,
             "reviews": self.newEstablishment.reviews,
             "verified": self.newEstablishment.verified,
+            "rejected": self.newEstablishment.rejected,
             "archived": self.newEstablishment.archived,
             "accommodations": self.newEstablishment.accommodations,
         })
