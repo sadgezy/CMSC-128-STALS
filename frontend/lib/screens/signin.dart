@@ -83,32 +83,33 @@ class _SignInPageState extends State<SignInPage> {
             Provider.of<TokenProvider>(context, listen: false).setToken(token);
             setState(() {});
             String url = "http://127.0.0.1:8000/get-one-user/";
-            final response2 = await json.decode((await http.post(Uri.parse(url),
-                    body: {
-                  'email': emailController.text,
-                }))
-                .body);
+            final response2 =
+                await json.decode((await http.post(Uri.parse(url), body: {
+              'email': emailController.text,
+            }))
+                    .body);
             print(response2);
             user_type = response2[0]["user_type"];
-            Provider.of<UserProvider>(context, listen: false).setUser(response2[0]["_id"], response2[0]["email"], response2[0]["username"], response2[0]["user_type"]);
-          }
-          else{
+            Provider.of<UserProvider>(context, listen: false).setUser(
+                response2[0]["_id"],
+                response2[0]["email"],
+                response2[0]["username"],
+                response2[0]["user_type"],
+                response2[0]["verified"]);
+          } else {
             print("Unsuccesful login!");
           }
 
-        if(user_type == "user"){
+          if (user_type == "user") {
             Navigator.pop(context);
             Navigator.pushNamed(context, '/signed_homepage');
-        }
-        else if(user_type == 'admin'){
+          } else if (user_type == 'admin') {
             Navigator.pop(context);
             Navigator.pushNamed(context, '/admin');
-        }
-        else if (user_type == 'owner'){
+          } else if (user_type == 'owner') {
             Navigator.pop(context);
             Navigator.pushNamed(context, '/view_owned_accomms');
-        }
-
+          }
         },
         style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
@@ -229,7 +230,7 @@ class _SignInPageState extends State<SignInPage> {
       //   Provider.of<TokenProvider>(context, listen: false).removeToken("");
       //   Provider.of<UserProvider>(context, listen: false).removeUser("");
       // });
-      
+
       return Center(child: CircularProgressIndicator());
     }
   }
