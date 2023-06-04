@@ -575,6 +575,7 @@ def search_establishment(request):
 
     if name:
         establishments = establishments.filter(name__icontains=name)
+    print(establishments)
     if location_approx:
         establishments = establishments.filter(location_approx=location_approx)
 
@@ -618,12 +619,17 @@ def search_establishment(request):
         capacity = eval(capacity)
         rooms = rooms.filter(capacity=capacity)
 
-    serializer_room = RoomSerializer(rooms, many=True)
-    estab_ids = [d["establishment_id"] for d in serializer_room.data if d['availability'] == True and d['establishment_id'] in valid_estab_criteria]
-    unique_estab_ids = list(dict.fromkeys(estab_ids))
+    if (price_lower == None and price_upper == None and capacity == None):
+        actual_estab_results = [d for d in serializer_estab_full.data if str(d['_id']) in valid_estab_criteria]
+    else:
+        serializer_room = RoomSerializer(rooms, many=True)
+        estab_ids = [d["establishment_id"] for d in serializer_room.data if d['availability'] == True and d['establishment_id'] in valid_estab_criteria]
+        unique_estab_ids = list(dict.fromkeys(estab_ids))
+        
+        actual_estab_results = [d for d in serializer_estab_full.data if str(d['_id']) in unique_estab_ids]
     
-    actual_estab_results = [d for d in serializer_estab_full.data if str(d['_id']) in unique_estab_ids]
-    #print(actual_estab_results)
+    
+    print("actual: ",actual_estab_results)
     return Response(actual_estab_results)
     
 
