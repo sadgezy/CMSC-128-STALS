@@ -22,6 +22,7 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
     final email = Form(
         key: emailKey,
         child: TextFormField(
@@ -177,7 +178,8 @@ class _SignInPageState extends State<SignInPage> {
                 TextStyle(fontSize: 12, color: Color.fromARGB(255, 31, 36, 33)),
           ),
           const Padding(padding: EdgeInsets.symmetric(vertical: 2)),
-          signupButton
+          signupButton,
+          const Padding(padding: EdgeInsets.symmetric(vertical: 20))
         ],
       ),
     );
@@ -186,48 +188,55 @@ class _SignInPageState extends State<SignInPage> {
       return Scaffold(
           resizeToAvoidBottomInset: false,
           body: SingleChildScrollView(
-              child: Column(
-            children: [
-              const Padding(padding: EdgeInsets.symmetric(vertical: 70)),
-              SizedBox(
-                  child: Image.asset('assets/images/stals_logo2.png',
-                      fit: BoxFit.fill)),
-              const Padding(
-                padding: EdgeInsets.only(left: 45, top: 20),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    "Welcome Back",
-                    style: TextStyle(
-                        fontSize: 28,
-                        // fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 31, 36, 33)),
-                  ),
-                ),
-              ),
-              ListView(
-                shrinkWrap: true,
-                padding: const EdgeInsets.only(left: 40.0, right: 40.0),
-                children: <Widget>[
-                  // Image.asset('assets/images/stals_logo.png', fit: BoxFit.fill),
-                  const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
-                  loginFields
-                ],
-              ),
-            ],
-          ))
-          // decoration: const BoxDecoration(
-          //     gradient: LinearGradient(
-          //   begin: Alignment.topCenter,
-          //   end: Alignment.bottomCenter,
-          //   colors: [
-          //     Color.fromARGB(255, 240, 243, 245),
-          //     Color.fromARGB(255, 25, 83, 95)
-          //   ],
-          //   stops: [0.35, 0.95],
-          // )),
+              child: Center(
+                  child: ConstrainedBox(
+                      constraints: new BoxConstraints(maxWidth: 550.0),
+                      child: Column(
+                        children: [
+                          const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 50)),
+                          SizedBox(
+                              child: Image.asset(
+                                  'assets/images/stals_logo2.png',
+                                  fit: BoxFit.fill)),
+                          const Padding(
+                            padding: EdgeInsets.only(left: 45, top: 20),
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                "Welcome Back",
+                                style: TextStyle(
+                                    fontSize: 28,
+                                    // fontWeight: FontWeight.bold,
+                                    color: Color.fromARGB(255, 31, 36, 33)),
+                              ),
+                            ),
+                          ),
+                          ListView(
+                            shrinkWrap: true,
+                            padding:
+                                const EdgeInsets.only(left: 40.0, right: 40.0),
+                            children: <Widget>[
+                              // Image.asset('assets/images/stals_logo.png', fit: BoxFit.fill),
+                              const Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 10)),
+                              loginFields
+                            ],
+                          ),
+                        ],
+                      ))
+                  // decoration: const BoxDecoration(
+                  //     gradient: LinearGradient(
+                  //   begin: Alignment.topCenter,
+                  //   end: Alignment.bottomCenter,
+                  //   colors: [
+                  //     Color.fromARGB(255, 240, 243, 245),
+                  //     Color.fromARGB(255, 25, 83, 95)
+                  //   ],
+                  //   stops: [0.35, 0.95],
+                  // )),
 
-          );
+                  )));
     } else {
       // print(Provider.of<UserProvider>(context, listen: false).userInfo);
       // Timer(const Duration(milliseconds: 500), () {

@@ -18,11 +18,19 @@ class PDFViewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: "PDFavorites",
+      theme: ThemeData(primaryColor: UIParameter.MAROON, fontFamily: 'Georgia'),
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("PDFavorites."),
-          backgroundColor: UIParameter.MAROON,
-        ),
+            title: const Text("PDFavorites."),
+            backgroundColor: UIParameter.MAROON,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              color: UIParameter.WHITE,
+              onPressed: () async {
+                Navigator.pop(context);
+              },
+            )),
         body: PdfPreview(
           maxPageWidth: 700,
           build: (format) => _generatePdf(format),
@@ -35,10 +43,12 @@ class PDFViewScreen extends StatelessWidget {
     final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: false);
     List<PDFData> estabList = [];
 
-    print(estabData);
-
     for (var e in estabData!) {
       PDFData nonFuture = await createPDFData(e.getID());
+      if (nonFuture.utilities == "[]") {
+        nonFuture.utilities = "No utilities specified.";
+      }
+      if (nonFuture.rooms.isEmpty) {}
       estabList.add(nonFuture);
     }
 
@@ -46,11 +56,23 @@ class PDFViewScreen extends StatelessWidget {
 
     pdf.addPage(pw.MultiPage(
       pageFormat: format,
+      theme: pw.ThemeData.withFont(
+        base: await PdfGoogleFonts.notoSansGeorgianRegular(),
+        bold: await PdfGoogleFonts.notoSansGeorgianBold(),
+      ),
       build: (pw.Context context) => [
         pw.Column(
           children: [
             // TO ADD: HEADER
-
+            pw.Center(
+              child: pw.Text("YOUR ELBEDS SUMMARY SHEET",
+                  style: pw.TextStyle(
+                    fontSize: 25,
+                    fontStyle: pw.FontStyle.italic,
+                    fontWeight: pw.FontWeight.bold,
+                  )),
+            ),
+            pw.SizedBox(height: 10),
             // CREATION OF BOXES IN PDF
             for (var estab in estabList)
               pw.Container(
@@ -74,16 +96,19 @@ class PDFViewScreen extends StatelessWidget {
                                       .defaultTextStyle
                                       .copyWith(
                                           fontWeight: pw.FontWeight.bold)),
-                              // pw.Text(estab.exactLoc),
-                              pw.Text(estab.estabType),
-                              pw.Text(estab.tenantType),
-                              pw.Text(estab.utilities),
+                              pw.Text(estab.exactLoc),
+                              pw.Text(
+                                  estab.estabType + " for " + estab.tenantType),
+                              // pw.Text(estab.tenantType),
+                              //pw.SizedBox(height: 10),
+                              //pw.Text(estab.utilities),
                               pw.SizedBox(height: 10),
                               pw.Text("Owner Information",
                                   style: pw.Theme.of(context)
                                       .defaultTextStyle
                                       .copyWith(
                                           fontWeight: pw.FontWeight.bold)),
+                              pw.Text(estab.ownerName),
                               pw.Text(estab.ownerContact),
                               pw.Text(estab.ownerEmail),
                             ],
@@ -99,18 +124,24 @@ class PDFViewScreen extends StatelessWidget {
                                 style: pw.Theme.of(context)
                                     .defaultTextStyle
                                     .copyWith(fontWeight: pw.FontWeight.bold)),
-                            for (var r in estab.rooms)
-                              pw.Row(
-                                children: [
-                                  // pw.Icon(Icons.check_circle_outline, ) // TO IMPLEMENT: ICONS CHECK or X for availability
-                                  pw.Text(
-                                      "PHP${r.priceLower.toString()}-${r.priceUpper.toString()} for ${r.capacity.toString()}"),
-                                  if (r.available)
-                                    pw.Text(" [AVAILABLE]")
-                                  else
-                                    pw.Text(" [UNAVAILABLE]")
-                                ],
-                              )
+                            if (estab.rooms.isNotEmpty)
+                              for (var r in estab.rooms)
+                                pw.Row(
+                                  children: [
+                                    // pw.Icon(Icons.check_circle_outline, ) // TO IMPLEMENT: ICONS CHECK or X for availability
+                                    pw.Text(
+                                        "PHP${r.priceLower.toString()}-${r.priceUpper.toString()} for ${r.capacity.toString()}"),
+                                    if (r.available)
+                                      pw.Text(" [AVAILABLE]")
+                                    else
+                                      pw.Text(" [UNAVAILABLE]"),
+                                  ],
+                                )
+                            else
+                              pw.Text("No rooms detail available.",
+                                  style: pw.Theme.of(context)
+                                      .defaultTextStyle
+                                      .copyWith(fontWeight: pw.FontWeight.bold))
                           ],
                         )),
                         pw.SizedBox(width: 10)
