@@ -4,8 +4,10 @@ import '../../UI_parameters.dart' as UIParameter;
 import '../../components/accom_card.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
 import 'package:provider/provider.dart';
-import '../../providers/user_provider.dart';
+import 'package:stals_frontend/providers/token_provider.dart';
+import 'package:stals_frontend/providers/user_provider.dart';
 
 class ViewArchivedAccommodations extends StatefulWidget {
   const ViewArchivedAccommodations({super.key});
@@ -47,20 +49,15 @@ class _ViewArchivedAccommodationsState
 
   @override
   Widget build(BuildContext context) {
-    if (!context.watch<UserProvider>().isAdmin) {
-      //Navigator.pop(context);
-      WidgetsBinding.instance?.addPostFrameCallback((_) {
-        Navigator.of(context).pushReplacementNamed('/');
-      });
+     if (!context.watch<UserProvider>().isAdmin) {
+       //Navigator.pop(context);
+       WidgetsBinding.instance?.addPostFrameCallback((_) {
+         Navigator.of(context).pushReplacementNamed('/');
+       });
 
-      return const CircularProgressIndicator();
+       return const CircularProgressIndicator();
     }
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: UIParameter.MAROON,
-        automaticallyImplyLeading: false,
-        elevation: 0,
-      ),
       body: SingleChildScrollView(
         child: FutureBuilder<List<AccomCardDetails>>(
           future: _accommodationsFuture,
@@ -69,16 +66,15 @@ class _ViewArchivedAccommodationsState
               if (snapshot.data!.length > 0) {
                 return Column(
                   children: [
-                    const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 5)),
+                    const Padding(padding: EdgeInsets.symmetric(vertical: 5)),
                     const Padding(
                         padding: EdgeInsets.only(left: 10),
                         child: Align(
                           alignment: Alignment.topLeft,
-                          child: Text("Archived", style: TextStyle(fontSize: 18)),
+                          child:
+                              Text("Archived", style: TextStyle(fontSize: 18)),
                         )),
-                    const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 7)),
+                    const Padding(padding: EdgeInsets.symmetric(vertical: 7)),
                     ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
@@ -87,8 +83,65 @@ class _ViewArchivedAccommodationsState
                         AccomCardDetails accommodation = snapshot.data![index];
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 7),
-                          child: AccomCard(details: accommodation),
+                          child: Column(children: [
+                            AccomCard(details: accommodation),
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 7),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: UIParameter.DARK_TEAL,
+                                      shape: RoundedRectangleBorder(
+                                        // borderRadius: BorderRadius.circular(UIParameter.CARD_BORDER_RADIUS),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
+                                    ),
+                                    onPressed: () {},
+                                    child: Text(
+                                      "RESTORE",
+                                      style: TextStyle(
+                                        color: UIParameter.WHITE,
+                                        fontSize: UIParameter.FONT_BODY_SIZE,
+                                        fontFamily: UIParameter.FONT_REGULAR,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: UIParameter.MAROON,
+                                      shape: RoundedRectangleBorder(
+                                        // borderRadius: BorderRadius.circular(UIParameter.CARD_BORDER_RADIUS),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
+                                    ),
+                                    onPressed: () {},
+                                    child: Text(
+                                      "DELETE",
+                                      style: TextStyle(
+                                        color: UIParameter.WHITE,
+                                        fontSize: UIParameter.FONT_BODY_SIZE,
+                                        fontFamily: UIParameter.FONT_REGULAR,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                ],
+                              ),
+                            ),
+                          ]),
                         );
+
+                        // Padding(
+                        //   padding: const EdgeInsets.symmetric(vertical: 7),
+                        //   child: AccomCard(details: accommodation),
+                        // );
                       },
                     ),
                   ],

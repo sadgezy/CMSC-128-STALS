@@ -5,8 +5,9 @@ import '../../UI_parameters.dart' as UIParameter;
 import '../../components/accom_card.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import '../../providers/user_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:stals_frontend/providers/token_provider.dart';
+import 'package:stals_frontend/providers/user_provider.dart';
 
 class AdminViewPendingApproved extends StatefulWidget {
   const AdminViewPendingApproved({Key? key}) : super(key: key);
@@ -355,11 +356,7 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
 
     // see code below for when there are no pending and archived accommodations
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: UIParameter.MAROON,
-        automaticallyImplyLeading: false,
-        elevation: 0,
-      ),
+      
       body: SingleChildScrollView(
         child: Column(
           children: [

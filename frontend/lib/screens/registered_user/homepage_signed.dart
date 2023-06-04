@@ -305,11 +305,13 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                   icon: const Icon(Icons.save_alt),
                   color: UIParameter.MAROON,
                   onPressed: () async {
+                    List<AccomCardDetails>? pdfData =
+                        await _accommodationsFuture;
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => PDFViewScreen(
-                                // estabData: dummyData,
+                                  estabData: pdfData,
                                 )));
                   },
                 );

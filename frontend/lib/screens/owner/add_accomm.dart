@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 import 'dart:io';
+import 'package:stals_frontend/screens/owner/view_manage_accomms.dart';
 
 class AddAccommPage extends StatefulWidget {
   const AddAccommPage({super.key});
@@ -49,6 +50,14 @@ class _AddAccommPageState extends State<AddAccommPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (!context.watch<UserProvider>().isOwner) {
+      //Navigator.pop(context);
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        Navigator.of(context).pushReplacementNamed('/');
+      });
+
+      return const CircularProgressIndicator();
+    }
     double height = MediaQuery.of(context).size.height;
     List<String> user =
         Provider.of<UserProvider>(context, listen: false).userInfo;
@@ -1408,8 +1417,8 @@ class _AddAccommPageState extends State<AddAccommPage> {
                                 "utilities": [],
                                 "description": descriptionController.text,
                                 "photos": [],
-                                "proof_type": "None",
-                                "proof_number": "None",
+                                "proof_type": _idType,
+                                "proof_number": idnoController,
                                 "loc_picture": base64Image1,
                                 "proof_picture": base64Image2,
                                 "reviews": [],
@@ -1425,7 +1434,10 @@ class _AddAccommPageState extends State<AddAccommPage> {
                                   body: json.encode(requestBody));
                               final decodedResponse =
                                   json.decode(response.body);
+
                               Navigator.pop(context);
+                              Navigator.pop(context);
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => const ViewOwnedAccomms()));
                             }
                           }
                         } else {

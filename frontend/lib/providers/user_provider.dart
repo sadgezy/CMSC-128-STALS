@@ -39,6 +39,10 @@ class UserProvider with ChangeNotifier {
     return this._type == "admin";
   }
 
+  bool get isOwner {
+    return this._type == "owner";
+  }
+
   bool get isGuest {
     return this._type == "guest";
   }

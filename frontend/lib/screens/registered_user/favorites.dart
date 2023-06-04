@@ -34,17 +34,16 @@ class _FavoritesState extends State<Favorites> {
   Future<List<AccomCardDetails>>? _accommodationsFavoritesFuture;
 
   List<String> user = [];
-     String id = '';
-     String email = '';
-     String username = '';
-     String user_type = '';
+  String id = '';
+  String email = '';
+  String username = '';
+  String user_type = '';
 
-   @override
+  @override
   void initState() {
     super.initState();
     getUserInfo();
     _accommodationsFavoritesFuture = fetchUserFavoritesAccommodations();
-    
   }
 
   Future<void> getUserInfo() async {
@@ -53,7 +52,6 @@ class _FavoritesState extends State<Favorites> {
     email = user[1];
     username = user[2];
     user_type = user[3];
-
   }
 
   // var accom = AccomCardDetails("jk23fvgw23", "Centtro Residences", "6437e2f6fe3f89a27b315950",
@@ -69,21 +67,16 @@ class _FavoritesState extends State<Favorites> {
   //     false,
   //     true);
 
-
-
-
   Future<List<AccomCardDetails>> fetchUserFavoritesAccommodations() async {
     var favoritesDecoded;
-    final favoritesUrl = Uri.parse('http://127.0.0.1:8000/view-all-user-favorites/');
+    final favoritesUrl =
+        Uri.parse('http://127.0.0.1:8000/view-all-user-favorites/');
     final body = json.encode({'email': email});
-    final favoritesResponse = await http.post(favoritesUrl, 
-                                              body: body,
-                                              headers: {'Content-Type': 'application/json'});
+    final favoritesResponse = await http.post(favoritesUrl,
+        body: body, headers: {'Content-Type': 'application/json'});
 
-
-    
     if (favoritesResponse.statusCode == 200) {
-  // Request was successful
+      // Request was successful
       favoritesDecoded = json.decode(favoritesResponse.body);
       // Handle the favorites response
     } else {
@@ -91,7 +84,8 @@ class _FavoritesState extends State<Favorites> {
       print('Request failed with status: ${favoritesResponse.statusCode}');
     }
 
-    final response = await http.get(Uri.parse('http://127.0.0.1:8000/view-all-establishment/'));
+    final response = await http
+        .get(Uri.parse('http://127.0.0.1:8000/view-all-establishment/'));
 
     if (response.statusCode == 200) {
       List jsonResponse = jsonDecode(response.body);
@@ -101,9 +95,9 @@ class _FavoritesState extends State<Favorites> {
 
       //  Apply the filter
       List<AccomCardDetails> filteredAccommodations = accommodations
-          .where((accommodation) => favoritesDecoded.contains(accommodation.ID))// && accommodation.verified)
+          .where((accommodation) => favoritesDecoded
+              .contains(accommodation.ID)) // && accommodation.verified)
           .toList();
-
 
       return filteredAccommodations;
     } else {
@@ -111,35 +105,10 @@ class _FavoritesState extends State<Favorites> {
     }
   }
 
-  //DUMMY FOR PDF
-  // List<PDFData> dummyData = [
-  //   PDFData(
-  //       "PDF 1",
-  //       "assets/images/room_stock.jpg",
-  //       "Within Campus",
-  //       "11 L Street",
-  //       "Dormitory",
-  //       "Ceat Students.",
-  //       "0000000",
-  //       "gg@wp.com",
-  //       "mabango"),
-  //   PDFData(
-  //       "PDF 2",
-  //       "assets/images/room_stock.jpg",
-  //       "Beyond Junction",
-  //       "B7 L23 Jade St.",
-  //       "House",
-  //       "Working",
-  //       "0000000",
-  //       "gg@wp.com",
-  //       "toilet"),
-  // ];
-  
-
   @override
   Widget build(BuildContext context) {
     // List<AccomCardDetails> favorites = [accom, accom2];
-    
+
     return Scaffold(
       appBar: AppBar(
           title: const Text('Favorites'),
@@ -152,12 +121,13 @@ class _FavoritesState extends State<Favorites> {
                   icon: const Icon(Icons.save_alt),
                   color: UIParameter.WHITE,
                   onPressed: () async {
+                    List<AccomCardDetails>? pdfData =
+                        await _accommodationsFavoritesFuture;
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => PDFViewScreen(
-                                // estabData: dummyData,
-                                )));
+                            builder: (context) =>
+                                PDFViewScreen(estabData: pdfData)));
                   },
                 );
               },
@@ -201,7 +171,8 @@ class _FavoritesState extends State<Favorites> {
               return Text('Error: ${snapshot.error}');
             }
             return Center(
-              child: CircularProgressIndicator(), // Or any loading indicator widget
+              child:
+                  CircularProgressIndicator(), // Or any loading indicator widget
             );
           },
         ),

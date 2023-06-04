@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 import 'dart:io';
+import 'package:stals_frontend/screens/homepage.dart';
 
 // COMPONENTS
 import '../../components/accom_card.dart';
@@ -25,12 +26,12 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
   Future<List<AccomCardDetails>>? _accommodationsFuture;
 
   List<String> user = [];
-     String id = '';
-     String email = '';
-     String username = '';
-     String user_type = '';
+  String id = '';
+  String email = '';
+  String username = '';
+  String user_type = '';
 
-   @override
+  @override
   void initState() {
     super.initState();
     _accommodationsFuture = fetchOwnedAccommodations();
@@ -45,7 +46,8 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
   }
 
   Future<List<AccomCardDetails>> fetchOwnedAccommodations() async {
-    final response = await http.get(Uri.parse('http://127.0.0.1:8000/view-all-establishment/'));
+    final response = await http
+        .get(Uri.parse('http://127.0.0.1:8000/view-all-establishment/'));
 
     if (response.statusCode == 200) {
       List jsonResponse = jsonDecode(response.body);
@@ -53,11 +55,12 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
           .map((accommodation) => AccomCardDetails.fromJson(accommodation))
           .toList();
 
-       // Apply the filter
+      // Apply the filter
       List<AccomCardDetails> filteredAccommodations = accommodations
-          .where((accommodation) => accommodation.owner == id)// && accommodation.verified)
+          .where((accommodation) =>
+              accommodation.owner == id) // && accommodation.verified)
           .toList();
-      
+
       return filteredAccommodations;
     } else {
       throw Exception('Failed to load accommodations');
@@ -66,6 +69,14 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
 
   @override
   Widget build(BuildContext context) {
+    if (!context.watch<UserProvider>().isOwner) {
+      //Navigator.pop(context);
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        Navigator.of(context).pushReplacementNamed('/');
+      });
+
+      return const CircularProgressIndicator();
+    }
     // var accom = AccomCardDetails("jk23fvgw23", "Centtro Residences",
     //     "Example Description", "assets/images/room_stock.jpg", 3, true, false);
     getUserInfo();
@@ -121,7 +132,7 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
                 title: const Text('Add Accommodation'),
                 onTap: () {
                   // Update the state of the app.
-                    Navigator.pushNamed(context, '/add_accommodation');
+                  Navigator.pushNamed(context, '/add_accommodation');
                 },
               ),
               ListTile(
@@ -135,6 +146,12 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
 
                   Navigator.pop(context);
                   Navigator.pop(context);
+
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const UnregisteredHomepage()));
                 },
               )
             ],
@@ -142,49 +159,49 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
         ),
         // the right drawer
         body: SingleChildScrollView(
-        child: FutureBuilder<List<AccomCardDetails>>(
-          future: _accommodationsFuture,
-          builder: (context, snapshot) {
-            if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-              print("RAN");
-              List<AccomCardDetails> accommodations = snapshot.data!;
-              // print(accommodations[0].getImage());
-              return Column(
-                children: accommodations.map((accommodation) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 7),
-                    child: AccomCard(details: accommodation),
-                  );
-                }).toList(),
-              );
-            } else if (snapshot.hasData && snapshot.data!.isEmpty) {
-              return Center(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    children: [
-                      const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20)),
-                      Image.asset(
-                        'assets/images/no_archived.png',
-                        height: 70,
-                      ),
-                      const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 10)),
-                      Text("No establishments added yet")
-                    ],
+          child: FutureBuilder<List<AccomCardDetails>>(
+            future: _accommodationsFuture,
+            builder: (context, snapshot) {
+              if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                print("RAN");
+                List<AccomCardDetails> accommodations = snapshot.data!;
+                // print(accommodations[0].getImage());
+                return Column(
+                  children: accommodations.map((accommodation) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 7),
+                      child: AccomCard(details: accommodation),
+                    );
+                  }).toList(),
+                );
+              } else if (snapshot.hasData && snapshot.data!.isEmpty) {
+                return Center(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      children: [
+                        const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 20)),
+                        Image.asset(
+                          'assets/images/no_archived.png',
+                          height: 70,
+                        ),
+                        const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 10)),
+                        Text("No establishments added yet")
+                      ],
+                    ),
                   ),
-                ),
+                );
+              } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              }
+              return Center(
+                child:
+                    CircularProgressIndicator(), // Or any loading indicator widget
               );
-            } else if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            }
-            return Center(
-              child: CircularProgressIndicator(), // Or any loading indicator widget
-            );
-          },
-        ),
-      ),
-    );
+            },
+          ),
+        ));
   }
 }
