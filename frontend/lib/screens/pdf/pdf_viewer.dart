@@ -7,126 +7,13 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
+import '../../classes.dart';
 import 'pdf_model.dart';
 
-//DUMMY FOR PDF
-List<PDFData> estabData = [
-  PDFData(
-      "Bahay ni Kuya",
-      "assets/images/room_stock.jpg",
-      "Within Campus",
-      "11 L Street Los Banos City",
-      "Dormitory",
-      "Ceat Students.",
-      "09172222222",
-      "gg@wp.com",
-      "mabango, friendly, malinis",
-      [Room(5000, 1, false), Room(3000, 1, true), Room(10000, 4, true)]),
-  PDFData(
-      "PDF 2",
-      "assets/images/room_stock.jpg",
-      "Beyond Junction",
-      "B7 L23 Jade St. Calamba City",
-      "House",
-      "Working",
-      "09172222222",
-      "gg@wp.com",
-      "toilet, aircon, pets allowed",
-      [Room(22000, 8, true)]),
-  PDFData(
-      "Bahay ni Kuya",
-      "assets/images/room_stock.jpg",
-      "Within Campus",
-      "11 L Street Los Banos City",
-      "Dormitory",
-      "Ceat Students.",
-      "09172222222",
-      "gg@wp.com",
-      "mabango, friendly, malinis",
-      [Room(5000, 1, false), Room(3000, 1, true), Room(10000, 4, true)]),
-  PDFData(
-      "PDF 2",
-      "assets/images/room_stock.jpg",
-      "Beyond Junction",
-      "B7 L23 Jade St. Calamba City",
-      "House",
-      "Working",
-      "09172222222",
-      "gg@wp.com",
-      "toilet, aircon, pets allowed",
-      [Room(22000, 8, true)]),
-  PDFData(
-      "Bahay ni Kuya",
-      "assets/images/room_stock.jpg",
-      "Within Campus",
-      "11 L Street Los Banos City",
-      "Dormitory",
-      "Ceat Students.",
-      "09172222222",
-      "gg@wp.com",
-      "mabango, friendly, malinis",
-      [Room(5000, 1, false), Room(3000, 1, true), Room(10000, 4, true)]),
-  PDFData(
-      "PDF 2",
-      "assets/images/room_stock.jpg",
-      "Beyond Junction",
-      "B7 L23 Jade St. Calamba City",
-      "House",
-      "Working",
-      "09172222222",
-      "gg@wp.com",
-      "toilet, aircon, pets allowed",
-      [Room(22000, 8, true)]),
-  PDFData(
-      "Bahay ni Kuya",
-      "assets/images/room_stock.jpg",
-      "Within Campus",
-      "11 L Street Los Banos City",
-      "Dormitory",
-      "Ceat Students.",
-      "09172222222",
-      "gg@wp.com",
-      "mabango, friendly, malinis",
-      [Room(5000, 1, false), Room(3000, 1, true), Room(10000, 4, true)]),
-  PDFData(
-      "PDF 2",
-      "assets/images/room_stock.jpg",
-      "Beyond Junction",
-      "B7 L23 Jade St. Calamba City",
-      "House",
-      "Working",
-      "09172222222",
-      "gg@wp.com",
-      "toilet, aircon, pets allowed",
-      [Room(22000, 8, true)]),
-  PDFData(
-      "Bahay ni Kuya",
-      "assets/images/room_stock.jpg",
-      "Within Campus",
-      "11 L Street Los Banos City",
-      "Dormitory",
-      "Ceat Students.",
-      "09172222222",
-      "gg@wp.com",
-      "mabango, friendly, malinis",
-      [Room(5000, 1, false), Room(3000, 1, true), Room(10000, 4, true)]),
-  PDFData(
-      "PDF 2",
-      "assets/images/room_stock.jpg",
-      "Beyond Junction",
-      "B7 L23 Jade St. Calamba City",
-      "House",
-      "Working",
-      "09172222222",
-      "gg@wp.com",
-      "toilet, aircon, pets allowed",
-      [Room(22000, 8, true)]),
-];
-
 class PDFViewScreen extends StatelessWidget {
-  // const PDFViewScreen({super.key, required this.estabData});
-  // final List<PDFData> estabData;
-  const PDFViewScreen({super.key});
+  const PDFViewScreen({super.key, required this.estabData});
+  final List<AccomCardDetails>? estabData;
+  // const PDFViewScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -146,6 +33,15 @@ class PDFViewScreen extends StatelessWidget {
 
   Future<Uint8List> _generatePdf(PdfPageFormat format) async {
     final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: false);
+    List<PDFData> estabList = [];
+
+    print(estabData);
+
+    for (var e in estabData!) {
+      PDFData nonFuture = await createPDFData(e.getID());
+      estabList.add(nonFuture);
+    }
+
     // final font = await PdfGoogleFonts.nunitoExtraLight();
 
     pdf.addPage(pw.MultiPage(
@@ -153,7 +49,10 @@ class PDFViewScreen extends StatelessWidget {
       build: (pw.Context context) => [
         pw.Column(
           children: [
-            for (var estab in estabData)
+            // TO ADD: HEADER
+
+            // CREATION OF BOXES IN PDF
+            for (var estab in estabList)
               pw.Container(
                   decoration: pw.BoxDecoration(border: pw.Border.all()),
                   // padding: const pw.EdgeInsets.all(16.0),
@@ -175,7 +74,6 @@ class PDFViewScreen extends StatelessWidget {
                                       .defaultTextStyle
                                       .copyWith(
                                           fontWeight: pw.FontWeight.bold)),
-                              pw.Text(estab.approxLoc),
                               // pw.Text(estab.exactLoc),
                               pw.Text(estab.estabType),
                               pw.Text(estab.tenantType),
@@ -206,7 +104,7 @@ class PDFViewScreen extends StatelessWidget {
                                 children: [
                                   // pw.Icon(Icons.check_circle_outline, ) // TO IMPLEMENT: ICONS CHECK or X for availability
                                   pw.Text(
-                                      "PHP${r.price.toString()} for ${r.capacity.toString()}"),
+                                      "PHP${r.priceLower.toString()}-${r.priceUpper.toString()} for ${r.capacity.toString()}"),
                                   if (r.available)
                                     pw.Text(" [AVAILABLE]")
                                   else
@@ -223,49 +121,7 @@ class PDFViewScreen extends StatelessWidget {
           ],
         )
       ],
-    )
-        // pw.Page(
-        //   pageFormat: format,
-        //   build: (pw.Context context) {
-
-        //   },
-        // ),
-        );
+    ));
     return pdf.save();
-  }
-
-  // pw.Widget buildEstabTiles(List<PDFData> estabData) => pw.Container(
-  //       child: pw.Column(
-  //         children: [
-  //           for (var estab in estabData)
-  //             pw.Row(
-  //               children: [
-  //                 // pw.Expanded(
-  //                 // child: pw.Icon(Icons.warning)
-  //                 // child: pw.Image(
-  //                 //   pw.MemoryImage(await _loadImage(estab.image)),
-  //                 // ),
-  //                 // ),
-  //                 pw.Expanded(
-  //                   child: pw.Column(
-  //                     children: [
-  //                       pw.Text(estab.estabName,
-  //                           style: pw.Theme.of(context)
-  //                               .defaultTextStyle
-  //                               .copyWith(fontWeight: pw.FontWeight.bold)),
-  //                       pw.Text(estab.approxLoc),
-  //                       pw.Text(estab.exactLoc),
-  //                     ],
-  //                   ),
-  //                 ),
-  //               ],
-  //             ),
-  //         ],
-  //       ),
-  //     );
-
-  Future<Uint8List> _loadImage(String imagePath) async {
-    final ByteData imageData = await rootBundle.load(imagePath);
-    return imageData.buffer.asUint8List();
   }
 }
