@@ -21,6 +21,8 @@ import 'package:stals_frontend/providers/token_provider.dart';
 import 'package:stals_frontend/providers/user_provider.dart';
 import 'package:stals_frontend/screens/verify_user.dart';
 import 'package:stals_frontend/screens/user_profile.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 void main() {
   runApp(
@@ -189,16 +191,36 @@ class MyApp extends StatelessWidget {
 // What it's *supposed* to do is if you're logged in, it'll go to the registered homepage, else unregistered homepage.
 // Not sure if my implementation is correct, pls fix hehe
 
-class AuthWrapper extends StatelessWidget {
+class AuthWrapper extends StatefulWidget {
   const AuthWrapper({super.key});
 
-  // This widget is the root of your application.
+  @override
+  _AuthWrapperState createState() => _AuthWrapperState();
+}
+
+class _AuthWrapperState extends State<AuthWrapper> {
+  Future<void> _initializeUserProvider() async {
+    await context.read<UserProvider>().loadUserData();
+  }
+
   @override
   Widget build(BuildContext context) {
-    if (context.watch<UserProvider>().isAuthenticated) {
-      return const RegisteredHomepage();
-    } else {
-      return const UnregisteredHomepage();
-    }
+    return FutureBuilder(
+      future: _initializeUserProvider(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        }
+
+        if (context.watch<UserProvider>().isAuthenticated) {
+          if(context.watch<UserProvider>().isAdmin) return const AdminDashBoard();
+          if(context.watch<UserProvider>().isOwner) return const ViewOwnedAccomms();
+          return const RegisteredHomepage();
+        } else {
+          return const UnregisteredHomepage();
+        }
+      },
+    );
   }
 }
+
