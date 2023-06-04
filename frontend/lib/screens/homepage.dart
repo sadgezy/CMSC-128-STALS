@@ -154,15 +154,8 @@ class _UnregisteredHomepageState extends State<UnregisteredHomepage> {
                   color: UIParameter.MAROON,
                   onPressed: () {
                     // cannot use filter if not signed-in
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                              content: Padding(
-                            padding: const EdgeInsets.all(8),
-                            child: Text("Sign in to unlock filters"),
-                          ));
-                        });
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text("Login to filter the accommodations!")));
                   },
                 );
               },

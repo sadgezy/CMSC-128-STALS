@@ -14,7 +14,7 @@ class _SignUpPageState extends State<SignUpPage> {
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-              minimumSize: const Size(100, 240),
+              minimumSize: const Size(150, 150),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
@@ -26,10 +26,10 @@ class _SignUpPageState extends State<SignUpPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(btnText, style: const TextStyle(fontSize: 20)),
-              const SizedBox(height: 30),
+              Padding(padding: EdgeInsets.symmetric(vertical: 10)),
               SizedBox(
-                height: 80,
-                child:  Image.asset(
+                height: 60,
+                child: Image.asset(
                   btnText == "Owner"
                       ? 'assets/images/flat.png'
                       : 'assets/images/user.png',
@@ -42,7 +42,7 @@ class _SignUpPageState extends State<SignUpPage> {
             if (btnText == "Owner") {
               Navigator.pushNamed(context, '/signup_info',
                   arguments: {"type": "owner"});
-            } else if (btnText == "Customer") {
+            } else if (btnText == "Consumer") {
               Navigator.pushNamed(context, '/signup_info',
                   arguments: {"type": "user"});
             }
@@ -54,66 +54,56 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     if (Provider.of<TokenProvider>(context, listen: false).currToken == "") {
       return Scaffold(
-        backgroundColor: const Color(0xffF0F3F5),
-        body: Column(
-          children: [
-            const SizedBox(
-              height: 160,
-            ),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  const Text(
-                    "You are\na/an",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 43),
-                  ),
-                  const SizedBox(height: 35),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 37),
-                    child: SizedBox(
-                      height: 240,
-                      width: double.infinity,
-                      child: Row(children: [
-                        Expanded(child: _buildButton("Owner")),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(child: _buildButton("Customer")),
-                      ]),
-                    ),
-                  ),
-                  const SizedBox(height: 100),
-                ],
-              ),
-            ),
-            Expanded(
-              child: Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(40, 0, 40, 50),
-                    child: ElevatedButton(
-                      onPressed: (() {
-                        Navigator.pop(context);
-                      }),
-                      style: ElevatedButton.styleFrom(
-                        elevation: 1,
-                        backgroundColor: Colors.white,
-                        minimumSize: const Size(100, 50),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+          backgroundColor: const Color(0xffF0F3F5),
+          body: SingleChildScrollView(
+              child: Center(
+                  child: ConstrainedBox(
+            constraints: new BoxConstraints(maxWidth: 550.0),
+            child: Column(
+              children: [
+                Padding(padding: EdgeInsets.symmetric(vertical: 70)),
+                Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      const Text(
+                        "Which one are you?",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 30),
                       ),
-                      child: const Text("Cancel",
-                          style: TextStyle(
-                              fontSize: 17, color: Color(0xff1F2421))),
+                      Padding(padding: EdgeInsets.symmetric(vertical: 30)),
+                      FractionallySizedBox(
+                        widthFactor: 0.85,
+                        child: Row(children: [
+                          Expanded(child: _buildButton("Owner")),
+                          const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20)),
+                          Expanded(child: _buildButton("Consumer")),
+                        ]),
+                      ),
+                      Padding(padding: EdgeInsets.symmetric(vertical: 50)),
+                    ],
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: (() {
+                    Navigator.pop(context);
+                  }),
+                  style: ElevatedButton.styleFrom(
+                    elevation: 1,
+                    backgroundColor: Colors.white,
+                    minimumSize: const Size(100, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                  )),
-            )
-          ],
-        ),
-      );
+                  ),
+                  child: const Text("Cancel",
+                      style: TextStyle(fontSize: 17, color: Color(0xff1F2421))),
+                ),
+                Padding(padding: EdgeInsets.symmetric(vertical: 20)),
+              ],
+            ),
+          ))));
     } else {
       return const Center(
         child: Text("You are logged in"),
