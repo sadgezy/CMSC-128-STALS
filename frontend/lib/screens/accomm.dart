@@ -410,7 +410,7 @@ class _AccommPageState extends State<AccommPage> {
                                     size: 20,
                                   ), // Third icon
                                 ),
-                              if (user_type == 'owner' || user_type == 'admin')
+                              if (user_type == 'admin')
                                 ElevatedButton(
                                   onPressed: () async {
                                     // Action for the third icon button
