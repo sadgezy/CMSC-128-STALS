@@ -103,7 +103,12 @@ class _AdminDashBoardState extends State<AdminDashBoard> {
           leading: const Icon(Icons.flag),
           onTap: () {
             // TODO
-            Navigator.pushNamed(context, '/admin/view_reports');
+            if (ModalRoute.of(context)?.settings.name !=
+                '/admin/view_reports') {
+              Navigator.pushNamed(context, '/admin/view_reports');
+            } else {
+              Navigator.pop(context);
+            }
           },
         ),
         ListTile(
@@ -118,6 +123,10 @@ class _AdminDashBoardState extends State<AdminDashBoard> {
 
             Navigator.pop(context);
             Navigator.pop(context);
+
+            Navigator.pop(context);
+            //Navigator.push(context, MaterialPageRoute(builder: (context) => const UnregisteredHomepage()));
+            Navigator.pushNamed(context, '/homepage');
           },
         ),
       ])),
