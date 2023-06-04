@@ -341,7 +341,7 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                 decoration: BoxDecoration(
                   color: UIParameter.LIGHT_TEAL,
                 ),
-                child: const Text('PROFILE'),
+                child: const Text('View Profile'),
               ),
             ),
             ListTile(
@@ -427,7 +427,7 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                         ),
                         const Padding(
                             padding: EdgeInsets.symmetric(vertical: 10)),
-                        Text("No Accommodations in database ")
+                        const Text("No Accommodations Available! ")
                       ],
                     ),
                   ),
