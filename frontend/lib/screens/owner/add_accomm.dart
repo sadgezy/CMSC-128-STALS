@@ -1174,6 +1174,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
                               height: 5,
                             ),
                             DropdownButtonFormField(
+                              isExpanded: true,
                               items: const [
                                 DropdownMenuItem(
                                   value: 'Business Permit',
@@ -1437,7 +1438,11 @@ class _AddAccommPageState extends State<AddAccommPage> {
 
                               Navigator.pop(context);
                               Navigator.pop(context);
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => const ViewOwnedAccomms()));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ViewOwnedAccomms()));
                             }
                           }
                         } else {
@@ -1478,7 +1483,11 @@ class _AddAccommPageState extends State<AddAccommPage> {
     return Scaffold(
       backgroundColor: const Color(0xffF0F3F5),
       resizeToAvoidBottomInset: false,
-      body: SingleChildScrollView(child: Center(child: getStep())),
+      body: SingleChildScrollView(
+          child: Center(
+              child: ConstrainedBox(
+                  constraints: new BoxConstraints(maxWidth: 550.0),
+                  child: getStep()))),
     );
   }
 }
