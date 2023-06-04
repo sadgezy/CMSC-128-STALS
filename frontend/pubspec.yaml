@@ -1,5 +1,5 @@
 name: stals_frontend
-description: A new Flutter project.
+description: A lightweight application with the purpose of searching for existing accommodations in the various establishments around Los Baños, Laguna.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
