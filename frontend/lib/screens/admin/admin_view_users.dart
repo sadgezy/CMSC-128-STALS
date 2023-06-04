@@ -22,7 +22,7 @@ class ViewUsersPage extends StatefulWidget {
 }
 
 class _ViewAllUsersPageState extends State<ViewUsersPage> {
-  // List<User> allUsersList = [];
+
 
   List<User> allUnverifiedUsersList = [];
 
@@ -33,10 +33,10 @@ class _ViewAllUsersPageState extends State<ViewUsersPage> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   int _selectedIndex = 0;
   bool isLoading = false;
-  // String apiUrl_allUsers = 'http://127.0.0.1:8000/view-all-users/';
+
   
   String apiUrl_allUnverifiedUsers =
-      'http://127.0.0.1:8000/view-all-modifUnverified-users/';
+      'http://127.0.0.1:8000/view-all-unverified-users/';
 
   String apiUrl_allVerifiedUsers =
       'http://127.0.0.1:8000/view-all-modifVerified-users/';
@@ -54,27 +54,6 @@ class _ViewAllUsersPageState extends State<ViewUsersPage> {
     fetchAllArchivedUsers();
   }
 
-  // Future<void> fetchAllUsers() async {
-  //   setState(() {
-  //     isLoading = true;
-  //   });
-  //   try {
-  //     Response response = await Dio().get(apiUrl_allUsers);
-  //     print(response.data);
-  //     if (response.statusCode == 200) {
-  //       List<dynamic> data = response.data;
-  //       //print(data);
-  //       List<User> fetchedUsers =
-  //           data.map((user) => User.fromJson(user)).toList();
-  //       setState(() {
-  //         allUsersList = fetchedUsers;
-  //       });
-  //     }
-  //   } catch (error) {
-  //     print(error.toString());
-  //   }
-  //   // fetchAllVerifiedUsers();
-  // }
 
   // ---
   void onTabChosen(int index) {
@@ -107,10 +86,7 @@ class _ViewAllUsersPageState extends State<ViewUsersPage> {
     } catch (error) {
       print(error.toString());
     }
-
-    // initState();
-    
-    
+ 
   }
   
   //---------------------------------------------
@@ -135,9 +111,6 @@ class _ViewAllUsersPageState extends State<ViewUsersPage> {
     } catch (error) {
       print(error.toString());
     }
-
-    
-    // initState();
   
   }
 
@@ -167,13 +140,6 @@ class _ViewAllUsersPageState extends State<ViewUsersPage> {
       isLoading = false;
     });
   }
-
-  final List<Widget> _children = [
-    // AdminDashBoard(),
-    // AdminViewPendingApproved(),
-    // ViewArchivedAccommodations(),
-  ];
-
 
 
   @override
