@@ -210,12 +210,11 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
     }
 
     String verified = context.watch<UserProvider>().isVerified
-        ? 'Your account’s verification is still pending. Please wait.'
+        ? 'Your account’s verification is under review. Please wait.'
         : 'Your account’s verification was declined. Please resubmit your details by editing your profile';
 
-    Color banner = context.watch<UserProvider>().isVerified
-        ? Colors.green.shade800
-        : Colors.red.shade800;
+    Color banner =
+        context.watch<UserProvider>().isVerified ? Colors.green : Colors.red;
 
     return Scaffold(
       key: scaffoldKey,
@@ -379,12 +378,17 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
       // the right drawer
       endDrawer: FilterDrawer(filter: accomFilter, callback: getFilter),
       body: Column(children: <Widget>[
-        Opacity(
-          opacity: 0.5,
+        Center(
           child: MaterialBanner(
             padding: EdgeInsets.all(5),
-            content: Text(verified, style: TextStyle(color: Colors.white)),
-            leading: Icon(Icons.info, color: Colors.white),
+            content: Center(
+                child: Text(
+              verified,
+              style: const TextStyle(
+                  fontSize: 14,
+                  color: Colors.white,
+                  overflow: TextOverflow.ellipsis),
+            )),
             backgroundColor: banner,
             actions: <Widget>[
               TextButton(
