@@ -192,6 +192,7 @@ class _AccommPageState extends State<AccommPage> {
   String loc_picture = "";
   String description = "";
   List selectedReason = [];
+  bool verified = false;
 
   String _idType = '';
   bool showAccommTypeError = false;
@@ -217,6 +218,7 @@ class _AccommPageState extends State<AccommPage> {
       email = user[1];
       username = user[2];
       user_type = user[3];
+      verified = user[4];
 
       // print(id);
       // print(email);
@@ -862,6 +864,13 @@ class _AccommPageState extends State<AccommPage> {
                                           content: Padding(
                                         padding: EdgeInsets.all(8),
                                         child: Text("Sign in to post a review"),
+                                      ));
+                                    }
+                                    if (!verified) {
+                                      return const AlertDialog(
+                                          content: Padding(
+                                        padding: EdgeInsets.all(8),
+                                        child: Text("Have account verified to post a review"),
                                       ));
                                     }
                                     return Review(
