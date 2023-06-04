@@ -66,7 +66,7 @@ class UserProvider with ChangeNotifier {
     _username = "";
     _type = 'guest';
     _verified = false;
-    _rejected = rejected;
+    _rejected = false;
     await _clearUserData(); // Clear user data from SharedPreferences
     notifyListeners();
   }
