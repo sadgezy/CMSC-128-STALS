@@ -95,7 +95,8 @@ class _SignInPageState extends State<SignInPage> {
                 response2[0]["email"],
                 response2[0]["username"],
                 response2[0]["user_type"],
-                response2[0]["verified"]);
+                response2[0]["verified"],
+                response2[0]["rejected"]);
           } else {
             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                 content:

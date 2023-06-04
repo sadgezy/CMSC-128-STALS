@@ -686,7 +686,15 @@ def view_all_modifVerified_users(request):
 def view_all_modifArchived_users(request):
     user = User.objects.all()
     serializer = userSerializer(user, many=True)
-    query = [d for d in serializer.data if d['archived'] == True and d['verified'] == True and d['user_type'] !="admin"]
+    #query = [d for d in serializer.data if d['archived'] == True and d['verified'] == True and d['user_type'] !="admin"]
+    query = [d for d in serializer.data if d['archived'] == True and d['user_type'] !="admin"]
+    return Response(query)
+
+@api_view(['GET'])
+def view_all_un_users(request):
+    user = User.objects.all()
+    serializer = userSerializer(user, many=True)
+    query = [d for d in serializer.data if d['archived'] == False and d['verified'] == False and d['user_type'] !="admin"]
     return Response(query)
 
 
@@ -814,3 +822,24 @@ def delete_all_userOwned_establishments(request, pk):
         establishment.delete()
 
     return Response(data={"message": "All user-owned establishments and rooms have been deleted"})
+
+######
+
+@api_view(['POST'])
+# @permission_classes([IsAuthenticated])
+def set_reject_user(request):   
+
+    try:
+        user = User.objects.get(pk=ObjectId(request.data["_id"]))
+
+    except User.DoesNotExist:
+         return Response(data={"message": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    if  (request.data["rejected"] == "True"):
+        status = True
+    else:
+        status = False 
+    user.rejected = status
+    user.save()
+
+    return Response(data={"message": "Successfully set reject status of user"})

@@ -29,6 +29,8 @@ class _ViewAllUsersPageState extends State<ViewUsersPage> {
   List<User> allVerifiedUsersList = [];
   List<User> allArchivedUsersList = [];
 
+  List<User> allUnverifiedAndUnarchivedUsersList = [];
+
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   int _selectedIndex = 0;
@@ -44,12 +46,15 @@ class _ViewAllUsersPageState extends State<ViewUsersPage> {
   String apiUrl_allArchivedUsers =
       'http://127.0.0.1:8000/view-all-modifArchived-users/';
 
+  String apiUrl_allUnverifiedAndUnarchivedUsers =
+      'http://127.0.0.1:8000/view-all-un-users/';
+
   //----
   @override
   void initState() {
     super.initState();
     // fetchAllUsers();
-    fetchAllUnverifiedUsers();
+    fetchAllUnverifiedAndUnarchivedUsers();
     fetchAllVerifiedUsers();
     fetchAllArchivedUsers();
   }
@@ -154,6 +159,35 @@ class _ViewAllUsersPageState extends State<ViewUsersPage> {
     setState(() {
       isLoading = false;
     });
+  }
+
+  Future<void> fetchAllUnverifiedAndUnarchivedUsers() async {
+    try {
+      Response response = await Dio().get(apiUrl_allUnverifiedAndUnarchivedUsers);
+      //print(response.data);
+
+      if (response.statusCode == 200) {
+        List<dynamic> data = response.data;
+        //print(data);
+
+        
+        List<User> fetchAllUnverifiedAndUnarchivedUsers =
+            data.map((user) => User.fromJson(user)).toList();
+        
+        // Apply the filter
+        fetchAllUnverifiedAndUnarchivedUsers = fetchAllUnverifiedAndUnarchivedUsers
+          .where((user) =>
+              user.userType != "Admin") // && accommodation.verified)
+          .toList();
+
+        setState(() {
+          allUnverifiedAndUnarchivedUsersList = fetchAllUnverifiedAndUnarchivedUsers;
+        });
+      }
+    } catch (error) {
+      print(error.toString());
+    }
+  
   }
 
 
@@ -295,17 +329,16 @@ class _ViewAllUsersPageState extends State<ViewUsersPage> {
 
                           child: (_selectedIndex == 0)
                               ? ListView.builder(
-                                  itemCount: allUnverifiedUsersList.length,
+                                  itemCount: allUnverifiedAndUnarchivedUsersList.length,
                                   itemBuilder: (context, index) {
                                     return Column(children: [
                                       //--------------------------------------------------
                                       
                                       PendingUserCard(
                                           name:
-                                              '${allUnverifiedUsersList[index].firstName} ${allUnverifiedUsersList[index].lastName}',
-                                          userId: '${allUnverifiedUsersList[index].id}',
-                                          fetchUnverifiedUsers: fetchAllUnverifiedUsers,
-                                                                                  
+                                              '${allUnverifiedAndUnarchivedUsersList[index].firstName} ${allUnverifiedAndUnarchivedUsersList[index].lastName}',
+                                          userId: '${allUnverifiedAndUnarchivedUsersList[index].id}',
+                                          fetchUnverifiedAndUnarchivedUsers: fetchAllUnverifiedAndUnarchivedUsers,                          
                                                   
                                       ),
                                           
@@ -369,7 +402,7 @@ class _ViewAllUsersPageState extends State<ViewUsersPage> {
                 });
 
                 if (index == 0) {
-                  await fetchAllUnverifiedUsers();
+                  await fetchAllUnverifiedAndUnarchivedUsers();
                 } else if (index == 1) {
                   await fetchAllVerifiedUsers();
                 } else if (index == 2) {

@@ -6,18 +6,20 @@ class UserProvider with ChangeNotifier {
   String _username = "";
   String _type = "guest";
   bool _verified = false;
+  bool _rejected = false;
 
   List<dynamic> get userInfo {
-    return [_id, _email, _username, _type, _verified];
+    return [_id, _email, _username, _type, _verified, _rejected];
   }
 
   void setUser(
-      String id, String email, String username, String type, bool verified) {
+      String id, String email, String username, String type, bool verified, bool rejected) {
     _id = id;
     _email = email;
     _username = username;
     _type = type;
     _verified = verified;
+    _rejected = rejected;
     notifyListeners();
   }
 
@@ -49,5 +51,9 @@ class UserProvider with ChangeNotifier {
 
   bool get isVerified {
     return this._verified;
+  }
+
+  bool get isRejected {
+    return this._rejected;
   }
 }
