@@ -106,6 +106,11 @@ class _VerificationPageState extends State<VerificationPage> {
               //print(base64Image);
               uploadedImage = true;
               setState(() {});
+              
+              if (!context.mounted) return;
+              Navigator.pop(context);
+              Navigator.pop(context);
+              Navigator.pop(context);
             }
           }
         },
