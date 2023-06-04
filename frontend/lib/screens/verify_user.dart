@@ -403,7 +403,7 @@ class _VerificationPageState extends State<VerificationPage> {
       double fileSize = (bytes.lengthInBytes / (1024 * 1024));
       //print(bytes.lengthInBytes);
       //print(fileSize);
-      if (fileSize > 1) {
+      if (fileSize > 4) {
         setState(() {
           _imageFile = null;
         });
