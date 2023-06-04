@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 import 'dart:io';
+import 'package:stals_frontend/screens/homepage.dart';
 
 // COMPONENTS
 import '../../components/accom_card.dart';
@@ -143,11 +144,15 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
                 Provider.of<UserProvider>(context, listen: false)
                     .removeUser("DO NOT REMOVE THIS PARAM");
 
-                Navigator.pop(context);
-                Navigator.pop(context);
-              },
-            )
-          ],
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+
+                  Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const UnregisteredHomepage()));
+                },
+              )
+            ],
+          ),
         ),
       ),
       // the right drawer

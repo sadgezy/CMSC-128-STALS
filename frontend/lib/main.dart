@@ -39,11 +39,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'CMSC 128 STALS',
       initialRoute: '/',
       routes: {
         '/': (context) => const AuthWrapper(),
-        // '/': (context) => MyHomePage("CMSC 128 STALS"),
         '/signin': (context) => const SignInPage(),
         '/signup': (context) => const SignUpPage(),
         '/signup_info': (context) => SignUpForm(),

@@ -28,11 +28,11 @@ class UserProvider with ChangeNotifier {
   }
 
   bool get isAuthenticated {
-    return UserProvider()._id != "";
+    return this._id != "";
   }
 
   bool get isAdmin {
-    return UserProvider()._type == "admin";
+    return this._type == "admin";
   }
 
   bool get isOwner {
@@ -40,6 +40,6 @@ class UserProvider with ChangeNotifier {
   }
 
   bool get isGuest {
-    return UserProvider()._type == "guest";
+    return this._type == "guest";
   }
 }
