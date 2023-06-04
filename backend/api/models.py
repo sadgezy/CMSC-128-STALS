@@ -2,6 +2,7 @@ from django.db import models as models_django
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from djongo import models as models_djongo
+from rest_framework.authtoken.models import Token
 
 # Create your models here.
 
@@ -57,6 +58,8 @@ class CustomUserManager(BaseUserManager):
         user.set_password(password)
         user.save()
 
+        Token.objects.create(user=user)
+
         return user
 
 class User(AbstractUser):
@@ -96,18 +99,16 @@ class Admin(models_django.Model):
     
 
 class ReviewManager(models_django.Manager):
-    def create_review(self,userID,establishmentID,dateSubmitted,title,rating,archived,body):
+    def create_review(self,user_id,establishment_id,username,date_submitted,body):
         # email=self.normalize_email(email)
 
         review=self.model(
             # _id=_id,
-            userID=userID,
-            establishmentID=establishmentID,
-            dateSubmitted=dateSubmitted,
-            title=title,
-            rating=rating,
-            archived=archived,
-            body=body,
+            user_id=user_id,
+            establishment_id=establishment_id,
+            date_submitted=date_submitted,
+            username=username,
+            body=body
         )
 
         # I think it says in the docs that this isn't necessary when you're using a manager 
@@ -116,24 +117,21 @@ class ReviewManager(models_django.Manager):
         return review
 
 class Review(models_django.Model):
-    # commented until functional
     _id = models_djongo.ObjectIdField()
-    userID = models_django.CharField(max_length=25)
-    establishmentID = models_django.CharField(max_length=25)
-    dateSubmited = models_django.DateTimeField(auto_now_add=True)
-    title = models_django.CharField(max_length=255)
-    rating = models_django.IntegerField()
-    archived = models_django.BooleanField(default=False)
+    user_id = models_django.CharField(max_length=25)
+    establishment_id = models_django.CharField(max_length=25)
+    username=models_django.CharField(max_length=45)
+    date_submitted = models_django.DateTimeField(auto_now_add=True)
     body = models_django.TextField()
 
     objects = ReviewManager()
 
     def __str__(self):
-        return self.title
+        return self.body
 
 
 class EstablishmentManager(models_django.Manager):
-    def create_establishment(self,name,owner,location_exact,location_approx,establishment_type,tenant_type,description,utilities,photos,proof_type,proof_number,proof_picture,reviews,verified,archived,accommodations):
+    def create_establishment(self,name,owner,location_exact,location_approx,establishment_type,tenant_type,description,utilities,loc_picture,proof_type,proof_number,proof_picture,reviews,verified,archived,accommodations):
         # email=self.normalize_email(email)
 
         establishment=self.model(
@@ -145,7 +143,7 @@ class EstablishmentManager(models_django.Manager):
             tenant_type = tenant_type,
             utilities = utilities,
             description = description,
-            photos = photos,
+            loc_picture = loc_picture,
             proof_type = proof_type,
             proof_number = proof_number,
             proof_picture = proof_picture,
@@ -176,10 +174,10 @@ class Establishment(models_django.Model):
     tenant_type = models_django.CharField(max_length=255)
     utilities = models_djongo.JSONField(default=list)
     description = models_django.TextField()
-    photos = models_djongo.JSONField(default=list)
+    loc_picture = models_django.CharField(max_length=9999999)
     proof_type = models_django.CharField(max_length=255)
     proof_number = models_django.CharField(max_length=255)
-    proof_picture = models_django.URLField()
+    proof_picture = models_django.CharField(max_length=9999999)
     reviews = models_djongo.JSONField(default=list)
     verified = models_django.BooleanField(default=False)
     archived = models_django.BooleanField(default=False)
@@ -238,7 +236,7 @@ class RoomManager(models_django.Manager):
     
 class Room(models_django.Model):
     _id = models_djongo.ObjectIdField()
-    availability = models_django.BooleanField()
+    availability = models_django.BooleanField(default=True)
     price_lower = models_django.IntegerField()
     price_upper = models_django.IntegerField()
     capacity = models_django.PositiveIntegerField()
