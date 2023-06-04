@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/admin/view_accomms',
+      initialRoute: '/',
       routes: {
         '/': (context) => const AuthWrapper(),
         '/signin': (context) => const SignInPage(),
