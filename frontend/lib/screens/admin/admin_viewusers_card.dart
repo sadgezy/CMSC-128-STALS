@@ -39,14 +39,14 @@ class _PendingUserCardState extends State<PendingUserCard> {
 
   void deleteUser() async {
     try {
-      Response response = await Dio().delete('http://127.0.0.1:8000/delete-user/${widget.userId}/');
+      Response response_user = await Dio().delete('http://127.0.0.1:8000/delete-user/${widget.userId}/');
 
-      if (response.statusCode == 200) {
-        print('User deleted successfully!');
+      if (response_user.statusCode == 200) {
+        print('User was deleted successfully!');
         
         widget.fetchUnverifiedUsers(); 
       } else {
-        print('Failed to delete user');
+        print('Failed to delete!');
       }
 
     } catch (error) {
@@ -392,16 +392,17 @@ class _ArchiveUserCardState extends State<ArchiveUserCard> {
 
   void deleteUser() async {
     try {
-      Response response = await Dio().delete('http://127.0.0.1:8000/delete-user/${widget.userId}/');
+      Response response_estab = await Dio().delete('http://127.0.0.1:8000/delete-all-userOwned-establishments/${widget.userId}/');
+      Response response_user = await Dio().delete('http://127.0.0.1:8000/delete-user/${widget.userId}/');
 
-      if (response.statusCode == 200) {
-        print('User deleted successfully!');
-        
-        widget.fetchArchivedUsers(); 
-      } else {
-        print('Failed to delete user');
+      if (response_user.statusCode == 200 && response_estab.statusCode == 200) {
+        print('User\'s owned establishment(s) was deleted successfully!');
+
+      }else{
+        print('Failed to unarchived user');
       }
 
+      widget.fetchArchivedUsers(); 
     } catch (error) {
       print(error.toString());
     }
