@@ -736,6 +736,13 @@ class _AccommPageState extends State<AccommPage> {
                                             Text("Sign in to file a report!"),
                                       ));
                                     }
+                                    if (!verified) {
+                                      return const AlertDialog(
+                                          content: Padding(
+                                        padding: EdgeInsets.all(8),
+                                        child: Text("Have account verified to file a report"),
+                                      ));
+                                    }
                                     return AlertDialog(
                                       scrollable: true,
                                       title: const Text("Report Listing"),

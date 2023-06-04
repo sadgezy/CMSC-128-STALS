@@ -54,6 +54,15 @@ class _PendingUserCardState extends State<PendingUserCard> {
       } else {
         print('Failed to approve user');
       }
+
+      String url2 = "http://127.0.0.1:8000/set-reject-user/";
+      final response2 =
+          await json.decode((await http.post(Uri.parse(url2), body: {
+        '_id': widget.userId,
+        'rejected': "False"
+      }))
+              .body);
+
     } catch (error) {
       print(error.toString());
     }
