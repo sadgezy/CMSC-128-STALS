@@ -16,6 +16,7 @@ class SignUpSerializer(serializers.ModelSerializer):
     suffix = serializers.CharField(max_length=10, required=False)
     phone_no = serializers.CharField(max_length=15)
     verified = serializers.BooleanField(default=False)
+    rejected = serializers.BooleanField(default=False)
     id_type = serializers.CharField(max_length=50, required=False)
     id_picture = serializers.CharField(required=False)
     id_number = serializers.CharField(max_length=50, required=False)
