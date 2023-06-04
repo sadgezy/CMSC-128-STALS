@@ -209,6 +209,14 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
       filterTitleList.add(filterRaw[i][1]);
     }
 
+    String verified = context.watch<UserProvider>().isVerified
+        ? 'Your account’s verification is still pending. Please wait.'
+        : 'Your account’s verification was declined. Please resubmit your details by editing your profile';
+
+    Color banner = context.watch<UserProvider>().isVerified
+        ? Colors.green.shade800
+        : Colors.red.shade800;
+
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
@@ -370,51 +378,68 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
       ),
       // the right drawer
       endDrawer: FilterDrawer(filter: accomFilter, callback: getFilter),
-      body: SingleChildScrollView(
-        child: FutureBuilder<List<AccomCardDetails>>(
-          future: _accommodationsFuture,
-          builder: (context, snapshot) {
-            if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-              // print("RAN");
-              print(snapshot);
-              List<AccomCardDetails> accommodations = snapshot.data!;
-              print(accommodations);
-              return Column(
-                children: accommodations.map((accommodation) {
-                  return Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
-                    child: AccomCard(details: accommodation),
-                  );
-                }).toList(),
-              );
-            } else if (snapshot.hasData && snapshot.data!.isEmpty ||
-                !snapshot.hasData) {
-              return Center(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    children: [
-                      const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20)),
-                      Image.asset(
-                        'assets/images/no_archived.png',
-                        height: 70,
-                      ),
-                      const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 10)),
-                      Text("No Accommodations in database ")
-                    ],
-                  ),
-                ),
-              );
-            } else if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            }
-            return CircularProgressIndicator();
-          },
+      body: Column(children: <Widget>[
+        Opacity(
+          opacity: 0.5,
+          child: MaterialBanner(
+            padding: EdgeInsets.all(5),
+            content: Text(verified, style: TextStyle(color: Colors.white)),
+            leading: Icon(Icons.info, color: Colors.white),
+            backgroundColor: banner,
+            actions: <Widget>[
+              TextButton(
+                onPressed: null,
+                child: const Text(""),
+              ),
+            ],
+          ),
         ),
-      ),
+        SingleChildScrollView(
+          child: FutureBuilder<List<AccomCardDetails>>(
+            future: _accommodationsFuture,
+            builder: (context, snapshot) {
+              if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                // print("RAN");
+                print(snapshot);
+                List<AccomCardDetails> accommodations = snapshot.data!;
+                print(accommodations);
+                return Column(
+                  children: accommodations.map((accommodation) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 7, horizontal: 15),
+                      child: AccomCard(details: accommodation),
+                    );
+                  }).toList(),
+                );
+              } else if (snapshot.hasData && snapshot.data!.isEmpty ||
+                  !snapshot.hasData) {
+                return Center(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      children: [
+                        const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 20)),
+                        Image.asset(
+                          'assets/images/no_archived.png',
+                          height: 70,
+                        ),
+                        const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 10)),
+                        Text("No Accommodations in database ")
+                      ],
+                    ),
+                  ),
+                );
+              } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              }
+              return CircularProgressIndicator();
+            },
+          ),
+        ),
+      ]),
     );
   }
 }
