@@ -46,22 +46,23 @@ class Item1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              stops: [
-                0.3,
-                1
-              ],
-              colors: [
-                Color(0xffff4000),
-                Color(0xffffcc66),
-              ]),
-          image: DecorationImage(
-              fit: BoxFit.scaleDown,
-              scale: 0.5,
-              alignment: Alignment.center,
-              image: NetworkImage(_checkurl))),
+        gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: [
+              0.3,
+              1
+            ],
+            colors: [
+              Color(0xffff4000),
+              Color(0xffffcc66),
+            ]),
+        // image: DecorationImage(
+        //     fit: BoxFit.scaleDown,
+        //     scale: 0.5,
+        //     alignment: Alignment.center,
+        //     image: NetworkImage(_checkurl))
+      ),
       child: const Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -70,22 +71,17 @@ class Item1 extends StatelessWidget {
             color: Color.fromARGB(255, 255, 255, 255),
             size: 75,
           ),
-          Text("1 Room",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold)),
-          Text("1 Bunk Bed",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17.0,
-                  fontWeight: FontWeight.w600)),
           Text("Max Capacity : 2",
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 17.0,
                   fontWeight: FontWeight.w600)),
           Text("Price: Php4,500",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 17.0,
+                  fontWeight: FontWeight.w600)),
+          Text("Availability: Yes",
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 17.0,
@@ -102,17 +98,18 @@ class Item2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              stops: [0.3, 1],
-              colors: [Color(0xff5f2c82), Color(0xff49a09d)]),
-          image: DecorationImage(
-              fit: BoxFit.scaleDown,
-              scale: 0.5,
-              alignment: Alignment.center,
-              //couldnt use the image asset for some reason
-              image: NetworkImage(_noturl))),
+        gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: [0.3, 1],
+            colors: [Color(0xff5f2c82), Color(0xff49a09d)]),
+        // image: DecorationImage(
+        //     fit: BoxFit.scaleDown,
+        //     scale: 0.5,
+        //     alignment: Alignment.center,
+        //     //couldnt use the image asset for some reason
+        //     image: NetworkImage(_noturl))
+      ),
       child: const Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -121,22 +118,17 @@ class Item2 extends StatelessWidget {
             color: Colors.white,
             size: 75,
           ),
-          Text("1 Room",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold)),
-          Text("2 Bunk Beds",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17.0,
-                  fontWeight: FontWeight.w600)),
           Text("Max Capacity : 4",
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 17.0,
                   fontWeight: FontWeight.w600)),
           Text("Price: Php3,500",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 17.0,
+                  fontWeight: FontWeight.w600)),
+          Text("Availability: Yes",
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 17.0,
@@ -153,22 +145,23 @@ class Item3 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              stops: [
-                0.3,
-                1
-              ],
-              colors: [
-                Color(0xffff4000),
-                Color(0xffffcc66),
-              ]),
-          image: DecorationImage(
-              fit: BoxFit.scaleDown,
-              scale: 0.5,
-              alignment: Alignment.center,
-              image: NetworkImage(_checkurl))),
+        gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: [
+              0.3,
+              1
+            ],
+            colors: [
+              Color(0xffff4000),
+              Color(0xffffcc66),
+            ]),
+        // image: DecorationImage(
+        //     fit: BoxFit.scaleDown,
+        //     scale: 0.5,
+        //     alignment: Alignment.center,
+        //     image: NetworkImage(_checkurl))
+      ),
       child: const Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -177,22 +170,17 @@ class Item3 extends StatelessWidget {
             color: Colors.white,
             size: 75,
           ),
-          Text("1 Room",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold)),
-          Text("2 Bunk Beds / 2 Beds",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17.0,
-                  fontWeight: FontWeight.w600)),
           Text("Max Capacity : 6",
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 17.0,
                   fontWeight: FontWeight.w600)),
           Text("Price: Php2,000",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 17.0,
+                  fontWeight: FontWeight.w600)),
+          Text("Availability: Yes",
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 17.0,
@@ -209,11 +197,12 @@ class Item4 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-          image: DecorationImage(
-              fit: BoxFit.scaleDown,
-              scale: 0.5,
-              alignment: Alignment.center,
-              image: NetworkImage(_checkurl))),
+          // image: DecorationImage(
+          //     fit: BoxFit.scaleDown,
+          //     scale: 0.5,
+          //     alignment: Alignment.center,
+          //     image: NetworkImage(_checkurl))
+          ),
       child: const Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -222,22 +211,17 @@ class Item4 extends StatelessWidget {
             color: Colors.white,
             size: 75,
           ),
-          Text("1 Room",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold)),
-          Text("4 Bunk Beds",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17.0,
-                  fontWeight: FontWeight.w600)),
           Text("Max Capacity : 8",
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 17.0,
                   fontWeight: FontWeight.w600)),
           Text("Price: Php1,500",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 17.0,
+                  fontWeight: FontWeight.w600)),
+          Text("Availability: Yes",
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 17.0,
@@ -254,22 +238,23 @@ class Item5 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              stops: [
-                0.3,
-                1
-              ],
-              colors: [
-                Color.fromARGB(255, 210, 80, 184),
-                Color.fromARGB(255, 226, 203, 100)
-              ]),
-          image: DecorationImage(
-              fit: BoxFit.scaleDown,
-              scale: 0.5,
-              alignment: Alignment.center,
-              image: NetworkImage(_noturl))),
+        gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: [
+              0.3,
+              1
+            ],
+            colors: [
+              Color.fromARGB(255, 210, 80, 184),
+              Color.fromARGB(255, 226, 203, 100)
+            ]),
+        // image: DecorationImage(
+        //     fit: BoxFit.scaleDown,
+        //     scale: 0.5,
+        //     alignment: Alignment.center,
+        //     image: NetworkImage(_noturl))
+      ),
       child: const Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -278,22 +263,17 @@ class Item5 extends StatelessWidget {
             color: Colors.white,
             size: 75,
           ),
-          Text("2 Rooms",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold)),
-          Text("1 Bed each room",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17.0,
-                  fontWeight: FontWeight.w600)),
           Text("Max Capacity : 2",
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 17.0,
                   fontWeight: FontWeight.w600)),
           Text("Price: Php8,500",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 17.0,
+                  fontWeight: FontWeight.w600)),
+          Text("Availability: Yes",
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 17.0,
@@ -310,22 +290,23 @@ class Item6 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              stops: [
-                0.3,
-                1
-              ],
-              colors: [
-                Color.fromARGB(255, 71, 151, 194),
-                Color.fromARGB(255, 72, 210, 157)
-              ]),
-          image: DecorationImage(
-              fit: BoxFit.scaleDown,
-              scale: 0.5,
-              alignment: Alignment.center,
-              image: NetworkImage(_checkurl))),
+        gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: [
+              0.3,
+              1
+            ],
+            colors: [
+              Color.fromARGB(255, 71, 151, 194),
+              Color.fromARGB(255, 72, 210, 157)
+            ]),
+        // image: DecorationImage(
+        //     fit: BoxFit.scaleDown,
+        //     scale: 0.5,
+        //     alignment: Alignment.center,
+        //     image: NetworkImage(_checkurl))
+      ),
       child: const Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -334,22 +315,17 @@ class Item6 extends StatelessWidget {
             color: Colors.white,
             size: 75,
           ),
-          Text("2 Rooms",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold)),
-          Text("2 Beds each room",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17.0,
-                  fontWeight: FontWeight.w600)),
           Text("Max Capacity : 4",
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 17.0,
                   fontWeight: FontWeight.w600)),
           Text("Price: Php3,000",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 17.0,
+                  fontWeight: FontWeight.w600)),
+          Text("Availability: Yes",
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 17.0,
@@ -366,22 +342,23 @@ class Item7 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              stops: [
-                0.3,
-                1
-              ],
-              colors: [
-                Color.fromARGB(255, 125, 85, 217),
-                Color.fromARGB(255, 88, 111, 57)
-              ]),
-          image: DecorationImage(
-              fit: BoxFit.scaleDown,
-              scale: 0.5,
-              alignment: Alignment.center,
-              image: NetworkImage(_noturl))),
+        gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: [
+              0.3,
+              1
+            ],
+            colors: [
+              Color.fromARGB(255, 125, 85, 217),
+              Color.fromARGB(255, 88, 111, 57)
+            ]),
+        // image: DecorationImage(
+        //     fit: BoxFit.scaleDown,
+        //     scale: 0.5,
+        //     alignment: Alignment.center,
+        //     image: NetworkImage(_noturl))
+      ),
       child: const Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -390,22 +367,17 @@ class Item7 extends StatelessWidget {
             color: Colors.white,
             size: 75,
           ),
-          Text("2 Rooms",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold)),
-          Text("1 Bunk Bed / 1 Bed each room",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17.0,
-                  fontWeight: FontWeight.w600)),
           Text("Max Capacity : 6",
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 17.0,
                   fontWeight: FontWeight.w600)),
           Text("Price: Php2,500",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 17.0,
+                  fontWeight: FontWeight.w600)),
+          Text("Availability: Yes",
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 17.0,

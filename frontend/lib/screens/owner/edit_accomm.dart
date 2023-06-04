@@ -21,6 +21,9 @@ Edit Accom: Basically the same as Accom page but
 
 */
 
+//These checkurl is a check mark png if its available
+// noturl is a not avaiable png
+//not yet implemented to change so i'll comment out the image
 const _checkurl = 'https://img.icons8.com/?size=512&id=11695&format=png';
 const _noturl = 'https://img.icons8.com/?size=512&id=TfRrgMHDWJk3&format=png';
 
@@ -30,7 +33,8 @@ class Item1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.white, width: 2),
         gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -42,11 +46,11 @@ class Item1 extends StatelessWidget {
               Color(0xffff4000),
               Color(0xffffcc66),
             ]),
-        image: DecorationImage(
-            fit: BoxFit.scaleDown,
-            scale: 0.5,
-            alignment: Alignment.center,
-            image: NetworkImage(_checkurl)),
+        // image: DecorationImage(
+        //     fit: BoxFit.scaleDown,
+        //     scale: 0.5,
+        //     alignment: Alignment.center,
+        //     image: NetworkImage(_checkurl)),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -67,54 +71,43 @@ class Item1 extends StatelessWidget {
                     borderRadius: BorderRadius.circular(30),
                   ),
                   contentPadding: EdgeInsets.all(2),
-                  labelText: '# Rooms',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
-          ),
-          const SizedBox(height: 5),
-          SizedBox(
-            height: 25,
-            width: 150,
-            child: TextFormField(
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  contentPadding: EdgeInsets.all(5),
-                  labelText: 'Bedroom Details',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
-          ),
-          const SizedBox(height: 5),
-          SizedBox(
-            height: 25,
-            width: 150,
-            child: TextFormField(
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  contentPadding: EdgeInsets.all(5),
                   labelText: 'Max Capacity',
                   labelStyle: TextStyle(color: Colors.white)),
             ),
           ),
           const SizedBox(height: 5),
-          SizedBox(
-            height: 25,
-            width: 150,
-            child: TextFormField(
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  contentPadding: EdgeInsets.all(5),
-                  labelText: 'Price ',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 25,
+                width: 75,
+                child: TextFormField(
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      contentPadding: EdgeInsets.all(5),
+                      labelText: 'Min-Price ',
+                      labelStyle: TextStyle(color: Colors.white)),
+                ),
+              ),
+              SizedBox(
+                height: 25,
+                width: 75,
+                child: TextFormField(
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      contentPadding: EdgeInsets.all(5),
+                      labelText: 'Max-Price ',
+                      labelStyle: TextStyle(color: Colors.white)),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 5),
           const Text('Is this Room Available?',
@@ -150,17 +143,18 @@ class Item2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              stops: [0.3, 1],
-              colors: [Color(0xff5f2c82), Color(0xff49a09d)]),
-          image: DecorationImage(
-              fit: BoxFit.scaleDown,
-              scale: 0.5,
-              alignment: Alignment.center,
-              //couldnt use the image asset for some reason
-              image: NetworkImage(_noturl))),
+        gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: [0.3, 1],
+            colors: [Color(0xff5f2c82), Color(0xff49a09d)]),
+        // image: DecorationImage(
+        //     fit: BoxFit.scaleDown,
+        //     scale: 0.5,
+        //     alignment: Alignment.center,
+        //     //couldnt use the image asset for some reason
+        //     image: NetworkImage(_noturl))
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -180,54 +174,43 @@ class Item2 extends StatelessWidget {
                     borderRadius: BorderRadius.circular(30),
                   ),
                   contentPadding: EdgeInsets.all(2),
-                  labelText: '# Rooms',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
-          ),
-          const SizedBox(height: 5),
-          SizedBox(
-            height: 25,
-            width: 150,
-            child: TextFormField(
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  contentPadding: EdgeInsets.all(5),
-                  labelText: 'Bedroom Details',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
-          ),
-          const SizedBox(height: 5),
-          SizedBox(
-            height: 25,
-            width: 150,
-            child: TextFormField(
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  contentPadding: EdgeInsets.all(5),
                   labelText: 'Max Capacity',
                   labelStyle: TextStyle(color: Colors.white)),
             ),
           ),
           const SizedBox(height: 5),
-          SizedBox(
-            height: 25,
-            width: 150,
-            child: TextFormField(
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  contentPadding: EdgeInsets.all(5),
-                  labelText: 'Price ',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 25,
+                width: 75,
+                child: TextFormField(
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      contentPadding: EdgeInsets.all(5),
+                      labelText: 'Min-Price ',
+                      labelStyle: TextStyle(color: Colors.white)),
+                ),
+              ),
+              SizedBox(
+                height: 25,
+                width: 75,
+                child: TextFormField(
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      contentPadding: EdgeInsets.all(5),
+                      labelText: 'Max-Price ',
+                      labelStyle: TextStyle(color: Colors.white)),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 5),
           const Text('Is this Room Available?',
@@ -263,22 +246,23 @@ class Item3 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              stops: [
-                0.3,
-                1
-              ],
-              colors: [
-                Color(0xffff4000),
-                Color(0xffffcc66),
-              ]),
-          image: DecorationImage(
-              fit: BoxFit.scaleDown,
-              scale: 0.5,
-              alignment: Alignment.center,
-              image: NetworkImage(_checkurl))),
+        gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: [
+              0.3,
+              1
+            ],
+            colors: [
+              Color(0xffff4000),
+              Color(0xffffcc66),
+            ]),
+        // image: DecorationImage(
+        //     fit: BoxFit.scaleDown,
+        //     scale: 0.5,
+        //     alignment: Alignment.center,
+        //     image: NetworkImage(_checkurl))
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -298,54 +282,43 @@ class Item3 extends StatelessWidget {
                     borderRadius: BorderRadius.circular(30),
                   ),
                   contentPadding: EdgeInsets.all(2),
-                  labelText: '# Rooms',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
-          ),
-          const SizedBox(height: 5),
-          SizedBox(
-            height: 25,
-            width: 150,
-            child: TextFormField(
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  contentPadding: EdgeInsets.all(5),
-                  labelText: 'Bedroom Details',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
-          ),
-          const SizedBox(height: 5),
-          SizedBox(
-            height: 25,
-            width: 150,
-            child: TextFormField(
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  contentPadding: EdgeInsets.all(5),
                   labelText: 'Max Capacity',
                   labelStyle: TextStyle(color: Colors.white)),
             ),
           ),
           const SizedBox(height: 5),
-          SizedBox(
-            height: 25,
-            width: 150,
-            child: TextFormField(
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  contentPadding: EdgeInsets.all(5),
-                  labelText: 'Price ',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 25,
+                width: 75,
+                child: TextFormField(
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      contentPadding: EdgeInsets.all(5),
+                      labelText: 'Min-Price ',
+                      labelStyle: TextStyle(color: Colors.white)),
+                ),
+              ),
+              SizedBox(
+                height: 25,
+                width: 75,
+                child: TextFormField(
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      contentPadding: EdgeInsets.all(5),
+                      labelText: 'Max-Price ',
+                      labelStyle: TextStyle(color: Colors.white)),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 5),
           const Text('Is this Room Available?',
@@ -381,11 +354,12 @@ class Item4 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-          image: DecorationImage(
-              fit: BoxFit.scaleDown,
-              scale: 0.5,
-              alignment: Alignment.center,
-              image: NetworkImage(_checkurl))),
+          // image: DecorationImage(
+          //     fit: BoxFit.scaleDown,
+          //     scale: 0.5,
+          //     alignment: Alignment.center,
+          //     image: NetworkImage(_checkurl))
+          ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -405,54 +379,43 @@ class Item4 extends StatelessWidget {
                     borderRadius: BorderRadius.circular(30),
                   ),
                   contentPadding: EdgeInsets.all(2),
-                  labelText: '# Rooms',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
-          ),
-          const SizedBox(height: 5),
-          SizedBox(
-            height: 25,
-            width: 150,
-            child: TextFormField(
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  contentPadding: EdgeInsets.all(5),
-                  labelText: 'Bedroom Details',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
-          ),
-          const SizedBox(height: 5),
-          SizedBox(
-            height: 25,
-            width: 150,
-            child: TextFormField(
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  contentPadding: EdgeInsets.all(5),
                   labelText: 'Max Capacity',
                   labelStyle: TextStyle(color: Colors.white)),
             ),
           ),
           const SizedBox(height: 5),
-          SizedBox(
-            height: 25,
-            width: 150,
-            child: TextFormField(
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  contentPadding: EdgeInsets.all(5),
-                  labelText: 'Price ',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 25,
+                width: 75,
+                child: TextFormField(
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      contentPadding: EdgeInsets.all(5),
+                      labelText: 'Min-Price ',
+                      labelStyle: TextStyle(color: Colors.white)),
+                ),
+              ),
+              SizedBox(
+                height: 25,
+                width: 75,
+                child: TextFormField(
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      contentPadding: EdgeInsets.all(5),
+                      labelText: 'Max-Price ',
+                      labelStyle: TextStyle(color: Colors.white)),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 5),
           const Text('Is this Room Available?',
@@ -488,22 +451,23 @@ class Item5 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              stops: [
-                0.3,
-                1
-              ],
-              colors: [
-                Color.fromARGB(255, 210, 80, 184),
-                Color.fromARGB(255, 226, 203, 100)
-              ]),
-          image: DecorationImage(
-              fit: BoxFit.scaleDown,
-              scale: 0.5,
-              alignment: Alignment.center,
-              image: NetworkImage(_noturl))),
+        gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: [
+              0.3,
+              1
+            ],
+            colors: [
+              Color.fromARGB(255, 210, 80, 184),
+              Color.fromARGB(255, 226, 203, 100)
+            ]),
+        // image: DecorationImage(
+        //     fit: BoxFit.scaleDown,
+        //     scale: 0.5,
+        //     alignment: Alignment.center,
+        //     image: NetworkImage(_noturl))
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -523,54 +487,43 @@ class Item5 extends StatelessWidget {
                     borderRadius: BorderRadius.circular(30),
                   ),
                   contentPadding: EdgeInsets.all(2),
-                  labelText: '# Rooms',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
-          ),
-          const SizedBox(height: 5),
-          SizedBox(
-            height: 25,
-            width: 150,
-            child: TextFormField(
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  contentPadding: EdgeInsets.all(5),
-                  labelText: 'Bedroom Details',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
-          ),
-          const SizedBox(height: 5),
-          SizedBox(
-            height: 25,
-            width: 150,
-            child: TextFormField(
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  contentPadding: EdgeInsets.all(5),
                   labelText: 'Max Capacity',
                   labelStyle: TextStyle(color: Colors.white)),
             ),
           ),
           const SizedBox(height: 5),
-          SizedBox(
-            height: 25,
-            width: 150,
-            child: TextFormField(
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  contentPadding: EdgeInsets.all(5),
-                  labelText: 'Price ',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 25,
+                width: 75,
+                child: TextFormField(
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      contentPadding: EdgeInsets.all(5),
+                      labelText: 'Min-Price ',
+                      labelStyle: TextStyle(color: Colors.white)),
+                ),
+              ),
+              SizedBox(
+                height: 25,
+                width: 75,
+                child: TextFormField(
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      contentPadding: EdgeInsets.all(5),
+                      labelText: 'Max-Price ',
+                      labelStyle: TextStyle(color: Colors.white)),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 5),
           const Text('Is this Room Available?',
@@ -606,22 +559,23 @@ class Item6 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              stops: [
-                0.3,
-                1
-              ],
-              colors: [
-                Color.fromARGB(255, 71, 151, 194),
-                Color.fromARGB(255, 72, 210, 157)
-              ]),
-          image: DecorationImage(
-              fit: BoxFit.scaleDown,
-              scale: 0.5,
-              alignment: Alignment.center,
-              image: NetworkImage(_checkurl))),
+        gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: [
+              0.3,
+              1
+            ],
+            colors: [
+              Color.fromARGB(255, 71, 151, 194),
+              Color.fromARGB(255, 72, 210, 157)
+            ]),
+        // image: DecorationImage(
+        //     fit: BoxFit.scaleDown,
+        //     scale: 0.5,
+        //     alignment: Alignment.center,
+        //     image: NetworkImage(_checkurl))
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -641,54 +595,43 @@ class Item6 extends StatelessWidget {
                     borderRadius: BorderRadius.circular(30),
                   ),
                   contentPadding: EdgeInsets.all(2),
-                  labelText: '# Rooms',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
-          ),
-          const SizedBox(height: 5),
-          SizedBox(
-            height: 25,
-            width: 150,
-            child: TextFormField(
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  contentPadding: EdgeInsets.all(5),
-                  labelText: 'Bedroom Details',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
-          ),
-          const SizedBox(height: 5),
-          SizedBox(
-            height: 25,
-            width: 150,
-            child: TextFormField(
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  contentPadding: EdgeInsets.all(5),
                   labelText: 'Max Capacity',
                   labelStyle: TextStyle(color: Colors.white)),
             ),
           ),
           const SizedBox(height: 5),
-          SizedBox(
-            height: 25,
-            width: 150,
-            child: TextFormField(
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  contentPadding: EdgeInsets.all(5),
-                  labelText: 'Price ',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 25,
+                width: 75,
+                child: TextFormField(
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      contentPadding: EdgeInsets.all(5),
+                      labelText: 'Min-Price ',
+                      labelStyle: TextStyle(color: Colors.white)),
+                ),
+              ),
+              SizedBox(
+                height: 25,
+                width: 75,
+                child: TextFormField(
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      contentPadding: EdgeInsets.all(5),
+                      labelText: 'Max-Price ',
+                      labelStyle: TextStyle(color: Colors.white)),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 5),
           const Text('Is this Room Available?',
@@ -726,22 +669,23 @@ class Item7 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              stops: [
-                0.3,
-                1
-              ],
-              colors: [
-                Color.fromARGB(255, 125, 85, 217),
-                Color.fromARGB(255, 88, 111, 57)
-              ]),
-          image: DecorationImage(
-              fit: BoxFit.scaleDown,
-              scale: 0.5,
-              alignment: Alignment.center,
-              image: NetworkImage(_checkurl))),
+        gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: [
+              0.3,
+              1
+            ],
+            colors: [
+              Color.fromARGB(255, 125, 85, 217),
+              Color.fromARGB(255, 88, 111, 57)
+            ]),
+        // image: DecorationImage(
+        //     fit: BoxFit.scaleDown,
+        //     scale: 0.5,
+        //     alignment: Alignment.center,
+        //     image: NetworkImage(_checkurl))
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -761,54 +705,43 @@ class Item7 extends StatelessWidget {
                     borderRadius: BorderRadius.circular(30),
                   ),
                   contentPadding: EdgeInsets.all(2),
-                  labelText: '# Rooms',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
-          ),
-          const SizedBox(height: 5),
-          SizedBox(
-            height: 25,
-            width: 150,
-            child: TextFormField(
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  contentPadding: EdgeInsets.all(5),
-                  labelText: 'Bedroom Details',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
-          ),
-          const SizedBox(height: 5),
-          SizedBox(
-            height: 25,
-            width: 150,
-            child: TextFormField(
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  contentPadding: EdgeInsets.all(5),
                   labelText: 'Max Capacity',
                   labelStyle: TextStyle(color: Colors.white)),
             ),
           ),
           const SizedBox(height: 5),
-          SizedBox(
-            height: 25,
-            width: 150,
-            child: TextFormField(
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  contentPadding: EdgeInsets.all(5),
-                  labelText: 'Price ',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 25,
+                width: 75,
+                child: TextFormField(
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      contentPadding: EdgeInsets.all(5),
+                      labelText: 'Min-Price ',
+                      labelStyle: TextStyle(color: Colors.white)),
+                ),
+              ),
+              SizedBox(
+                height: 25,
+                width: 75,
+                child: TextFormField(
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      contentPadding: EdgeInsets.all(5),
+                      labelText: 'Max-Price ',
+                      labelStyle: TextStyle(color: Colors.white)),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 5),
           const Text('Is this Room Available?',
@@ -1097,25 +1030,6 @@ class _EditAccommState extends State<EditAccomm> {
                   //Alternative Cards
                   Column(
                     children: [
-                      // Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                      //   const Text("Click Here to add Room details",
-                      //       style: TextStyle(color: Colors.black)),
-                      //   //this button should reroute to the Add Rooms route?
-                      //   ElevatedButton(
-                      //       onPressed: () {
-                      //         Navigator.pushNamed(
-                      //             context, '/add_accommodation');
-                      //       },
-                      //       style: ElevatedButton.styleFrom(
-                      //           shape: const CircleBorder(),
-                      //           backgroundColor: Colors.white,
-                      //           foregroundColor:
-                      //               const Color.fromARGB(255, 25, 83, 95)),
-                      //       child: const Icon(
-                      //         Icons.save_as,
-                      //         size: 20,
-                      //       )),
-                      // ]),
                       CarouselSlider(
                         options: CarouselOptions(
                           height: 275.0,
@@ -1135,13 +1049,64 @@ class _EditAccommState extends State<EditAccomm> {
                         items: cardList.map((card) {
                           return Builder(builder: (BuildContext context) {
                             return SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.30,
-                              width: MediaQuery.of(context).size.width,
-                              child: Card(
-                                color: Colors.blueAccent,
-                                child: card,
-                              ),
-                            );
+                                height:
+                                    MediaQuery.of(context).size.height * 0.30,
+                                width: MediaQuery.of(context).size.width,
+                                child: Card(
+                                  color: const Color.fromARGB(255, 25, 83, 95),
+                                  shape: RoundedRectangleBorder(
+                                      side: BorderSide(color: Colors.white),
+                                      borderRadius:
+                                          BorderRadius.circular(20.0)),
+                                  margin: const EdgeInsets.all(12),
+                                  elevation: 4,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 8.0, horizontal: 16),
+                                    child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          //Button for edit
+                                          Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                const Text("Edit Room Details",
+                                                    style: TextStyle(
+                                                        color: Color.fromARGB(
+                                                            255,
+                                                            225,
+                                                            225,
+                                                            225))),
+                                                //this button should reroute to the Add Rooms route?
+                                                ElevatedButton(
+                                                    onPressed: () {
+                                                      Navigator.pushNamed(
+                                                          context,
+                                                          '/add_accommodation');
+                                                    },
+                                                    style: ElevatedButton.styleFrom(
+                                                        shape:
+                                                            const CircleBorder(),
+                                                        backgroundColor: Colors
+                                                            .white,
+                                                        foregroundColor:
+                                                            const Color
+                                                                    .fromARGB(
+                                                                255,
+                                                                25,
+                                                                83,
+                                                                95)),
+                                                    child: const Icon(
+                                                      Icons.save_as,
+                                                      size: 20,
+                                                    )),
+                                              ]),
+                                          //the actual card information
+                                          card,
+                                        ]),
+                                  ),
+                                ));
                           });
                         }).toList(),
                       ),
