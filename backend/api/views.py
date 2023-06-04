@@ -876,3 +876,39 @@ def add_new_proof_estab(request):
     estab.save()
 
     return Response(data={"message": "Successfully add new proof for establishment"})
+
+@api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+def get_num_users(request):   
+    count = User.objects.exclude(user_type="admin").count()
+    
+
+    return Response(data={"count": count})
+
+@api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+def get_total_login(request):   
+    
+    try:
+        room = Room.objects.get(capacity=-999)
+    except Room.DoesNotExist:
+        Room.objects.create(capacity=-999, price_lower=1)
+        return Response(data={"count": 1})
+    
+    return Response(data={"count": room.price_lower})
+
+@api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+def add_login(request):   
+    print("HELLO")
+    try:
+        room = Room.objects.get(capacity=-999)
+    except Room.DoesNotExist:
+        Room.objects.create(capacity=-999, price_lower=1)
+        return Response(data={"count": 1})
+    
+    room.price_lower = room.price_lower+1
+    print(room.price_lower)
+    room.save()
+    
+    return Response(data={"count": 1})

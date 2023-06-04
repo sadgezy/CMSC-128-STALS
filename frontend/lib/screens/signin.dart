@@ -98,6 +98,9 @@ class _SignInPageState extends State<SignInPage> {
                 response2[0]["user_type"],
                 response2[0]["verified"],
                 response2[0]["rejected"]);
+            
+            String url3 = "http://127.0.0.1:8000/add-login-count/";
+            final response3 = await http.get(Uri.parse(url3));
           } else {
             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                 content:

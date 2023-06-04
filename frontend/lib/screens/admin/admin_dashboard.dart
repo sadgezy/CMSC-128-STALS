@@ -6,6 +6,8 @@ import '../../UI_parameters.dart' as UIParameter;
 import 'package:provider/provider.dart';
 import 'package:stals_frontend/providers/token_provider.dart';
 import 'package:stals_frontend/providers/user_provider.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class AdminDashBoard extends StatefulWidget {
   const AdminDashBoard({super.key});
@@ -16,6 +18,29 @@ class AdminDashBoard extends StatefulWidget {
 
 class _AdminDashBoardState extends State<AdminDashBoard> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  int responseData = 0;
+  int responseData2 = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchData();
+  }
+
+  fetchData() async {
+    String url1 = "http://127.0.0.1:8000/get-num-users/";
+      final response = await http.get(Uri.parse(url1));
+
+    String url2 = "http://127.0.0.1:8000/get-total-login/";
+      final response2 = await http.get(Uri.parse(url2));
+
+      setState(() {
+        responseData = json.decode(response.body)["count"]; 
+        responseData2 = json.decode(response2.body)["count"];
+      });
+      
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -156,21 +181,16 @@ class _AdminDashBoardState extends State<AdminDashBoard> {
                       ])),
                 ),
                 const SizedBox(height: 20),
-                const StatCard(
+                StatCard(
                     title: "Registered Users",
                     icon: Icons.person_outline_sharp,
-                    value: 75),
+                    value: responseData),
                 const SizedBox(height: 10),
-                const StatCard(
-                    title: "App Visits (Day)", icon: Icons.bar_chart, value: 7),
+                StatCard(
+                    title: "Total Logins", icon: Icons.bar_chart, value: responseData2),
                 const SizedBox(
                   height: 10,
                 ),
-                const StatCard(
-                  title: "App Visits (Week)",
-                  icon: Icons.bar_chart,
-                  value: 75,
-                )
               ])))),
     );
   }

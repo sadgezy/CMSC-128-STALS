@@ -71,4 +71,8 @@ urlpatterns = [
 
     path('get-one-user-using-id/<str:pk>/', views.get_one_user_using_id),
 
+    path('get-num-users/', views.get_num_users),
+    path('get-total-login/', views.get_total_login),
+    path('add-login-count/', views.add_login)
+
  ]
