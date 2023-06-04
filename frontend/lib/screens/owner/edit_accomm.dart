@@ -33,107 +33,113 @@ class Item1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.white, width: 2),
-        gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            stops: [
-              0.3,
-              1
-            ],
-            colors: [
-              Color(0xffff4000),
-              Color(0xffffcc66),
-            ]),
-        // image: DecorationImage(
-        //     fit: BoxFit.scaleDown,
-        //     scale: 0.5,
-        //     alignment: Alignment.center,
-        //     image: NetworkImage(_checkurl)),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          const Icon(
-            Icons.king_bed_outlined,
-            color: Colors.white,
-            size: 50,
-          ),
-          const SizedBox(height: 5),
-          SizedBox(
-            height: 25,
-            width: 150,
-            child: TextFormField(
-              style: const TextStyle(fontSize: 12, color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  contentPadding: EdgeInsets.all(2),
-                  labelText: 'Max Capacity',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
-          ),
-          const SizedBox(height: 5),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 25,
-                width: 75,
-                child: TextFormField(
-                  style: const TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      contentPadding: EdgeInsets.all(5),
-                      labelText: 'Min-Price ',
-                      labelStyle: TextStyle(color: Colors.white)),
-                ),
-              ),
-              SizedBox(
-                height: 25,
-                width: 75,
-                child: TextFormField(
-                  style: const TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      contentPadding: EdgeInsets.all(5),
-                      labelText: 'Max-Price ',
-                      labelStyle: TextStyle(color: Colors.white)),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 5),
-          const Text('Is this Room Available?',
-              style: TextStyle(color: Colors.white)),
-          const SizedBox(
-            width: 20,
-          ),
-          ToggleSwitch(
-            minWidth: 90.0,
-            cornerRadius: 20.0,
-            activeBgColors: [
-              [Colors.green[800]!],
-              [Colors.red[800]!]
-            ],
-            activeFgColor: Colors.white,
-            inactiveBgColor: Colors.grey,
-            inactiveFgColor: Colors.white,
-            initialLabelIndex: 1,
-            totalSwitches: 2,
-            labels: const ['Yes', 'No'],
-            radiusStyle: true,
-            onToggle: (index) {},
-          ),
-        ],
-      ),
-    );
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.white, width: 2),
+          gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              stops: [
+                0.3,
+                1
+              ],
+              colors: [
+                Color(0xffff4000),
+                Color(0xffffcc66),
+              ]),
+          // image: DecorationImage(
+          //     fit: BoxFit.scaleDown,
+          //     scale: 0.5,
+          //     alignment: Alignment.center,
+          //     image: NetworkImage(_checkurl)),
+        ),
+        child: Column(
+          children: [
+            SizedBox(
+                width: 1000,
+                child: Column(
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        const Icon(
+                          Icons.king_bed_outlined,
+                          color: Colors.white,
+                          size: 50,
+                        ),
+                        const SizedBox(height: 5),
+                        SizedBox(
+                          height: 25,
+                          width: 250,
+                          child: TextFormField(
+                            style: const TextStyle(
+                                fontSize: 12, color: Colors.white),
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                contentPadding: EdgeInsets.all(2),
+                                labelText: 'Max Capacity',
+                                labelStyle: TextStyle(color: Colors.white)),
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        SizedBox(
+                          height: 25,
+                          width: 250,
+                          child: TextFormField(
+                            style: const TextStyle(color: Colors.white),
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                contentPadding: EdgeInsets.all(5),
+                                labelText: 'Min-Price ',
+                                labelStyle: TextStyle(color: Colors.white)),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 25,
+                          width: 250,
+                          child: TextFormField(
+                            style: const TextStyle(color: Colors.white),
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                contentPadding: EdgeInsets.all(5),
+                                labelText: 'Max-Price ',
+                                labelStyle: TextStyle(color: Colors.white)),
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        const Text('Is this Room Available?',
+                            style: TextStyle(color: Colors.white)),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        ToggleSwitch(
+                          minWidth: 90.0,
+                          cornerRadius: 20.0,
+                          activeBgColors: [
+                            [Colors.green[800]!],
+                            [Colors.red[800]!]
+                          ],
+                          activeFgColor: Colors.white,
+                          inactiveBgColor: Colors.grey,
+                          inactiveFgColor: Colors.white,
+                          initialLabelIndex: 1,
+                          totalSwitches: 2,
+                          labels: const ['Yes', 'No'],
+                          radiusStyle: true,
+                          onToggle: (index) {},
+                        ),
+                      ],
+                    ),
+                  ],
+                ))
+          ],
+        ));
   }
 }
 
@@ -179,38 +185,33 @@ class Item2 extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 5),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 25,
-                width: 75,
-                child: TextFormField(
-                  style: const TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      contentPadding: EdgeInsets.all(5),
-                      labelText: 'Min-Price ',
-                      labelStyle: TextStyle(color: Colors.white)),
-                ),
-              ),
-              SizedBox(
-                height: 25,
-                width: 75,
-                child: TextFormField(
-                  style: const TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      contentPadding: EdgeInsets.all(5),
-                      labelText: 'Max-Price ',
-                      labelStyle: TextStyle(color: Colors.white)),
-                ),
-              ),
-            ],
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(5),
+                  labelText: 'Min-Price ',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(5),
+                  labelText: 'Max-Price ',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
           ),
           const SizedBox(height: 5),
           const Text('Is this Room Available?',
@@ -287,38 +288,33 @@ class Item3 extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 5),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 25,
-                width: 75,
-                child: TextFormField(
-                  style: const TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      contentPadding: EdgeInsets.all(5),
-                      labelText: 'Min-Price ',
-                      labelStyle: TextStyle(color: Colors.white)),
-                ),
-              ),
-              SizedBox(
-                height: 25,
-                width: 75,
-                child: TextFormField(
-                  style: const TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      contentPadding: EdgeInsets.all(5),
-                      labelText: 'Max-Price ',
-                      labelStyle: TextStyle(color: Colors.white)),
-                ),
-              ),
-            ],
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(5),
+                  labelText: 'Min-Price ',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(5),
+                  labelText: 'Max-Price ',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
           ),
           const SizedBox(height: 5),
           const Text('Is this Room Available?',
@@ -362,6 +358,7 @@ class Item4 extends StatelessWidget {
           ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           const Icon(
             Icons.king_bed_outlined,
@@ -384,38 +381,33 @@ class Item4 extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 5),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 25,
-                width: 75,
-                child: TextFormField(
-                  style: const TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      contentPadding: EdgeInsets.all(5),
-                      labelText: 'Min-Price ',
-                      labelStyle: TextStyle(color: Colors.white)),
-                ),
-              ),
-              SizedBox(
-                height: 25,
-                width: 75,
-                child: TextFormField(
-                  style: const TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      contentPadding: EdgeInsets.all(5),
-                      labelText: 'Max-Price ',
-                      labelStyle: TextStyle(color: Colors.white)),
-                ),
-              ),
-            ],
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(5),
+                  labelText: 'Min-Price ',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
+          ),
+          SizedBox(
+            height: 25,
+            width: 150,
+            child: TextFormField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  contentPadding: EdgeInsets.all(5),
+                  labelText: 'Max-Price ',
+                  labelStyle: TextStyle(color: Colors.white)),
+            ),
           ),
           const SizedBox(height: 5),
           const Text('Is this Room Available?',
@@ -470,6 +462,7 @@ class Item5 extends StatelessWidget {
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           const Icon(
             Icons.king_bed_outlined,
