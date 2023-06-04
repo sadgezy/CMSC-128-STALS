@@ -386,7 +386,7 @@ class _VerificationPageState extends State<VerificationPage> {
   @override
   void initState() {
     super.initState();
-    _chooseImage();
+    //_chooseImage();
   }
 
   void _chooseImage() async {
