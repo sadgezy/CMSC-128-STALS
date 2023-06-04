@@ -215,6 +215,7 @@ class UserProfileState extends State<UserProfile> {
                     ),
                     const SizedBox(height: 5),
                     DropdownButtonFormField(
+                      isExpanded: true,
                       items: const [
                         DropdownMenuItem(
                           value: 'UMID',
@@ -513,108 +514,114 @@ class UserProfileState extends State<UserProfile> {
                   : Colors.green,
         ),
         body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: height * 0.04),
-                    Center(
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+          child: Center(
+            child: ConstrainedBox(
+              constraints: new BoxConstraints(maxWidth: 550.0),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 40),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: height * 0.04),
+                        Center(
+                          child: Column(
                             children: [
-                              Text(fullname,
-                                  style: const TextStyle(
-                                      fontSize: 28,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xff1F2421))),
-                              SizedBox(
-                                width: 15,
-                                child: IconButton(
-                                  style: IconButton.styleFrom(
-                                    splashFactory: NoSplash.splashFactory,
-                                  ),
-                                  icon: const Icon(
-                                    Icons.edit,
-                                    size: 13,
-                                    color: Colors.grey,
-                                  ),
-                                  onPressed: () {
-                                    nameController.text = fullname;
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) =>
-                                            editNamePopup);
-                                  },
-                                ),
-                              )
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(fullname,
+                                      style: const TextStyle(
+                                          fontSize: 28,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xff1F2421))),
+                                  SizedBox(
+                                    width: 15,
+                                    child: IconButton(
+                                      style: IconButton.styleFrom(
+                                        splashFactory: NoSplash.splashFactory,
+                                      ),
+                                      icon: const Icon(
+                                        Icons.edit,
+                                        size: 13,
+                                        color: Colors.grey,
+                                      ),
+                                      onPressed: () {
+                                        nameController.text = fullname;
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) =>
+                                                editNamePopup);
+                                      },
+                                    ),
+                                  )
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 5, 0, 30),
+                                child: Text(username),
+                              ),
                             ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 5, 0, 30),
-                            child: Text(username),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                      child: Text("Account Details",
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: Color.fromARGB(255, 31, 36, 33))),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 25, vertical: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            buildInfo("Full Name", fullname),
-                            buildInfo("Username", username),
-                            buildInfo("E-mail Address", email),
-                            buildInfo("Phone Number", phone),
-                            buildInfo("Verification Status", verificationStatus)
-                          ],
                         ),
-                      ),
+                        const Padding(
+                          padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                          child: Text("Account Details",
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: Color.fromARGB(255, 31, 36, 33))),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 25, vertical: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                buildInfo("Full Name", fullname),
+                                buildInfo("Username", username),
+                                buildInfo("E-mail Address", email),
+                                buildInfo("Phone Number", phone),
+                                buildInfo(
+                                    "Verification Status", verificationStatus)
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        // const Divider(height: 1),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        verificationStatus != "pending"
+                            ? const Text("Identity Verification",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: Color.fromARGB(255, 31, 36, 33)))
+                            : const SizedBox(),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        buildVerification(),
+                        verificationStatus == "rejected"
+                            ? navigationButtons
+                            : backButton
+                      ],
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    // const Divider(height: 1),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    verificationStatus != "pending"
-                        ? const Text("Identity Verification",
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Color.fromARGB(255, 31, 36, 33)))
-                        : const SizedBox(),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    buildVerification(),
-                    verificationStatus == "rejected"
-                        ? navigationButtons
-                        : backButton
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ));
   }

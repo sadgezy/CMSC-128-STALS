@@ -259,17 +259,13 @@ def delete_establishment(request, pk):
     except Establishment.DoesNotExist:
         return Response(data={"message": "Establishment not found"}, status=status.HTTP_404_NOT_FOUND)
 
-    
     #if request.user != establishment.owner:
     #    return Response({'error': '?'}, status=status.HTTP_401_UNAUTHORIZED)
     estab = EstablishmentSerializer(establishment)
-    estab_json_accom = eval(estab.data['accommodations'])
-    for i in estab_json_accom:
-        try:
-            room = Room.objects.get(pk=ObjectId(i))
-            room.delete()
-        except:
-            return Response(data={"message":"Failure deleting a room"})
+
+    # Fetch and delete all rooms associated with the establishment
+    rooms_to_delete = Room.objects.filter(establishment_id=pk)
+    rooms_to_delete.delete()
 
     owner = User.objects.get(pk=ObjectId(estab.data['owner']))
     owner.establishments.remove(estab.data['_id'])
@@ -278,6 +274,7 @@ def delete_establishment(request, pk):
     establishment.delete()
 
     return Response(data={"message": "Successfully deleted establishment"})
+
 
 @api_view(['PUT'])
 def edit_establishment(request, pk):
@@ -842,3 +839,22 @@ def set_reject_user(request):
     user.save()
 
     return Response(data={"message": "Successfully set reject status of user"})
+
+@api_view(['POST'])
+# @permission_classes([IsAuthenticated])
+def set_reject_estab(request):   
+    print(request.data)
+    try:
+        estab = Establishment.objects.get(pk=ObjectId(request.data["_id"]))
+
+    except Establishment.DoesNotExist:
+         return Response(data={"message": "Establishment not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    if  (request.data["rejected"] == "True"):
+        status = True
+    else:
+        status = False 
+    estab.rejected = status
+    estab.save()
+
+    return Response(data={"message": "Successfully set reject status of establishment"})
