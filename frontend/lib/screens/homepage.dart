@@ -360,7 +360,7 @@ class _UnregisteredHomepageState extends State<UnregisteredHomepage> {
                       ),
                       const Padding(
                           padding: EdgeInsets.symmetric(vertical: 10)),
-                      Text("No Accommodations in database ")
+                      Text("No Accommodations Available! ")
                     ],
                   ),
                 ),
