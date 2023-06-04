@@ -50,6 +50,14 @@ class _AddAccommPageState extends State<AddAccommPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (!context.watch<UserProvider>().isOwner) {
+      //Navigator.pop(context);
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        Navigator.of(context).pushReplacementNamed('/');
+      });
+
+      return const CircularProgressIndicator();
+    }
     double height = MediaQuery.of(context).size.height;
     List<String> user =
         Provider.of<UserProvider>(context, listen: false).userInfo;
