@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 import 'dart:io';
+import 'package:stals_frontend/screens/owner/view_manage_accomms.dart';
 
 class AddAccommPage extends StatefulWidget {
   const AddAccommPage({super.key});
@@ -1425,7 +1426,10 @@ class _AddAccommPageState extends State<AddAccommPage> {
                                   body: json.encode(requestBody));
                               final decodedResponse =
                                   json.decode(response.body);
+
                               Navigator.pop(context);
+                              Navigator.pop(context);
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => const ViewOwnedAccomms()));
                             }
                           }
                         } else {

@@ -4,8 +4,10 @@ import '../../UI_parameters.dart' as UIParameter;
 import '../../components/accom_card.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
 import 'package:provider/provider.dart';
-import '../../providers/user_provider.dart';
+import 'package:stals_frontend/providers/token_provider.dart';
+import 'package:stals_frontend/providers/user_provider.dart';
 
 class ViewArchivedAccommodations extends StatefulWidget {
   const ViewArchivedAccommodations({super.key});
@@ -56,11 +58,6 @@ class _ViewArchivedAccommodationsState
        return const CircularProgressIndicator();
     }
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: UIParameter.MAROON,
-        automaticallyImplyLeading: false,
-        elevation: 0,
-      ),
       body: SingleChildScrollView(
         child: FutureBuilder<List<AccomCardDetails>>(
           future: _accommodationsFuture,
