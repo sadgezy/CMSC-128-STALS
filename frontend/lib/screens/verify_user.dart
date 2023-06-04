@@ -365,14 +365,14 @@ class _VerificationPageState extends State<VerificationPage> {
                 // ),
                 // DONT REMOVE. IMPORTANT FOR TESTING
                 if (uploadedImage)
-                  Column(
-                    children: [
-                      Text(
-                          "If you see this picture, this was from the database!"),
-                      Image.memory(
-                          Uri.parse(base64Image).data!.contentAsBytes())
-                    ],
-                  ),
+                  // Column(
+                  //   children: [
+                  //     Text(
+                  //         "If you see this picture, this was from the database!"),
+                  //     Image.memory(
+                  //         Uri.parse(base64Image).data!.contentAsBytes())
+                  //   ],
+                  // ),
                 const SizedBox(height: 70),
                 navigationButtons
               ],

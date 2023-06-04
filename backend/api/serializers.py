@@ -54,8 +54,8 @@ class SignUpSerializer(serializers.ModelSerializer):
     
         if not re.match(password_pattern, password):
             raise ValidationError("Password must contain at least one uppercase letter, one lowercase letter, and one digit!")
-        if not password.isalnum():
-            raise ValidationError("Password must not contain spaces or other special characters!")
+        if ' ' in password:
+            raise ValidationError("Password must not contain spaces!")
 
 
         return super().validate(attrs)
