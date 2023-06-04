@@ -120,14 +120,14 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
                   child: const Text('PROFILE'),
                 ),
               ),
-              ListTile(
-                title: const Text('Edit Accommodationomm'),
-                onTap: () {
-                  // Update the state of the app.
-                  // ...
-                  Navigator.pushNamed(context, '/owned/accomm/edit');
-                },
-              ),
+              // ListTile(
+              //   title: const Text('Edit Accommodationomm'),
+              //   onTap: () {
+              //     // Update the state of the app.
+              //     // ...
+              //     Navigator.pushNamed(context, '/owned/accomm/edit');
+              //   },
+              // ),
               ListTile(
                 title: const Text('Add Accommodation'),
                 onTap: () {

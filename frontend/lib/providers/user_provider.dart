@@ -7,9 +7,10 @@ class UserProvider with ChangeNotifier {
   String _username = "";
   String _type = "guest";
   bool _verified = false;
+  bool _rejected = false;
 
   List<dynamic> get userInfo {
-    return [_id, _email, _username, _type, _verified];
+    return [_id, _email, _username, _type, _verified, _rejected];
   }
 
   Future<void> _storeUserData() async {
@@ -19,6 +20,7 @@ class UserProvider with ChangeNotifier {
     prefs.setString('username', _username);
     prefs.setString('type', _type.toString());
     prefs.setBool('verified', _verified);
+    prefs.setBool('rejected', _rejected);
   }
 
   Future<void> loadUserData() async {
@@ -28,6 +30,7 @@ class UserProvider with ChangeNotifier {
     _username = prefs.getString('username') ?? "";
     _type = prefs.getString('type') ?? "guest";
     _verified = prefs.getBool('verified') ?? false;
+    _rejected = prefs.getBool('rejected') ?? false;
   }
 
   Future<void> _clearUserData() async {
@@ -37,6 +40,7 @@ class UserProvider with ChangeNotifier {
     prefs.remove('username');
     prefs.remove('type');
     prefs.remove('verified');
+    prefs.remove('rejected');
   }
 
 
@@ -45,12 +49,13 @@ class UserProvider with ChangeNotifier {
   }
 
   void setUser(
-      String id, String email, String username, String type, bool verified) {
+      String id, String email, String username, String type, bool verified, bool rejected) {
     _id = id;
     _email = email;
     _username = username;
     _type = type == 'admin' ? 'admin' : type;
     _verified = verified;
+    _rejected = rejected;
     _storeUserData(); // Store user data in SharedPreferences
     notifyListeners();
   }
@@ -61,6 +66,7 @@ class UserProvider with ChangeNotifier {
     _username = "";
     _type = 'guest';
     _verified = false;
+    _rejected = rejected;
     await _clearUserData(); // Clear user data from SharedPreferences
     notifyListeners();
   }
@@ -84,5 +90,9 @@ class UserProvider with ChangeNotifier {
 
   bool get isVerified {
     return this._verified;
+  }
+
+  bool get isRejected {
+    return this._rejected;
   }
 }

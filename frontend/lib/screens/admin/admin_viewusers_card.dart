@@ -6,36 +6,54 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:stals_frontend/screens/admin/admin_view_reports.dart';
 
-
 class PendingUserCard extends StatefulWidget {
   final String name;
   final String userId;
-  final VoidCallback fetchUnverifiedUsers;                  
+  final VoidCallback fetchUnverifiedAndUnarchivedUsers;
   // TODO: image
   // const PendingUserCard({super.key, required this.name});
 
-  const PendingUserCard({Key? key, required this.name, required this.userId, required this.fetchUnverifiedUsers,}) : super(key: key);
+  const PendingUserCard({
+    Key? key,
+    required this.name,
+    required this.userId,
+    required this.fetchUnverifiedAndUnarchivedUsers,
+  }) : super(key: key);
 
   @override
   State<PendingUserCard> createState() => _PendingUserCardState();
 }
 
-
 class _PendingUserCardState extends State<PendingUserCard> {
-  
+  void archiveUser() async {
+    try {
+      Response response = await Dio()
+          .put('http://127.0.0.1:8000/archive-user/${widget.userId}/');
+
+      if (response.statusCode == 200) {
+        print('User archived successfully!');
+
+        widget.fetchUnverifiedAndUnarchivedUsers();
+      } else {
+        print('Failed to archived user');
+      }
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
   void verifyUser() async {
     try {
-      
-      Response response = await Dio().put('http://127.0.0.1:8000/verify-user/${widget.userId}/');
+      Response response = await Dio()
+          .put('http://127.0.0.1:8000/verify-user/${widget.userId}/');
 
       if (response.statusCode == 200) {
         print('User approved successfully!');
-        
-        widget.fetchUnverifiedUsers(); 
+
+        widget.fetchUnverifiedAndUnarchivedUsers();
       } else {
         print('Failed to approve user');
       }
-
     } catch (error) {
       print(error.toString());
     }
@@ -43,16 +61,35 @@ class _PendingUserCardState extends State<PendingUserCard> {
 
   void deleteUser() async {
     try {
-      Response response_user = await Dio().delete('http://127.0.0.1:8000/delete-user/${widget.userId}/');
+      Response response_user = await Dio()
+          .delete('http://127.0.0.1:8000/delete-user/${widget.userId}/');
 
       if (response_user.statusCode == 200) {
         print('User was deleted successfully!');
-        
-        widget.fetchUnverifiedUsers(); 
+
+        widget.fetchUnverifiedAndUnarchivedUsers();
       } else {
         print('Failed to delete!');
       }
+    } catch (error) {
+      print(error.toString());
+    }
+  }
 
+  void reject() async {
+    try {
+
+      String url = "http://127.0.0.1:8000/set-reject-user/";
+      final response =
+          await json.decode((await http.post(Uri.parse(url), body: {
+        '_id': widget.userId,
+        'rejected': "True"
+      }))
+              .body);
+
+      
+
+      //widget.fetchUnverifiedUsers();
     } catch (error) {
       print(error.toString());
     }
@@ -63,9 +100,13 @@ class _PendingUserCardState extends State<PendingUserCard> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        showDialog(context: context, builder: (context) {
-          return Profile(userId: widget.userId,);
-        });
+        showDialog(
+            context: context,
+            builder: (context) {
+              return Profile(
+                userId: widget.userId,
+              );
+            });
       },
       child: Container(
         decoration: BoxDecoration(
@@ -78,7 +119,8 @@ class _PendingUserCardState extends State<PendingUserCard> {
           children: [
             SizedBox(
               width: (MediaQuery.of(context).size.width - 40) / 7,
-              child: const Icon(Icons.person_pin_sharp, size: 34, color: Colors.black87),
+              child: const Icon(Icons.person_pin_sharp,
+                  size: 34, color: Colors.black87),
             ),
             SizedBox(
               width: (MediaQuery.of(context).size.width - 40) * 2 / 7,
@@ -119,7 +161,6 @@ class _PendingUserCardState extends State<PendingUserCard> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-    
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: UIParameter.DARK_TEAL,
@@ -141,10 +182,7 @@ class _PendingUserCardState extends State<PendingUserCard> {
                       ),
                     ),
                   ),
-    
                   const SizedBox(width: 10),
-    
-    
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: UIParameter.MAROON,
@@ -154,10 +192,12 @@ class _PendingUserCardState extends State<PendingUserCard> {
                       ),
                     ),
                     onPressed: () {
-                      deleteUser();
+                      //deleteUser();
+                      reject();
+                      archiveUser();
                     },
                     child: Text(
-                      "DELETE",
+                      "REJECT",
                       style: TextStyle(
                         color: UIParameter.WHITE,
                         fontSize: UIParameter.FONT_BODY_SIZE,
@@ -166,7 +206,6 @@ class _PendingUserCardState extends State<PendingUserCard> {
                       ),
                     ),
                   ),
-    
                   const SizedBox(width: 10),
                 ],
               ),
@@ -263,35 +302,38 @@ class _PendingUserCardState extends State<PendingUserCard> {
 class VerifiedUserCard extends StatefulWidget {
   final String name;
   final String userId;
-  final VoidCallback fetchVerifiedUsers;   
+  final VoidCallback fetchVerifiedUsers;
   // TODO: image
-  
+
   // const VerifiedUserCard({super.key, required this.name});
-  const VerifiedUserCard({Key? key, required this.name, required this.userId, required this.fetchVerifiedUsers,}) : super(key: key);
+  const VerifiedUserCard({
+    Key? key,
+    required this.name,
+    required this.userId,
+    required this.fetchVerifiedUsers,
+  }) : super(key: key);
 
   @override
   State<VerifiedUserCard> createState() => _VerifiedUserCardState();
 }
 
 class _VerifiedUserCardState extends State<VerifiedUserCard> {
-
   void archiveUser() async {
     try {
-      Response response = await Dio().put('http://127.0.0.1:8000/archive-user/${widget.userId}/');
+      Response response = await Dio()
+          .put('http://127.0.0.1:8000/archive-user/${widget.userId}/');
 
       if (response.statusCode == 200) {
         print('User archived successfully!');
-        
-        widget.fetchVerifiedUsers(); 
+
+        widget.fetchVerifiedUsers();
       } else {
         print('Failed to archived user');
       }
-
     } catch (error) {
       print(error.toString());
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -332,14 +374,11 @@ class _VerifiedUserCardState extends State<VerifiedUserCard> {
                   ],
                 ),
               )),
-
-
           SizedBox(
             width: (MediaQuery.of(context).size.width - 40) * 2 / 7,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: UIParameter.MAROON,
@@ -361,8 +400,8 @@ class _VerifiedUserCardState extends State<VerifiedUserCard> {
                     ),
                   ),
                 ),
-                            
 
+                const SizedBox(width: 10),
               ],
             ),
           ),
@@ -373,29 +412,33 @@ class _VerifiedUserCardState extends State<VerifiedUserCard> {
 class ArchiveUserCard extends StatefulWidget {
   final String name;
   final String userId;
-  final VoidCallback fetchArchivedUsers;   
+  final VoidCallback fetchArchivedUsers;
   // TODO: image
-  
-  const ArchiveUserCard({Key? key, required this.name, required this.userId, required this.fetchArchivedUsers,}) : super(key: key);
+
+  const ArchiveUserCard({
+    Key? key,
+    required this.name,
+    required this.userId,
+    required this.fetchArchivedUsers,
+  }) : super(key: key);
 
   @override
   State<ArchiveUserCard> createState() => _ArchiveUserCardState();
 }
 
 class _ArchiveUserCardState extends State<ArchiveUserCard> {
-
   void resolveReport() async {
     try {
-      Response response = await Dio().put('http://127.0.0.1:8000/unarchive-user/${widget.userId}/');
+      Response response = await Dio()
+          .put('http://127.0.0.1:8000/unarchive-user/${widget.userId}/');
 
       if (response.statusCode == 200) {
         print('User unarchived successfully!');
-        
-        widget.fetchArchivedUsers(); 
+
+        widget.fetchArchivedUsers();
       } else {
         print('Failed to unarchived user');
       }
-
     } catch (error) {
       print(error.toString());
     }
@@ -403,17 +446,18 @@ class _ArchiveUserCardState extends State<ArchiveUserCard> {
 
   void deleteUser() async {
     try {
-      Response response_estab = await Dio().delete('http://127.0.0.1:8000/delete-all-userOwned-establishments/${widget.userId}/');
-      Response response_user = await Dio().delete('http://127.0.0.1:8000/delete-user/${widget.userId}/');
+      Response response_estab = await Dio().delete(
+          'http://127.0.0.1:8000/delete-all-userOwned-establishments/${widget.userId}/');
+      Response response_user = await Dio()
+          .delete('http://127.0.0.1:8000/delete-user/${widget.userId}/');
 
       if (response_user.statusCode == 200 && response_estab.statusCode == 200) {
         print('User\'s owned establishment(s) was deleted successfully!');
-
-      }else{
+      } else {
         print('Failed to unarchived user');
       }
 
-      widget.fetchArchivedUsers(); 
+      widget.fetchArchivedUsers();
     } catch (error) {
       print(error.toString());
     }
@@ -463,7 +507,6 @@ class _ArchiveUserCardState extends State<ArchiveUserCard> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: UIParameter.DARK_TEAL,
@@ -485,10 +528,7 @@ class _ArchiveUserCardState extends State<ArchiveUserCard> {
                     ),
                   ),
                 ),
-
                 const SizedBox(width: 10),
-
-
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: UIParameter.MAROON,
@@ -510,7 +550,6 @@ class _ArchiveUserCardState extends State<ArchiveUserCard> {
                     ),
                   ),
                 ),
-
                 const SizedBox(width: 10),
               ],
             ),
@@ -519,34 +558,37 @@ class _ArchiveUserCardState extends State<ArchiveUserCard> {
   }
 }
 
-
 class TicketCard extends StatefulWidget {
   final String ticketId;
   final String name;
   final bool resolved;
   final VoidCallback fetchAllTickets;
   // TODO: image
-  
-  const TicketCard({Key? key, required this.ticketId, required this.name, required this.resolved, required this.fetchAllTickets}) : super(key: key);
+
+  const TicketCard(
+      {Key? key,
+      required this.ticketId,
+      required this.name,
+      required this.resolved,
+      required this.fetchAllTickets})
+      : super(key: key);
 
   @override
   State<TicketCard> createState() => _TicketCardState();
 }
 
 class _TicketCardState extends State<TicketCard> {
-
   void resolveReport() async {
     try {
       String url = "http://127.0.0.1:8000/resolve-report/";
-      final response2 = await json.decode((await http.post(Uri.parse(url),
-              body: {"_id": widget.ticketId}))
-          .body);
+      final response2 = await json.decode(
+          (await http.post(Uri.parse(url), body: {"_id": widget.ticketId}))
+              .body);
 
       // TEMP SOL. Replace if better solution is found
       Navigator.pop(context);
-      Navigator.push(context, new MaterialPageRoute(builder: (context) => new ViewReportsPage()));
-      
-
+      Navigator.push(context,
+          new MaterialPageRoute(builder: (context) => new ViewReportsPage()));
     } catch (error) {
       print(error.toString());
     }
@@ -555,14 +597,14 @@ class _TicketCardState extends State<TicketCard> {
   void deleteReport() async {
     try {
       String url = "http://127.0.0.1:8000/delete-report/";
-      final response2 = await json.decode((await http.post(Uri.parse(url),
-              body: {"_id": widget.ticketId}))
-          .body);
-        
+      final response2 = await json.decode(
+          (await http.post(Uri.parse(url), body: {"_id": widget.ticketId}))
+              .body);
+
       // TEMP SOL. Replace if better solution is found
       Navigator.pop(context);
-      Navigator.push(context, new MaterialPageRoute(builder: (context) => new ViewReportsPage()));
-
+      Navigator.push(context,
+          new MaterialPageRoute(builder: (context) => new ViewReportsPage()));
     } catch (error) {
       print(error.toString());
     }
@@ -629,11 +671,8 @@ class _TicketCardState extends State<TicketCard> {
                       ),
                     ),
                   ),
-                if (widget.resolved)
-                  Text("RESOLVED"),
+                if (widget.resolved) Text("RESOLVED"),
                 const SizedBox(width: 10),
-
-
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: UIParameter.MAROON,
@@ -656,7 +695,6 @@ class _TicketCardState extends State<TicketCard> {
                     ),
                   ),
                 ),
-
                 const SizedBox(width: 10),
               ],
             ),

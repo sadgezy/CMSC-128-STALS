@@ -42,7 +42,7 @@ class _FilterDrawerState extends State<FilterDrawer> {
   List<String> tenantChoices = [
     'Students',
     'Teachers',
-    'Proffesionals',
+    'Professionals',
     'Everyone'
   ];
   List<String> establishmentChoices = [
@@ -300,8 +300,8 @@ class _FilterDrawerState extends State<FilterDrawer> {
                   ),
                 ],
               ),
-              _customDivider(),
-              _buildRadios("Rating", ratingChoices),
+              //_customDivider(),
+              //_buildRadios("Rating", ratingChoices),
               _customDivider(),
               _buildRadios("Establishment Type", establishmentChoices),
               _customDivider(),

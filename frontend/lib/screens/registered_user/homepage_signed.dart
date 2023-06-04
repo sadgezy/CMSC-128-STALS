@@ -265,7 +265,7 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                     onPressed: () async {
                       // print(searchVal);
                       // print(filterTitleList);
-                      // print(filterValueList);
+                      print(filterValueList);
 
                       String url =
                           "http://127.0.0.1:8000/search-establishment/";
@@ -414,6 +414,13 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
               ],
             ),
           ),
+          if (!accomFilter.isEmpty())
+                    Wrap(children: [
+                      for (int i = 0; i < filterValueList.length; i++)
+                        if (filterValueList[i] != null)
+                          _displayFilter(
+                              filterValueList[i].toString(), filterTitleList[i])
+                    ]),
         if (!fetchedAll)
           SingleChildScrollView(
             child: FutureBuilder<List<AccomCardDetails>>(
