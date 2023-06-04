@@ -97,6 +97,9 @@ class _SignInPageState extends State<SignInPage> {
                 response2[0]["user_type"],
                 response2[0]["verified"].toString());
           } else {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                content:
+                    Text("Password is incorrect or account does not exist!")));
             print("Unsuccesful login!");
           }
 
@@ -183,35 +186,35 @@ class _SignInPageState extends State<SignInPage> {
           resizeToAvoidBottomInset: false,
           body: SingleChildScrollView(
               child: Column(
-        children: [
-          const Padding(padding: EdgeInsets.symmetric(vertical: 70)),
-          SizedBox(
-              child: Image.asset('assets/images/stals_logo2.png',
-                  fit: BoxFit.fill)),
-          const Padding(
-            padding: EdgeInsets.only(left: 45, top: 20),
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: Text(
-                "Welcome Back",
-                style: TextStyle(
-                    fontSize: 28,
-                    // fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 31, 36, 33)),
+            children: [
+              const Padding(padding: EdgeInsets.symmetric(vertical: 70)),
+              SizedBox(
+                  child: Image.asset('assets/images/stals_logo2.png',
+                      fit: BoxFit.fill)),
+              const Padding(
+                padding: EdgeInsets.only(left: 45, top: 20),
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    "Welcome Back",
+                    style: TextStyle(
+                        fontSize: 28,
+                        // fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 31, 36, 33)),
+                  ),
+                ),
               ),
-            ),
-          ),
-          ListView(
-            shrinkWrap: true,
-            padding: const EdgeInsets.only(left: 40.0, right: 40.0),
-            children: <Widget>[
-              // Image.asset('assets/images/stals_logo.png', fit: BoxFit.fill),
-              const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
-              loginFields
+              ListView(
+                shrinkWrap: true,
+                padding: const EdgeInsets.only(left: 40.0, right: 40.0),
+                children: <Widget>[
+                  // Image.asset('assets/images/stals_logo.png', fit: BoxFit.fill),
+                  const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+                  loginFields
+                ],
+              ),
             ],
-          ),
-        ],
-      ))
+          ))
           // decoration: const BoxDecoration(
           //     gradient: LinearGradient(
           //   begin: Alignment.topCenter,
