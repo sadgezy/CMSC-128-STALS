@@ -900,7 +900,7 @@ def get_total_login(request):
 @api_view(['GET'])
 # @permission_classes([IsAuthenticated])
 def add_login(request):   
-    print("HELLO")
+    #print("HELLO")
     try:
         room = Room.objects.get(capacity=-999)
     except Room.DoesNotExist:
@@ -908,7 +908,7 @@ def add_login(request):
         return Response(data={"count": 1})
     
     room.price_lower = room.price_lower+1
-    print(room.price_lower)
+    #print(room.price_lower)
     room.save()
     
     return Response(data={"count": 1})
