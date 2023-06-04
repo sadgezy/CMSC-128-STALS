@@ -87,8 +87,8 @@ class _ItemState extends State<Item> {
       color1 = const Color.fromARGB(255, 17, 149, 21);
       color2 = const Color.fromARGB(255, 85, 94, 120);
     } else {
-      color1 = Color.fromARGB(255, 32, 27, 26);
-      color2 = Color.fromARGB(255, 232, 154, 53);
+      color1 = const Color.fromARGB(255, 32, 27, 26);
+      color2 = const Color.fromARGB(255, 232, 154, 53);
     }
 
     return Container(
@@ -171,7 +171,7 @@ class _AccommPageState extends State<AccommPage> {
   var responseData2 = "";
   String response_Name = "";
   String response_Address = "";
-  bool ?response_archived;
+  bool? response_archived;
   String owner_id = "";
   String response2_ownerName = "";
   String response2_phone_no = "";
@@ -215,7 +215,7 @@ class _AccommPageState extends State<AccommPage> {
       loc_picture = responseData["loc_picture"];
       description = responseData["description"];
       response_archived = responseData["archived"];
- 
+
       owner_id = responseData['owner'];
       // print(owner_id);
       // print("http://127.0.0.1:8000/get-one-user-using-id/" + owner_id + "/");
@@ -258,22 +258,22 @@ class _AccommPageState extends State<AccommPage> {
 
     Widget buildUserTypeIcon() {
       if (user_type == "user") {
-        return Icon(
+        return const Icon(
           Icons.bookmark_outline,
           size: 20,
         );
       } else if (user_type == "owner") {
-        return Icon(
+        return const Icon(
           Icons.edit,
           size: 20,
         );
       } else if (user_type == "owner") {
-        return Icon(
+        return const Icon(
           Icons.edit,
           size: 20,
         );
       } else {
-        return Icon(
+        return const Icon(
           Icons.bookmark,
           size: 20,
         );
@@ -284,14 +284,13 @@ class _AccommPageState extends State<AccommPage> {
       //App bar start
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
+          icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
             Navigator.pop(context);
           },
           color: Colors.black,
         ),
-        title: 
-        Text(
+        title: const Text(
           "Return to Homepage",
           style: TextStyle(color: Colors.black),
         ),
@@ -326,7 +325,7 @@ class _AccommPageState extends State<AccommPage> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             // While the data is being fetched, show a loading indicator
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             // If there's an error, display an error message
             return Center(child: Text('Error: ${snapshot.error}'));
@@ -358,9 +357,10 @@ class _AccommPageState extends State<AccommPage> {
                                         arguments: id);
                                   },
                                   style: ElevatedButton.styleFrom(
-                                    shape: CircleBorder(),
+                                    shape: const CircleBorder(),
                                     primary: Colors.white,
-                                    onPrimary: Color.fromARGB(255, 25, 83, 95),
+                                    onPrimary:
+                                        const Color.fromARGB(255, 25, 83, 95),
                                   ),
                                   child: buildUserTypeIcon(), // First icon
                                 ),
@@ -389,22 +389,23 @@ class _AccommPageState extends State<AccommPage> {
                                             "/";
                                     final response =
                                         await http.delete(Uri.parse(url));
-                                     if(user_type == 'owner'){
+                                    if (user_type == 'owner') {
                                       Navigator.pushNamed(
-                                        context, '/view_owned_accomms');
-                                      }
+                                          context, '/view_owned_accomms');
+                                    }
 
-                                      if(user_type == 'admin'){
-                                        Navigator.pushNamed(
+                                    if (user_type == 'admin') {
+                                      Navigator.pushNamed(
                                           context, '/admin/view_accomms');
-                                      }
+                                    }
                                   },
                                   style: ElevatedButton.styleFrom(
-                                    shape: CircleBorder(),
+                                    shape: const CircleBorder(),
                                     primary: Colors.white,
-                                    onPrimary: Color.fromARGB(255, 25, 83, 95),
+                                    onPrimary:
+                                        const Color.fromARGB(255, 25, 83, 95),
                                   ),
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.delete,
                                     size: 20,
                                   ), // Third icon
@@ -413,32 +414,37 @@ class _AccommPageState extends State<AccommPage> {
                                 ElevatedButton(
                                   onPressed: () async {
                                     // Action for the third icon button
-                                    if (response_archived == true){
-                                        String url = "http://127.0.0.1:8000/unarchive-establishment/" + id +"/";
-                                        final response = await http.put(Uri.parse(url));
+                                    if (response_archived == true) {
+                                      String url =
+                                          "http://127.0.0.1:8000/unarchive-establishment/" +
+                                              id +
+                                              "/";
+                                      final response =
+                                          await http.put(Uri.parse(url));
+                                    } else {
+                                      String url =
+                                          "http://127.0.0.1:8000/archive-establishment/" +
+                                              id +
+                                              "/";
+                                      final response =
+                                          await http.put(Uri.parse(url));
                                     }
 
-                                    else{
-                                         String url = "http://127.0.0.1:8000/archive-establishment/" + id +"/";
-                                        final response = await http.put(Uri.parse(url));
-                                    }
-                                   
-
-                                    if(user_type == 'owner'){
+                                    if (user_type == 'owner') {
                                       Navigator.pushNamed(
-                                        context, '/view_owned_accomms');
+                                          context, '/view_owned_accomms');
                                     }
 
-                                    if(user_type == 'admin'){
+                                    if (user_type == 'admin') {
                                       Navigator.pushNamed(
-                                        context, '/admin/view_accomms');
+                                          context, '/admin/view_accomms');
                                     }
-                                    
                                   },
                                   style: ElevatedButton.styleFrom(
                                     shape: const CircleBorder(),
                                     primary: Colors.white,
-                                    onPrimary: Color.fromARGB(255, 25, 83, 95),
+                                    onPrimary:
+                                        const Color.fromARGB(255, 25, 83, 95),
                                   ),
                                   child: const Icon(
                                     Icons.archive,
@@ -449,14 +455,19 @@ class _AccommPageState extends State<AccommPage> {
                                 ElevatedButton(
                                   onPressed: () async {
                                     // Action for the fourth icon button
-                                    showDialog(context: context, builder: (context) {
-                                      return AddRoom(estabId: id, estabName: response_Name);
-                                    });
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return AddRoom(
+                                              estabId: id,
+                                              estabName: response_Name);
+                                        });
                                   },
                                   style: ElevatedButton.styleFrom(
                                     shape: const CircleBorder(),
                                     primary: Colors.white,
-                                    onPrimary: Color.fromARGB(255, 25, 83, 95),
+                                    onPrimary:
+                                        const Color.fromARGB(255, 25, 83, 95),
                                   ),
                                   child: const Icon(
                                     Icons.add_home,
@@ -509,39 +520,39 @@ class _AccommPageState extends State<AccommPage> {
                   ),
 
                   //spacing and divider line
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  Divider(
+                  const Divider(
                     color: Colors.black,
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      SizedBox(
+                      const SizedBox(
                         height: 3,
                       ),
 
                       //Owner Name
                       Row(
                         children: <Widget>[
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
-                          CircleAvatar(
+                          const CircleAvatar(
                             radius: 15,
                             backgroundImage:
                                 AssetImage("assets/images/room_stock.jpg"),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           FittedBox(
                             fit: BoxFit.fill,
                             child: Text(
                               response2_ownerName,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 15, fontWeight: FontWeight.normal),
                             ),
                           ),
@@ -551,10 +562,10 @@ class _AccommPageState extends State<AccommPage> {
                       //Location Details
                       Row(
                         children: <Widget>[
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
-                          Icon(
+                          const Icon(
                             Icons.location_pin,
                             color: Colors.blue,
                             size: 40,
@@ -563,7 +574,7 @@ class _AccommPageState extends State<AccommPage> {
                             fit: BoxFit.fill,
                             child: Text(
                               response_Address,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 15, fontWeight: FontWeight.normal),
                             ),
                           ),
@@ -573,22 +584,22 @@ class _AccommPageState extends State<AccommPage> {
                       //Contact Info
                       Row(
                         children: <Widget>[
-                          SizedBox(
+                          const SizedBox(
                             width: 6,
                           ),
-                          Icon(
+                          const Icon(
                             Icons.phone_in_talk_rounded,
                             color: Colors.blue,
                             size: 33,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           FittedBox(
                             fit: BoxFit.fill,
                             child: Text(
                               response2_phone_no,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 15, fontWeight: FontWeight.normal),
                             ),
                           ),
@@ -605,10 +616,11 @@ class _AccommPageState extends State<AccommPage> {
                                   builder: (BuildContext context) {
                                     print(user_type);
                                     if (user_type == "guest") {
-                                      return AlertDialog(
+                                      return const AlertDialog(
                                           content: Padding(
-                                        padding: const EdgeInsets.all(8),
-                                        child: Text("Sign in to file a report"),
+                                        padding: EdgeInsets.all(8),
+                                        child:
+                                            Text("Sign in to file a report!"),
                                       ));
                                     }
                                     return AlertDialog(
@@ -619,7 +631,7 @@ class _AccommPageState extends State<AccommPage> {
                                         child: Form(
                                           child: Column(
                                             children: [
-                                              Padding(
+                                              const Padding(
                                                 padding: EdgeInsets.symmetric(
                                                     vertical: 5),
                                                 child: Text("Select Reason"),
@@ -628,19 +640,21 @@ class _AccommPageState extends State<AccommPage> {
                                                 tags: tagsController,
                                               ),
                                               Padding(
-                                                padding: EdgeInsets.all(10),
+                                                padding:
+                                                    const EdgeInsets.all(10),
                                                 child: SizedBox(
                                                   width: 200,
                                                   child: TextFormField(
-                                                    controller: reportController,
-                                                    style:
-                                                        TextStyle(fontSize: 13),
+                                                    controller:
+                                                        reportController,
+                                                    style: const TextStyle(
+                                                        fontSize: 13),
                                                     decoration:
                                                         const InputDecoration(
                                                       border:
                                                           OutlineInputBorder(),
                                                       hintText:
-                                                          "Report description",
+                                                          "Report Description",
                                                       contentPadding:
                                                           EdgeInsets.all(10),
                                                     ),
@@ -652,40 +666,66 @@ class _AccommPageState extends State<AccommPage> {
                                               ElevatedButton(
                                                 onPressed: () async {
                                                   print(tagsController.text);
-                                                  switch(tagsController.text) {
+                                                  switch (tagsController.text) {
                                                     case "1":
-                                                      selectedReason = ["Inactive Owner"];
+                                                      selectedReason = [
+                                                        "Inactive Owner"
+                                                      ];
                                                       break;
                                                     case "2":
-                                                      selectedReason = ["Inaccurate Details"];
+                                                      selectedReason = [
+                                                        "Inaccurate Details"
+                                                      ];
                                                       break;
                                                     case "3":
-                                                      selectedReason = ["Fraudulent Listing"];
+                                                      selectedReason = [
+                                                        "Fraudulent Listing"
+                                                      ];
                                                       break;
                                                     case "4":
-                                                      selectedReason = ["Offensive Content"];
+                                                      selectedReason = [
+                                                        "Offensive Content"
+                                                      ];
                                                       break;
                                                     case "5":
-                                                      selectedReason = ["Other Reason"];
+                                                      selectedReason = [
+                                                        "Other Reason"
+                                                      ];
                                                       break;
                                                   }
-                                                  
-                                                  String url5 = "http://127.0.0.1:8000/report-establishment/";
-                                                  final response5 = await json.decode(
-                                                      (await http.post(Uri.parse(url5), body: {"establishment_id": id, "user_id": user_id, "tags": "'${selectedReason.toString()}'", "description": reportController.text}))
+
+                                                  String url5 =
+                                                      "http://127.0.0.1:8000/report-establishment/";
+                                                  final response5 = await json
+                                                      .decode((await http.post(
+                                                              Uri.parse(url5),
+                                                              body: {
+                                                        "establishment_id": id,
+                                                        "user_id": user_id,
+                                                        "tags":
+                                                            "'${selectedReason.toString()}'",
+                                                        "description":
+                                                            reportController
+                                                                .text
+                                                      }))
                                                           .body);
-                                                  
+
                                                   reportController.clear();
                                                   Navigator.pop(context);
+
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(const SnackBar(
+                                                          content: Text(
+                                                              "You have reported this accommodation. Thank you for helping us!")));
                                                 },
-                                                child: Text(
+                                                style: ElevatedButton.styleFrom(
+                                                    backgroundColor:
+                                                        UIParams.MAROON),
+                                                child: const Text(
                                                   "Report",
                                                   style: TextStyle(
                                                       color: Colors.white),
                                                 ),
-                                                style: ElevatedButton.styleFrom(
-                                                    backgroundColor:
-                                                        UIParams.MAROON),
                                               ),
                                             ],
                                           ),
@@ -695,10 +735,10 @@ class _AccommPageState extends State<AccommPage> {
                                   },
                                 );
                               },
-                              icon: Icon(Icons.flag_outlined),
-                              label: Text("Report this listing"),
+                              icon: const Icon(Icons.flag_outlined),
+                              label: const Text("Report this listing"),
                               style: TextButton.styleFrom(
-                                foregroundColor: Color(0xff7B2D26),
+                                foregroundColor: const Color(0xff7B2D26),
                               ),
                             ),
                             TextButton.icon(
@@ -708,9 +748,9 @@ class _AccommPageState extends State<AccommPage> {
                                   builder: (BuildContext context) {
                                     print(user_type);
                                     if (user_type == "guest") {
-                                      return AlertDialog(
+                                      return const AlertDialog(
                                           content: Padding(
-                                        padding: const EdgeInsets.all(8),
+                                        padding: EdgeInsets.all(8),
                                         child: Text("Sign in to post a review"),
                                       ));
                                     }
@@ -719,14 +759,13 @@ class _AccommPageState extends State<AccommPage> {
                                         estabId: id,
                                         username: username,
                                         userId: user_id);
-                                  
                                   },
                                 );
                               },
-                              icon: Icon(Icons.rate_review),
-                              label: Text("Write a review"),
+                              icon: const Icon(Icons.rate_review),
+                              label: const Text("Write a review"),
                               style: TextButton.styleFrom(
-                                foregroundColor: Color(0xff7B2D26),
+                                foregroundColor: const Color(0xff7B2D26),
                               ),
                             )
                           ],
@@ -734,7 +773,7 @@ class _AccommPageState extends State<AccommPage> {
                     ],
                   ),
 
-                  Divider(
+                  const Divider(
                     color: Colors.black,
                   ),
 
@@ -748,9 +787,9 @@ class _AccommPageState extends State<AccommPage> {
                           options: CarouselOptions(
                             height: 200.0,
                             autoPlay: true,
-                            autoPlayInterval: Duration(seconds: 5),
+                            autoPlayInterval: const Duration(seconds: 5),
                             autoPlayAnimationDuration:
-                                Duration(milliseconds: 1000),
+                                const Duration(milliseconds: 1000),
                             autoPlayCurve: Curves.fastOutSlowIn,
                             pauseAutoPlayOnTouch: true,
                             aspectRatio: 2.0,
@@ -762,7 +801,8 @@ class _AccommPageState extends State<AccommPage> {
                           items: cardList.map((card) {
                             return Builder(builder: (BuildContext context) {
                               return SizedBox(
-                                height: MediaQuery.of(context).size.height * 0.30,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.30,
                                 width: MediaQuery.of(context).size.width,
                                 child: Card(
                                   color: Colors.blueAccent,
@@ -772,25 +812,25 @@ class _AccommPageState extends State<AccommPage> {
                             });
                           }).toList(),
                         ),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.center,
-                      //   children: map<Widget>(cardList, (index, url) {
-                      //     return Container(
-                      //       width: 10.0,
-                      //       height: 10.0,
-                      //       margin: EdgeInsets.symmetric(
-                      //           vertical: 10.0, horizontal: 2.0),
-                      //       decoration: BoxDecoration(
-                      //         shape: BoxShape.circle,
-                      //         color: _currentIndex == index
-                      //             ? Colors.blueAccent
-                      //             : Colors.grey,
-                      //       ),
-                      //     );
-                      //   }),
-                      // ),
-                    ],
-                  ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   children: map<Widget>(cardList, (index, url) {
+                        //     return Container(
+                        //       width: 10.0,
+                        //       height: 10.0,
+                        //       margin: EdgeInsets.symmetric(
+                        //           vertical: 10.0, horizontal: 2.0),
+                        //       decoration: BoxDecoration(
+                        //         shape: BoxShape.circle,
+                        //         color: _currentIndex == index
+                        //             ? Colors.blueAccent
+                        //             : Colors.grey,
+                        //       ),
+                        //     );
+                        //   }),
+                        // ),
+                      ],
+                    ),
                   //End of Cards
                   if (cardList.isNotEmpty)
                     const SizedBox(
@@ -819,7 +859,8 @@ class _AccommPageState extends State<AccommPage> {
                           SizedBox(
                             width: 450,
                             child: Text(description,
-                                style: TextStyle(fontWeight: FontWeight.normal),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.normal),
                                 textAlign: TextAlign.center),
                           ),
                         ],
@@ -827,10 +868,10 @@ class _AccommPageState extends State<AccommPage> {
                     ],
                   ),
                   //end of Description
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
-                  Divider(
+                  const Divider(
                     color: Colors.black,
                   ),
 
@@ -1179,31 +1220,39 @@ class _AccommPageState extends State<AccommPage> {
                           child: ListView.builder(
                               itemCount: reviewList.length,
                               itemBuilder: (BuildContext context, int index) {
-                            return Column(
-                                children: [
+                                return Column(children: [
                                   Row(
                                     children: [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                      child: Text(reviewList[index]["username"]),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                      child: Text(reviewList[index]["date_submitted"].substring(0,10) + " " + reviewList[index]["date_submitted"].substring(11,19)),
-                                    )
-                                  ],),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8.0),
+                                        child:
+                                            Text(reviewList[index]["username"]),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8.0),
+                                        child: Text(reviewList[index]
+                                                    ["date_submitted"]
+                                                .substring(0, 10) +
+                                            " " +
+                                            reviewList[index]["date_submitted"]
+                                                .substring(11, 19)),
+                                      )
+                                    ],
+                                  ),
                                   Row(
-                                    children: [Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(reviewList[index]["body"]),
-                                    )],
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(reviewList[index]["body"]),
+                                      )
+                                    ],
                                   )
-                                ]
-                              );
-                          }),
+                                ]);
+                              }),
                         ),
-                      if (reviewList.isEmpty)
-                        Text("No reviews yet"),
+                      if (reviewList.isEmpty) const Text("No reviews yet"),
                     ],
                   ),
                   //end of View Reviews
