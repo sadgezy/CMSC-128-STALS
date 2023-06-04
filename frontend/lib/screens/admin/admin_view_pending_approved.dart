@@ -5,7 +5,8 @@ import '../../UI_parameters.dart' as UIParameter;
 import '../../components/accom_card.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
+import '../../providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class AdminViewPendingApproved extends StatefulWidget {
   const AdminViewPendingApproved({Key? key}) : super(key: key);
@@ -95,6 +96,14 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
 
   @override
   Widget build(BuildContext context) {
+    if (!context.watch<UserProvider>().isAdmin) {
+      //Navigator.pop(context);
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        Navigator.of(context).pushReplacementNamed('/');
+      });
+
+      return const CircularProgressIndicator();
+    }
     Widget pendingAccomms = FutureBuilder<List<AccomCardDetails>>(
       future: _accommodationsPendingFuture,
       builder: (context, snapshot) {

@@ -5,6 +5,7 @@ import 'package:stals_frontend/screens/admin/admin_view_accommodations.dart';
 import 'package:stals_frontend/screens/admin/admin_view_pending_approved.dart';
 import 'package:stals_frontend/screens/admin/admin_view_users.dart';
 import 'package:stals_frontend/screens/admin/admin_verify_accomm.dart';
+import 'package:stals_frontend/screens/admin/admin_view_reports.dart';
 import 'package:stals_frontend/screens/owner/add_accomm.dart';
 import 'package:stals_frontend/screens/owner/edit_accomm.dart';
 import 'package:stals_frontend/screens/owner/owned_accomm.dart';
@@ -38,11 +39,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'CMSC 128 STALS',
       initialRoute: '/',
       routes: {
         '/': (context) => const AuthWrapper(),
-        // '/': (context) => MyHomePage("CMSC 128 STALS"),
         '/signin': (context) => const SignInPage(),
         '/signup': (context) => const SignUpPage(),
         '/signup_info': (context) => SignUpForm(),
@@ -58,6 +57,7 @@ class MyApp extends StatelessWidget {
         '/admin/view_users': (context) => const ViewUsersPage(),
         '/admin/view_accomms': (context) => const AdminViewAccommodations(),
         '/admin/verify_accomm': (context) => AccommPageProof(),
+        '/admin/view_reports': (context) => const ViewReportsPage(),
       },
       theme: ThemeData(
         fontFamily: 'SFProDisplayRegular',

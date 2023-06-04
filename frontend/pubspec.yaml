@@ -49,7 +49,8 @@ dependencies:
   open_document: ^1.0.6
   # pdf: ^3.10.3
   path_provider: ^2.0.15
-  toggle_switch: ^1.2.0
+  pdf: ^3.10.4
+  printing: ^5.10.4
   # syncfusion_flutter_pdfviewer: ^21.2.3
 
 dev_dependencies:
@@ -78,8 +79,8 @@ flutter:
     - assets/images/stals_logo2.png
     - assets/images/
     - assets/images/apartment.png
-    - assets/images/bed.png
-    - assets/images/bunk.png
+    - assets/images/transient.png
+    - assets/images/dormitory.png
     - assets/images/home.png
     - assets/images/hotel.png
     - assets/images/flat.png
