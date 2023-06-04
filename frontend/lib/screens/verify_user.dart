@@ -446,7 +446,7 @@ class _VerificationPageState extends State<VerificationPage> {
       });
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('No image selected'),
+          content: Text('No image selected!'),
         ),
       );
     }
