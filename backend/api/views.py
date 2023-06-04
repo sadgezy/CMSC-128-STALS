@@ -733,3 +733,78 @@ def unarchive_user(request, pk):
     user.save()
 
     return Response(data={"message": "Successfully unarchived user"})
+
+@api_view(['GET'])
+def view_one_user(request, pk):
+    try:
+        user = User.objects.get(pk=ObjectId(pk))
+    except User.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND, data={"message": "User not found"})
+
+    serializer = userSerializer(user)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def view_userOwned_establishments(request, pk):
+    try:
+        user = User.objects.get(pk=ObjectId(pk))
+        print('hi2')
+        print(user._id)
+    except User.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND, data={"message": "User not found"})
+
+    establishments = Establishment.objects.filter(owner=str(user._id))
+    serializer = EstablishmentSerializer(establishments, many=True)
+
+    # Include the accommodations and rooms in the response
+    for establishment_data in serializer.data:
+        establishment_id = establishment_data['_id']
+        accommodations = establishment_data['accommodations']
+
+        rooms = Room.objects.filter(establishment_id=str(establishment_id))
+        room_serializer = RoomSerializer(rooms, many=True)
+        establishment_data['accommodations'] = {
+            'accommodations': accommodations,
+            'rooms': room_serializer.data
+        }
+
+        # Print the rooms
+        # print(f"Establishment ID: {establishment_id}")
+        # print("Rooms:")
+        # for room in room_serializer.data:
+        #     room_id = room['_id']
+        #     availability = room['availability']
+        #     price_lower = room['price_lower']
+        #     price_upper = room['price_upper']
+        #     capacity = room['capacity']
+        #     print(f"Room ID: {room_id}, Availability: {availability}, Price Range: {price_lower}-{price_upper}, Capacity: {capacity}")
+
+    return Response(serializer.data)
+
+
+@api_view(['DELETE'])
+def delete_all_userOwned_establishments(request, pk):
+    try:
+        user = User.objects.get(pk=ObjectId(pk))
+    except User.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND, data={"message": "User not found"})
+
+    establishments = Establishment.objects.filter(owner=str(user._id))
+
+    for establishment in establishments:
+        establishment_id = establishment._id
+
+        # Delete rooms
+        rooms = Room.objects.filter(establishment_id=str(establishment_id))
+        rooms.delete()
+
+        # Remove the establishment from the owner's establishments list
+        owner = User.objects.get(pk=ObjectId(establishment.owner))
+        owner.establishments = [estab_id for estab_id in owner.establishments if estab_id != str(establishment._id)]
+        owner.save()
+
+        # Delete estab
+        establishment.delete()
+
+    return Response(data={"message": "All user-owned establishments and rooms have been deleted"})
