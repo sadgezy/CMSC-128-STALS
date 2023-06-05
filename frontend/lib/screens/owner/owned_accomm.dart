@@ -12,34 +12,6 @@ class OwnedAccommPage extends StatefulWidget {
 
 const _checkurl = 'https://img.icons8.com/?size=512&id=11695&format=png';
 const _noturl = 'https://img.icons8.com/?size=512&id=TfRrgMHDWJk3&format=png';
-/*possible values:
-bool isOwner = true/false
-if true then it is the owner there   will be an edit button to edit the current information on the page/cards/image/highlights/etc..
-if false then there will be a favorite button for the user 
-
-Highlights booleans
-if true it will show in the highlights
-if false it wont show
-bool isPet = ?
-bool isbathroom = ?
-bool isCook = ?
-bool isNet = ?
-bool isConnectNet = ?
-bool isAircon = ?
-bool isCurfew = ?
-bool isMeter = ?
-bool isFurnished = ?
-bool isSemiFurnished = ?
-bool isParking = ? 
-bool isLaundry = ? 
-bool isOvernight = ?
-bool isVisitors = ?
-bool isCCTV = ?
-bool isMeter = ?
-bool isRef = ?
-
-
-*/
 
 //data information:
 class Item1 extends StatelessWidget {
@@ -434,7 +406,7 @@ class _OwnedAccommPageState extends State<OwnedAccommPage> {
             color: Colors.black,
           ),
           title: const Text(
-            "Return to Homepage",
+            "Return to me",
             style: TextStyle(color: Colors.black),
           ),
           backgroundColor: Colors.white,
@@ -443,24 +415,6 @@ class _OwnedAccommPageState extends State<OwnedAccommPage> {
 
         //Main Content for body start
 
-        /*
-        Row content Arrangement: 
-        > Image
-        > Apt. name - Star rating
-        > Apt. Location/ Owner name and contact no.
-        > Keycards/box of Rooms
-          >Available or not
-          >Price
-          >Max occu.
-          >type of room
-        >Detailed Info of Apt
-        >Highlighted features of Apt./Room
-        >Reviews
-          >Name of reviewee
-          >Date
-          >Review content
-
-        */
 
         body: SingleChildScrollView(
           child: Column(children: [

@@ -3,12 +3,12 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../UI_parameters.dart' as UIParameter;
 import '../classes.dart';
 import 'dart:typed_data';
+import 'dart:ui';
 
 import 'package:provider/provider.dart';
 import 'package:stals_frontend/providers/user_provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 
 class AccomCard extends StatefulWidget {
   /* Accom Card will accept an object that will contain
@@ -33,17 +33,17 @@ class _AccomCardState extends State<AccomCard> {
   var isFavorite = false;
 
   List<dynamic> user = [];
-    String id = '';
-    String email = '';
-    String username = '';
-    String user_type = '';
+  String id = '';
+  String email = '';
+  String username = '';
+  String user_type = '';
 
   Future<void> addAccommodationToFavorites(String id) async {
     print("Add accommodation complete.");
     String url = "http://127.0.0.1:8000/add-room-to-user-favorites/";
     final Map<String, dynamic> requestBody = {
       "email": email,
-      "ticket_id" : id,
+      "ticket_id": id,
     };
     final headers = {
       'Content-Type': 'application/json',
@@ -58,14 +58,13 @@ class _AccomCardState extends State<AccomCard> {
     // Handle the decoded response or perform any necessary operations
   }
 
-   Future<void> getUserInfo() async {
-        user = Provider.of<UserProvider>(context, listen: false).userInfo;
-        id = user[0];
-        email = user[1];
-        username = user[2];
-        user_type = user[3];
-      }
-
+  Future<void> getUserInfo() async {
+    user = Provider.of<UserProvider>(context, listen: false).userInfo;
+    id = user[0];
+    email = user[1];
+    username = user[2];
+    user_type = user[3];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,13 +74,15 @@ class _AccomCardState extends State<AccomCard> {
       width: MediaQuery.of(context).size.width - 40,
       height: 150,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: widget.details.archived
+            ? const Color.fromARGB(255, 211, 211, 211)
+            : Colors.white,
         borderRadius: UIParameter.CARD_BORDER_RADIUS,
         // ignore: prefer_const_literals_to_create_immutables
         boxShadow: [
           // box shadow to get elevation effect
           const BoxShadow(
-              color: Color.fromARGB(255, 177, 177, 177),
+              color: Color.fromARGB(255, 200, 200, 200),
               blurRadius: 3,
               offset: Offset(3, 5))
         ],
@@ -102,20 +103,55 @@ class _AccomCardState extends State<AccomCard> {
             // 2 Sized boxes to split the card in half
             // left side for image
             // right side for name, description, and rating
-            SizedBox(
-              width: (MediaQuery.of(context).size.width - 40) / 2,
-              height: 200,
-              child: ClipRRect(
-                  // round the left edges of the image to match the card
-                  borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      bottomLeft: Radius.circular(15)),
-                  child: FittedBox(
-                      fit: BoxFit.fill,
-                      child: Image.memory(Uri.parse(widget.details.getImage())
-                          .data!
-                          .contentAsBytes()))),
-            ),
+            widget.details.archived
+                ? SizedBox(
+                    width: (MediaQuery.of(context).size.width - 40) / 2,
+                    height: 200,
+                    child: ClipRRect(
+                      // round the left edges of the image to match the card
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        bottomLeft: Radius.circular(15),
+                      ),
+                      child: FittedBox(
+                        fit: BoxFit.fill,
+                        child: Stack(
+                          children: [
+                            Image.memory(
+                              Uri.parse(widget.details.getImage())
+                                  .data!
+                                  .contentAsBytes(),
+                            ),
+                            BackdropFilter(
+                              filter: ImageFilter.blur(
+                                  sigmaX: 10,
+                                  sigmaY:
+                                      10), // Adjust the sigma values for desired blur strength
+                              child: Container(
+                                color: Colors.black.withOpacity(
+                                    0), // Adjust the opacity for desired blur intensity
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                : SizedBox(
+                    width: (MediaQuery.of(context).size.width - 40) / 2,
+                    height: 200,
+                    child: ClipRRect(
+                        // round the left edges of the image to match the card
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(15),
+                            bottomLeft: Radius.circular(15)),
+                        child: FittedBox(
+                            fit: BoxFit.fill,
+                            child: Image.memory(
+                                Uri.parse(widget.details.getImage())
+                                    .data!
+                                    .contentAsBytes()))),
+                  ),
             SizedBox(
               width: (MediaQuery.of(context).size.width - 40) / 2,
               height: 200,
@@ -143,70 +179,94 @@ class _AccomCardState extends State<AccomCard> {
                             fontFamily: UIParameter.FONT_REGULAR),
                       ),
                     ),
-                    // if admin only display rating
-                    isAdmin ? Container()
-                        // ? RatingBar.builder(
-                        //     minRating: 0,
-                        //     maxRating: 5,
-                        //     initialRating: widget.details.getRating(),
-                        //     direction: Axis.horizontal,
-                        //     allowHalfRating: false,
-
-                        //     // ignore gestures to make rating un-editable
-                        //     ignoreGestures: true,
-                        //     onRatingUpdate: (rating) {
-                        //       /* CANNOT RATE HERE */
-                        //     },
-                        //     itemSize: 18,
-                        //     itemBuilder: (BuildContext context, int index) =>
-                        //         const Icon(
-                        //           Icons.star,
-                        //           color: Colors.amber,
-                        //         ))
-                        // else add favorite icon
-                        : Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              // RatingBar.builder(
-                              //     minRating: 0,
-                              //     maxRating: 5,
-                              //     initialRating: widget.details.getRating(),
-                              //     direction: Axis.horizontal,
-                              //     allowHalfRating: false,
-
-                              //     // ignore gestures to make rating un-editable
-                              //     ignoreGestures: true,
-                              //     onRatingUpdate: (rating) {
-                              //       /* CANNOT RATE HERE */
-                              //     },
-                              //     itemSize: 18,
-                              //     itemBuilder:
-                              //         (BuildContext context, int index) =>
-                              //             const Icon(
-                              //               Icons.star,
-                              //               color: Colors.amber,
-                              //             )),
-                              InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      isFavorite = !isFavorite;
-                                    });
-                                    addAccommodationToFavorites(widget.details.getID());
-                                  },
-                                  // check if part of favorite accomms
-                                  child: isFavorite
-                                      ? Icon(
-                                          Icons.favorite,
-                                          color: UIParameter.MAROON,
-                                          size: 18,
-                                        )
-                                      : const Icon(
-                                          Icons.favorite_outline_rounded,
-                                          color: Colors.grey,
-                                          size: 18,
-                                        ))
-                            ],
+                    widget.details.archived
+                        ? Container(
+                            decoration: BoxDecoration(
+                              color:
+                                  Colors.red, // Choose a color that stands out
+                              borderRadius: BorderRadius.circular(
+                                  8.0), // Adjust the border radius as per your preference
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 4.0,
+                                horizontal:
+                                    8.0), // Adjust padding as per your preference
+                            child: const Text(
+                              'ARCHIVED',
+                              style: TextStyle(
+                                color: Colors
+                                    .white, // Choose a contrasting text color
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           )
+                        : Container(),
+                        // if admin only display rating
+                        isAdmin || user_type == "owner"
+                            ? Container()
+                            // ? RatingBar.builder(
+                            //     minRating: 0,
+                            //     maxRating: 5,
+                            //     initialRating: widget.details.getRating(),
+                            //     direction: Axis.horizontal,
+                            //     allowHalfRating: false,
+
+                            //     // ignore gestures to make rating un-editable
+                            //     ignoreGestures: true,
+                            //     onRatingUpdate: (rating) {
+                            //       /* CANNOT RATE HERE */
+                            //     },
+                            //     itemSize: 18,
+                            //     itemBuilder: (BuildContext context, int index) =>
+                            //         const Icon(
+                            //           Icons.star,
+                            //           color: Colors.amber,
+                            //         ))
+                            // else add favorite icon
+                            : Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  // RatingBar.builder(
+                                  //     minRating: 0,
+                                  //     maxRating: 5,
+                                  //     initialRating: widget.details.getRating(),
+                                  //     direction: Axis.horizontal,
+                                  //     allowHalfRating: false,
+
+                                  //     // ignore gestures to make rating un-editable
+                                  //     ignoreGestures: true,
+                                  //     onRatingUpdate: (rating) {
+                                  //       /* CANNOT RATE HERE */
+                                  //     },
+                                  //     itemSize: 18,
+                                  //     itemBuilder:
+                                  //         (BuildContext context, int index) =>
+                                  //             const Icon(
+                                  //               Icons.star,
+                                  //               color: Colors.amber,
+                                  //             )),
+                                  InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          isFavorite = !isFavorite;
+                                        });
+                                        addAccommodationToFavorites(
+                                            widget.details.getID());
+                                      },
+                                      // check if part of favorite accomms
+                                      child: isFavorite
+                                          ? Icon(
+                                              Icons.favorite,
+                                              color: UIParameter.MAROON,
+                                              size: 18,
+                                            )
+                                          : const Icon(
+                                              Icons.favorite_outline_rounded,
+                                              color: Colors.grey,
+                                              size: 18,
+                                            ))
+                                ],
+                              )
                   ],
                 ),
               ),
