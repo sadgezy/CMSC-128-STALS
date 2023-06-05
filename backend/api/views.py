@@ -861,6 +861,25 @@ def set_reject_estab(request):
 
 @api_view(['POST'])
 # @permission_classes([IsAuthenticated])
+def add_new_proof_user(request):   
+    try:
+        user = User.objects.get(pk=ObjectId(request.data["_id"]))
+
+    except User.DoesNotExist:
+         return Response(data={"message": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    user.id_type = request.data["id_type"]
+    user.id_picture = request.data["id_picture"]
+    user.id_number = request.data["id_number"]
+    user.archived = False
+    user.rejected = False
+    user.save()
+
+    return Response(data={"message": "Successfully add new proof for establishment"})
+
+
+@api_view(['POST'])
+# @permission_classes([IsAuthenticated])
 def add_new_proof_estab(request):   
     try:
         estab = Establishment.objects.get(pk=ObjectId(request.data["_id"]))
