@@ -1,4 +1,3 @@
-import 'package:stals_frontend/components/rating.dart';
 import 'package:provider/provider.dart';
 import 'package:stals_frontend/providers/token_provider.dart';
 import 'package:stals_frontend/providers/user_provider.dart';
@@ -860,15 +859,18 @@ class _AccommPageProofState extends State<AccommPageProof> {
                             children: [
                               const TextSpan(
                                   text: "Proof Type: ",
-                                  style: TextStyle(fontWeight: FontWeight.bold)),
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.bold)),
                               TextSpan(text: "$proof_type\n"),
                               const TextSpan(
                                   text: "Proof No: ",
-                                  style: TextStyle(fontWeight: FontWeight.bold)),
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.bold)),
                               TextSpan(text: "$proof_number\n"),
                               const TextSpan(
                                   text: "Proof Picture: \n",
-                                  style: TextStyle(fontWeight: FontWeight.bold)),
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.bold)),
                             ],
                             style: const TextStyle(fontSize: 18),
                           ),

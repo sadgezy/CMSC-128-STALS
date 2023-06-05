@@ -23,7 +23,6 @@ import 'package:stals_frontend/screens/verify_user.dart';
 import 'package:stals_frontend/screens/user_profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 void main() {
   runApp(
     MultiProvider(
@@ -213,8 +212,10 @@ class _AuthWrapperState extends State<AuthWrapper> {
         }
 
         if (context.watch<UserProvider>().isAuthenticated) {
-          if(context.watch<UserProvider>().isAdmin) return const AdminDashBoard();
-          if(context.watch<UserProvider>().isOwner) return const ViewOwnedAccomms();
+          if (context.watch<UserProvider>().isAdmin)
+            return const AdminDashBoard();
+          if (context.watch<UserProvider>().isOwner)
+            return const ViewOwnedAccomms();
           return const RegisteredHomepage();
         } else {
           return const UnregisteredHomepage();
@@ -223,4 +224,3 @@ class _AuthWrapperState extends State<AuthWrapper> {
     );
   }
 }
-

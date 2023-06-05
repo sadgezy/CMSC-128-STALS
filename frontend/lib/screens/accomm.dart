@@ -1,4 +1,3 @@
-import 'package:stals_frontend/components/rating.dart';
 import 'package:provider/provider.dart';
 import 'package:stals_frontend/providers/token_provider.dart';
 import 'package:stals_frontend/providers/user_provider.dart';
@@ -21,35 +20,6 @@ class AccommPage extends StatefulWidget {
   @override
   _AccommPageState createState() => _AccommPageState();
 }
-
-/*possible values:
-bool isOwner = true/false
-if true then it is the owner there   will be an edit button to edit the current information on the page/cards/image/highlights/etc..
-if false then there will be a favorite button for the user 
-
-Highlights booleans
-if true it will show in the highlights
-if false it wont show
-bool isPet = ?
-bool isbathroom = ?
-bool isCook = ?
-bool isNet = ?
-bool isConnectNet = ?
-bool isAircon = ?
-bool isCurfew = ?
-bool isMeter = ?
-bool isFurnished = ?
-bool isSemiFurnished = ?
-bool isParking = ? 
-bool isLaundry = ? 
-bool isOvernight = ?
-bool isVisitors = ?
-bool isCCTV = ?
-bool isMeter = ?
-bool isRef = ?
-
-
-*/
 
 class Item extends StatefulWidget {
   const Item(
@@ -434,7 +404,7 @@ class _AccommPageState extends State<AccommPage> {
         body: SingleChildScrollView(
             child: Center(
                 child: ConstrainedBox(
-          constraints: new BoxConstraints(maxWidth: 550.0),
+          constraints: BoxConstraints(maxWidth: double.infinity),
           child: FutureBuilder(
             future:
                 fetchData(), // Replace fetchData with your actual future function
