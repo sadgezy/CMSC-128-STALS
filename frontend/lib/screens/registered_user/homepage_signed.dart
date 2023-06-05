@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stals_frontend/screens/user_profile.dart';
 import '../../classes.dart';
 import '../../UI_parameters.dart' as UIParameter;
 import '../pdf/pdf_viewer.dart';
@@ -350,11 +351,26 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                   decoration: BoxDecoration(
                     color: UIParameter.LIGHT_TEAL,
                   ),
-                  child: const Text('View Profile'),
+                  child: const Text(''),
                 ),
               ),
               ListTile(
+                title: const Text('View Profile'),
+                onTap: () {
+                  // NOT SURE IF THIS IS THE PROPER WAY, TEMPORARY Navigator.push
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return UserProfile();
+                      },
+                    ),
+                  );
+                },
+              ),
+              ListTile(
                 title: const Text('Favorites'),
+                trailing: Icon(Icons.person_2_rounded),
                 onTap: () {
                   // NOT SURE IF THIS IS THE PROPER WAY, TEMPORARY Navigator.push
                   Navigator.push(
