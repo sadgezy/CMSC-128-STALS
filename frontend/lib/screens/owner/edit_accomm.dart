@@ -1245,19 +1245,15 @@ class _EditAccommState extends State<EditAccomm> {
                                       onPressed: () async {
                                         //on button pushed it saves the editted details and routes back the owned accoms page
                                         //setState(() {});
-                                        print("edit accommodation error.");
-                                        if (_newEstablishmentNameController.text == "" ||
-                                            _newEstablishmentLocationController.text == "" ||
-                                            _newEstablishmentDescriptionController
-                                                  .text == "")
-                                          {
-                                            print("edit accommodation error.");
-                                            setState(() {
-                                              showEditAccommError = true;
-                                            });
-                                          }
-                                        else {
-                                        print("edit accommodation complete.");
+                                        if (_newEstablishmentNameController.text == "") {
+                                          _newEstablishmentNameController.text = responseData['name'];
+                                        }
+                                        if (_newEstablishmentLocationController.text == "") {
+                                          _newEstablishmentLocationController.text = responseData['location_exact'];
+                                        }
+                                        if (_newEstablishmentDescriptionController.text == "") {
+                                          _newEstablishmentDescriptionController.text = responseData['description'];
+                                        };
                                         String url =
                                             "http://127.0.0.1:8000/edit-establishment/" +
                                                 id +
@@ -1307,7 +1303,7 @@ class _EditAccommState extends State<EditAccomm> {
                                         // Navigator.pop(context);
                                         Navigator.pushNamed(
                                             context, '/view_owned_accomms');
-                                        }
+                                        
                                       },
                                       style: ElevatedButton.styleFrom(
                                           shape: const CircleBorder(),
