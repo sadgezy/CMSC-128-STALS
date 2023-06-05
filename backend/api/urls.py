@@ -61,6 +61,9 @@ urlpatterns = [
 
     path('set-reject-establishment/', views.set_reject_estab),
     path("add-new-proof-establishment/", views.add_new_proof_estab),
+
+    path('set-reject-user/', views.set_reject_user),
+    path("add-new-proof-user/", views.add_new_proof_user),
     
     path('archive-user/<str:pk>/', views.archive_user),
     path('unarchive-user/<str:pk>/', views.unarchive_user),
