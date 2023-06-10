@@ -166,15 +166,19 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
                 print("RAN");
                 List<AccomCardDetails> accommodations = snapshot.data!;
                 // print(accommodations[0].getImage());
-                return Column(
-                  children: accommodations.map((accommodation) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                            vertical: 7, horizontal: 15),
-                      child: AccomCard(details: accommodation),
-                    );
-                  }).toList(),
-                );
+                return Center(
+                    child: ConstrainedBox(
+                        constraints: new BoxConstraints(maxWidth: 550),
+                        child: FittedBox(
+                            child: Column(
+                          children: accommodations.map((accommodation) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 7, horizontal: 15),
+                              child: AccomCard(details: accommodation),
+                            );
+                          }).toList(),
+                        ))));
               } else if (snapshot.hasData && snapshot.data!.isEmpty) {
                 return Center(
                   child: Container(

@@ -332,82 +332,90 @@ class _UnregisteredHomepageState extends State<UnregisteredHomepage> {
         body: SingleChildScrollView(
             child: Center(
                 child: ConstrainedBox(
-          constraints: new BoxConstraints(maxWidth: 550.0),
-          child: Column(
-            children: [
-              if (!fetchedAll)
-                SingleChildScrollView(
-                  child: FutureBuilder<List<AccomCardDetails>>(
-                    future: _accommodationsFuture,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                        // print("RAN");
-                        //print(snapshot);
-                        List<AccomCardDetails> accommodations = snapshot.data!;
-                        //print(accommodations);
-                        return Column(
-                          children: accommodations.map((accommodation) {
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 7, horizontal: 15),
-                              child: AccomCard(details: accommodation),
-                            );
-                          }).toList(),
-                        );
-                      } else if (snapshot.hasData && snapshot.data!.isEmpty ||
-                          !snapshot.hasData) {
-                        return Center(
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Column(
-                              children: [
-                                const Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 20)),
-                                Image.asset(
-                                  'assets/images/no_archived.png',
-                                  height: 70,
-                                ),
-                                const Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 10)),
-                                Text("No Accommodations Available! ")
-                              ],
+                    constraints: new BoxConstraints(maxWidth: 550),
+                    child: FittedBox(
+                      child: Column(
+                        children: [
+                          if (!fetchedAll)
+                            SingleChildScrollView(
+                              child: FutureBuilder<List<AccomCardDetails>>(
+                                future: _accommodationsFuture,
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData &&
+                                      snapshot.data!.isNotEmpty) {
+                                    // print("RAN");
+                                    //print(snapshot);
+                                    List<AccomCardDetails> accommodations =
+                                        snapshot.data!;
+                                    //print(accommodations);
+                                    return Column(
+                                      children:
+                                          accommodations.map((accommodation) {
+                                        return Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 7, horizontal: 15),
+                                          child:
+                                              AccomCard(details: accommodation),
+                                        );
+                                      }).toList(),
+                                    );
+                                  } else if (snapshot.hasData &&
+                                          snapshot.data!.isEmpty ||
+                                      !snapshot.hasData) {
+                                    return Center(
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 20),
+                                        child: Column(
+                                          children: [
+                                            const Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: 20)),
+                                            Image.asset(
+                                              'assets/images/no_archived.png',
+                                              height: 70,
+                                            ),
+                                            const Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: 10)),
+                                            Text(
+                                                "No Accommodations Available! ")
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  } else if (snapshot.hasError) {
+                                    return Text('Error: ${snapshot.error}');
+                                  }
+                                  return CircularProgressIndicator();
+                                },
+                              ),
                             ),
-                          ),
-                        );
-                      } else if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}');
-                      }
-                      return CircularProgressIndicator();
-                    },
-                  ),
-                ),
-              if (fetchedAll)
-                SingleChildScrollView(
-                  child: Column(
-                    children: accommList.map((accommodation) {
-                      //print(accommodation);
-                      //print(accommodation["name"]);
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 7, horizontal: 15),
-                        child: AccomCard(
-                            details: AccomCardDetails(
-                                accommodation["_id"],
-                                accommodation["name"],
-                                accommodation["owner"],
-                                accommodation["description"],
-                                accommodation["loc_picture"],
-                                4.0,
-                                accommodation["archived"],
-                                accommodation["verified"])),
-                      );
-                    }).toList(),
-                  ),
-                ),
-            ],
-          ),
-        ))));
+                          if (fetchedAll)
+                            SingleChildScrollView(
+                              child: Column(
+                                children: accommList.map((accommodation) {
+                                  //print(accommodation);
+                                  //print(accommodation["name"]);
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 7, horizontal: 15),
+                                    child: AccomCard(
+                                        details: AccomCardDetails(
+                                            accommodation["_id"],
+                                            accommodation["name"],
+                                            accommodation["owner"],
+                                            accommodation["description"],
+                                            accommodation["loc_picture"],
+                                            4.0,
+                                            accommodation["archived"],
+                                            accommodation["verified"])),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                        ],
+                      ),
+                    )))));
   }
 }
