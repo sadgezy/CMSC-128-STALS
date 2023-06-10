@@ -92,6 +92,8 @@ class _ItemState extends State<Item> {
     }
 
     return Container(
+      constraints: BoxConstraints(maxWidth: 550),
+      padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
         gradient: LinearGradient(
             begin: Alignment.topLeft,
