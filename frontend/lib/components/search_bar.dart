@@ -24,7 +24,8 @@ class CustomSearchBar extends StatelessWidget {
           onChanged: onChanged,
           cursorColor: UIParameter.LIGHT_TEAL,
           style: const TextStyle(
-              fontSize: UIParameter.FONT_BODY_SIZE,
+              // fontSize: UIParameter.FONT_BODY_SIZE,
+              fontSize: 18,
               fontFamily: UIParameter.FONT_REGULAR),
           decoration: InputDecoration(
             isDense: true,

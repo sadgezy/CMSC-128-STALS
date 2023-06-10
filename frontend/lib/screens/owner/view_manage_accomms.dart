@@ -158,50 +158,58 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
           ),
         ),
         // the right drawer
-        body: SingleChildScrollView(
-          child: FutureBuilder<List<AccomCardDetails>>(
-            future: _accommodationsFuture,
-            builder: (context, snapshot) {
-              if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                print("RAN");
-                List<AccomCardDetails> accommodations = snapshot.data!;
-                // print(accommodations[0].getImage());
-                return Column(
-                  children: accommodations.map((accommodation) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                            vertical: 7, horizontal: 15),
-                      child: AccomCard(details: accommodation),
-                    );
-                  }).toList(),
-                );
-              } else if (snapshot.hasData && snapshot.data!.isEmpty) {
-                return Center(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      children: [
-                        const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 20)),
-                        Image.asset(
-                          'assets/images/no_archived.png',
-                          height: 70,
+        body: Center(
+          child: ConstrainedBox(
+            constraints: new BoxConstraints(maxWidth: 550.0),
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: SingleChildScrollView(
+                child: FutureBuilder<List<AccomCardDetails>>(
+                  future: _accommodationsFuture,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                      print("RAN");
+                      List<AccomCardDetails> accommodations = snapshot.data!;
+                      // print(accommodations[0].getImage());
+                      return Column(
+                        children: accommodations.map((accommodation) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 7, horizontal: 15),
+                            child: AccomCard(details: accommodation),
+                          );
+                        }).toList(),
+                      );
+                    } else if (snapshot.hasData && snapshot.data!.isEmpty) {
+                      return Center(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Column(
+                            children: [
+                              const Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 20)),
+                              Image.asset(
+                                'assets/images/no_archived.png',
+                                height: 70,
+                              ),
+                              const Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 10)),
+                              Text("No establishments added yet")
+                            ],
+                          ),
                         ),
-                        const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 10)),
-                        Text("No establishments added yet")
-                      ],
-                    ),
-                  ),
-                );
-              } else if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              }
-              return Center(
-                child:
-                    CircularProgressIndicator(), // Or any loading indicator widget
-              );
-            },
+                      );
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    }
+                    return Center(
+                      child:
+                          CircularProgressIndicator(), // Or any loading indicator widget
+                    );
+                  },
+                ),
+              ),
+            ),
           ),
         ));
   }

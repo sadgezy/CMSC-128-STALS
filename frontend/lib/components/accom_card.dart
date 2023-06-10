@@ -9,7 +9,6 @@ import 'package:stals_frontend/providers/user_provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-
 class AccomCard extends StatefulWidget {
   /* Accom Card will accept an object that will contain
     - Accom ID
@@ -33,17 +32,17 @@ class _AccomCardState extends State<AccomCard> {
   var isFavorite = false;
 
   List<dynamic> user = [];
-    String id = '';
-    String email = '';
-    String username = '';
-    String user_type = '';
+  String id = '';
+  String email = '';
+  String username = '';
+  String user_type = '';
 
   Future<void> addAccommodationToFavorites(String id) async {
     print("Add accommodation complete.");
     String url = "http://127.0.0.1:8000/add-room-to-user-favorites/";
     final Map<String, dynamic> requestBody = {
       "email": email,
-      "ticket_id" : id,
+      "ticket_id": id,
     };
     final headers = {
       'Content-Type': 'application/json',
@@ -58,18 +57,19 @@ class _AccomCardState extends State<AccomCard> {
     // Handle the decoded response or perform any necessary operations
   }
 
-   Future<void> getUserInfo() async {
-        user = Provider.of<UserProvider>(context, listen: false).userInfo;
-        id = user[0];
-        email = user[1];
-        username = user[2];
-        user_type = user[3];
-      }
-
+  Future<void> getUserInfo() async {
+    user = Provider.of<UserProvider>(context, listen: false).userInfo;
+    id = user[0];
+    email = user[1];
+    username = user[2];
+    user_type = user[3];
+  }
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     getUserInfo();
+
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
       width: MediaQuery.of(context).size.width - 40,
@@ -82,8 +82,8 @@ class _AccomCardState extends State<AccomCard> {
           // box shadow to get elevation effect
           const BoxShadow(
               color: Color.fromARGB(255, 177, 177, 177),
-              blurRadius: 3,
-              offset: Offset(3, 5))
+              blurRadius: 2,
+              offset: Offset(2, 3))
         ],
       ),
       // InkWell so card has onTap property
@@ -103,7 +103,9 @@ class _AccomCardState extends State<AccomCard> {
             // left side for image
             // right side for name, description, and rating
             SizedBox(
-              width: (MediaQuery.of(context).size.width - 40) / 2,
+              width: width < 550
+                  ? (MediaQuery.of(context).size.width - 40) / 2
+                  : 255,
               height: 200,
               child: ClipRRect(
                   // round the left edges of the image to match the card
@@ -111,13 +113,15 @@ class _AccomCardState extends State<AccomCard> {
                       topLeft: Radius.circular(15),
                       bottomLeft: Radius.circular(15)),
                   child: FittedBox(
-                      fit: BoxFit.fill,
+                      fit: BoxFit.cover,
                       child: Image.memory(Uri.parse(widget.details.getImage())
                           .data!
                           .contentAsBytes()))),
             ),
             SizedBox(
-              width: (MediaQuery.of(context).size.width - 40) / 2,
+              width: width < 550
+                  ? (MediaQuery.of(context).size.width - 40) / 2
+                  : 255,
               height: 200,
               child: Padding(
                 padding: const EdgeInsets.all(20),
@@ -139,12 +143,14 @@ class _AccomCardState extends State<AccomCard> {
                       child: Text(
                         widget.details.getDescription(),
                         style: const TextStyle(
+                            overflow: TextOverflow.fade,
                             fontSize: UIParameter.FONT_BODY_SIZE,
                             fontFamily: UIParameter.FONT_REGULAR),
                       ),
                     ),
                     // if admin only display rating
-                    isAdmin ? Container()
+                    isAdmin
+                        ? Container()
                         // ? RatingBar.builder(
                         //     minRating: 0,
                         //     maxRating: 5,
@@ -191,7 +197,8 @@ class _AccomCardState extends State<AccomCard> {
                                     setState(() {
                                       isFavorite = !isFavorite;
                                     });
-                                    addAccommodationToFavorites(widget.details.getID());
+                                    addAccommodationToFavorites(
+                                        widget.details.getID());
                                   },
                                   // check if part of favorite accomms
                                   child: isFavorite

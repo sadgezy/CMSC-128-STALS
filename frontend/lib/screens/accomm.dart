@@ -92,7 +92,6 @@ class _ItemState extends State<Item> {
     }
 
     return Container(
-      constraints: BoxConstraints(maxWidth: 550),
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -174,6 +173,7 @@ class _AccommPageState extends State<AccommPage> {
   String response_Name = "";
   String response_Address = "";
   bool? response_archived;
+  String response_estab_type = "";
   String owner_id = "";
   String response2_ownerName = "";
   String response2_phone_no = "";
@@ -190,6 +190,9 @@ class _AccommPageState extends State<AccommPage> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
     reviewList = [];
     Future<void> fetchData() async {
       // controller: emailController;
@@ -217,6 +220,7 @@ class _AccommPageState extends State<AccommPage> {
       loc_picture = responseData["loc_picture"];
       description = responseData["description"];
       response_archived = responseData["archived"];
+      response_estab_type = responseData["establishment_type"];
 
       owner_id = responseData['owner'];
       // print(owner_id);
@@ -284,6 +288,7 @@ class _AccommPageState extends State<AccommPage> {
 
     return Scaffold(
       //App bar start
+      backgroundColor: Color(0xffF0F3F5),
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
@@ -292,11 +297,11 @@ class _AccommPageState extends State<AccommPage> {
           },
           color: Colors.black,
         ),
-        title: Text(
-          "Return to Homepage",
+        title: const Text(
+          "All Establishments",
           style: TextStyle(color: Colors.black),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xffF0F3F5),
       ),
       // end of Appbar
 
@@ -321,947 +326,1094 @@ class _AccommPageState extends State<AccommPage> {
 
         */
 
-      body: FutureBuilder(
-        future:
-            fetchData(), // Replace fetchData with your actual future function
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            // While the data is being fetched, show a loading indicator
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            // If there's an error, display an error message
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else {
-            return SingleChildScrollView(
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+      body: Center(
+        child: ConstrainedBox(
+          constraints: new BoxConstraints(maxWidth: 550.0),
+          child: FutureBuilder(
+            future:
+                fetchData(), // Replace fetchData with your actual future function
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                // While the data is being fetched, show a loading indicator
+                return const Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                // If there's an error, display an error message
+                return Center(child: Text('Error: ${snapshot.error}'));
+              } else {
+                return SingleChildScrollView(
+                  child: Column(
                     children: [
-                      Stack(
-                        alignment: Alignment.topRight,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Container(
-                              height: MediaQuery.of(context).size.height / 3.5,
-                              width: MediaQuery.of(context).size.width,
-                              child: Image.memory(Uri.parse(loc_picture)
-                                  .data!
-                                  .contentAsBytes())),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          Stack(
+                            alignment: Alignment.topRight,
                             children: [
-                              if (user_type == 'owner')
-                                ElevatedButton(
-                                  onPressed: () {
-                                    // Action for the first icon button
-                                    Navigator.pushNamed(
-                                        context, '/owned/accomm/edit',
-                                        arguments: id);
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    shape: const CircleBorder(),
-                                    primary: Colors.white,
-                                    onPrimary:
-                                        const Color.fromARGB(255, 25, 83, 95),
-                                  ),
-                                  child: buildUserTypeIcon(), // First icon
-                                ),
-                              // if (user_type == 'owner')
-                              //   ElevatedButton(
-                              //     onPressed: () {
-                              //       // Action for the second icon button
-                              //       Navigator.pushNamed(
-                              //           context, '/view_owned_accomms',
-                              //           arguments: id);
-                              //     },
-                              //     style: ElevatedButton.styleFrom(
-                              //       shape: CircleBorder(),
-                              //       primary: Colors.white,
-                              //       onPrimary: Color.fromARGB(255, 25, 83, 95),
-                              //     ),
-                              //     child: buildUserTypeIcon(), // Second icon
-                              //   ),
-                              if (user_type == 'owner' || user_type == 'admin')
-                                ElevatedButton(
-                                  onPressed: () async {
-                                    // Action for the third icon button
-                                    String url =
-                                        "http://127.0.0.1:8000/delete-establishment/" +
-                                            id +
-                                            "/";
-                                    final response =
-                                        await http.delete(Uri.parse(url));
-                                    if (user_type == 'owner') {
-                                      Navigator.pushNamed(
-                                          context, '/view_owned_accomms');
-                                    }
-
-                                    if (user_type == 'admin') {
-                                      Navigator.pushNamed(
-                                          context, '/admin/view_accomms');
-                                    }
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    shape: const CircleBorder(),
-                                    primary: Colors.white,
-                                    onPrimary:
-                                        const Color.fromARGB(255, 25, 83, 95),
-                                  ),
-                                  child: const Icon(
-                                    Icons.delete,
-                                    size: 20,
-                                  ), // Third icon
-                                ),
-                              if (user_type == 'owner' || user_type == 'admin')
-                                ElevatedButton(
-                                  onPressed: () async {
-                                    // Action for the third icon button
-                                    if (response_archived == true) {
-                                      String url =
-                                          "http://127.0.0.1:8000/unarchive-establishment/" +
-                                              id +
-                                              "/";
-                                      final response =
-                                          await http.put(Uri.parse(url));
-                                    } else {
-                                      String url =
-                                          "http://127.0.0.1:8000/archive-establishment/" +
-                                              id +
-                                              "/";
-                                      final response =
-                                          await http.put(Uri.parse(url));
-                                    }
-
-                                    if (user_type == 'owner') {
-                                      Navigator.pushNamed(
-                                          context, '/view_owned_accomms');
-                                    }
-
-                                    if (user_type == 'admin') {
-                                      Navigator.pushNamed(
-                                          context, '/admin/view_accomms');
-                                    }
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    shape: const CircleBorder(),
-                                    primary: Colors.white,
-                                    onPrimary:
-                                        const Color.fromARGB(255, 25, 83, 95),
-                                  ),
-                                  child: const Icon(
-                                    Icons.archive,
-                                    size: 20,
-                                  ),
-                                ),
-                              if (user_type == 'owner')
-                                ElevatedButton(
-                                  onPressed: () async {
-                                    // Action for the fourth icon button
-                                    showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return AddRoom(
-                                              estabId: id,
-                                              estabName: response_Name);
-                                        });
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    shape: const CircleBorder(),
-                                    primary: Colors.white,
-                                    onPrimary:
-                                        const Color.fromARGB(255, 25, 83, 95),
-                                  ),
-                                  child: const Icon(
-                                    Icons.add_home,
-                                    size: 20,
-                                  ),
-                                ),
-                            ],
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    //optional
-                    children: [
-                      const SizedBox(
-                        width: 35,
-                      ),
-                      FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Text(
-                          response_Name,
-                          style: const TextStyle(
-                              fontSize: 28, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 35,
-                      ),
-                      // Column(children: [
-                      //   StarRating(
-                      //     rating: rating,
-                      //     onRatingChanged: (rating) =>
-                      //         setState(() => this.rating = rating),
-                      //     color: Colors.black,
-                      //   ),
-                      //   FittedBox(
-                      //     fit: BoxFit.scaleDown,
-                      //     child: Text(
-                      //       "100+ reviews",
-                      //       style: TextStyle(
-                      //           fontSize: 10, fontWeight: FontWeight.bold),
-                      //     ),
-                      //   ),
-                      // ]),
-                    ],
-                  ),
-
-                  //spacing and divider line
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Divider(
-                    color: Colors.black,
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      const SizedBox(
-                        height: 3,
-                      ),
-
-                      //Owner Name
-                      Row(
-                        children: <Widget>[
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          const CircleAvatar(
-                            radius: 15,
-                            backgroundImage:
-                                AssetImage("assets/images/room_stock.jpg"),
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          FittedBox(
-                            fit: BoxFit.fill,
-                            child: Text(
-                              response2_ownerName,
-                              style: const TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.normal),
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      //Location Details
-                      Row(
-                        children: <Widget>[
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          const Icon(
-                            Icons.location_pin,
-                            color: Colors.blue,
-                            size: 40,
-                          ),
-                          FittedBox(
-                            fit: BoxFit.fill,
-                            child: Text(
-                              response_Address,
-                              style: const TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.normal),
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      //Contact Info
-                      Row(
-                        children: <Widget>[
-                          const SizedBox(
-                            width: 6,
-                          ),
-                          const Icon(
-                            Icons.phone_in_talk_rounded,
-                            color: Colors.blue,
-                            size: 33,
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          FittedBox(
-                            fit: BoxFit.fill,
-                            child: Text(
-                              response2_phone_no,
-                              style: const TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.normal),
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      if (user_type == "user" || user_type == "guest")
-                        Row(
-                          children: [
-                            TextButton.icon(
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    print(user_type);
-                                    if (user_type == "guest") {
-                                      return const AlertDialog(
-                                          content: Padding(
-                                        padding: EdgeInsets.all(8),
+                              Container(
+                                  // height:
+                                  //     MediaQuery.of(context).size.height / 3.5,
+                                  height: 400,
+                                  // width: MediaQuery.of(context).size.width,
+                                  width: width < 550 ? width : 550,
+                                  child: Image.memory(
+                                    Uri.parse(loc_picture)
+                                        .data!
+                                        .contentAsBytes(),
+                                    fit: BoxFit.cover,
+                                  )),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 15),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    if (user_type == 'owner')
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          // Action for the first icon button
+                                          Navigator.pushNamed(
+                                              context, '/owned/accomm/edit',
+                                              arguments: id);
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          shape: const CircleBorder(),
+                                          primary: Colors.white,
+                                          onPrimary: const Color.fromARGB(
+                                              255, 25, 83, 95),
+                                        ),
                                         child:
-                                            Text("Sign in to file a report!"),
-                                      ));
-                                    }
-                                    return AlertDialog(
-                                      scrollable: true,
-                                      title: const Text("Report Listing"),
-                                      content: Padding(
-                                        padding: const EdgeInsets.all(8),
-                                        child: Form(
-                                          child: Column(
-                                            children: [
-                                              const Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    vertical: 5),
-                                                child: Text("Select Reason"),
-                                              ),
-                                              ReportListing(
-                                                tags: tagsController,
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.all(10),
-                                                child: SizedBox(
-                                                  width: 200,
-                                                  child: TextFormField(
-                                                    controller:
-                                                        reportController,
-                                                    style:
-                                                        TextStyle(fontSize: 13),
-                                                    decoration:
-                                                        const InputDecoration(
-                                                      border:
-                                                          OutlineInputBorder(),
-                                                      hintText:
-                                                          "Report Description",
-                                                      contentPadding:
-                                                          EdgeInsets.all(10),
-                                                    ),
-                                                    maxLines: 5,
-                                                    minLines: 5,
-                                                  ),
-                                                ),
-                                              ),
-                                              ElevatedButton(
-                                                onPressed: () async {
-                                                  print(tagsController.text);
-                                                  switch (tagsController.text) {
-                                                    case "1":
-                                                      selectedReason = [
-                                                        "Inactive Owner"
-                                                      ];
-                                                      break;
-                                                    case "2":
-                                                      selectedReason = [
-                                                        "Inaccurate Details"
-                                                      ];
-                                                      break;
-                                                    case "3":
-                                                      selectedReason = [
-                                                        "Fraudulent Listing"
-                                                      ];
-                                                      break;
-                                                    case "4":
-                                                      selectedReason = [
-                                                        "Offensive Content"
-                                                      ];
-                                                      break;
-                                                    case "5":
-                                                      selectedReason = [
-                                                        "Other Reason"
-                                                      ];
-                                                      break;
-                                                  }
-                                                  String url5 =
-                                                      "http://127.0.0.1:8000/report-establishment/";
-                                                  final response5 = await json
-                                                      .decode((await http.post(
-                                                              Uri.parse(url5),
-                                                              body: {
-                                                        "establishment_id": id,
-                                                        "user_id": user_id,
-                                                        "tags":
-                                                            "'${selectedReason.toString()}'",
-                                                        "description":
-                                                            reportController
-                                                                .text
-                                                      }))
-                                                          .body);
+                                            buildUserTypeIcon(), // First icon
+                                      ),
+                                    // if (user_type == 'owner')
+                                    //   ElevatedButton(
+                                    //     onPressed: () {
+                                    //       // Action for the second icon button
+                                    //       Navigator.pushNamed(
+                                    //           context, '/view_owned_accomms',
+                                    //           arguments: id);
+                                    //     },
+                                    //     style: ElevatedButton.styleFrom(
+                                    //       shape: CircleBorder(),
+                                    //       primary: Colors.white,
+                                    //       onPrimary: Color.fromARGB(255, 25, 83, 95),
+                                    //     ),
+                                    //     child: buildUserTypeIcon(), // Second icon
+                                    //   ),
+                                    if (user_type == 'owner' ||
+                                        user_type == 'admin')
+                                      ElevatedButton(
+                                        onPressed: () async {
+                                          // Action for the third icon button
+                                          String url =
+                                              "http://127.0.0.1:8000/delete-establishment/" +
+                                                  id +
+                                                  "/";
+                                          final response =
+                                              await http.delete(Uri.parse(url));
+                                          if (user_type == 'owner') {
+                                            Navigator.pushNamed(
+                                                context, '/view_owned_accomms');
+                                          }
 
-                                                  reportController.clear();
-                                                  Navigator.pop(context);
+                                          if (user_type == 'admin') {
+                                            Navigator.pushNamed(
+                                                context, '/admin/view_accomms');
+                                          }
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          shape: const CircleBorder(),
+                                          primary: Colors.white,
+                                          onPrimary: const Color.fromARGB(
+                                              255, 25, 83, 95),
+                                        ),
+                                        child: const Icon(
+                                          Icons.delete,
+                                          size: 20,
+                                        ), // Third icon
+                                      ),
+                                    if (user_type == 'owner' ||
+                                        user_type == 'admin')
+                                      ElevatedButton(
+                                        onPressed: () async {
+                                          // Action for the third icon button
+                                          if (response_archived == true) {
+                                            String url =
+                                                "http://127.0.0.1:8000/unarchive-establishment/" +
+                                                    id +
+                                                    "/";
+                                            final response =
+                                                await http.put(Uri.parse(url));
+                                          } else {
+                                            String url =
+                                                "http://127.0.0.1:8000/archive-establishment/" +
+                                                    id +
+                                                    "/";
+                                            final response =
+                                                await http.put(Uri.parse(url));
+                                          }
 
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(const SnackBar(
-                                                          content: Text(
-                                                              "You have reported this accommodation. Thank you for helping us!")));
-                                                },
-                                                style: ElevatedButton.styleFrom(
-                                                    backgroundColor:
-                                                        UIParams.MAROON),
-                                                child: const Text(
-                                                  "Report",
-                                                  style: TextStyle(
-                                                      color: Colors.white),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
+                                          if (user_type == 'owner') {
+                                            Navigator.pushNamed(
+                                                context, '/view_owned_accomms');
+                                          }
+
+                                          if (user_type == 'admin') {
+                                            Navigator.pushNamed(
+                                                context, '/admin/view_accomms');
+                                          }
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          shape: const CircleBorder(),
+                                          primary: Colors.white,
+                                          onPrimary: const Color.fromARGB(
+                                              255, 25, 83, 95),
+                                        ),
+                                        child: const Icon(
+                                          Icons.archive,
+                                          size: 20,
                                         ),
                                       ),
-                                    );
-                                  },
-                                );
-                              },
-                              icon: const Icon(Icons.flag_outlined),
-                              label: const Text("Report this listing"),
-                              style: TextButton.styleFrom(
-                                foregroundColor: const Color(0xff7B2D26),
+                                    if (user_type == 'owner')
+                                      ElevatedButton(
+                                        onPressed: () async {
+                                          // Action for the fourth icon button
+                                          showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return AddRoom(
+                                                    estabId: id,
+                                                    estabName: response_Name);
+                                              });
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          shape: const CircleBorder(),
+                                          primary: Colors.white,
+                                          onPrimary: const Color.fromARGB(
+                                              255, 25, 83, 95),
+                                        ),
+                                        child: const Icon(
+                                          Icons.add_home,
+                                          size: 20,
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                        child: Column(
+                          children: [
+                            const SizedBox(
+                              height: 25,
+                            ),
+                            Row(
+                              //optional
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: Text(
+                                        response_Name,
+                                        style: const TextStyle(
+                                            fontSize: 28,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 5),
+                                    Text(
+                                        response_estab_type[0].toUpperCase() +
+                                            response_estab_type.substring(1),
+                                        style: const TextStyle(
+                                            color: Colors.grey, fontSize: 15))
+                                  ],
+                                ),
+                                // Column(children: [
+                                //   StarRating(
+                                //     rating: rating,
+                                //     onRatingChanged: (rating) =>
+                                //         setState(() => this.rating = rating),
+                                //     color: Colors.black,
+                                //   ),
+                                //   FittedBox(
+                                //     fit: BoxFit.scaleDown,
+                                //     child: Text(
+                                //       "100+ reviews",
+                                //       style: TextStyle(
+                                //           fontSize: 10, fontWeight: FontWeight.bold),
+                                //     ),
+                                //   ),
+                                // ]),
+                              ],
+                            ),
+
+                            //spacing and divider line
+                            const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10),
+                              child: Divider(
+                                color: Colors.grey,
+                                height: 1.5,
                               ),
                             ),
-                            TextButton.icon(
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    print(user_type);
-                                    if (user_type == "guest") {
-                                      return const AlertDialog(
-                                          content: Padding(
-                                        padding: EdgeInsets.all(8),
-                                        child: Text("Sign in to post a review"),
-                                      ));
-                                    }
-                                    return Review(
-                                        accommName: response_Name,
-                                        estabId: id,
-                                        username: username,
-                                        userId: user_id);
-                                  },
-                                );
-                              },
-                              icon: const Icon(Icons.rate_review),
-                              label: const Text("Write a review"),
-                              style: TextButton.styleFrom(
-                                foregroundColor: const Color(0xff7B2D26),
-                              ),
-                            )
-                          ],
-                        ),
-                    ],
-                  ),
-
-                  const Divider(
-                    color: Colors.black,
-                  ),
-
-                  //CARD Carousel for ROOM Capacity/Type/Price/Availability
-                  //Cards Information/Data are on items1-4()
-                  //starting from lines 45-223
-                  if (cardList.isNotEmpty)
-                    Column(
-                      children: [
-                        CarouselSlider(
-                          options: CarouselOptions(
-                            height: 200.0,
-                            autoPlay: true,
-                            autoPlayInterval: const Duration(seconds: 5),
-                            autoPlayAnimationDuration:
-                                const Duration(milliseconds: 1000),
-                            autoPlayCurve: Curves.fastOutSlowIn,
-                            pauseAutoPlayOnTouch: true,
-                            aspectRatio: 2.0,
-                            onPageChanged: (index, reason) {
-                              _currentIndex = index;
-                              print(index);
-                            },
-                          ),
-                          items: cardList.map((card) {
-                            return Builder(builder: (BuildContext context) {
-                              return SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.30,
-                                width: MediaQuery.of(context).size.width,
-                                child: Card(
-                                  color: Colors.blueAccent,
-                                  child: card,
-                                ),
-                              );
-                            });
-                          }).toList(),
-                        ),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.center,
-                        //   children: map<Widget>(cardList, (index, url) {
-                        //     return Container(
-                        //       width: 10.0,
-                        //       height: 10.0,
-                        //       margin: EdgeInsets.symmetric(
-                        //           vertical: 10.0, horizontal: 2.0),
-                        //       decoration: BoxDecoration(
-                        //         shape: BoxShape.circle,
-                        //         color: _currentIndex == index
-                        //             ? Colors.blueAccent
-                        //             : Colors.grey,
-                        //       ),
-                        //     );
-                        //   }),
-                        // ),
-                      ],
-                    ),
-                  //End of Cards
-                  if (cardList.isNotEmpty)
-                    const SizedBox(
-                      height: 10,
-                    ),
-                  if (cardList.isNotEmpty)
-                    const Divider(
-                      color: Colors.black,
-                    ),
-                  //Description
-                  Row(
-                    children: [
-                      Expanded(
-                          child: Column(
-                        children: [
-                          const Text(
-                            "Description",
-                            maxLines: 1,
-                            style: TextStyle(
-                                fontSize: 22, fontWeight: FontWeight.normal),
-                            textAlign: TextAlign.center,
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height / 60,
-                          ),
-                          SizedBox(
-                            width: 450,
-                            child: Text(description,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.normal),
-                                textAlign: TextAlign.center),
-                          ),
-                        ],
-                      ))
-                    ],
-                  ),
-                  //end of Description
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  const Divider(
-                    color: Colors.black,
-                  ),
-
-                  //Highlights
-                  // FittedBox(
-                  //   fit: BoxFit.fill,
-                  //   child: Text(
-                  //     "Highlights",
-                  //     style: TextStyle(
-                  //         fontSize: 22, fontWeight: FontWeight.normal),
-                  //   ),
-                  // ),
-                  // SizedBox(
-                  //     child: Column(
-                  //   crossAxisAlignment: CrossAxisAlignment.start,
-                  //   children: [
-                  //     SizedBox(
-                  //       height: 5,
-                  //     ),
-                  //     FittedBox(
-                  //       child: Row(
-                  //         children: [
-                  //           SizedBox(
-                  //             width: 5,
-                  //           ),
-                  //           Icon(
-                  //             Icons.pets,
-                  //             color: Colors.blue,
-                  //             size: 40,
-                  //           ),
-                  //           FittedBox(
-                  //               fit: BoxFit.fill,
-                  //               child: Text(
-                  //                 "Pets Allowed",
-                  //                 style: TextStyle(
-                  //                     fontSize: 16,
-                  //                     fontWeight: FontWeight.normal),
-                  //               )),
-                  //         ],
-                  //       ),
-                  //     ),
-                  //     FittedBox(
-                  //       child: Row(
-                  //         children: [
-                  //           SizedBox(
-                  //             width: 5,
-                  //           ),
-                  //           Icon(
-                  //             Icons.bathtub_outlined,
-                  //             color: Colors.blue,
-                  //             size: 40,
-                  //           ),
-                  //           FittedBox(
-                  //               fit: BoxFit.fill,
-                  //               child: Text(
-                  //                 "Own Bathroom",
-                  //                 style: TextStyle(
-                  //                     fontSize: 16,
-                  //                     fontWeight: FontWeight.normal),
-                  //               )),
-                  //         ],
-                  //       ),
-                  //     ),
-                  //     FittedBox(
-                  //       child: Row(
-                  //         children: [
-                  //           SizedBox(
-                  //             width: 5,
-                  //           ),
-                  //           Icon(
-                  //             Icons.restaurant_menu,
-                  //             color: Colors.blue,
-                  //             size: 40,
-                  //           ),
-                  //           FittedBox(
-                  //               fit: BoxFit.fill,
-                  //               child: Text(
-                  //                 "Cooking Allowed",
-                  //                 style: TextStyle(
-                  //                     fontSize: 16,
-                  //                     fontWeight: FontWeight.normal),
-                  //               )),
-                  //         ],
-                  //       ),
-                  //     ),
-                  //     FittedBox(
-                  //       child: Row(
-                  //         children: [
-                  //           SizedBox(
-                  //             width: 5,
-                  //           ),
-                  //           Icon(
-                  //             Icons.wifi,
-                  //             color: Colors.blue,
-                  //             size: 40,
-                  //           ),
-                  //           FittedBox(
-                  //               fit: BoxFit.fill,
-                  //               child: Text(
-                  //                 "With Internet Connection",
-                  //                 style: TextStyle(
-                  //                     fontSize: 16,
-                  //                     fontWeight: FontWeight.normal),
-                  //               )),
-                  //         ],
-                  //       ),
-                  //     ),
-                  //     FittedBox(
-                  //       child: Row(
-                  //         children: [
-                  //           SizedBox(
-                  //             width: 5,
-                  //           ),
-                  //           Icon(
-                  //             Icons.ac_unit,
-                  //             color: Colors.blue,
-                  //             size: 40,
-                  //           ),
-                  //           FittedBox(
-                  //               fit: BoxFit.fill,
-                  //               child: Text(
-                  //                 "Air - Conditioned Room",
-                  //                 style: TextStyle(
-                  //                     fontSize: 16,
-                  //                     fontWeight: FontWeight.normal),
-                  //               )),
-                  //         ],
-                  //       ),
-                  //     ),
-                  //     FittedBox(
-                  //       child: Row(
-                  //         children: [
-                  //           SizedBox(
-                  //             width: 5,
-                  //           ),
-                  //           Icon(
-                  //             Icons.bedtime_off,
-                  //             color: Colors.blue,
-                  //             size: 40,
-                  //           ),
-                  //           FittedBox(
-                  //               fit: BoxFit.fill,
-                  //               child: Text(
-                  //                 "No Curfew",
-                  //                 style: TextStyle(
-                  //                     fontSize: 16,
-                  //                     fontWeight: FontWeight.normal),
-                  //               )),
-                  //         ],
-                  //       ),
-                  //     ),
-                  //     FittedBox(
-                  //       child: Row(
-                  //         children: [
-                  //           SizedBox(
-                  //             width: 5,
-                  //           ),
-                  //           Icon(
-                  //             Icons.electric_meter_outlined,
-                  //             color: Colors.blue,
-                  //             size: 40,
-                  //           ),
-                  //           FittedBox(
-                  //               fit: BoxFit.fill,
-                  //               child: Text(
-                  //                 "Own Meter",
-                  //                 style: TextStyle(
-                  //                     fontSize: 16,
-                  //                     fontWeight: FontWeight.normal),
-                  //               )),
-                  //         ],
-                  //       ),
-                  //     ),
-                  //     FittedBox(
-                  //       child: Row(
-                  //         children: [
-                  //           SizedBox(
-                  //             width: 5,
-                  //           ),
-                  //           Icon(
-                  //             Icons.bed_sharp,
-                  //             color: Colors.blue,
-                  //             size: 40,
-                  //           ),
-                  //           FittedBox(
-                  //               fit: BoxFit.fill,
-                  //               child: Text(
-                  //                 "Furnished",
-                  //                 style: TextStyle(
-                  //                     fontSize: 16,
-                  //                     fontWeight: FontWeight.normal),
-                  //               )),
-                  //         ],
-                  //       ),
-                  //     ),
-                  //     FittedBox(
-                  //       child: Row(
-                  //         children: [
-                  //           SizedBox(
-                  //             width: 5,
-                  //           ),
-                  //           Icon(
-                  //             Icons.desk,
-                  //             color: Colors.blue,
-                  //             size: 40,
-                  //           ),
-                  //           FittedBox(
-                  //               fit: BoxFit.fill,
-                  //               child: Text(
-                  //                 "Semi Furnished",
-                  //                 style: TextStyle(
-                  //                     fontSize: 16,
-                  //                     fontWeight: FontWeight.normal),
-                  //               )),
-                  //         ],
-                  //       ),
-                  //     ),
-                  //     FittedBox(
-                  //       child: Row(
-                  //         children: [
-                  //           SizedBox(
-                  //             width: 5,
-                  //           ),
-                  //           Icon(
-                  //             Icons.drive_eta_outlined,
-                  //             color: Colors.blue,
-                  //             size: 40,
-                  //           ),
-                  //           FittedBox(
-                  //               fit: BoxFit.fill,
-                  //               child: Text(
-                  //                 "Parking Space",
-                  //                 style: TextStyle(
-                  //                     fontSize: 16,
-                  //                     fontWeight: FontWeight.normal),
-                  //               )),
-                  //         ],
-                  //       ),
-                  //     ),
-                  //     FittedBox(
-                  //       child: Row(
-                  //         children: [
-                  //           SizedBox(
-                  //             width: 5,
-                  //           ),
-                  //           Icon(
-                  //             Icons.local_laundry_service_outlined,
-                  //             color: Colors.blue,
-                  //             size: 40,
-                  //           ),
-                  //           FittedBox(
-                  //               fit: BoxFit.fill,
-                  //               child: Text(
-                  //                 "Laundry Allowed",
-                  //                 style: TextStyle(
-                  //                     fontSize: 16,
-                  //                     fontWeight: FontWeight.normal),
-                  //               )),
-                  //         ],
-                  //       ),
-                  //     ),
-                  //     FittedBox(
-                  //       child: Row(
-                  //         children: [
-                  //           SizedBox(
-                  //             width: 5,
-                  //           ),
-                  //           Icon(
-                  //             Icons.nights_stay_outlined,
-                  //             color: Colors.blue,
-                  //             size: 40,
-                  //           ),
-                  //           FittedBox(
-                  //               fit: BoxFit.fill,
-                  //               child: Text(
-                  //                 "Overnight Visitors Allowed",
-                  //                 style: TextStyle(
-                  //                     fontSize: 16,
-                  //                     fontWeight: FontWeight.normal),
-                  //               )),
-                  //         ],
-                  //       ),
-                  //     ),
-                  //     FittedBox(
-                  //       child: Row(
-                  //         children: [
-                  //           SizedBox(
-                  //             width: 5,
-                  //           ),
-                  //           Icon(
-                  //             Icons.directions_walk,
-                  //             color: Colors.blue,
-                  //             size: 40,
-                  //           ),
-                  //           FittedBox(
-                  //               fit: BoxFit.fill,
-                  //               child: Text(
-                  //                 "Visitors Allowed",
-                  //                 style: TextStyle(
-                  //                     fontSize: 16,
-                  //                     fontWeight: FontWeight.normal),
-                  //               )),
-                  //         ],
-                  //       ),
-                  //     ),
-                  //     FittedBox(
-                  //       child: Row(
-                  //         children: [
-                  //           SizedBox(
-                  //             width: 5,
-                  //           ),
-                  //           Icon(
-                  //             Icons.video_camera_front_outlined,
-                  //             color: Colors.blue,
-                  //             size: 40,
-                  //           ),
-                  //           FittedBox(
-                  //               fit: BoxFit.fill,
-                  //               child: Text(
-                  //                 "CCTV in the Area",
-                  //                 style: TextStyle(
-                  //                     fontSize: 16,
-                  //                     fontWeight: FontWeight.normal),
-                  //               )),
-                  //         ],
-                  //       ),
-                  //     ),
-                  //   ],
-                  // )),
-                  //End of Highlights
-
-                  //View Reviews
-                  Column(
-                    children: [
-                      const Text(
-                        "Reviews",
-                        style: TextStyle(
-                            fontSize: 22, fontWeight: FontWeight.normal),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height / 60,
-                      ),
-                      if (reviewList.isNotEmpty)
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height / 6,
-                          child: ListView.builder(
-                              itemCount: reviewList.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Column(children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 15),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  //Owner Name
                                   Row(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 8.0),
-                                        child:
-                                            Text(reviewList[index]["username"]),
+                                    children: <Widget>[
+                                      const SizedBox(
+                                        width: 10,
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 8.0),
-                                        child: Text(reviewList[index]
-                                                    ["date_submitted"]
-                                                .substring(0, 10) +
-                                            " " +
-                                            reviewList[index]["date_submitted"]
-                                                .substring(11, 19)),
+                                      const CircleAvatar(
+                                        radius: 10,
+                                        backgroundImage: AssetImage(
+                                            "assets/images/room_stock.jpg"),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        response2_ownerName,
+                                        style: const TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color(0xff1F2421)),
+                                      ),
+                                      const Text(
+                                        " owns this place",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            color: Color(0xff1F2421)),
                                       )
+                                      // FittedBox(
+                                      //   fit: BoxFit.fill,
+                                      //   child: Text(
+                                      //     response2_ownerName,
+                                      //     style: const TextStyle(
+                                      //         fontSize: 15,
+                                      //         fontWeight: FontWeight.normal),
+                                      //   ),
+                                      // ),
                                     ],
                                   ),
+                                  const SizedBox(height: 5),
+
+                                  //Location Details
                                   Row(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(reviewList[index]["body"]),
+                                    children: <Widget>[
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      const Icon(
+                                        Icons.location_pin,
+                                        color: Color(0xff0B7A75),
+                                        size: 25,
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Flexible(
+                                        child: Text(
+                                          response_Address,
+                                          style: const TextStyle(
+                                              fontSize: 15,
+                                              color: Color(0xff1F2421)),
+                                        ),
                                       )
+                                      // FittedBox(
+                                      //   fit: BoxFit.fill,
+                                      //   child: Text(
+                                      //     response_Address,
+                                      //     style: const TextStyle(
+                                      //         fontSize: 15,
+                                      //         fontWeight: FontWeight.normal),
+                                      //   ),
+                                      // ),
                                     ],
-                                  )
-                                ]);
-                              }),
+                                  ),
+                                  const SizedBox(height: 5),
+                                  //Contact Info
+                                  Row(
+                                    children: <Widget>[
+                                      const SizedBox(
+                                        width: 9,
+                                      ),
+                                      const Icon(
+                                        Icons.phone_in_talk_rounded,
+                                        color: Color(0xff0B7A75),
+                                        size: 20,
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        response2_phone_no,
+                                        style: const TextStyle(
+                                            fontSize: 15,
+                                            color: Color(0xff1F2421)),
+                                      )
+                                      // FittedBox(
+                                      //   fit: BoxFit.fill,
+                                      //   child: Text(
+                                      //     response2_phone_no,
+                                      //     style: const TextStyle(
+                                      //         fontSize: 15,
+                                      //         fontWeight: FontWeight.normal),
+                                      //   ),
+                                      // ),
+                                    ],
+                                  ),
+
+                                  if (user_type == "user" ||
+                                      user_type == "guest")
+                                    Row(
+                                      children: [
+                                        TextButton.icon(
+                                          onPressed: () {
+                                            showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                print(user_type);
+                                                if (user_type == "guest") {
+                                                  return const AlertDialog(
+                                                      content: Padding(
+                                                    padding: EdgeInsets.all(8),
+                                                    child: Text(
+                                                        "Sign in to file a report!"),
+                                                  ));
+                                                }
+                                                return AlertDialog(
+                                                  scrollable: true,
+                                                  title: const Text(
+                                                      "Report Listing"),
+                                                  content: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(8),
+                                                    child: Form(
+                                                      child: Column(
+                                                        children: [
+                                                          const Padding(
+                                                            padding: EdgeInsets
+                                                                .symmetric(
+                                                                    vertical:
+                                                                        5),
+                                                            child: Text(
+                                                                "Select Reason"),
+                                                          ),
+                                                          ReportListing(
+                                                            tags:
+                                                                tagsController,
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(10),
+                                                            child: SizedBox(
+                                                              width: 200,
+                                                              child:
+                                                                  TextFormField(
+                                                                controller:
+                                                                    reportController,
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        13),
+                                                                decoration:
+                                                                    const InputDecoration(
+                                                                  border:
+                                                                      OutlineInputBorder(),
+                                                                  hintText:
+                                                                      "Report Description",
+                                                                  contentPadding:
+                                                                      EdgeInsets
+                                                                          .all(
+                                                                              10),
+                                                                ),
+                                                                maxLines: 5,
+                                                                minLines: 5,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          ElevatedButton(
+                                                            onPressed:
+                                                                () async {
+                                                              print(
+                                                                  tagsController
+                                                                      .text);
+                                                              switch (
+                                                                  tagsController
+                                                                      .text) {
+                                                                case "1":
+                                                                  selectedReason =
+                                                                      [
+                                                                    "Inactive Owner"
+                                                                  ];
+                                                                  break;
+                                                                case "2":
+                                                                  selectedReason =
+                                                                      [
+                                                                    "Inaccurate Details"
+                                                                  ];
+                                                                  break;
+                                                                case "3":
+                                                                  selectedReason =
+                                                                      [
+                                                                    "Fraudulent Listing"
+                                                                  ];
+                                                                  break;
+                                                                case "4":
+                                                                  selectedReason =
+                                                                      [
+                                                                    "Offensive Content"
+                                                                  ];
+                                                                  break;
+                                                                case "5":
+                                                                  selectedReason =
+                                                                      [
+                                                                    "Other Reason"
+                                                                  ];
+                                                                  break;
+                                                              }
+                                                              String url5 =
+                                                                  "http://127.0.0.1:8000/report-establishment/";
+                                                              final response5 = await json.decode(
+                                                                  (await http.post(
+                                                                          Uri.parse(
+                                                                              url5),
+                                                                          body: {
+                                                                    "establishment_id":
+                                                                        id,
+                                                                    "user_id":
+                                                                        user_id,
+                                                                    "tags":
+                                                                        "'${selectedReason.toString()}'",
+                                                                    "description":
+                                                                        reportController
+                                                                            .text
+                                                                  }))
+                                                                      .body);
+
+                                                              reportController
+                                                                  .clear();
+                                                              Navigator.pop(
+                                                                  context);
+
+                                                              ScaffoldMessenger
+                                                                      .of(
+                                                                          context)
+                                                                  .showSnackBar(
+                                                                      const SnackBar(
+                                                                          content:
+                                                                              Text("You have reported this accommodation. Thank you for helping us!")));
+                                                            },
+                                                            style: ElevatedButton
+                                                                .styleFrom(
+                                                                    backgroundColor:
+                                                                        UIParams
+                                                                            .MAROON),
+                                                            child: const Text(
+                                                              "Report",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
+                                          icon: const Icon(Icons.flag_outlined),
+                                          label:
+                                              const Text("Report this listing"),
+                                          style: TextButton.styleFrom(
+                                            foregroundColor:
+                                                const Color(0xff7B2D26),
+                                          ),
+                                        ),
+                                        TextButton.icon(
+                                          onPressed: () {
+                                            showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                print(user_type);
+                                                if (user_type == "guest") {
+                                                  return const AlertDialog(
+                                                      content: Padding(
+                                                    padding: EdgeInsets.all(8),
+                                                    child: Text(
+                                                        "Sign in to post a review"),
+                                                  ));
+                                                }
+                                                return Review(
+                                                    accommName: response_Name,
+                                                    estabId: id,
+                                                    username: username,
+                                                    userId: user_id);
+                                              },
+                                            );
+                                          },
+                                          icon: const Icon(Icons.rate_review),
+                                          label: const Text("Write a review"),
+                                          style: TextButton.styleFrom(
+                                            foregroundColor:
+                                                const Color(0xff7B2D26),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                ],
+                              ),
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10),
+                              child: Divider(
+                                color: Colors.grey,
+                                height: 1.5,
+                              ),
+                            ),
+                          ],
                         ),
-                      if (reviewList.isEmpty) Text("No reviews yet. Add one!"),
+                      ),
+
+                      //CARD Carousel for ROOM Capacity/Type/Price/Availability
+                      //Cards Information/Data are on items1-4()
+                      //starting from lines 45-223
+                      if (cardList.isNotEmpty)
+                        Column(
+                          children: [
+                            CarouselSlider(
+                              options: CarouselOptions(
+                                height: 200.0,
+                                autoPlay: true,
+                                autoPlayInterval: const Duration(seconds: 5),
+                                autoPlayAnimationDuration:
+                                    const Duration(milliseconds: 1000),
+                                autoPlayCurve: Curves.fastOutSlowIn,
+                                pauseAutoPlayOnTouch: true,
+                                aspectRatio: 2.0,
+                                onPageChanged: (index, reason) {
+                                  _currentIndex = index;
+                                  print(index);
+                                },
+                              ),
+                              items: cardList.map((card) {
+                                return Builder(builder: (BuildContext context) {
+                                  return SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.30,
+                                    width: MediaQuery.of(context).size.width,
+                                    child: Card(
+                                      color: Colors.blueAccent,
+                                      child: card,
+                                    ),
+                                  );
+                                });
+                              }).toList(),
+                            ),
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.center,
+                            //   children: map<Widget>(cardList, (index, url) {
+                            //     return Container(
+                            //       width: 10.0,
+                            //       height: 10.0,
+                            //       margin: EdgeInsets.symmetric(
+                            //           vertical: 10.0, horizontal: 2.0),
+                            //       decoration: BoxDecoration(
+                            //         shape: BoxShape.circle,
+                            //         color: _currentIndex == index
+                            //             ? Colors.blueAccent
+                            //             : Colors.grey,
+                            //       ),dding
+                            //     );
+                            //   }),
+                            // ),
+                          ],
+                        ),
+                      //End of Cards
+
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                        child: Column(
+                          children: [
+                            if (cardList.isNotEmpty)
+                              const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 10),
+                                child: Divider(
+                                  color: Colors.grey,
+                                  height: 1.5,
+                                ),
+                              ),
+                            //Description
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "About $response_Name",
+                                  maxLines: 1,
+                                  style: const TextStyle(
+                                      color: Color(0xff1F2421),
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                  textAlign: TextAlign.left,
+                                ),
+                                // SizedBox(
+                                //   height:
+                                //       MediaQuery.of(context).size.height / 60,
+                                // ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(20, 10, 20, 0),
+                                  child: SizedBox(
+                                    width: 450,
+                                    child: Text(description,
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.normal),
+                                        textAlign: TextAlign.justify),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            //end of Description
+
+                            const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10),
+                              child: Divider(
+                                color: Colors.grey,
+                                height: 1.5,
+                              ),
+                            ),
+
+                            //Highlights
+                            // FittedBox(
+                            //   fit: BoxFit.fill,
+                            //   child: Text(
+                            //     "Highlights",
+                            //     style: TextStyle(
+                            //         fontSize: 22, fontWeight: FontWeight.normal),
+                            //   ),
+                            // ),
+                            // SizedBox(
+                            //     child: Column(
+                            //   crossAxisAlignment: CrossAxisAlignment.start,
+                            //   children: [
+                            //     SizedBox(
+                            //       height: 5,
+                            //     ),
+                            //     FittedBox(
+                            //       child: Row(
+                            //         children: [
+                            //           SizedBox(
+                            //             width: 5,
+                            //           ),
+                            //           Icon(
+                            //             Icons.pets,
+                            //             color: Colors.blue,
+                            //             size: 40,
+                            //           ),
+                            //           FittedBox(
+                            //               fit: BoxFit.fill,
+                            //               child: Text(
+                            //                 "Pets Allowed",
+                            //                 style: TextStyle(
+                            //                     fontSize: 16,
+                            //                     fontWeight: FontWeight.normal),
+                            //               )),
+                            //         ],
+                            //       ),
+                            //     ),
+                            //     FittedBox(
+                            //       child: Row(
+                            //         children: [
+                            //           SizedBox(
+                            //             width: 5,
+                            //           ),
+                            //           Icon(
+                            //             Icons.bathtub_outlined,
+                            //             color: Colors.blue,
+                            //             size: 40,
+                            //           ),
+                            //           FittedBox(
+                            //               fit: BoxFit.fill,
+                            //               child: Text(
+                            //                 "Own Bathroom",
+                            //                 style: TextStyle(
+                            //                     fontSize: 16,
+                            //                     fontWeight: FontWeight.normal),
+                            //               )),
+                            //         ],
+                            //       ),
+                            //     ),
+                            //     FittedBox(
+                            //       child: Row(
+                            //         children: [
+                            //           SizedBox(
+                            //             width: 5,
+                            //           ),
+                            //           Icon(
+                            //             Icons.restaurant_menu,
+                            //             color: Colors.blue,
+                            //             size: 40,
+                            //           ),
+                            //           FittedBox(
+                            //               fit: BoxFit.fill,
+                            //               child: Text(
+                            //                 "Cooking Allowed",
+                            //                 style: TextStyle(
+                            //                     fontSize: 16,
+                            //                     fontWeight: FontWeight.normal),
+                            //               )),
+                            //         ],
+                            //       ),
+                            //     ),
+                            //     FittedBox(
+                            //       child: Row(
+                            //         children: [
+                            //           SizedBox(
+                            //             width: 5,
+                            //           ),
+                            //           Icon(
+                            //             Icons.wifi,
+                            //             color: Colors.blue,
+                            //             size: 40,
+                            //           ),
+                            //           FittedBox(
+                            //               fit: BoxFit.fill,
+                            //               child: Text(
+                            //                 "With Internet Connection",
+                            //                 style: TextStyle(
+                            //                     fontSize: 16,
+                            //                     fontWeight: FontWeight.normal),
+                            //               )),
+                            //         ],
+                            //       ),
+                            //     ),
+                            //     FittedBox(
+                            //       child: Row(
+                            //         children: [
+                            //           SizedBox(
+                            //             width: 5,
+                            //           ),
+                            //           Icon(
+                            //             Icons.ac_unit,
+                            //             color: Colors.blue,
+                            //             size: 40,
+                            //           ),
+                            //           FittedBox(
+                            //               fit: BoxFit.fill,
+                            //               child: Text(
+                            //                 "Air - Conditioned Room",
+                            //                 style: TextStyle(
+                            //                     fontSize: 16,
+                            //                     fontWeight: FontWeight.normal),
+                            //               )),
+                            //         ],
+                            //       ),
+                            //     ),
+                            //     FittedBox(
+                            //       child: Row(
+                            //         children: [
+                            //           SizedBox(
+                            //             width: 5,
+                            //           ),
+                            //           Icon(
+                            //             Icons.bedtime_off,
+                            //             color: Colors.blue,
+                            //             size: 40,
+                            //           ),
+                            //           FittedBox(
+                            //               fit: BoxFit.fill,
+                            //               child: Text(
+                            //                 "No Curfew",
+                            //                 style: TextStyle(
+                            //                     fontSize: 16,
+                            //                     fontWeight: FontWeight.normal),
+                            //               )),
+                            //         ],
+                            //       ),
+                            //     ),
+                            //     FittedBox(
+                            //       child: Row(
+                            //         children: [
+                            //           SizedBox(
+                            //             width: 5,
+                            //           ),
+                            //           Icon(
+                            //             Icons.electric_meter_outlined,
+                            //             color: Colors.blue,
+                            //             size: 40,
+                            //           ),
+                            //           FittedBox(
+                            //               fit: BoxFit.fill,
+                            //               child: Text(
+                            //                 "Own Meter",
+                            //                 style: TextStyle(
+                            //                     fontSize: 16,
+                            //                     fontWeight: FontWeight.normal),
+                            //               )),
+                            //         ],
+                            //       ),
+                            //     ),
+                            //     FittedBox(
+                            //       child: Row(
+                            //         children: [
+                            //           SizedBox(
+                            //             width: 5,
+                            //           ),
+                            //           Icon(
+                            //             Icons.bed_sharp,
+                            //             color: Colors.blue,
+                            //             size: 40,
+                            //           ),
+                            //           FittedBox(
+                            //               fit: BoxFit.fill,
+                            //               child: Text(
+                            //                 "Furnished",
+                            //                 style: TextStyle(
+                            //                     fontSize: 16,
+                            //                     fontWeight: FontWeight.normal),
+                            //               )),
+                            //         ],
+                            //       ),
+                            //     ),
+                            //     FittedBox(
+                            //       child: Row(
+                            //         children: [
+                            //           SizedBox(
+                            //             width: 5,
+                            //           ),
+                            //           Icon(
+                            //             Icons.desk,
+                            //             color: Colors.blue,
+                            //             size: 40,
+                            //           ),
+                            //           FittedBox(
+                            //               fit: BoxFit.fill,
+                            //               child: Text(
+                            //                 "Semi Furnished",
+                            //                 style: TextStyle(
+                            //                     fontSize: 16,
+                            //                     fontWeight: FontWeight.normal),
+                            //               )),
+                            //         ],
+                            //       ),
+                            //     ),
+                            //     FittedBox(
+                            //       child: Row(
+                            //         children: [
+                            //           SizedBox(
+                            //             width: 5,
+                            //           ),
+                            //           Icon(
+                            //             Icons.drive_eta_outlined,
+                            //             color: Colors.blue,
+                            //             size: 40,
+                            //           ),
+                            //           FittedBox(
+                            //               fit: BoxFit.fill,
+                            //               child: Text(
+                            //                 "Parking Space",
+                            //                 style: TextStyle(
+                            //                     fontSize: 16,
+                            //                     fontWeight: FontWeight.normal),
+                            //               )),
+                            //         ],
+                            //       ),
+                            //     ),
+                            //     FittedBox(
+                            //       child: Row(
+                            //         children: [
+                            //           SizedBox(
+                            //             width: 5,
+                            //           ),
+                            //           Icon(
+                            //             Icons.local_laundry_service_outlined,
+                            //             color: Colors.blue,
+                            //             size: 40,
+                            //           ),
+                            //           FittedBox(
+                            //               fit: BoxFit.fill,
+                            //               child: Text(
+                            //                 "Laundry Allowed",
+                            //                 style: TextStyle(
+                            //                     fontSize: 16,
+                            //                     fontWeight: FontWeight.normal),
+                            //               )),
+                            //         ],
+                            //       ),
+                            //     ),
+                            //     FittedBox(
+                            //       child: Row(
+                            //         children: [
+                            //           SizedBox(
+                            //             width: 5,
+                            //           ),
+                            //           Icon(
+                            //             Icons.nights_stay_outlined,
+                            //             color: Colors.blue,
+                            //             size: 40,
+                            //           ),
+                            //           FittedBox(
+                            //               fit: BoxFit.fill,
+                            //               child: Text(
+                            //                 "Overnight Visitors Allowed",
+                            //                 style: TextStyle(
+                            //                     fontSize: 16,
+                            //                     fontWeight: FontWeight.normal),
+                            //               )),
+                            //         ],
+                            //       ),
+                            //     ),
+                            //     FittedBox(
+                            //       child: Row(
+                            //         children: [
+                            //           SizedBox(
+                            //             width: 5,
+                            //           ),
+                            //           Icon(
+                            //             Icons.directions_walk,
+                            //             color: Colors.blue,
+                            //             size: 40,
+                            //           ),
+                            //           FittedBox(
+                            //               fit: BoxFit.fill,
+                            //               child: Text(
+                            //                 "Visitors Allowed",
+                            //                 style: TextStyle(
+                            //                     fontSize: 16,
+                            //                     fontWeight: FontWeight.normal),
+                            //               )),
+                            //         ],
+                            //       ),
+                            //     ),
+                            //     FittedBox(
+                            //       child: Row(
+                            //         children: [
+                            //           SizedBox(
+                            //             width: 5,
+                            //           ),
+                            //           Icon(
+                            //             Icons.video_camera_front_outlined,
+                            //             color: Colors.blue,
+                            //             size: 40,
+                            //           ),
+                            //           FittedBox(
+                            //               fit: BoxFit.fill,
+                            //               child: Text(
+                            //                 "CCTV in the Area",
+                            //                 style: TextStyle(
+                            //                     fontSize: 16,
+                            //                     fontWeight: FontWeight.normal),
+                            //               )),
+                            //         ],
+                            //       ),
+                            //     ),
+                            //   ],
+                            // )),
+                            //End of Highlights
+
+                            //View Reviews
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 40),
+                              child: Align(
+                                alignment: Alignment.topLeft,
+                                child: Column(
+                                  children: [
+                                    const Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Text(
+                                        "Reviews",
+                                        style: TextStyle(
+                                          color: Color(0xff1F2421),
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height /
+                                              60,
+                                    ),
+                                    if (reviewList.isNotEmpty)
+                                      SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                6,
+                                        child: ListView.builder(
+                                            itemCount: reviewList.length,
+                                            itemBuilder: (BuildContext context,
+                                                int index) {
+                                              return Column(children: [
+                                                Row(
+                                                  children: [
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 8.0),
+                                                      child: Text(
+                                                          reviewList[index]
+                                                              ["username"]),
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 8.0),
+                                                      child: Text(reviewList[
+                                                                      index][
+                                                                  "date_submitted"]
+                                                              .substring(
+                                                                  0, 10) +
+                                                          " " +
+                                                          reviewList[index][
+                                                                  "date_submitted"]
+                                                              .substring(
+                                                                  11, 19)),
+                                                    )
+                                                  ],
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: Text(
+                                                          reviewList[index]
+                                                              ["body"]),
+                                                    )
+                                                  ],
+                                                )
+                                              ]);
+                                            }),
+                                      ),
+                                    if (reviewList.isEmpty)
+                                      Text("No reviews yet. Add one!"),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            //end of View Reviews
+                          ],
+                        ),
+                      ),
                     ],
                   ),
-                  //end of View Reviews
-                ],
-              ),
-            );
-          }
-        },
+                );
+              }
+            },
+          ),
+        ),
       ),
     );
   }

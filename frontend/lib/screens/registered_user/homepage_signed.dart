@@ -106,66 +106,64 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
       filterValue = "MAX: $filterValue";
     }
 
-    return UnconstrainedBox(
-      child: Container(
-        margin: const EdgeInsets.all(5),
-        padding: const EdgeInsets.only(left: 10, right: 5, top: 5, bottom: 5),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: UIParameter.LIGHT_TEAL,
-        ),
-        child: Row(
-          children: [
-            Text(
-              filterValue,
-              style: const TextStyle(
-                  fontFamily: UIParameter.FONT_REGULAR,
-                  fontSize: UIParameter.FONT_BODY_SIZE,
-                  color: Colors.white),
-            ),
-            // if the filter is `rating` we will append a star icon to the text
-            isRating
-                ? const Icon(
-                    Icons.star,
-                    color: Colors.amber,
-                    size: 16,
-                  )
-                : Container(),
-            InkWell(
-                /*
-                allows user to remove/delete existing filters
-                automatically updates the `Filter` of the homepage using setState which should also
-                update the accommodations shown (reload accomms in homepage)
-                */
-                onTap: () {
-                  Filter newFilter = Filter(
-                      filterTitle == "Rating" ? null : accomFilter.getRating(),
-                      filterTitle == "Location"
-                          ? null
-                          : accomFilter.getLocation(),
-                      filterTitle == "Establishment Type"
-                          ? null
-                          : accomFilter.getEstablishmentType(),
-                      filterTitle == "Tenant Type"
-                          ? null
-                          : accomFilter.getTenantType(),
-                      filterTitle == "Min Price"
-                          ? null
-                          : accomFilter.getMinPrice(),
-                      filterTitle == "Max Price"
-                          ? null
-                          : accomFilter.getMaxPrice());
-                  setState(() {
-                    accomFilter = newFilter;
-                  });
-                },
-                child: const Icon(
-                  Icons.close_rounded,
-                  color: Colors.white,
+    return Container(
+      margin: const EdgeInsets.all(5),
+      padding: const EdgeInsets.only(left: 10, right: 5, top: 5, bottom: 5),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: UIParameter.LIGHT_TEAL,
+      ),
+      child: Row(
+        children: [
+          Text(
+            filterValue,
+            style: const TextStyle(
+                fontFamily: UIParameter.FONT_REGULAR,
+                fontSize: UIParameter.FONT_BODY_SIZE,
+                color: Colors.white),
+          ),
+          // if the filter is `rating` we will append a star icon to the text
+          isRating
+              ? const Icon(
+                  Icons.star,
+                  color: Colors.amber,
                   size: 16,
-                )),
-          ],
-        ),
+                )
+              : Container(),
+          InkWell(
+              /*
+              allows user to remove/delete existing filters
+              automatically updates the `Filter` of the homepage using setState which should also
+              update the accommodations shown (reload accomms in homepage)
+              */
+              onTap: () {
+                Filter newFilter = Filter(
+                    filterTitle == "Rating" ? null : accomFilter.getRating(),
+                    filterTitle == "Location"
+                        ? null
+                        : accomFilter.getLocation(),
+                    filterTitle == "Establishment Type"
+                        ? null
+                        : accomFilter.getEstablishmentType(),
+                    filterTitle == "Tenant Type"
+                        ? null
+                        : accomFilter.getTenantType(),
+                    filterTitle == "Min Price"
+                        ? null
+                        : accomFilter.getMinPrice(),
+                    filterTitle == "Max Price"
+                        ? null
+                        : accomFilter.getMaxPrice());
+                setState(() {
+                  accomFilter = newFilter;
+                });
+              },
+              child: const Icon(
+                Icons.close_rounded,
+                color: Colors.white,
+                size: 16,
+              )),
+        ],
       ),
     );
   }
@@ -212,7 +210,7 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
     String verified = context.watch<UserProvider>().isVerified
         ? ''
         : 'Your account’s verification is under review. Please wait.';
-        //: 'Your account’s verification was declined. Please resubmit your details by editing your profile';
+    //: 'Your account’s verification was declined. Please resubmit your details by editing your profile';
 
     Color banner =
         context.watch<UserProvider>().isVerified ? Colors.green : Colors.red;
@@ -378,74 +376,79 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
       ),
       // the right drawer
       endDrawer: FilterDrawer(filter: accomFilter, callback: getFilter),
-      body: Column(children: <Widget>[
-        if (!context.watch<UserProvider>().isVerified)
-        Center(
-          child: MaterialBanner(
-            padding: EdgeInsets.all(5),
-            content: Center(
-                child: Text(
-              verified,
-              style: const TextStyle(
-                  fontSize: 14,
-                  color: Colors.white,
-                  overflow: TextOverflow.ellipsis),
-            )),
-            backgroundColor: banner,
-            actions: <Widget>[
-              TextButton(
-                onPressed: null,
-                child: const Text(""),
-              ),
-            ],
-          ),
-        ),
-        SingleChildScrollView(
-          child: FutureBuilder<List<AccomCardDetails>>(
-            future: _accommodationsFuture,
-            builder: (context, snapshot) {
-              if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                // print("RAN");
-                print(snapshot);
-                List<AccomCardDetails> accommodations = snapshot.data!;
-                print(accommodations);
-                return Column(
-                  children: accommodations.map((accommodation) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 7, horizontal: 15),
-                      child: AccomCard(details: accommodation),
-                    );
-                  }).toList(),
-                );
-              } else if (snapshot.hasData && snapshot.data!.isEmpty ||
-                  !snapshot.hasData) {
-                return Center(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      children: [
-                        const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 20)),
-                        Image.asset(
-                          'assets/images/no_archived.png',
-                          height: 70,
-                        ),
-                        const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 10)),
-                        const Text("No Accommodations Available! ")
-                      ],
+      body: Center(
+        child: ConstrainedBox(
+          constraints: new BoxConstraints(maxWidth: 550.0),
+          child: Column(children: <Widget>[
+            if (!context.watch<UserProvider>().isVerified)
+              Center(
+                child: MaterialBanner(
+                  padding: EdgeInsets.all(5),
+                  content: Center(
+                      child: Text(
+                    verified,
+                    style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.white,
+                        overflow: TextOverflow.ellipsis),
+                  )),
+                  backgroundColor: banner,
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: null,
+                      child: const Text(""),
                     ),
-                  ),
-                );
-              } else if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              }
-              return CircularProgressIndicator();
-            },
-          ),
+                  ],
+                ),
+              ),
+            SingleChildScrollView(
+              child: FutureBuilder<List<AccomCardDetails>>(
+                future: _accommodationsFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                    // print("RAN");
+                    print(snapshot);
+                    List<AccomCardDetails> accommodations = snapshot.data!;
+                    print(accommodations);
+                    return Column(
+                      children: accommodations.map((accommodation) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 7, horizontal: 15),
+                          child: AccomCard(details: accommodation),
+                        );
+                      }).toList(),
+                    );
+                  } else if (snapshot.hasData && snapshot.data!.isEmpty ||
+                      !snapshot.hasData) {
+                    return Center(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          children: [
+                            const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 20)),
+                            Image.asset(
+                              'assets/images/no_archived.png',
+                              height: 70,
+                            ),
+                            const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 10)),
+                            const Text("No Accommodations Available! ")
+                          ],
+                        ),
+                      ),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  }
+                  return CircularProgressIndicator();
+                },
+              ),
+            ),
+          ]),
         ),
-      ]),
+      ),
     );
   }
 }
