@@ -87,8 +87,8 @@ class _AccomCardState extends State<AccomCard> {
                   // box shadow to get elevation effect
                   const BoxShadow(
                       color: Color.fromARGB(255, 200, 200, 200),
-                      blurRadius: 3,
-                      offset: Offset(3, 5))
+                      blurRadius: 2,
+                      offset: Offset(2, 4))
                 ],
               ),
               // InkWell so card has onTap property
@@ -177,12 +177,16 @@ class _AccomCardState extends State<AccomCard> {
                             SizedBox(
                               height: MediaQuery.of(context).size.width * 0.02,
                             ),
-                            Text(
-                              widget.details.getDescription(),
-                              style: TextStyle(
-                                  fontSize:
-                                      MediaQuery.of(context).size.width * 0.03,
-                                  fontFamily: UIParameter.FONT_REGULAR),
+                            Expanded(
+                              child: Text(
+                                widget.details.getDescription(),
+                                style: TextStyle(
+                                    overflow: TextOverflow.fade,
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                            0.027,
+                                    fontFamily: UIParameter.FONT_REGULAR),
+                              ),
                             ),
                             widget.details.archived
                                 ? Container(
