@@ -84,6 +84,18 @@ def getadmindetails(request):
     serializer = userSerializer(admin, many=True)
     return Response(serializer.data)
 
+@api_view(['PUT'])
+def resubmit_verification_data(request, pk):
+    user = User.objects.get(pk=ObjectId(pk))
+    user.rejected = False  # Set the is_rejected field to True
+    user.id_type = request.data['id_type']
+    user.id_number = request.data['id_number']
+    user.id_picture = request.data['id_picture']
+    user.verified = False
+    user.rejected = False
+    user.save()
+
+    return Response(data={"message": "Successfully resubmitted verification data"}) 
 
 @api_view(['PUT'])
 def adminverifyuser(request, pk):

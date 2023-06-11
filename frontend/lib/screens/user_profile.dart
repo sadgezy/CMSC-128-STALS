@@ -56,6 +56,19 @@ class UserProfileState extends State<UserProfile> {
     }
   }
 
+  Future<void> resubmitVerificationData(Map<String, dynamic> updatedData, String userId) async {
+    String url = 'http://127.0.0.1:8000/resubmit-verification-data/$userId/'; 
+    final response = await http.put(
+      Uri.parse(url),
+      body: updatedData,
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to resubmit verification data');
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -172,12 +185,26 @@ class UserProfileState extends State<UserProfile> {
                   proofPic = base64Image;
                   verificationStatus = "pending";
                 });
-                print(
-                    "verification status: ${verificationStatus}"); //must be pending after resubmission
-                // TODO: reflect changes (new id upload) to database (verified: false, rejected: false)
+                print("verification status: ${verificationStatus}"); //must be pending after resubmission
+                // Send the updated verification data to the backend
+                Map<String, dynamic> updatedData = {
+                  'userId': widget.userId,
+                  'id_type': _idType,
+                  'id_number': _idNumber,
+                  'id_picture': base64Image,
+                };
+
+                resubmitVerificationData(updatedData,widget.userId).then((_) {
+                  // Handle successful resubmission
+                  print('Verification data resubmitted successfully');
+                }).catchError((error) {
+                  // Handle error
+                  print('Failed to resubmit verification data: $error');
+                });
               }
             }
           },
+
           style: ElevatedButton.styleFrom(
             elevation: 0,
             backgroundColor: const Color(0xff0B7A75),
