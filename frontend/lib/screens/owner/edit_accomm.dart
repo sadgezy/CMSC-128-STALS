@@ -28,745 +28,9 @@ Edit Accom: Basically the same as Accom page but
 //These checkurl is a check mark png if its available
 // noturl is a not avaiable png
 //not yet implemented to change so i'll comment out the image
+
 const _checkurl = 'https://img.icons8.com/?size=512&id=11695&format=png';
 const _noturl = 'https://img.icons8.com/?size=512&id=TfRrgMHDWJk3&format=png';
-
-//data information:
-class Item1 extends StatelessWidget {
-  const Item1({Key? key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.white, width: 2),
-          gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              stops: [
-                0.3,
-                1
-              ],
-              colors: [
-                Color(0xffff4000),
-                Color(0xffffcc66),
-              ]),
-          // image: DecorationImage(
-          //     fit: BoxFit.scaleDown,
-          //     scale: 0.5,
-          //     alignment: Alignment.center,
-          //     image: NetworkImage(_checkurl)),
-        ),
-        child: Column(
-          children: [
-            SizedBox(
-                width: 1000,
-                child: Column(
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        const Icon(
-                          Icons.king_bed_outlined,
-                          color: Colors.white,
-                          size: 50,
-                        ),
-                        const SizedBox(height: 5),
-                        SizedBox(
-                          height: 25,
-                          width: 250,
-                          child: TextFormField(
-                            style: const TextStyle(
-                                fontSize: 12, color: Colors.white),
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                contentPadding: EdgeInsets.all(2),
-                                labelText: 'Max Capacity',
-                                labelStyle: TextStyle(color: Colors.white)),
-                          ),
-                        ),
-                        const SizedBox(height: 5),
-                        SizedBox(
-                          height: 25,
-                          width: 250,
-                          child: TextFormField(
-                            style: const TextStyle(color: Colors.white),
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                contentPadding: EdgeInsets.all(5),
-                                labelText: 'Min-Price ',
-                                labelStyle: TextStyle(color: Colors.white)),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 25,
-                          width: 250,
-                          child: TextFormField(
-                            style: const TextStyle(color: Colors.white),
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                contentPadding: EdgeInsets.all(5),
-                                labelText: 'Max-Price ',
-                                labelStyle: TextStyle(color: Colors.white)),
-                          ),
-                        ),
-                        const SizedBox(height: 5),
-                        const Text('Is this Room Available?',
-                            style: TextStyle(color: Colors.white)),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        ToggleSwitch(
-                          minWidth: 90.0,
-                          cornerRadius: 20.0,
-                          activeBgColors: [
-                            [Colors.green[800]!],
-                            [Colors.red[800]!]
-                          ],
-                          activeFgColor: Colors.white,
-                          inactiveBgColor: Colors.grey,
-                          inactiveFgColor: Colors.white,
-                          initialLabelIndex: 1,
-                          totalSwitches: 2,
-                          labels: const ['Yes', 'No'],
-                          radiusStyle: true,
-                          onToggle: (index) {},
-                        ),
-                      ],
-                    ),
-                  ],
-                ))
-          ],
-        ));
-  }
-}
-
-class Item2 extends StatelessWidget {
-  const Item2({Key? key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            stops: [0.3, 1],
-            colors: [Color(0xff5f2c82), Color(0xff49a09d)]),
-        // image: DecorationImage(
-        //     fit: BoxFit.scaleDown,
-        //     scale: 0.5,
-        //     alignment: Alignment.center,
-        //     //couldnt use the image asset for some reason
-        //     image: NetworkImage(_noturl))
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          const Icon(
-            Icons.king_bed_outlined,
-            color: Colors.white,
-            size: 50,
-          ),
-          const SizedBox(height: 5),
-          SizedBox(
-            height: 25,
-            width: 150,
-            child: TextFormField(
-              style: const TextStyle(fontSize: 12, color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  contentPadding: EdgeInsets.all(2),
-                  labelText: 'Max Capacity',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
-          ),
-          const SizedBox(height: 5),
-          SizedBox(
-            height: 25,
-            width: 150,
-            child: TextFormField(
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  contentPadding: EdgeInsets.all(5),
-                  labelText: 'Min-Price ',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
-          ),
-          SizedBox(
-            height: 25,
-            width: 150,
-            child: TextFormField(
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  contentPadding: EdgeInsets.all(5),
-                  labelText: 'Max-Price ',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
-          ),
-          const SizedBox(height: 5),
-          const Text('Is this Room Available?',
-              style: TextStyle(color: Colors.white)),
-          const SizedBox(
-            width: 20,
-          ),
-          ToggleSwitch(
-            minWidth: 90.0,
-            cornerRadius: 20.0,
-            activeBgColors: [
-              [Colors.green[800]!],
-              [Colors.red[800]!]
-            ],
-            activeFgColor: Colors.white,
-            inactiveBgColor: Colors.grey,
-            inactiveFgColor: Colors.white,
-            initialLabelIndex: 1,
-            totalSwitches: 2,
-            labels: const ['Yes', 'No'],
-            radiusStyle: true,
-            onToggle: (index) {},
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class Item3 extends StatelessWidget {
-  const Item3({Key? key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            stops: [
-              0.3,
-              1
-            ],
-            colors: [
-              Color(0xffff4000),
-              Color(0xffffcc66),
-            ]),
-        // image: DecorationImage(
-        //     fit: BoxFit.scaleDown,
-        //     scale: 0.5,
-        //     alignment: Alignment.center,
-        //     image: NetworkImage(_checkurl))
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          const Icon(
-            Icons.king_bed_outlined,
-            color: Colors.white,
-            size: 50,
-          ),
-          const SizedBox(height: 5),
-          SizedBox(
-            height: 25,
-            width: 150,
-            child: TextFormField(
-              style: const TextStyle(fontSize: 12, color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  contentPadding: EdgeInsets.all(2),
-                  labelText: 'Max Capacity',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
-          ),
-          const SizedBox(height: 5),
-          SizedBox(
-            height: 25,
-            width: 150,
-            child: TextFormField(
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  contentPadding: EdgeInsets.all(5),
-                  labelText: 'Min-Price ',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
-          ),
-          SizedBox(
-            height: 25,
-            width: 150,
-            child: TextFormField(
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  contentPadding: EdgeInsets.all(5),
-                  labelText: 'Max-Price ',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
-          ),
-          const SizedBox(height: 5),
-          const Text('Is this Room Available?',
-              style: TextStyle(color: Colors.white)),
-          const SizedBox(
-            width: 20,
-          ),
-          ToggleSwitch(
-            minWidth: 90.0,
-            cornerRadius: 20.0,
-            activeBgColors: [
-              [Colors.green[800]!],
-              [Colors.red[800]!]
-            ],
-            activeFgColor: Colors.white,
-            inactiveBgColor: Colors.grey,
-            inactiveFgColor: Colors.white,
-            initialLabelIndex: 1,
-            totalSwitches: 2,
-            labels: const ['Yes', 'No'],
-            radiusStyle: true,
-            onToggle: (index) {},
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class Item4 extends StatelessWidget {
-  const Item4({Key? key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-          // image: DecorationImage(
-          //     fit: BoxFit.scaleDown,
-          //     scale: 0.5,
-          //     alignment: Alignment.center,
-          //     image: NetworkImage(_checkurl))
-          ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          const Icon(
-            Icons.king_bed_outlined,
-            color: Colors.white,
-            size: 50,
-          ),
-          const SizedBox(height: 5),
-          SizedBox(
-            height: 25,
-            width: 150,
-            child: TextFormField(
-              style: const TextStyle(fontSize: 12, color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  contentPadding: EdgeInsets.all(2),
-                  labelText: 'Max Capacity',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
-          ),
-          const SizedBox(height: 5),
-          SizedBox(
-            height: 25,
-            width: 150,
-            child: TextFormField(
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  contentPadding: EdgeInsets.all(5),
-                  labelText: 'Min-Price ',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
-          ),
-          SizedBox(
-            height: 25,
-            width: 150,
-            child: TextFormField(
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  contentPadding: EdgeInsets.all(5),
-                  labelText: 'Max-Price ',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
-          ),
-          const SizedBox(height: 5),
-          const Text('Is this Room Available?',
-              style: TextStyle(color: Colors.white)),
-          const SizedBox(
-            width: 20,
-          ),
-          ToggleSwitch(
-            minWidth: 90.0,
-            cornerRadius: 20.0,
-            activeBgColors: [
-              [Colors.green[800]!],
-              [Colors.red[800]!]
-            ],
-            activeFgColor: Colors.white,
-            inactiveBgColor: Colors.grey,
-            inactiveFgColor: Colors.white,
-            initialLabelIndex: 1,
-            totalSwitches: 2,
-            labels: const ['Yes', 'No'],
-            radiusStyle: true,
-            onToggle: (index) {},
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class Item5 extends StatelessWidget {
-  const Item5({Key? key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            stops: [
-              0.3,
-              1
-            ],
-            colors: [
-              Color.fromARGB(255, 210, 80, 184),
-              Color.fromARGB(255, 226, 203, 100)
-            ]),
-        // image: DecorationImage(
-        //     fit: BoxFit.scaleDown,
-        //     scale: 0.5,
-        //     alignment: Alignment.center,
-        //     image: NetworkImage(_noturl))
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          const Icon(
-            Icons.king_bed_outlined,
-            color: Colors.white,
-            size: 50,
-          ),
-          const SizedBox(height: 5),
-          SizedBox(
-            height: 25,
-            width: 150,
-            child: TextFormField(
-              style: const TextStyle(fontSize: 12, color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  contentPadding: EdgeInsets.all(2),
-                  labelText: 'Max Capacity',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
-          ),
-          const SizedBox(height: 5),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 25,
-                width: 75,
-                child: TextFormField(
-                  style: const TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      contentPadding: EdgeInsets.all(5),
-                      labelText: 'Min-Price ',
-                      labelStyle: TextStyle(color: Colors.white)),
-                ),
-              ),
-              SizedBox(
-                height: 25,
-                width: 75,
-                child: TextFormField(
-                  style: const TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      contentPadding: EdgeInsets.all(5),
-                      labelText: 'Max-Price ',
-                      labelStyle: TextStyle(color: Colors.white)),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 5),
-          const Text('Is this Room Available?',
-              style: TextStyle(color: Colors.white)),
-          const SizedBox(
-            width: 20,
-          ),
-          ToggleSwitch(
-            minWidth: 90.0,
-            cornerRadius: 20.0,
-            activeBgColors: [
-              [Colors.green[800]!],
-              [Colors.red[800]!]
-            ],
-            activeFgColor: Colors.white,
-            inactiveBgColor: Colors.grey,
-            inactiveFgColor: Colors.white,
-            initialLabelIndex: 1,
-            totalSwitches: 2,
-            labels: const ['Yes', 'No'],
-            radiusStyle: true,
-            onToggle: (index) {},
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class Item6 extends StatelessWidget {
-  const Item6({Key? key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            stops: [
-              0.3,
-              1
-            ],
-            colors: [
-              Color.fromARGB(255, 71, 151, 194),
-              Color.fromARGB(255, 72, 210, 157)
-            ]),
-        // image: DecorationImage(
-        //     fit: BoxFit.scaleDown,
-        //     scale: 0.5,
-        //     alignment: Alignment.center,
-        //     image: NetworkImage(_checkurl))
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          const Icon(
-            Icons.king_bed_outlined,
-            color: Colors.white,
-            size: 50,
-          ),
-          const SizedBox(height: 5),
-          SizedBox(
-            height: 25,
-            width: 150,
-            child: TextFormField(
-              style: const TextStyle(fontSize: 12, color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  contentPadding: EdgeInsets.all(2),
-                  labelText: 'Max Capacity',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
-          ),
-          const SizedBox(height: 5),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 25,
-                width: 75,
-                child: TextFormField(
-                  style: const TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      contentPadding: EdgeInsets.all(5),
-                      labelText: 'Min-Price ',
-                      labelStyle: TextStyle(color: Colors.white)),
-                ),
-              ),
-              SizedBox(
-                height: 25,
-                width: 75,
-                child: TextFormField(
-                  style: const TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      contentPadding: EdgeInsets.all(5),
-                      labelText: 'Max-Price ',
-                      labelStyle: TextStyle(color: Colors.white)),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 5),
-          const Text('Is this Room Available?',
-              style: TextStyle(color: Colors.white)),
-          const SizedBox(
-            width: 20,
-          ),
-          ToggleSwitch(
-            minWidth: 90.0,
-            cornerRadius: 20.0,
-            activeBgColors: [
-              [Colors.green[800]!],
-              [Colors.red[800]!]
-            ],
-            activeFgColor: Colors.white,
-            inactiveBgColor: Colors.grey,
-            inactiveFgColor: Colors.white,
-            initialLabelIndex: 1,
-            totalSwitches: 2,
-            labels: const ['Yes', 'No'],
-            radiusStyle: true,
-            onToggle: (index) {},
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class Item7 extends StatelessWidget {
-  const Item7({Key? key}) : super(key: key);
-
-  get onToggleButton => null;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            stops: [
-              0.3,
-              1
-            ],
-            colors: [
-              Color.fromARGB(255, 125, 85, 217),
-              Color.fromARGB(255, 88, 111, 57)
-            ]),
-        // image: DecorationImage(
-        //     fit: BoxFit.scaleDown,
-        //     scale: 0.5,
-        //     alignment: Alignment.center,
-        //     image: NetworkImage(_checkurl))
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          const Icon(
-            Icons.king_bed_outlined,
-            color: Colors.white,
-            size: 50,
-          ),
-          const SizedBox(height: 5),
-          SizedBox(
-            height: 25,
-            width: 150,
-            child: TextFormField(
-              style: const TextStyle(fontSize: 12, color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  contentPadding: EdgeInsets.all(2),
-                  labelText: 'Max Capacity',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
-          ),
-          const SizedBox(height: 5),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 25,
-                width: 75,
-                child: TextFormField(
-                  style: const TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      contentPadding: EdgeInsets.all(5),
-                      labelText: 'Min-Price ',
-                      labelStyle: TextStyle(color: Colors.white)),
-                ),
-              ),
-              SizedBox(
-                height: 25,
-                width: 75,
-                child: TextFormField(
-                  style: const TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      contentPadding: EdgeInsets.all(5),
-                      labelText: 'Max-Price ',
-                      labelStyle: TextStyle(color: Colors.white)),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 5),
-          const Text('Is this Room Available?',
-              style: TextStyle(color: Colors.white)),
-          const SizedBox(
-            width: 20,
-          ),
-          ToggleSwitch(
-            minWidth: 90.0,
-            cornerRadius: 20.0,
-            activeBgColors: [
-              [Colors.green[800]!],
-              [Colors.red[800]!]
-            ],
-            activeFgColor: Colors.white,
-            inactiveBgColor: Colors.grey,
-            inactiveFgColor: Colors.white,
-            initialLabelIndex: 1,
-            totalSwitches: 2,
-            labels: const ['Yes', 'No'],
-            radiusStyle: true,
-            onToggle: (index) {},
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 class Item extends StatefulWidget {
   const Item(
@@ -866,8 +130,8 @@ class _ItemState extends State<Item> {
                   ),
                 ],
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 650.0),
+              ConstrainedBox(
+                constraints: const BoxConstraints.tightFor(width: 300),
                 child: TextField(
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
@@ -878,8 +142,7 @@ class _ItemState extends State<Item> {
                       fontSize: 17.0,
                       fontWeight: FontWeight.w600,
                     ),
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
+                    contentPadding: const EdgeInsets.symmetric( vertical: 10.0, horizontal: 12.0),
                   ), // Enable/disable editing based on isEditing flag
                   controller: maxTenantsController,
                   style: const TextStyle(
@@ -890,8 +153,8 @@ class _ItemState extends State<Item> {
                 ),
               ),
               if (widget.priceLower == widget.priceUpper)
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 650.0),
+                ConstrainedBox(
+                constraints: const BoxConstraints.tightFor(width: 200),
                   child: TextField(
                     textAlign: TextAlign.center,
                     decoration: InputDecoration(
@@ -902,8 +165,7 @@ class _ItemState extends State<Item> {
                         fontSize: 17.0,
                         fontWeight: FontWeight.w600,
                       ),
-                      contentPadding: EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 12.0),
+                      contentPadding: const EdgeInsets.symmetric( vertical: 10.0, horizontal: 12.0),
                     ), // Enable/disable editing based on isEditing flag
                     controller: priceController,
                     
@@ -916,10 +178,10 @@ class _ItemState extends State<Item> {
                 )
               else
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Expanded(
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 300.0),
+                      ConstrainedBox(
+                        constraints: const BoxConstraints.tightFor(width: 150),
                         child: TextField(
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(
@@ -930,8 +192,7 @@ class _ItemState extends State<Item> {
                               fontSize: 17.0,
                               fontWeight: FontWeight.w600,
                             ),
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 10.0, horizontal: 12.0),
+                            contentPadding: const EdgeInsets.symmetric( vertical: 10.0, horizontal: 12.0),
                           ), // Enable/disable editing based on isEditing flag
                           controller: priceLowerController,
                           style: const TextStyle(
@@ -940,12 +201,10 @@ class _ItemState extends State<Item> {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                      ),
                     ),
                     SizedBox(width: 8.0),
-                    Expanded(
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 300.0),
+                      ConstrainedBox(
+                        constraints: const BoxConstraints.tightFor(width: 150),
                         child: TextField(
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(
@@ -956,8 +215,7 @@ class _ItemState extends State<Item> {
                               fontSize: 17.0,
                               fontWeight: FontWeight.w600,
                             ),
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 10.0, horizontal: 12.0),
+                            contentPadding: const EdgeInsets.symmetric( vertical: 10.0, horizontal: 12.0),
                           ), // Enable/disable editing based on isEditing flag
                           controller: priceUpperController,
                           style: const TextStyle(
@@ -966,12 +224,10 @@ class _ItemState extends State<Item> {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                      ),
                     ),
                   ],
                 ),
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 40.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -1082,6 +338,7 @@ class _EditAccommState extends State<EditAccomm> {
   String response_phoneNo = "";
   String response_Name = "";
   String owner_id = "";
+  String loc_picture = "";
   String id = "";
   String response_Description = "";
 
@@ -1115,6 +372,7 @@ class _EditAccommState extends State<EditAccomm> {
     String url1 = "http://127.0.0.1:8000/view-establishment/" + id + "/";
     final response = await http.get(Uri.parse(url1));
     responseData = json.decode(response.body);
+    loc_picture = responseData["loc_picture"];
     response_Name = responseData['name'];
     response_Address = responseData['location_exact'];
     owner_id = responseData['owner'];
@@ -1217,8 +475,10 @@ class _EditAccommState extends State<EditAccomm> {
           >Review content
 
         */
-        
-        body: FutureBuilder(
+        body: Center(
+                child: ConstrainedBox(
+          constraints: new BoxConstraints(maxWidth: 550.0),
+        child: FutureBuilder(
             future:
                 fetchData(), // Replace fetchData with your actual future function
             builder: (context, snapshot) {
@@ -1233,20 +493,42 @@ class _EditAccommState extends State<EditAccomm> {
                   child: Column(children: [
                     SizedBox(
                         height: 2000,
-                        child: Column(children: [
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Stack(alignment: Alignment.topRight, children: [
-                                  SizedBox(
-                                    height: 280,
-                                    width: MediaQuery.of(context).size.width,
-                                    child: Image.asset(
-                                      'assets/images/room_stock.jpg',
-                                      fit: BoxFit.cover,
-                                    ),
+                        child: Column(
+                        children: [  
+                          ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: const Size(150, 50),
+                                  maximumSize: const Size(150, 50),
+                                  elevation: 0,
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 25, 83, 95),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
-                                  ElevatedButton(
+                                ),
+                                onPressed: () {
+                                  // _chooseImage();
+                                },
+                                child: const Text("Upload image")), 
+                          Row(
+                            children: [ 
+                              Stack(
+                                alignment: Alignment.topRight,
+                                children: [
+                                  Container(
+                                      height:
+                                          MediaQuery.of(context).size.height / 2,
+                                      // width: MediaQuery.of(context).size.width, //# THIS CAUSES OVERFLOW ERROR
+                                      child: Image.memory(Uri.parse(loc_picture)
+                                          .data!
+                                          .contentAsBytes()
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                          ElevatedButton(
                                       onPressed: () async {
                                         //on button pushed it saves the editted details and routes back the owned accoms page
                                         //setState(() {});
@@ -1259,43 +541,25 @@ class _EditAccommState extends State<EditAccomm> {
                                         if (_newEstablishmentDescriptionController.text == "") {
                                           _newEstablishmentDescriptionController.text = responseData['description'];
                                         };
-                                        String url =
-                                            "http://127.0.0.1:8000/edit-establishment/" +
-                                                id +
-                                                "/";
-                                        final Map<String, dynamic> requestBody =
-                                            {
+                                        String url = "http://127.0.0.1:8000/edit-establishment/" + id + "/";
+                                        final Map<String, dynamic> requestBody = {
                                           "owner": owner_id,
-                                          "name":
-                                              _newEstablishmentNameController
-                                                  .text,
-                                          "location_exact":
-                                              _newEstablishmentLocationController
-                                                  .text,
-                                          "location_approx":
-                                              responseData['location_approx'],
-                                          "establishment_type": responseData[
-                                              'establishment_type'],
-                                          "tenant_type":
-                                              responseData['tenant_type'],
+                                          "name": _newEstablishmentNameController.text,
+                                          "location_exact": _newEstablishmentLocationController.text,
+                                          "location_approx":responseData['location_approx'],
+                                          "establishment_type": responseData['establishment_type'],
+                                          "tenant_type": responseData['tenant_type'],
                                           "utilities": [],
-                                          "description":
-                                              _newEstablishmentDescriptionController
-                                                  .text,
+                                          "description":_newEstablishmentDescriptionController.text,
                                           "photos": [],
-                                          "proof_type":
-                                              responseData['proof_type'],
-                                          "proof_number":
-                                              responseData['proof_number'],
-                                          "loc_picture":
-                                              responseData['loc_picture'],
-                                          "proof_picture":
-                                              responseData['loc_picture'],
+                                          "proof_type":responseData['proof_type'],
+                                          "proof_number":responseData['proof_number'],
+                                          "loc_picture":responseData['loc_picture'],
+                                          "proof_picture":responseData['loc_picture'],
                                           "reviews": responseData['reviews'],
                                           "verified": responseData['verified'],
                                           "archived": responseData['archived'],
-                                          "accommodations":
-                                              responseData['accommodations']
+                                          "accommodations":responseData['accommodations']
                                         };
                                         final headers = {
                                           'Content-Type': 'application/json',
@@ -1310,17 +574,16 @@ class _EditAccommState extends State<EditAccomm> {
                                             context, '/view_owned_accomms');
                                         
                                       },
-                                      style: ElevatedButton.styleFrom(
-                                          shape: const CircleBorder(),
-                                          backgroundColor: Colors.white,
-                                          foregroundColor: const Color.fromARGB(
-                                              255, 25, 83, 95)),
-                                      child: const Icon(
-                                        Icons.save_as,
-                                        size: 20,
-                                      ))
-                                ])
-                              ]),
+                            style: ElevatedButton.styleFrom(
+                                shape: const CircleBorder(),
+                                backgroundColor: Colors.white,
+                                foregroundColor: const Color.fromARGB(
+                                    255, 25, 83, 95)),
+                            child: const Icon(
+                              Icons.save_as,
+                              size: 20,
+                            ),
+                          ),
                           const SizedBox(
                             height: 10,
                           ),
@@ -1350,23 +613,6 @@ class _EditAccommState extends State<EditAccomm> {
                               const SizedBox(
                                 width: 35,
                               ),
-                              Column(children: [
-                                StarRating(
-                                  rating: rating,
-                                  onRatingChanged: (rating) =>
-                                      setState(() => this.rating = rating),
-                                  color: Colors.black,
-                                ),
-                                const FittedBox(
-                                  fit: BoxFit.scaleDown,
-                                  child: Text(
-                                    "100+ reviews",
-                                    style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ]),
                             ],
                           ),
                           const SizedBox(
@@ -1397,17 +643,17 @@ class _EditAccommState extends State<EditAccomm> {
                                   const SizedBox(
                                     width: 5,
                                   ),
-                                  SizedBox(
-                                    height: 50,
-                                    width: 200,
-                                    child: Text(
-                                      username,
-                                      style: const TextStyle(
-                                          fontSize:
-                                              UIParameter.FONT_BODY_SIZE + 12,
-                                          fontFamily: UIParameter.FONT_REGULAR),
+                                  Padding(
+                                      padding: EdgeInsets.all(10),
+                                      child: Text(
+                                        username,
+                                        style: const TextStyle(
+                                            fontSize:
+                                                UIParameter.FONT_BODY_SIZE + 12,
+                                            fontFamily:
+                                                UIParameter.FONT_REGULAR),
+                                      ),
                                     ),
-                                  ),
                                 ],
                               ),
                               //Location Details
@@ -1448,17 +694,17 @@ class _EditAccommState extends State<EditAccomm> {
                                   const SizedBox(
                                     width: 5,
                                   ),
-                                  SizedBox(
-                                    height: 50,
-                                    width: 200,
-                                    child: Text(
-                                      response_phoneNo,
-                                      style: const TextStyle(
-                                          fontSize:
-                                              UIParameter.FONT_BODY_SIZE + 12,
-                                          fontFamily: UIParameter.FONT_REGULAR),
+                                  Padding(
+                                      padding: EdgeInsets.all(10),
+                                      child: Text(
+                                        response_phoneNo,
+                                        style: const TextStyle(
+                                            fontSize:
+                                                UIParameter.FONT_BODY_SIZE + 12,
+                                            fontFamily:
+                                                UIParameter.FONT_REGULAR),
+                                      ),
                                     ),
-                                  ),
                                 ],
                               )
                             ],
@@ -1564,360 +810,16 @@ class _EditAccommState extends State<EditAccomm> {
                               ))
                             ],
                           ),
-                          //end of Description
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          const Divider(
-                            color: Colors.black,
-                          ),
-
-                          //Highlights
-                          const FittedBox(
-                            fit: BoxFit.fill,
-                            child: Text(
-                              "Highlights",
-                              style: TextStyle(
-                                  fontSize: 22, fontWeight: FontWeight.normal),
-                            ),
-                          ),
-                          const SizedBox(
-                              height: 2000,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  FittedBox(
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Icon(
-                                          Icons.pets,
-                                          color: Colors.blue,
-                                          size: 40,
-                                        ),
-                                        FittedBox(
-                                            fit: BoxFit.fill,
-                                            child: Text(
-                                              "Pets Allowed",
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight:
-                                                      FontWeight.normal),
-                                            )),
-                                      ],
-                                    ),
-                                  ),
-                                  FittedBox(
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Icon(
-                                          Icons.bathtub_outlined,
-                                          color: Colors.blue,
-                                          size: 40,
-                                        ),
-                                        FittedBox(
-                                            fit: BoxFit.fill,
-                                            child: Text(
-                                              "Own Bathroom",
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight:
-                                                      FontWeight.normal),
-                                            )),
-                                      ],
-                                    ),
-                                  ),
-                                  FittedBox(
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Icon(
-                                          Icons.restaurant_menu,
-                                          color: Colors.blue,
-                                          size: 40,
-                                        ),
-                                        FittedBox(
-                                            fit: BoxFit.fill,
-                                            child: Text(
-                                              "Cooking Allowed",
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight:
-                                                      FontWeight.normal),
-                                            )),
-                                      ],
-                                    ),
-                                  ),
-                                  FittedBox(
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Icon(
-                                          Icons.wifi,
-                                          color: Colors.blue,
-                                          size: 40,
-                                        ),
-                                        FittedBox(
-                                            fit: BoxFit.fill,
-                                            child: Text(
-                                              "With Internet Connection",
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight:
-                                                      FontWeight.normal),
-                                            )),
-                                      ],
-                                    ),
-                                  ),
-                                  FittedBox(
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Icon(
-                                          Icons.ac_unit,
-                                          color: Colors.blue,
-                                          size: 40,
-                                        ),
-                                        FittedBox(
-                                            fit: BoxFit.fill,
-                                            child: Text(
-                                              "Air - Conditioned Room",
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight:
-                                                      FontWeight.normal),
-                                            )),
-                                      ],
-                                    ),
-                                  ),
-                                  FittedBox(
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Icon(
-                                          Icons.bedtime_off,
-                                          color: Colors.blue,
-                                          size: 40,
-                                        ),
-                                        FittedBox(
-                                            fit: BoxFit.fill,
-                                            child: Text(
-                                              "No Curfew",
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight:
-                                                      FontWeight.normal),
-                                            )),
-                                      ],
-                                    ),
-                                  ),
-                                  FittedBox(
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Icon(
-                                          Icons.electric_meter_outlined,
-                                          color: Colors.blue,
-                                          size: 40,
-                                        ),
-                                        FittedBox(
-                                            fit: BoxFit.fill,
-                                            child: Text(
-                                              "Own Meter",
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight:
-                                                      FontWeight.normal),
-                                            )),
-                                      ],
-                                    ),
-                                  ),
-                                  FittedBox(
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Icon(
-                                          Icons.bed_sharp,
-                                          color: Colors.blue,
-                                          size: 40,
-                                        ),
-                                        FittedBox(
-                                            fit: BoxFit.fill,
-                                            child: Text(
-                                              "Furnished",
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight:
-                                                      FontWeight.normal),
-                                            )),
-                                      ],
-                                    ),
-                                  ),
-                                  FittedBox(
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Icon(
-                                          Icons.desk,
-                                          color: Colors.blue,
-                                          size: 40,
-                                        ),
-                                        FittedBox(
-                                            fit: BoxFit.fill,
-                                            child: Text(
-                                              "Semi Furnished",
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight:
-                                                      FontWeight.normal),
-                                            )),
-                                      ],
-                                    ),
-                                  ),
-                                  FittedBox(
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Icon(
-                                          Icons.drive_eta_outlined,
-                                          color: Colors.blue,
-                                          size: 40,
-                                        ),
-                                        FittedBox(
-                                            fit: BoxFit.fill,
-                                            child: Text(
-                                              "Parking Space",
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight:
-                                                      FontWeight.normal),
-                                            )),
-                                      ],
-                                    ),
-                                  ),
-                                  FittedBox(
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Icon(
-                                          Icons.local_laundry_service_outlined,
-                                          color: Colors.blue,
-                                          size: 40,
-                                        ),
-                                        FittedBox(
-                                            fit: BoxFit.fill,
-                                            child: Text(
-                                              "Laundry Allowed",
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight:
-                                                      FontWeight.normal),
-                                            )),
-                                      ],
-                                    ),
-                                  ),
-                                  FittedBox(
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Icon(
-                                          Icons.nights_stay_outlined,
-                                          color: Colors.blue,
-                                          size: 40,
-                                        ),
-                                        FittedBox(
-                                            fit: BoxFit.fill,
-                                            child: Text(
-                                              "Overnight Visitors Allowed",
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight:
-                                                      FontWeight.normal),
-                                            )),
-                                      ],
-                                    ),
-                                  ),
-                                  FittedBox(
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Icon(
-                                          Icons.directions_walk,
-                                          color: Colors.blue,
-                                          size: 40,
-                                        ),
-                                        FittedBox(
-                                            fit: BoxFit.fill,
-                                            child: Text(
-                                              "Visitors Allowed",
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight:
-                                                      FontWeight.normal),
-                                            )),
-                                      ],
-                                    ),
-                                  ),
-                                  FittedBox(
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Icon(
-                                          Icons.video_camera_front_outlined,
-                                          color: Colors.blue,
-                                          size: 40,
-                                        ),
-                                        FittedBox(
-                                            fit: BoxFit.fill,
-                                            child: Text(
-                                              "CCTV in the Area",
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight:
-                                                      FontWeight.normal),
-                                            )),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              )),
-                          //End of Highlights
-                        ]))
-                  ]),
-                );
-              }
-            }));
-  }
-}
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }
+          },
+        ),
+      ),
+    ),
+  );
+}}

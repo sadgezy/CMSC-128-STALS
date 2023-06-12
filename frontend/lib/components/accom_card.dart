@@ -58,27 +58,27 @@ class _AccomCardState extends State<AccomCard> {
     // Handle the decoded response or perform any necessary operations
   }
 
-  // Future<void> checkAccomodationInUserFavorites() async {
-  //   print("Add accommodation complete.");
-  //   var favoritesDecoded;
-  //   final favoritesUrl =
-  //       Uri.parse('http://127.0.0.1:8000/view-all-user-favorites/');
-  //   final body = json.encode({'email': email});
-  //   final favoritesResponse = await http.post(favoritesUrl,
-  //       body: body, headers: {'Content-Type': 'application/json'});
+  Future<void> checkAccomodationInUserFavorites() async {
+    print("Add accommodation complete.");
+    var favoritesDecoded;
+    final favoritesUrl =
+        Uri.parse('http://127.0.0.1:8000/view-all-user-favorites/');
+    final body = json.encode({'email': email});
+    final favoritesResponse = await http.post(favoritesUrl,
+        body: body, headers: {'Content-Type': 'application/json'});
 
-  //   if (favoritesResponse.statusCode == 200) {
-  //     // Request was successful
-  //     favoritesDecoded = jsonDecode(favoritesResponse.body);
-  //     // Handle the favorites response
-  //   } else {
-  //     // Request failed
-  //     print('Request failed with status: ${favoritesResponse.statusCode}');
-  //   }
-  //   List<String> favoritesList = List<String>.from(jsonDecode(favoritesDecoded));
-  //   print(favoritesList);
-  //   // Handle the decoded response or perform any necessary operations
-  // }
+    if (favoritesResponse.statusCode == 200) {
+      // Request was successful
+      favoritesDecoded = jsonDecode(favoritesResponse.body);
+      // Handle the favorites response
+    } else {
+      // Request failed
+      print('Request failed with status: ${favoritesResponse.statusCode}');
+    }
+    List<String> favoritesList = List<String>.from(jsonDecode(favoritesDecoded));
+    // print(favoritesList);
+    // Handle the decoded response or perform any necessary operations
+  }
 
   Future<void> getUserInfo() async {
     user = Provider.of<UserProvider>(context, listen: false).userInfo;
@@ -91,7 +91,7 @@ class _AccomCardState extends State<AccomCard> {
   @override
   Widget build(BuildContext context) {
     getUserInfo();
-
+    checkAccomodationInUserFavorites();
     return ConstrainedBox(
         constraints: new BoxConstraints(maxWidth: 550),
         child: FittedBox(

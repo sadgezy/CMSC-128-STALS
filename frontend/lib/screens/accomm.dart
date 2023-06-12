@@ -1,4 +1,3 @@
-import 'package:stals_frontend/components/rating.dart';
 import 'package:provider/provider.dart';
 import 'package:stals_frontend/providers/token_provider.dart';
 import 'package:stals_frontend/providers/user_provider.dart';
@@ -21,35 +20,6 @@ class AccommPage extends StatefulWidget {
   @override
   _AccommPageState createState() => _AccommPageState();
 }
-
-/*possible values:
-bool isOwner = true/false
-if true then it is the owner there   will be an edit button to edit the current information on the page/cards/image/highlights/etc..
-if false then there will be a favorite button for the user 
-
-Highlights booleans
-if true it will show in the highlights
-if false it wont show
-bool isPet = ?
-bool isbathroom = ?
-bool isCook = ?
-bool isNet = ?
-bool isConnectNet = ?
-bool isAircon = ?
-bool isCurfew = ?
-bool isMeter = ?
-bool isFurnished = ?
-bool isSemiFurnished = ?
-bool isParking = ? 
-bool isLaundry = ? 
-bool isOvernight = ?
-bool isVisitors = ?
-bool isCCTV = ?
-bool isMeter = ?
-bool isRef = ?
-
-
-*/
 
 class Item extends StatefulWidget {
   const Item(
@@ -220,10 +190,6 @@ class _AccommPageState extends State<AccommPage> {
       user_type = user[3];
       verified = user[4];
 
-      // print(id);
-      // print(email);
-      // print(username);
-      // print(user_type);
       final arguments = ModalRoute.of(context)!.settings.arguments;
       if (arguments != null) {
         // Do something with the passed data
@@ -241,8 +207,7 @@ class _AccommPageState extends State<AccommPage> {
       response_rejected = responseData["rejected"];
 
       owner_id = responseData['owner'];
-      // print(owner_id);
-      // print("http://127.0.0.1:8000/get-one-user-using-id/" + owner_id + "/");
+
       String url2 =
           "http://127.0.0.1:8000/get-one-user-using-id/" + owner_id + "/";
       final response2 = await http.get(Uri.parse(url2));
@@ -367,18 +332,6 @@ class _AccommPageState extends State<AccommPage> {
                   "data:image/jpeg;base64," + base64Encode(bytes!.toList());
             }
           }
-          //print(result.files.first.name);
-          //print("img_pan : $base64Image");
-          //setState(() {});
-          //var imageFile = Image.network(image.path);
-          //html.File(image.path.codeUnits, image.path);
-          //print(imageFile.name);
-
-          //_idImage = image as XFile?;
-          //final bytes = File(imageFile.name).readAsBytesSync();
-          //String base64Image =  "data:image/png;base64,"+base64Encode(bytes);
-
-          //print(base64Image);
         }
       } else {
         setState(() {
@@ -488,21 +441,7 @@ class _AccommPageState extends State<AccommPage> {
                               ),
                               child: buildUserTypeIcon(), // First icon
                             ),
-                          // if (user_type == 'owner')
-                          //   ElevatedButton(
-                          //     onPressed: () {
-                          //       // Action for the second icon button
-                          //       Navigator.pushNamed(
-                          //           context, '/view_owned_accomms',
-                          //           arguments: id);
-                          //     },
-                          //     style: ElevatedButton.styleFrom(
-                          //       shape: CircleBorder(),
-                          //       primary: Colors.white,
-                          //       onPrimary: Color.fromARGB(255, 25, 83, 95),
-                          //     ),
-                          //     child: buildUserTypeIcon(), // Second icon
-                          //   ),
+
                           if (user_type == 'owner' ||
                               user_type == 'admin')
                             ElevatedButton(
@@ -654,22 +593,6 @@ class _AccommPageState extends State<AccommPage> {
                           const SizedBox(
                             width: 35,
                           ),
-                          // Column(children: [
-                          //   StarRating(
-                          //     rating: rating,
-                          //     onRatingChanged: (rating) =>
-                          //         setState(() => this.rating = rating),
-                          //     color: Colors.black,
-                          //   ),
-                          //   FittedBox(
-                          //     fit: BoxFit.scaleDown,
-                          //     child: Text(
-                          //       "100+ reviews",
-                          //       style: TextStyle(
-                          //           fontSize: 10, fontWeight: FontWeight.bold),
-                          //     ),
-                          //   ),
-                          // ]),
                         ],
                       ),
 
@@ -1059,334 +982,6 @@ class _AccommPageState extends State<AccommPage> {
                       const Divider(
                         color: Colors.black,
                       ),
-
-                      //Highlights
-                      // FittedBox(
-                      //   fit: BoxFit.fill,
-                      //   child: Text(
-                      //     "Highlights",
-                      //     style: TextStyle(
-                      //         fontSize: 22, fontWeight: FontWeight.normal),
-                      //   ),
-                      // ),
-                      // SizedBox(
-                      //     child: Column(
-                      //   crossAxisAlignment: CrossAxisAlignment.start,
-                      //   children: [
-                      //     SizedBox(
-                      //       height: 5,
-                      //     ),
-                      //     FittedBox(
-                      //       child: Row(
-                      //         children: [
-                      //           SizedBox(
-                      //             width: 5,
-                      //           ),
-                      //           Icon(
-                      //             Icons.pets,
-                      //             color: Colors.blue,
-                      //             size: 40,
-                      //           ),
-                      //           FittedBox(
-                      //               fit: BoxFit.fill,
-                      //               child: Text(
-                      //                 "Pets Allowed",
-                      //                 style: TextStyle(
-                      //                     fontSize: 16,
-                      //                     fontWeight: FontWeight.normal),
-                      //               )),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //     FittedBox(
-                      //       child: Row(
-                      //         children: [
-                      //           SizedBox(
-                      //             width: 5,
-                      //           ),
-                      //           Icon(
-                      //             Icons.bathtub_outlined,
-                      //             color: Colors.blue,
-                      //             size: 40,
-                      //           ),
-                      //           FittedBox(
-                      //               fit: BoxFit.fill,
-                      //               child: Text(
-                      //                 "Own Bathroom",
-                      //                 style: TextStyle(
-                      //                     fontSize: 16,
-                      //                     fontWeight: FontWeight.normal),
-                      //               )),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //     FittedBox(
-                      //       child: Row(
-                      //         children: [
-                      //           SizedBox(
-                      //             width: 5,
-                      //           ),
-                      //           Icon(
-                      //             Icons.restaurant_menu,
-                      //             color: Colors.blue,
-                      //             size: 40,
-                      //           ),
-                      //           FittedBox(
-                      //               fit: BoxFit.fill,
-                      //               child: Text(
-                      //                 "Cooking Allowed",
-                      //                 style: TextStyle(
-                      //                     fontSize: 16,
-                      //                     fontWeight: FontWeight.normal),
-                      //               )),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //     FittedBox(
-                      //       child: Row(
-                      //         children: [
-                      //           SizedBox(
-                      //             width: 5,
-                      //           ),
-                      //           Icon(
-                      //             Icons.wifi,
-                      //             color: Colors.blue,
-                      //             size: 40,
-                      //           ),
-                      //           FittedBox(
-                      //               fit: BoxFit.fill,
-                      //               child: Text(
-                      //                 "With Internet Connection",
-                      //                 style: TextStyle(
-                      //                     fontSize: 16,
-                      //                     fontWeight: FontWeight.normal),
-                      //               )),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //     FittedBox(
-                      //       child: Row(
-                      //         children: [
-                      //           SizedBox(
-                      //             width: 5,
-                      //           ),
-                      //           Icon(
-                      //             Icons.ac_unit,
-                      //             color: Colors.blue,
-                      //             size: 40,
-                      //           ),
-                      //           FittedBox(
-                      //               fit: BoxFit.fill,
-                      //               child: Text(
-                      //                 "Air - Conditioned Room",
-                      //                 style: TextStyle(
-                      //                     fontSize: 16,
-                      //                     fontWeight: FontWeight.normal),
-                      //               )),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //     FittedBox(
-                      //       child: Row(
-                      //         children: [
-                      //           SizedBox(
-                      //             width: 5,
-                      //           ),
-                      //           Icon(
-                      //             Icons.bedtime_off,
-                      //             color: Colors.blue,
-                      //             size: 40,
-                      //           ),
-                      //           FittedBox(
-                      //               fit: BoxFit.fill,
-                      //               child: Text(
-                      //                 "No Curfew",
-                      //                 style: TextStyle(
-                      //                     fontSize: 16,
-                      //                     fontWeight: FontWeight.normal),
-                      //               )),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //     FittedBox(
-                      //       child: Row(
-                      //         children: [
-                      //           SizedBox(
-                      //             width: 5,
-                      //           ),
-                      //           Icon(
-                      //             Icons.electric_meter_outlined,
-                      //             color: Colors.blue,
-                      //             size: 40,
-                      //           ),
-                      //           FittedBox(
-                      //               fit: BoxFit.fill,
-                      //               child: Text(
-                      //                 "Own Meter",
-                      //                 style: TextStyle(
-                      //                     fontSize: 16,
-                      //                     fontWeight: FontWeight.normal),
-                      //               )),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //     FittedBox(
-                      //       child: Row(
-                      //         children: [
-                      //           SizedBox(
-                      //             width: 5,
-                      //           ),
-                      //           Icon(
-                      //             Icons.bed_sharp,
-                      //             color: Colors.blue,
-                      //             size: 40,
-                      //           ),
-                      //           FittedBox(
-                      //               fit: BoxFit.fill,
-                      //               child: Text(
-                      //                 "Furnished",
-                      //                 style: TextStyle(
-                      //                     fontSize: 16,
-                      //                     fontWeight: FontWeight.normal),
-                      //               )),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //     FittedBox(
-                      //       child: Row(
-                      //         children: [
-                      //           SizedBox(
-                      //             width: 5,
-                      //           ),
-                      //           Icon(
-                      //             Icons.desk,
-                      //             color: Colors.blue,
-                      //             size: 40,
-                      //           ),
-                      //           FittedBox(
-                      //               fit: BoxFit.fill,
-                      //               child: Text(
-                      //                 "Semi Furnished",
-                      //                 style: TextStyle(
-                      //                     fontSize: 16,
-                      //                     fontWeight: FontWeight.normal),
-                      //               )),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //     FittedBox(
-                      //       child: Row(
-                      //         children: [
-                      //           SizedBox(
-                      //             width: 5,
-                      //           ),
-                      //           Icon(
-                      //             Icons.drive_eta_outlined,
-                      //             color: Colors.blue,
-                      //             size: 40,
-                      //           ),
-                      //           FittedBox(
-                      //               fit: BoxFit.fill,
-                      //               child: Text(
-                      //                 "Parking Space",
-                      //                 style: TextStyle(
-                      //                     fontSize: 16,
-                      //                     fontWeight: FontWeight.normal),
-                      //               )),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //     FittedBox(
-                      //       child: Row(
-                      //         children: [
-                      //           SizedBox(
-                      //             width: 5,
-                      //           ),
-                      //           Icon(
-                      //             Icons.local_laundry_service_outlined,
-                      //             color: Colors.blue,
-                      //             size: 40,
-                      //           ),
-                      //           FittedBox(
-                      //               fit: BoxFit.fill,
-                      //               child: Text(
-                      //                 "Laundry Allowed",
-                      //                 style: TextStyle(
-                      //                     fontSize: 16,
-                      //                     fontWeight: FontWeight.normal),
-                      //               )),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //     FittedBox(
-                      //       child: Row(
-                      //         children: [
-                      //           SizedBox(
-                      //             width: 5,
-                      //           ),
-                      //           Icon(
-                      //             Icons.nights_stay_outlined,
-                      //             color: Colors.blue,
-                      //             size: 40,
-                      //           ),
-                      //           FittedBox(
-                      //               fit: BoxFit.fill,
-                      //               child: Text(
-                      //                 "Overnight Visitors Allowed",
-                      //                 style: TextStyle(
-                      //                     fontSize: 16,
-                      //                     fontWeight: FontWeight.normal),
-                      //               )),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //     FittedBox(
-                      //       child: Row(
-                      //         children: [
-                      //           SizedBox(
-                      //             width: 5,
-                      //           ),
-                      //           Icon(
-                      //             Icons.directions_walk,
-                      //             color: Colors.blue,
-                      //             size: 40,
-                      //           ),
-                      //           FittedBox(
-                      //               fit: BoxFit.fill,
-                      //               child: Text(
-                      //                 "Visitors Allowed",
-                      //                 style: TextStyle(
-                      //                     fontSize: 16,
-                      //                     fontWeight: FontWeight.normal),
-                      //               )),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //     FittedBox(
-                      //       child: Row(
-                      //         children: [
-                      //           SizedBox(
-                      //             width: 5,
-                      //           ),
-                      //           Icon(
-                      //             Icons.video_camera_front_outlined,
-                      //             color: Colors.blue,
-                      //             size: 40,
-                      //           ),
-                      //           FittedBox(
-                      //               fit: BoxFit.fill,
-                      //               child: Text(
-                      //                 "CCTV in the Area",
-                      //                 style: TextStyle(
-                      //                     fontSize: 16,
-                      //                     fontWeight: FontWeight.normal),
-                      //               )),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //   ],
-                      // )),
-                      //End of Highlights
 
                       if (response_verified == true)
                         //View Reviews
