@@ -504,9 +504,15 @@ def add_room_to_user_favorites(request):
     try:
         user = User.objects.get(email=request.data['email'])
         User_serializer = userSerializer(user)
-        user.favorites.append(request.data['ticket_id'])
-        user.save()  # Make sure you're saving an instance of User model, not a regular user object
-        return Response(data={"message": "Successfully added to user favorites"})
+        # check if room is already in favorites)
+        if request.data['ticket_id'] in user.favorites:
+            user.favorites.remove(request.data['ticket_id'])
+            user.save()
+            return Response(data={"message": "Room already in user favorites"})
+        else:
+            user.favorites.append(request.data['ticket_id'])
+            user.save()  # Make sure you're saving an instance of User model, not a regular user object
+            return Response(data={"message": "Successfully added to user favorites"})
     except User.DoesNotExist:
         # Handle the case when the user doesn't exist
         return Response("User not found", status=status.HTTP_404_NOT_FOUND)

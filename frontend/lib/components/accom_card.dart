@@ -30,7 +30,7 @@ class _AccomCardState extends State<AccomCard> {
   // temporary holders to determine if user is admin
   var isAdmin = false;
   // temporary holders to determine if post is part of user's favorite, or part of admin's archived accomms
-  var isFavorite = false;
+  bool isFavorite = false;
 
   List<dynamic> user = [];
   String id = '';
@@ -39,7 +39,6 @@ class _AccomCardState extends State<AccomCard> {
   String user_type = '';
 
   Future<void> addAccommodationToFavorites(String id) async {
-    print("Add accommodation complete.");
     String url = "http://127.0.0.1:8000/add-room-to-user-favorites/";
     final Map<String, dynamic> requestBody = {
       "email": email,
@@ -58,17 +57,58 @@ class _AccomCardState extends State<AccomCard> {
     // Handle the decoded response or perform any necessary operations
   }
 
-  Future<void> getUserInfo() async {
+  // check if accommodation is part of user's favorites
+  Future<void> checkIfAccommodationIsFavorite(String id, String email) async {
+    String url = "http://127.0.0.1:8000/view-all-user-favorites/";
+    final Map<String, dynamic> requestBody = {
+      "email": email
+    };
+    final headers = {
+      'Content-Type': 'application/json',
+    };
+
+    final response = await http.post(
+      Uri.parse(url),
+      headers: headers,
+      body: json.encode(requestBody),
+    );
+    
+    var decodedResponse = json.decode(response.body);
+
+    decodedResponse = decodedResponse.replaceAll("[", "");
+    decodedResponse = decodedResponse.replaceAll("]", "");
+    decodedResponse = decodedResponse.replaceAll("'", "");
+    decodedResponse = decodedResponse.split(",");
+    
+    // check if id is in the list of user's favorites
+    if (decodedResponse.contains(id)) {
+      // will remove this after fixing the issue
+      print("true after checking");
+      isFavorite = true;
+    }
+    else {
+      isFavorite = false;
+    }
+  }
+
+
+
+  Future<void> getUserInfo(String estabId) async {
     user = Provider.of<UserProvider>(context, listen: false).userInfo;
     id = user[0];
     email = user[1];
     username = user[2];
     user_type = user[3];
+    if(user_type == "user"){
+      checkIfAccommodationIsFavorite(estabId, email);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    getUserInfo();
+    getUserInfo(widget.details.getID());
+    // will remove this after fixing the issue
+    print(isFavorite);
     return ConstrainedBox(
         constraints: new BoxConstraints(maxWidth: 550),
         child: FittedBox(
@@ -209,49 +249,11 @@ class _AccomCardState extends State<AccomCard> {
                             // if admin only display rating
                             isAdmin || user_type == "owner"
                                 ? Container()
-                                // ? RatingBar.builder(
-                                //     minRating: 0,
-                                //     maxRating: 5,
-                                //     initialRating: widget.details.getRating(),
-                                //     direction: Axis.horizontal,
-                                //     allowHalfRating: false,
-
-                                //     // ignore gestures to make rating un-editable
-                                //     ignoreGestures: true,
-                                //     onRatingUpdate: (rating) {
-                                //       /* CANNOT RATE HERE */
-                                //     },
-                                //     itemSize: 18,
-                                //     itemBuilder: (BuildContext context, int index) =>
-                                //         const Icon(
-                                //           Icons.star,
-                                //           color: Colors.amber,
-                                //         ))
-                                // else add favorite icon
                                 : Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
-                                      // RatingBar.builder(
-                                      //     minRating: 0,
-                                      //     maxRating: 5,
-                                      //     initialRating: widget.details.getRating(),
-                                      //     direction: Axis.horizontal,
-                                      //     allowHalfRating: false,
-
-                                      //     // ignore gestures to make rating un-editable
-                                      //     ignoreGestures: true,
-                                      //     onRatingUpdate: (rating) {
-                                      //       /* CANNOT RATE HERE */
-                                      //     },
-                                      //     itemSize: 18,
-                                      //     itemBuilder:
-                                      //         (BuildContext context, int index) =>
-                                      //             const Icon(
-                                      //               Icons.star,
-                                      //               color: Colors.amber,
-                                      //             )),
                                       InkWell(
                                           onTap: () {
                                             setState(() {
