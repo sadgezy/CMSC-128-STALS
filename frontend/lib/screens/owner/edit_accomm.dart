@@ -872,6 +872,7 @@ class _ItemState extends State<Item> {
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
                     labelText: "Max Capacity",
+                    hintText: widget.capacity.toString(),
                     labelStyle: const TextStyle(
                       color: Colors.white,
                       fontSize: 17.0,
@@ -890,11 +891,12 @@ class _ItemState extends State<Item> {
               ),
               if (widget.priceLower == widget.priceUpper)
                 Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 650.0),
+                  margin: EdgeInsets.symmetric(horizontal: 650.0),
                   child: TextField(
                     textAlign: TextAlign.center,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: "Price",
+                      hintText: widget.priceLower.toString(),
                       labelStyle: TextStyle(
                         color: Colors.white,
                         fontSize: 17.0,
@@ -904,6 +906,7 @@ class _ItemState extends State<Item> {
                           vertical: 10.0, horizontal: 12.0),
                     ), // Enable/disable editing based on isEditing flag
                     controller: priceController,
+                    
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 15.0,
@@ -921,6 +924,7 @@ class _ItemState extends State<Item> {
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(
                             labelText: "Price Lower",
+                            hintText: widget.priceLower.toString(),
                             labelStyle: const TextStyle(
                               color: Colors.white,
                               fontSize: 17.0,
@@ -946,6 +950,7 @@ class _ItemState extends State<Item> {
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(
                             labelText: "Price Upper",
+                            hintText: widget.priceUpper.toString(),
                             labelStyle: const TextStyle(
                               color: Colors.white,
                               fontSize: 17.0,
@@ -1212,7 +1217,7 @@ class _EditAccommState extends State<EditAccomm> {
           >Review content
 
         */
-
+        
         body: FutureBuilder(
             future:
                 fetchData(), // Replace fetchData with your actual future function

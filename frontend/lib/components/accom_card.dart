@@ -38,12 +38,12 @@ class _AccomCardState extends State<AccomCard> {
   String username = '';
   String user_type = '';
 
-  Future<void> addAccommodationToFavorites(String id) async {
+  Future<void> addAccommodationToFavorites() async {
     print("Add accommodation complete.");
     String url = "http://127.0.0.1:8000/add-room-to-user-favorites/";
     final Map<String, dynamic> requestBody = {
       "email": email,
-      "ticket_id": id,
+      "ticket_id": widget.details.getID(),
     };
     final headers = {
       'Content-Type': 'application/json',
@@ -58,6 +58,28 @@ class _AccomCardState extends State<AccomCard> {
     // Handle the decoded response or perform any necessary operations
   }
 
+  // Future<void> checkAccomodationInUserFavorites() async {
+  //   print("Add accommodation complete.");
+  //   var favoritesDecoded;
+  //   final favoritesUrl =
+  //       Uri.parse('http://127.0.0.1:8000/view-all-user-favorites/');
+  //   final body = json.encode({'email': email});
+  //   final favoritesResponse = await http.post(favoritesUrl,
+  //       body: body, headers: {'Content-Type': 'application/json'});
+
+  //   if (favoritesResponse.statusCode == 200) {
+  //     // Request was successful
+  //     favoritesDecoded = jsonDecode(favoritesResponse.body);
+  //     // Handle the favorites response
+  //   } else {
+  //     // Request failed
+  //     print('Request failed with status: ${favoritesResponse.statusCode}');
+  //   }
+  //   List<String> favoritesList = List<String>.from(jsonDecode(favoritesDecoded));
+  //   print(favoritesList);
+  //   // Handle the decoded response or perform any necessary operations
+  // }
+
   Future<void> getUserInfo() async {
     user = Provider.of<UserProvider>(context, listen: false).userInfo;
     id = user[0];
@@ -69,6 +91,7 @@ class _AccomCardState extends State<AccomCard> {
   @override
   Widget build(BuildContext context) {
     getUserInfo();
+
     return ConstrainedBox(
         constraints: new BoxConstraints(maxWidth: 550),
         child: FittedBox(
@@ -257,8 +280,7 @@ class _AccomCardState extends State<AccomCard> {
                                             setState(() {
                                               isFavorite = !isFavorite;
                                             });
-                                            addAccommodationToFavorites(
-                                                widget.details.getID());
+                                            addAccommodationToFavorites();
                                           },
                                           // check if part of favorite accomms
                                           child: isFavorite

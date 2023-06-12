@@ -457,149 +457,151 @@ class _AccommPageState extends State<AccommPage> {
                             children: [
                               Container(
                                   height:
-                                      MediaQuery.of(context).size.height / 3.5,
-                                  width: MediaQuery.of(context).size.width,
+                                      MediaQuery.of(context).size.height / 2,
+                                  // width: MediaQuery.of(context).size.width, //# THIS CAUSES OVERFLOW ERROR
                                   child: Image.memory(Uri.parse(loc_picture)
                                       .data!
-                                      .contentAsBytes())),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  if (user_type == 'owner')
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        // Action for the first icon button
-                                        Navigator.pushNamed(
-                                            context, '/owned/accomm/edit',
-                                            arguments: id);
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        shape: const CircleBorder(),
-                                        primary: Colors.white,
-                                        onPrimary: const Color.fromARGB(
-                                            255, 25, 83, 95),
-                                      ),
-                                      child: buildUserTypeIcon(), // First icon
+                                      .contentAsBytes()
                                     ),
-                                  // if (user_type == 'owner')
-                                  //   ElevatedButton(
-                                  //     onPressed: () {
-                                  //       // Action for the second icon button
-                                  //       Navigator.pushNamed(
-                                  //           context, '/view_owned_accomms',
-                                  //           arguments: id);
-                                  //     },
-                                  //     style: ElevatedButton.styleFrom(
-                                  //       shape: CircleBorder(),
-                                  //       primary: Colors.white,
-                                  //       onPrimary: Color.fromARGB(255, 25, 83, 95),
-                                  //     ),
-                                  //     child: buildUserTypeIcon(), // Second icon
-                                  //   ),
-                                  if (user_type == 'owner' ||
-                                      user_type == 'admin')
-                                    ElevatedButton(
-                                      onPressed: () async {
-                                        // Action for the third icon button
-                                        String url =
-                                            "http://127.0.0.1:8000/delete-establishment/" +
-                                                id +
-                                                "/";
-                                        final response =
-                                            await http.delete(Uri.parse(url));
-                                        if (user_type == 'owner') {
-                                          Navigator.pushNamed(
-                                              context, '/view_owned_accomms');
-                                        }
-
-                                        if (user_type == 'admin') {
-                                          Navigator.pushNamed(
-                                              context, '/admin/view_accomms');
-                                        }
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        shape: const CircleBorder(),
-                                        primary: Colors.white,
-                                        onPrimary: const Color.fromARGB(
-                                            255, 25, 83, 95),
-                                      ),
-                                      child: const Icon(
-                                        Icons.delete,
-                                        size: 20,
-                                      ), // Third icon
-                                    ),
-                                  // if (user_type == 'owner' || user_type == 'admin')
-                                  if (user_type == 'admin')
-                                    ElevatedButton(
-                                      onPressed: () async {
-                                        // Action for the third icon button
-                                        if (response_archived == true) {
-                                          String url =
-                                              "http://127.0.0.1:8000/unarchive-establishment/" +
-                                                  id +
-                                                  "/";
-                                          final response =
-                                              await http.put(Uri.parse(url));
-                                        } else {
-                                          String url =
-                                              "http://127.0.0.1:8000/archive-establishment/" +
-                                                  id +
-                                                  "/";
-                                          final response =
-                                              await http.put(Uri.parse(url));
-                                        }
-
-                                        if (user_type == 'owner') {
-                                          Navigator.pushNamed(
-                                              context, '/view_owned_accomms');
-                                        }
-
-                                        if (user_type == 'admin') {
-                                          Navigator.pushNamed(
-                                              context, '/admin/view_accomms');
-                                        }
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        shape: const CircleBorder(),
-                                        primary: Colors.white,
-                                        onPrimary: const Color.fromARGB(
-                                            255, 25, 83, 95),
-                                      ),
-                                      child: response_archived == false
-                                          ? const Icon(
-                                              Icons.archive,
-                                              size: 20,
-                                            )
-                                          : const Icon(Icons.restore, size: 20),
-                                    ),
-                                  if (user_type == 'owner')
-                                    ElevatedButton(
-                                      onPressed: () async {
-                                        // Action for the fourth icon button
-                                        showDialog(
-                                            context: context,
-                                            builder: (context) {
-                                              return AddRoom(
-                                                  estabId: id,
-                                                  estabName: response_Name);
-                                            });
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        shape: const CircleBorder(),
-                                        primary: Colors.white,
-                                        onPrimary: const Color.fromARGB(
-                                            255, 25, 83, 95),
-                                      ),
-                                      child: const Icon(
-                                        Icons.add_home,
-                                        size: 20,
-                                      ),
-                                    ),
+                                  ),
                                 ],
-                              ),
+                              )
                             ],
-                          )
+                          ),
+                          Row(
+                        mainAxisAlignment:
+                            MainAxisAlignment.spaceEvenly,
+                        children: [
+                          if (user_type == 'owner')
+                            ElevatedButton(
+                              onPressed: () {
+                                // Action for the first icon button
+                                Navigator.pushNamed(
+                                    context, '/owned/accomm/edit',
+                                    arguments: id);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                shape: const CircleBorder(),
+                                primary: Colors.white,
+                                onPrimary: const Color.fromARGB(
+                                    255, 25, 83, 95),
+                              ),
+                              child: buildUserTypeIcon(), // First icon
+                            ),
+                          // if (user_type == 'owner')
+                          //   ElevatedButton(
+                          //     onPressed: () {
+                          //       // Action for the second icon button
+                          //       Navigator.pushNamed(
+                          //           context, '/view_owned_accomms',
+                          //           arguments: id);
+                          //     },
+                          //     style: ElevatedButton.styleFrom(
+                          //       shape: CircleBorder(),
+                          //       primary: Colors.white,
+                          //       onPrimary: Color.fromARGB(255, 25, 83, 95),
+                          //     ),
+                          //     child: buildUserTypeIcon(), // Second icon
+                          //   ),
+                          if (user_type == 'owner' ||
+                              user_type == 'admin')
+                            ElevatedButton(
+                              onPressed: () async {
+                                // Action for the third icon button
+                                String url =
+                                    "http://127.0.0.1:8000/delete-establishment/" +
+                                        id +
+                                        "/";
+                                final response =
+                                    await http.delete(Uri.parse(url));
+                                if (user_type == 'owner') {
+                                  Navigator.pushNamed(
+                                      context, '/view_owned_accomms');
+                                }
+
+                                if (user_type == 'admin') {
+                                  Navigator.pushNamed(
+                                      context, '/admin/view_accomms');
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                shape: const CircleBorder(),
+                                primary: Colors.white,
+                                onPrimary: const Color.fromARGB(
+                                    255, 25, 83, 95),
+                              ),
+                              child: const Icon(
+                                Icons.delete,
+                                size: 20,
+                              ), // Third icon
+                            ),
+                          // if (user_type == 'owner' || user_type == 'admin')
+                          if (user_type == 'admin')
+                            ElevatedButton(
+                              onPressed: () async {
+                                // Action for the third icon button
+                                if (response_archived == true) {
+                                  String url =
+                                      "http://127.0.0.1:8000/unarchive-establishment/" +
+                                          id +
+                                          "/";
+                                  final response =
+                                      await http.put(Uri.parse(url));
+                                } else {
+                                  String url =
+                                      "http://127.0.0.1:8000/archive-establishment/" +
+                                          id +
+                                          "/";
+                                  final response =
+                                      await http.put(Uri.parse(url));
+                                }
+
+                                if (user_type == 'owner') {
+                                  Navigator.pushNamed(
+                                      context, '/view_owned_accomms');
+                                }
+
+                                if (user_type == 'admin') {
+                                  Navigator.pushNamed(
+                                      context, '/admin/view_accomms');
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                shape: const CircleBorder(),
+                                primary: Colors.white,
+                                onPrimary: const Color.fromARGB(
+                                    255, 25, 83, 95),
+                              ),
+                              child: response_archived == false
+                                  ? const Icon(
+                                      Icons.archive,
+                                      size: 20,
+                                    )
+                                  : const Icon(Icons.restore, size: 20),
+                            ),
+                          if (user_type == 'owner')
+                            ElevatedButton(
+                              onPressed: () async {
+                                // Action for the fourth icon button
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AddRoom(
+                                          estabId: id,
+                                          estabName: response_Name);
+                                    });
+                              },
+                              style: ElevatedButton.styleFrom(
+                                shape: const CircleBorder(),
+                                primary: Colors.white,
+                                onPrimary: const Color.fromARGB(
+                                    255, 25, 83, 95),
+                              ),
+                              child: const Icon(
+                                Icons.add_home,
+                                size: 20,
+                              ),
+                            ),
                         ],
                       ),
                       const SizedBox(
@@ -921,7 +923,6 @@ class _AccommPageState extends State<AccommPage> {
                                     showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
-                                        print(user_type);
                                         if (user_type == "guest") {
                                           return const AlertDialog(
                                               content: Padding(
@@ -979,7 +980,6 @@ class _AccommPageState extends State<AccommPage> {
                                 aspectRatio: 2.0,
                                 onPageChanged: (index, reason) {
                                   _currentIndex = index;
-                                  print(index);
                                 },
                               ),
                               items: cardList.map((card) {
