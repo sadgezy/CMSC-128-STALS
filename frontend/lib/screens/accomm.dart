@@ -409,21 +409,18 @@ class _AccommPageState extends State<AccommPage> {
                             alignment: Alignment.topRight,
                             children: [
                               Container(
-                                  height:
-                                      MediaQuery.of(context).size.height / 2,
-                                  // width: MediaQuery.of(context).size.width, //# THIS CAUSES OVERFLOW ERROR
-                                  child: Image.memory(Uri.parse(loc_picture)
-                                      .data!
-                                      .contentAsBytes()
-                                    ),
-                                  ),
-                                ],
-                              )
+                                height: MediaQuery.of(context).size.height / 2,
+                                // width: MediaQuery.of(context).size.width, //# THIS CAUSES OVERFLOW ERROR
+                                child: Image.memory(Uri.parse(loc_picture)
+                                    .data!
+                                    .contentAsBytes()),
+                              ),
                             ],
-                          ),
-                          Row(
-                        mainAxisAlignment:
-                            MainAxisAlignment.spaceEvenly,
+                          )
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           if (user_type == 'owner')
                             ElevatedButton(
@@ -436,14 +433,13 @@ class _AccommPageState extends State<AccommPage> {
                               style: ElevatedButton.styleFrom(
                                 shape: const CircleBorder(),
                                 primary: Colors.white,
-                                onPrimary: const Color.fromARGB(
-                                    255, 25, 83, 95),
+                                onPrimary:
+                                    const Color.fromARGB(255, 25, 83, 95),
                               ),
                               child: buildUserTypeIcon(), // First icon
                             ),
 
-                          if (user_type == 'owner' ||
-                              user_type == 'admin')
+                          if (user_type == 'owner' || user_type == 'admin')
                             ElevatedButton(
                               onPressed: () async {
                                 // Action for the third icon button
@@ -466,8 +462,8 @@ class _AccommPageState extends State<AccommPage> {
                               style: ElevatedButton.styleFrom(
                                 shape: const CircleBorder(),
                                 primary: Colors.white,
-                                onPrimary: const Color.fromARGB(
-                                    255, 25, 83, 95),
+                                onPrimary:
+                                    const Color.fromARGB(255, 25, 83, 95),
                               ),
                               child: const Icon(
                                 Icons.delete,
@@ -508,8 +504,8 @@ class _AccommPageState extends State<AccommPage> {
                               style: ElevatedButton.styleFrom(
                                 shape: const CircleBorder(),
                                 primary: Colors.white,
-                                onPrimary: const Color.fromARGB(
-                                    255, 25, 83, 95),
+                                onPrimary:
+                                    const Color.fromARGB(255, 25, 83, 95),
                               ),
                               child: response_archived == false
                                   ? const Icon(
@@ -533,8 +529,8 @@ class _AccommPageState extends State<AccommPage> {
                               style: ElevatedButton.styleFrom(
                                 shape: const CircleBorder(),
                                 primary: Colors.white,
-                                onPrimary: const Color.fromARGB(
-                                    255, 25, 83, 95),
+                                onPrimary:
+                                    const Color.fromARGB(255, 25, 83, 95),
                               ),
                               child: const Icon(
                                 Icons.add_home,
@@ -678,6 +674,50 @@ class _AccommPageState extends State<AccommPage> {
                                 fit: BoxFit.fill,
                                 child: Text(
                                   response2_phone_no,
+                                  style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal),
+                                ),
+                              ),
+                            ],
+                          ),
+                          //Establishment Type
+                          Row(
+                            children: <Widget>[
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              const Icon(
+                                Icons.maps_home_work_outlined,
+                                color: Colors.blue,
+                                size: 35,
+                              ),
+                              FittedBox(
+                                fit: BoxFit.fill,
+                                child: Text(
+                                  " House",
+                                  style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal),
+                                ),
+                              ),
+                            ],
+                          ),
+                          //Tenant Type
+                          Row(
+                            children: <Widget>[
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              const Icon(
+                                Icons.room_preferences_outlined,
+                                color: Colors.blue,
+                                size: 35,
+                              ),
+                              FittedBox(
+                                fit: BoxFit.fill,
+                                child: Text(
+                                  " Student",
                                   style: const TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.normal),

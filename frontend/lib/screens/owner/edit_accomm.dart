@@ -142,7 +142,8 @@ class _ItemState extends State<Item> {
                       fontSize: 17.0,
                       fontWeight: FontWeight.w600,
                     ),
-                    contentPadding: const EdgeInsets.symmetric( vertical: 10.0, horizontal: 12.0),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 12.0),
                   ), // Enable/disable editing based on isEditing flag
                   controller: maxTenantsController,
                   style: const TextStyle(
@@ -154,7 +155,7 @@ class _ItemState extends State<Item> {
               ),
               if (widget.priceLower == widget.priceUpper)
                 ConstrainedBox(
-                constraints: const BoxConstraints.tightFor(width: 200),
+                  constraints: const BoxConstraints.tightFor(width: 200),
                   child: TextField(
                     textAlign: TextAlign.center,
                     decoration: InputDecoration(
@@ -165,10 +166,11 @@ class _ItemState extends State<Item> {
                         fontSize: 17.0,
                         fontWeight: FontWeight.w600,
                       ),
-                      contentPadding: const EdgeInsets.symmetric( vertical: 10.0, horizontal: 12.0),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 12.0),
                     ), // Enable/disable editing based on isEditing flag
                     controller: priceController,
-                    
+
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 15.0,
@@ -180,50 +182,52 @@ class _ItemState extends State<Item> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                      ConstrainedBox(
-                        constraints: const BoxConstraints.tightFor(width: 150),
-                        child: TextField(
-                          textAlign: TextAlign.center,
-                          decoration: InputDecoration(
-                            labelText: "Price Lower",
-                            hintText: widget.priceLower.toString(),
-                            labelStyle: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 17.0,
-                              fontWeight: FontWeight.w600,
-                            ),
-                            contentPadding: const EdgeInsets.symmetric( vertical: 10.0, horizontal: 12.0),
-                          ), // Enable/disable editing based on isEditing flag
-                          controller: priceLowerController,
-                          style: const TextStyle(
+                    ConstrainedBox(
+                      constraints: const BoxConstraints.tightFor(width: 150),
+                      child: TextField(
+                        textAlign: TextAlign.center,
+                        decoration: InputDecoration(
+                          labelText: "Price Lower",
+                          hintText: widget.priceLower.toString(),
+                          labelStyle: const TextStyle(
                             color: Colors.white,
-                            fontSize: 15.0,
+                            fontSize: 17.0,
                             fontWeight: FontWeight.w600,
                           ),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 12.0),
+                        ), // Enable/disable editing based on isEditing flag
+                        controller: priceLowerController,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.w600,
                         ),
+                      ),
                     ),
                     SizedBox(width: 8.0),
-                      ConstrainedBox(
-                        constraints: const BoxConstraints.tightFor(width: 150),
-                        child: TextField(
-                          textAlign: TextAlign.center,
-                          decoration: InputDecoration(
-                            labelText: "Price Upper",
-                            hintText: widget.priceUpper.toString(),
-                            labelStyle: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 17.0,
-                              fontWeight: FontWeight.w600,
-                            ),
-                            contentPadding: const EdgeInsets.symmetric( vertical: 10.0, horizontal: 12.0),
-                          ), // Enable/disable editing based on isEditing flag
-                          controller: priceUpperController,
-                          style: const TextStyle(
+                    ConstrainedBox(
+                      constraints: const BoxConstraints.tightFor(width: 150),
+                      child: TextField(
+                        textAlign: TextAlign.center,
+                        decoration: InputDecoration(
+                          labelText: "Price Upper",
+                          hintText: widget.priceUpper.toString(),
+                          labelStyle: const TextStyle(
                             color: Colors.white,
-                            fontSize: 15.0,
+                            fontSize: 17.0,
                             fontWeight: FontWeight.w600,
                           ),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 12.0),
+                        ), // Enable/disable editing based on isEditing flag
+                        controller: priceUpperController,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.w600,
                         ),
+                      ),
                     ),
                   ],
                 ),
@@ -302,6 +306,28 @@ class _ItemState extends State<Item> {
   }
 }
 
+//Changes here
+List<DropdownMenuItem<String>> get dropdownEstab {
+  List<DropdownMenuItem<String>> esType = [
+    DropdownMenuItem(child: Text("House"), value: "house"),
+    DropdownMenuItem(child: Text("Dormitory"), value: "dormitory"),
+    DropdownMenuItem(child: Text("Apartment"), value: "apartment"),
+    DropdownMenuItem(child: Text("Transient"), value: "transient"),
+    DropdownMenuItem(child: Text("Hotel"), value: "hotel"),
+  ];
+  return esType;
+}
+
+List<DropdownMenuItem<String>> get dropdownTenant {
+  List<DropdownMenuItem<String>> tenantItems = [
+    DropdownMenuItem(child: Text("Students"), value: "students"),
+    DropdownMenuItem(child: Text("Teachers"), value: "teachers"),
+    DropdownMenuItem(child: Text("Professionals"), value: "professionals"),
+    DropdownMenuItem(child: Text("Anyone"), value: "anyone"),
+  ];
+  return tenantItems;
+}
+
 class _EditAccommState extends State<EditAccomm> {
   double rating = 4.0;
   int _index = 1;
@@ -316,15 +342,7 @@ class _EditAccommState extends State<EditAccomm> {
       TextEditingController();
   TextEditingController _newEstablishmentDescriptionController =
       TextEditingController();
-  List cardList = [
-    // const Item1(),
-    // const Item2(),
-    // const Item3(),
-    // const Item4(),
-    // const Item5(),
-    // const Item6(),
-    // const Item7()
-  ];
+  List cardList = [];
   bool isLoading = true;
 
   var responseData;
@@ -341,6 +359,9 @@ class _EditAccommState extends State<EditAccomm> {
   String loc_picture = "";
   String id = "";
   String response_Description = "";
+  //Changes here
+  String selectedValueEsType = "house";
+  String selectedValueTenant = "students";
 
   @override
   void initState() {
@@ -475,351 +496,399 @@ class _EditAccommState extends State<EditAccomm> {
           >Review content
 
         */
-        body: Center(
-                child: ConstrainedBox(
-          constraints: new BoxConstraints(maxWidth: 550.0),
-        child: FutureBuilder(
-            future:
-                fetchData(), // Replace fetchData with your actual future function
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                // While the data is being fetched, show a loading indicator
-                return Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                // If there's an error, display an error message
-                return Center(child: Text('Error: ${snapshot.error}'));
-              } else {
-                return SingleChildScrollView(
-                  child: Column(children: [
-                    SizedBox(
-                        height: 2000,
-                        child: Column(
-                        children: [  
-                          ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  minimumSize: const Size(150, 50),
-                                  maximumSize: const Size(150, 50),
-                                  elevation: 0,
-                                  backgroundColor:
-                                      const Color.fromARGB(255, 25, 83, 95),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                                onPressed: () {
-                                  // _chooseImage();
-                                },
-                                child: const Text("Upload image")), 
-                          Row(
-                            children: [ 
-                              Stack(
-                                alignment: Alignment.topRight,
-                                children: [
-                                  Container(
-                                      height:
-                                          MediaQuery.of(context).size.height / 2,
-                                      // width: MediaQuery.of(context).size.width, //# THIS CAUSES OVERFLOW ERROR
-                                      child: Image.memory(Uri.parse(loc_picture)
-                                          .data!
-                                          .contentAsBytes()
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                          ElevatedButton(
-                                      onPressed: () async {
-                                        //on button pushed it saves the editted details and routes back the owned accoms page
-                                        //setState(() {});
-                                        if (_newEstablishmentNameController.text == "") {
-                                          _newEstablishmentNameController.text = responseData['name'];
-                                        }
-                                        if (_newEstablishmentLocationController.text == "") {
-                                          _newEstablishmentLocationController.text = responseData['location_exact'];
-                                        }
-                                        if (_newEstablishmentDescriptionController.text == "") {
-                                          _newEstablishmentDescriptionController.text = responseData['description'];
-                                        };
-                                        String url = "http://127.0.0.1:8000/edit-establishment/" + id + "/";
-                                        final Map<String, dynamic> requestBody = {
-                                          "owner": owner_id,
-                                          "name": _newEstablishmentNameController.text,
-                                          "location_exact": _newEstablishmentLocationController.text,
-                                          "location_approx":responseData['location_approx'],
-                                          "establishment_type": responseData['establishment_type'],
-                                          "tenant_type": responseData['tenant_type'],
-                                          "utilities": [],
-                                          "description":_newEstablishmentDescriptionController.text,
-                                          "photos": [],
-                                          "proof_type":responseData['proof_type'],
-                                          "proof_number":responseData['proof_number'],
-                                          "loc_picture":responseData['loc_picture'],
-                                          "proof_picture":responseData['loc_picture'],
-                                          "reviews": responseData['reviews'],
-                                          "verified": responseData['verified'],
-                                          "archived": responseData['archived'],
-                                          "accommodations":responseData['accommodations']
-                                        };
-                                        final headers = {
-                                          'Content-Type': 'application/json',
-                                        };
-                                        final response = await http.put(
-                                            Uri.parse(url),
-                                            headers: headers,
-                                            body: json.encode(requestBody));
-                                        // final decodedResponse = json.decode(response.body);
-                                        // Navigator.pop(context);
-                                        Navigator.pushNamed(
-                                            context, '/view_owned_accomms');
-                                        
-                                      },
+        body: SingleChildScrollView(
+          child: Center(
+            child: ConstrainedBox(
+              constraints: new BoxConstraints(maxWidth: 550.0),
+              child: FutureBuilder(
+                future:
+                    fetchData(), // Replace fetchData with your actual future function
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    // While the data is being fetched, show a loading indicator
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    // If there's an error, display an error message
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else {
+                    return Column(
+                      children: [
+                        ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                shape: const CircleBorder(),
-                                backgroundColor: Colors.white,
-                                foregroundColor: const Color.fromARGB(
-                                    255, 25, 83, 95)),
-                            child: const Icon(
-                              Icons.save_as,
-                              size: 20,
+                              minimumSize: const Size(150, 50),
+                              maximumSize: const Size(150, 50),
+                              elevation: 0,
+                              backgroundColor:
+                                  const Color.fromARGB(255, 25, 83, 95),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-
-                          //Apartment Details
-                          //Reviews
-
-                          Row(
-                            //optional
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const SizedBox(
-                                width: 35,
-                              ),
-                              SizedBox(
-                                height: 50,
-                                width: 200,
-                                child: TextFormField(
-                                  controller: _newEstablishmentNameController,
-                                  decoration: InputDecoration(
-                                      hintText: response_Name,
-                                      //label text should be the value before editting
-                                      labelText: 'Edit Establishment Name'),
+                            onPressed: () {
+                              // _chooseImage();
+                            },
+                            child: const Text("Upload image")),
+                        Row(
+                          children: [
+                            Stack(
+                              alignment: Alignment.topRight,
+                              children: [
+                                Container(
+                                  height:
+                                      MediaQuery.of(context).size.height / 2,
+                                  // width: MediaQuery.of(context).size.width, //# THIS CAUSES OVERFLOW ERROR
+                                  child: Image.memory(Uri.parse(loc_picture)
+                                      .data!
+                                      .contentAsBytes()),
                                 ),
-                              ),
-                              const SizedBox(
-                                width: 35,
-                              ),
-                            ],
+                              ],
+                            )
+                          ],
+                        ),
+                        ElevatedButton(
+                          onPressed: () async {
+                            //on button pushed it saves the editted details and routes back the owned accoms page
+                            //setState(() {});
+                            if (_newEstablishmentNameController.text == "") {
+                              _newEstablishmentNameController.text =
+                                  responseData['name'];
+                            }
+                            if (_newEstablishmentLocationController.text ==
+                                "") {
+                              _newEstablishmentLocationController.text =
+                                  responseData['location_exact'];
+                            }
+                            if (_newEstablishmentDescriptionController.text ==
+                                "") {
+                              _newEstablishmentDescriptionController.text =
+                                  responseData['description'];
+                            }
+                            ;
+                            String url =
+                                "http://127.0.0.1:8000/edit-establishment/" +
+                                    id +
+                                    "/";
+                            final Map<String, dynamic> requestBody = {
+                              "owner": owner_id,
+                              "name": _newEstablishmentNameController.text,
+                              "location_exact":
+                                  _newEstablishmentLocationController.text,
+                              "location_approx":
+                                  responseData['location_approx'],
+                              "establishment_type":
+                                  responseData['establishment_type'],
+                              "tenant_type": responseData['tenant_type'],
+                              "utilities": [],
+                              "description":
+                                  _newEstablishmentDescriptionController.text,
+                              "photos": [],
+                              "proof_type": responseData['proof_type'],
+                              "proof_number": responseData['proof_number'],
+                              "loc_picture": responseData['loc_picture'],
+                              "proof_picture": responseData['loc_picture'],
+                              "reviews": responseData['reviews'],
+                              "verified": responseData['verified'],
+                              "archived": responseData['archived'],
+                              "accommodations": responseData['accommodations']
+                            };
+                            final headers = {
+                              'Content-Type': 'application/json',
+                            };
+                            final response = await http.put(Uri.parse(url),
+                                headers: headers,
+                                body: json.encode(requestBody));
+                            // final decodedResponse = json.decode(response.body);
+                            // Navigator.pop(context);
+                            Navigator.pushNamed(context, '/view_owned_accomms');
+                          },
+                          style: ElevatedButton.styleFrom(
+                              shape: const CircleBorder(),
+                              backgroundColor: Colors.white,
+                              foregroundColor:
+                                  const Color.fromARGB(255, 25, 83, 95)),
+                          child: const Icon(
+                            Icons.save_as,
+                            size: 20,
                           ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          const Divider(
-                            color: Colors.black,
-                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
 
-                          //Contact Information Box
-                          Column(
-                            children: [
-                              const SizedBox(
-                                height: 3,
-                              ),
-                              //Profile icon and name of owner
-                              Row(
-                                children: [
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  //Profile of Owner
-                                  const CircleAvatar(
-                                    radius: 15,
-                                    backgroundImage: AssetImage(
-                                        "assets/images/room_stock.jpg"),
-                                  ),
-                                  const SizedBox(
-                                    width: 5,
-                                  ),
-                                  Padding(
-                                      padding: EdgeInsets.all(10),
-                                      child: Text(
-                                        username,
-                                        style: const TextStyle(
-                                            fontSize:
-                                                UIParameter.FONT_BODY_SIZE + 12,
-                                            fontFamily:
-                                                UIParameter.FONT_REGULAR),
-                                      ),
-                                    ),
-                                ],
-                              ),
-                              //Location Details
-                              Row(
-                                children: [
-                                  const SizedBox(
-                                    width: 5,
-                                  ),
-                                  const Icon(
-                                    Icons.location_pin,
-                                    color: Colors.blue,
-                                    size: 40,
-                                  ),
-                                  SizedBox(
-                                    height: 50,
-                                    width: 200,
-                                    child: TextFormField(
-                                      controller:
-                                          _newEstablishmentLocationController,
-                                      decoration: InputDecoration(
-                                          hintText: response_Address,
-                                          labelText: 'Edit Location Details'),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              //Contact Info
-                              Row(
-                                children: <Widget>[
-                                  const SizedBox(
-                                    width: 6,
-                                  ),
-                                  const Icon(
-                                    Icons.phone_in_talk_rounded,
-                                    color: Colors.blue,
-                                    size: 33,
-                                  ),
-                                  const SizedBox(
-                                    width: 5,
-                                  ),
-                                  Padding(
-                                      padding: EdgeInsets.all(10),
-                                      child: Text(
-                                        response_phoneNo,
-                                        style: const TextStyle(
-                                            fontSize:
-                                                UIParameter.FONT_BODY_SIZE + 12,
-                                            fontFamily:
-                                                UIParameter.FONT_REGULAR),
-                                      ),
-                                    ),
-                                ],
-                              )
-                            ],
-                          ),
-                          //end of Owner Information
+                        //Apartment Details
+                        //Reviews
 
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          const Divider(
-                            color: Colors.black,
-                          ),
+                        Row(
+                          //optional
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(
+                              width: 35,
+                            ),
+                            SizedBox(
+                              height: 50,
+                              width: 200,
+                              child: TextFormField(
+                                controller: _newEstablishmentNameController,
+                                decoration: InputDecoration(
+                                    hintText: response_Name,
+                                    //label text should be the value before editting
+                                    labelText: 'Edit Establishment Name'),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 35,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const Divider(
+                          color: Colors.black,
+                        ),
 
-                          //Cards information
-                          //Alternative Cards
-                          Column(
-                            children: [
-                              CarouselSlider(
-                                options: CarouselOptions(
-                                  height: 275.0,
-                                  autoPlay: false,
-                                  autoPlayInterval: const Duration(seconds: 5),
-                                  autoPlayAnimationDuration:
-                                      const Duration(milliseconds: 1000),
-                                  autoPlayCurve: Curves.fastOutSlowIn,
-                                  pauseAutoPlayOnTouch: true,
-                                  aspectRatio: 2.0,
-                                  onPageChanged: (index, reason) {
-                                    // setState(() {
-                                    //   _currentIndex = index;
-                                    // });
-                                  },
+                        //Contact Information Box
+                        Column(
+                          children: [
+                            const SizedBox(
+                              height: 3,
+                            ),
+                            //Profile icon and name of owner
+                            Row(
+                              children: [
+                                const SizedBox(
+                                  width: 10,
                                 ),
-                                items: cardList.map((card) {
-                                  return Builder(
-                                      builder: (BuildContext context) {
-                                    return SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.30,
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        child: Card(
-                                            color: const Color.fromARGB(
-                                                255, 25, 83, 95),
-                                            margin: const EdgeInsets.all(12),
-                                            elevation: 4,
-                                            child: card));
-                                  });
-                                }).toList(),
-                              ),
-                            ],
-                          ),
-                          //End of Cards
+                                //Profile of Owner
+                                const CircleAvatar(
+                                  radius: 15,
+                                  backgroundImage: AssetImage(
+                                      "assets/images/room_stock.jpg"),
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(10),
+                                  child: Text(
+                                    username,
+                                    style: const TextStyle(
+                                        fontSize:
+                                            UIParameter.FONT_BODY_SIZE + 12,
+                                        fontFamily: UIParameter.FONT_REGULAR),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            //Location Details
+                            Row(
+                              children: [
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                const Icon(
+                                  Icons.location_pin,
+                                  color: Colors.blue,
+                                  size: 40,
+                                ),
+                                SizedBox(
+                                  height: 50,
+                                  width: 200,
+                                  child: TextFormField(
+                                    controller:
+                                        _newEstablishmentLocationController,
+                                    decoration: InputDecoration(
+                                        hintText: response_Address,
+                                        labelText: 'Edit Location Details'),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            //Contact Info
+                            Row(
+                              children: <Widget>[
+                                const SizedBox(
+                                  width: 6,
+                                ),
+                                const Icon(
+                                  Icons.phone_in_talk_rounded,
+                                  color: Colors.blue,
+                                  size: 33,
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(10),
+                                  child: Text(
+                                    response_phoneNo,
+                                    style: const TextStyle(
+                                        fontSize:
+                                            UIParameter.FONT_BODY_SIZE + 12,
+                                        fontFamily: UIParameter.FONT_REGULAR),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            //Changes here
+                            //Establishment Type
+                            Row(
+                              children: <Widget>[
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                const Icon(
+                                  Icons.maps_home_work_outlined,
+                                  color: Colors.blue,
+                                  size: 40,
+                                ),
+                                Padding(
+                                    padding: EdgeInsets.all(10),
+                                    child: DropdownButton(
+                                      value: selectedValueEsType,
+                                      items: dropdownEstab,
+                                      onChanged: (String? newEstab) {
+                                        setState(() {
+                                          selectedValueEsType = newEstab!;
+                                        });
+                                      },
+                                    )),
+                              ],
+                            ),
+                            //Tenant Type
+                            Row(
+                              children: <Widget>[
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                const Icon(
+                                  Icons.room_preferences_outlined,
+                                  color: Colors.blue,
+                                  size: 40,
+                                ),
+                                Padding(
+                                    padding: EdgeInsets.all(10),
+                                    child: DropdownButton(
+                                      value: selectedValueTenant,
+                                      items: dropdownTenant,
+                                      onChanged: (String? newTenant) {
+                                        setState(() {
+                                          selectedValueTenant = newTenant!;
+                                        });
+                                      },
+                                    )),
+                              ],
+                            ),
+                          ],
+                        ),
+                        //end of Owner Information
 
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          const Divider(
-                            color: Colors.black,
-                          ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        const Divider(
+                          color: Colors.black,
+                        ),
 
-                          //Description
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              const SizedBox(
-                                height: 4,
-                                width: 25,
+                        //Cards information
+                        //Alternative Cards
+                        Column(
+                          children: [
+                            CarouselSlider(
+                              options: CarouselOptions(
+                                height: 275.0,
+                                autoPlay: false,
+                                autoPlayInterval: const Duration(seconds: 5),
+                                autoPlayAnimationDuration:
+                                    const Duration(milliseconds: 1000),
+                                autoPlayCurve: Curves.fastOutSlowIn,
+                                pauseAutoPlayOnTouch: true,
+                                aspectRatio: 2.0,
+                                onPageChanged: (index, reason) {
+                                  // setState(() {
+                                  //   _currentIndex = index;
+                                  // });
+                                },
                               ),
-                              Expanded(
-                                  child: Column(
-                                children: [
-                                  const FittedBox(
-                                    alignment: Alignment.topLeft,
-                                    child: Text(
-                                      "About Name",
-                                      maxLines: 1,
-                                      style: TextStyle(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.normal),
-                                      textAlign: TextAlign.start,
-                                    ),
+                              items: cardList.map((card) {
+                                return Builder(builder: (BuildContext context) {
+                                  return SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.30,
+                                      width: MediaQuery.of(context).size.width,
+                                      child: Card(
+                                          color: const Color.fromARGB(
+                                              255, 25, 83, 95),
+                                          margin: const EdgeInsets.all(12),
+                                          elevation: 4,
+                                          child: card));
+                                });
+                              }).toList(),
+                            ),
+                          ],
+                        ),
+                        //End of Cards
+
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        const Divider(
+                          color: Colors.black,
+                        ),
+
+                        //Description
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const SizedBox(
+                              height: 4,
+                              width: 25,
+                            ),
+                            Expanded(
+                                child: Column(
+                              children: [
+                                const FittedBox(
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    "About Name",
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.normal),
+                                    textAlign: TextAlign.start,
                                   ),
-                                  const SizedBox(
-                                    height: 2,
-                                    width: 5,
+                                ),
+                                const SizedBox(
+                                  height: 2,
+                                  width: 5,
+                                ),
+                                SizedBox(
+                                  height: 100,
+                                  width: 600,
+                                  child: TextFormField(
+                                    maxLines: 5,
+                                    controller:
+                                        _newEstablishmentDescriptionController,
+                                    decoration: InputDecoration(
+                                        hintText: response_Description,
+                                        labelText: 'Edit Description'),
                                   ),
-                                  SizedBox(
-                                    height: 100,
-                                    width: 600,
-                                    child: TextFormField(
-                                      maxLines: 5,
-                                      controller:
-                                          _newEstablishmentDescriptionController,
-                                      decoration: InputDecoration(
-                                          hintText: response_Description,
-                                          labelText: 'Edit Description'),
-                                    ),
-                                  ),
-                                ],
-                              ))
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }
-          },
-        ),
-      ),
-    ),
-  );
-}}
+                                ),
+                              ],
+                            ))
+                          ],
+                        ),
+                      ],
+                    );
+                  }
+                },
+              ),
+            ),
+          ),
+        ));
+  }
+}
