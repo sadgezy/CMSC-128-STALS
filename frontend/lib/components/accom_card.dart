@@ -31,6 +31,8 @@ class _AccomCardState extends State<AccomCard> {
   var isAdmin = false;
   // temporary holders to determine if post is part of user's favorite, or part of admin's archived accomms
   bool isFavorite = false;
+  bool loading = true;
+  bool checked = false;
 
   List<dynamic> user = [];
   String id = '';
@@ -82,33 +84,37 @@ class _AccomCardState extends State<AccomCard> {
     
     // check if id is in the list of user's favorites
     if (decodedResponse.contains(id)) {
-      // will remove this after fixing the issue
-      print("true after checking");
       isFavorite = true;
     }
     else {
       isFavorite = false;
     }
+    setState(() {
+      loading = false;
+      checked = true;
+    });
   }
 
 
 
-  Future<void> getUserInfo(String estabId) async {
+  Future<void> getUserInfo() async {
     user = Provider.of<UserProvider>(context, listen: false).userInfo;
     id = user[0];
     email = user[1];
     username = user[2];
     user_type = user[3];
-    if(user_type == "user"){
-      checkIfAccommodationIsFavorite(estabId, email);
-    }
   }
 
   @override
   Widget build(BuildContext context) {
-    getUserInfo(widget.details.getID());
-    // will remove this after fixing the issue
-    print(isFavorite);
+    getUserInfo();
+    if (user_type == "user" && !checked) {
+      checkIfAccommodationIsFavorite(widget.details.getID(), email);
+    }
+    else {
+      loading = false;
+    }
+    if (loading) return CircularProgressIndicator();
     return ConstrainedBox(
         constraints: new BoxConstraints(maxWidth: 550),
         child: FittedBox(
@@ -291,5 +297,5 @@ class _AccomCardState extends State<AccomCard> {
                 ),
               ),
             )));
-  }
+    }
 }
