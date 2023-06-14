@@ -30,7 +30,9 @@ class _AccomCardState extends State<AccomCard> {
   // temporary holders to determine if user is admin
   var isAdmin = false;
   // temporary holders to determine if post is part of user's favorite, or part of admin's archived accomms
-  var isFavorite = false;
+  bool isFavorite = false;
+  bool loading = true;
+  bool checked = false;
 
   List<dynamic> user = [];
   String id = '';
@@ -39,7 +41,6 @@ class _AccomCardState extends State<AccomCard> {
   String user_type = '';
 
   Future<void> addAccommodationToFavorites(String id) async {
-    print("Add accommodation complete.");
     String url = "http://127.0.0.1:8000/add-room-to-user-favorites/";
     final Map<String, dynamic> requestBody = {
       "email": email,
@@ -57,6 +58,44 @@ class _AccomCardState extends State<AccomCard> {
     final decodedResponse = json.decode(response.body);
     // Handle the decoded response or perform any necessary operations
   }
+
+  // check if accommodation is part of user's favorites
+  Future<void> checkIfAccommodationIsFavorite(String id, String email) async {
+    String url = "http://127.0.0.1:8000/view-all-user-favorites/";
+    final Map<String, dynamic> requestBody = {
+      "email": email
+    };
+    final headers = {
+      'Content-Type': 'application/json',
+    };
+
+    final response = await http.post(
+      Uri.parse(url),
+      headers: headers,
+      body: json.encode(requestBody),
+    );
+    
+    var decodedResponse = json.decode(response.body);
+
+    decodedResponse = decodedResponse.replaceAll("[", "");
+    decodedResponse = decodedResponse.replaceAll("]", "");
+    decodedResponse = decodedResponse.replaceAll("'", "");
+    decodedResponse = decodedResponse.split(",");
+    
+    // check if id is in the list of user's favorites
+    if (decodedResponse.contains(id)) {
+      isFavorite = true;
+    }
+    else {
+      isFavorite = false;
+    }
+    setState(() {
+      loading = false;
+      checked = true;
+    });
+  }
+
+
 
   Future<void> getUserInfo() async {
     user = Provider.of<UserProvider>(context, listen: false).userInfo;
@@ -83,6 +122,13 @@ class _AccomCardState extends State<AccomCard> {
       future: imageStr,
       builder: (context, snapshot) {
         
+        if (user_type == "user" && !checked) {
+          checkIfAccommodationIsFavorite(widget.details.getID(), email);
+        }
+        else {
+          loading = false;
+        }
+        if (loading) return CircularProgressIndicator();
 
         return ConstrainedBox(
             constraints: new BoxConstraints(maxWidth: 550),
