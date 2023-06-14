@@ -184,7 +184,20 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
     if (!fetchedAll) {
       _accommodationsFuture = fetchAllAccommodations();
       accommList.clear();
-      //print("HEU");
+    }
+
+    String verified;
+    bool isVerified = context.watch<UserProvider>().isVerified;
+    bool isRejected = context.watch<UserProvider>().isRejected;
+    print(isVerified);
+    print(isRejected);
+
+    if (!isVerified && !isRejected) {
+      verified = 'Your account’s verification is under review. Please wait.';
+    } else if (!isVerified && isRejected) {
+      verified = 'Your account’s verification is rejected. Please try again.';
+    } else {
+      verified = '';
     }
 
     /*
@@ -218,10 +231,11 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
       filterTitleList.add(filterRaw[i][1]);
     }
 
-    String verified = context.watch<UserProvider>().isVerified
-        ? ''
-        : 'Your account’s verification is under review. Please wait.';
+    // String verified = context.watch<UserProvider>().isVerified
+    //     ? ''
+    //     : 'Your account’s verification is under review. Please wait.';
     //: 'Your account’s verification was declined. Please resubmit your details by editing your profile';
+
 
     Color banner =
         context.watch<UserProvider>().isVerified ? Colors.green : Colors.red;
@@ -357,13 +371,11 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
               ListTile(
                 title: const Text('View Profile'),
                 onTap: () {
-                  // NOT SURE IF THIS IS THE PROPER WAY, TEMPORARY Navigator.push
+                  String userId = Provider.of<UserProvider>(context, listen: false).getID;
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) {
-                        return UserProfile();
-                      },
+                      builder: (context) => UserProfile(userId: userId),
                     ),
                   );
                 },

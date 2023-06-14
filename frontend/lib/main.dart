@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
         '/admin/view_accomms': (context) => const AdminViewAccommodations(),
         '/admin/verify_accomm': (context) => AccommPageProof(),
         '/admin/view_reports': (context) => const ViewReportsPage(),
-        '/userprofile': (context) => const UserProfile(),
+        // '/userprofile': (context) => const UserProfile(),
       },
       theme: ThemeData(
         fontFamily: 'SFProDisplayRegular',
