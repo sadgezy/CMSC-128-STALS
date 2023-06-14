@@ -385,6 +385,8 @@ class _UnregisteredHomepageState extends State<UnregisteredHomepage> {
                                               const Padding(
                                                   padding: EdgeInsets.symmetric(
                                                       vertical: 10)),
+                                            if (snapshot.connectionState !=
+                                                ConnectionState.waiting)
                                             const Text(
                                                 "No Accommodations Available! ")
                                           ],
