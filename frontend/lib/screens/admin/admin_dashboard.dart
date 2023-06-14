@@ -61,7 +61,7 @@ class _AdminDashBoardState extends State<AdminDashBoard> {
               child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 550),
                   child: FittedBox(
-                      child: Container(
+                      child: SizedBox(
                     width: 550,
                     child: AppBar(
                         backgroundColor: UIParameter.MAROON,
