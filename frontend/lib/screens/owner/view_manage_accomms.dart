@@ -163,7 +163,7 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
             future: _accommodationsFuture,
             builder: (context, snapshot) {
               if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                print("RAN");
+                // print("RAN");
                 List<AccomCardDetails> accommodations = snapshot.data!;
                 // print(accommodations[0].getImage());
                 return Center(

@@ -1397,7 +1397,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
                             } else if (base64Image2 == '') {
                               setState(() => showProofUploadError = true);
                             } else {
-                              print("Add accommodation complete.");
+                              // print("Add accommodation complete.");
                               String url =
                                   "http://127.0.0.1:8000/create-establishment/";
                               final Map<String, dynamic> requestBody = {

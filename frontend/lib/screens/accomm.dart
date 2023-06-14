@@ -791,7 +791,7 @@ class _AccommPageState extends State<AccommPage> {
                                             showDialog(
                                               context: context,
                                               builder: (BuildContext context) {
-                                                print(user_type);
+                                                // print(user_type);
                                                 if (user_type == "guest") {
                                                   return const AlertDialog(
                                                       content: Padding(
@@ -854,9 +854,9 @@ class _AccommPageState extends State<AccommPage> {
                                                           ElevatedButton(
                                                             onPressed:
                                                                 () async {
-                                                              print(
-                                                                  tagsController
-                                                                      .text);
+                                                              // print(
+                                                              //     tagsController
+                                                              //         .text);
                                                               switch (
                                                                   tagsController
                                                                       .text) {
@@ -957,7 +957,7 @@ class _AccommPageState extends State<AccommPage> {
                                             showDialog(
                                               context: context,
                                               builder: (BuildContext context) {
-                                                print(user_type);
+                                                // print(user_type);
                                                 if (user_type == "guest") {
                                                   return const AlertDialog(
                                                       content: Padding(
@@ -1016,7 +1016,7 @@ class _AccommPageState extends State<AccommPage> {
                                 aspectRatio: 2.0,
                                 onPageChanged: (index, reason) {
                                   _currentIndex = index;
-                                  print(index);
+                                  // print(index);
                                 },
                               ),
                               items: cardList.map((card) {
@@ -1716,7 +1716,7 @@ class _AccommPageState extends State<AccommPage> {
                                       setState(
                                           () => showProofUploadError = true);
                                     } else {
-                                      print("Add accommodation complete.");
+                                      // print("Add accommodation complete.");
 
                                       String url2 =
                                           "http://127.0.0.1:8000/add-new-proof-establishment/";
@@ -1733,7 +1733,7 @@ class _AccommPageState extends State<AccommPage> {
                                       Navigator.pop(context);
                                     }
                                   } else {
-                                    print("Not an owner");
+                                    print("Not an owner!");
                                   }
                                 },
                                 style: ElevatedButton.styleFrom(
