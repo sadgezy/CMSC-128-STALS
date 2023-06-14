@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stals_frontend/components/verification_banner.dart';
 import 'package:stals_frontend/screens/user_profile.dart';
 import '../../classes.dart';
 import '../../UI_parameters.dart' as UIParameter;
@@ -193,9 +194,9 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
     print(isRejected);
 
     if (!isVerified && !isRejected) {
-      verified = 'Your account’s verification is under review. Please wait.';
+      verified = 'pending';
     } else if (!isVerified && isRejected) {
-      verified = 'Your account’s verification is rejected. Please try again.';
+      verified = 'rejected';
     } else {
       verified = '';
     }
@@ -204,24 +205,6 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
     DUMMY OBJECT
     <Object will come from database fetch later>
     */
-    var accom = AccomCardDetails(
-        "jk23fvgw23",
-        "Centtro Residences",
-        "6437e2f6fe3f89a27b315950",
-        "Example Description",
-        "assets/images/room_stock.jpg",
-        3,
-        false,
-        true);
-    var accom2 = AccomCardDetails(
-        'test1234',
-        'Casa Del Mar',
-        "6437e2f6fe3f89a27b315950",
-        'Casa Del Mar is located at Sapphire street.',
-        "assets/images/room_stock.jpg",
-        5,
-        true,
-        false);
 
     var filterTitleList = [];
     var filterValueList = [];
@@ -235,7 +218,6 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
     //     ? ''
     //     : 'Your account’s verification is under review. Please wait.';
     //: 'Your account’s verification was declined. Please resubmit your details by editing your profile';
-
 
     Color banner =
         context.watch<UserProvider>().isVerified ? Colors.green : Colors.red;
@@ -371,7 +353,8 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
               ListTile(
                 title: const Text('View Profile'),
                 onTap: () {
-                  String userId = Provider.of<UserProvider>(context, listen: false).getID;
+                  String userId =
+                      Provider.of<UserProvider>(context, listen: false).getID;
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -423,26 +406,11 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
             child: Center(
                 child: Column(children: [
           if (!context.watch<UserProvider>().isVerified)
-            Center(
-              child: MaterialBanner(
-                padding: EdgeInsets.symmetric(vertical: 5),
-                content: Center(
-                    child: Text(
-                  verified,
-                  style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.white,
-                      overflow: TextOverflow.ellipsis),
+            ConstrainedBox(
+                constraints: new BoxConstraints(maxWidth: 550),
+                child: VerificationBanner(
+                  verificationStatus: verified,
                 )),
-                backgroundColor: banner,
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: null,
-                    child: const Text(""),
-                  ),
-                ],
-              ),
-            ),
           ConstrainedBox(
               constraints: new BoxConstraints(
                 maxWidth: 550,

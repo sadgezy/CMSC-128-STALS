@@ -117,7 +117,7 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
                   decoration: BoxDecoration(
                     color: UIParameter.LIGHT_TEAL,
                   ),
-                  child: const Text('PROFILE'),
+                  child: const Text(''),
                 ),
               ),
               // ListTile(
