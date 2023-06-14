@@ -55,37 +55,46 @@ class _AdminDashBoardState extends State<AdminDashBoard> {
 
     return Scaffold(
       key: scaffoldKey,
-      appBar: AppBar(
-          backgroundColor: UIParameter.MAROON,
-          elevation: 0,
-          // hamburger icon for profile
-          // opens left drawer on tap
-          leading: IconButton(
-            icon: const Icon(Icons.menu),
-            color: UIParameter.WHITE,
-            onPressed: () {
-              if (scaffoldKey.currentState!.isDrawerOpen) {
-                //scaffoldKey.currentState!.closeDrawer();
-                //close drawer, if drawer is open
-              } else {
-                scaffoldKey.currentState!.openDrawer();
-                //open drawer, if drawer is closed
-              }
-            },
-          ),
-          actions: <Widget>[
-            Builder(
-              builder: (context) {
-                return IconButton(
-                  icon: const Icon(Icons.filter_alt),
-                  color: UIParameter.MAROON,
-                  onPressed: () {
-                    // cannot use filter if not signed-in
-                  },
-                );
-              },
-            )
-          ]),
+      appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(kToolbarHeight),
+          child: Center(
+              child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 550),
+                  child: FittedBox(
+                      child: Container(
+                    width: 550,
+                    child: AppBar(
+                        backgroundColor: UIParameter.MAROON,
+                        elevation: 0,
+                        // hamburger icon for profile
+                        // opens left drawer on tap
+                        leading: IconButton(
+                          icon: const Icon(Icons.menu),
+                          color: UIParameter.WHITE,
+                          onPressed: () {
+                            if (scaffoldKey.currentState!.isDrawerOpen) {
+                              //scaffoldKey.currentState!.closeDrawer();
+                              //close drawer, if drawer is open
+                            } else {
+                              scaffoldKey.currentState!.openDrawer();
+                              //open drawer, if drawer is closed
+                            }
+                          },
+                        ),
+                        actions: <Widget>[
+                          Builder(
+                            builder: (context) {
+                              return IconButton(
+                                icon: const Icon(Icons.filter_alt),
+                                color: UIParameter.MAROON,
+                                onPressed: () {
+                                  // cannot use filter if not signed-in
+                                },
+                              );
+                            },
+                          )
+                        ]),
+                  ))))),
       drawer: Drawer(
           child: ListView(padding: EdgeInsets.zero, children: [
         ListTile(
