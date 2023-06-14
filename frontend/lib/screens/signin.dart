@@ -17,10 +17,8 @@ class _SignInPageState extends State<SignInPage> {
   final GlobalKey<FormState> emailKey = GlobalKey<FormState>();
   final GlobalKey<FormState> passKey = GlobalKey<FormState>();
 
-  TextEditingController emailController = TextEditingController(
-      text: "NEWowner.11@gmail.com"); //TODO: remove initial values
-  TextEditingController passwordController =
-      TextEditingController(text: "NEWowner.11");
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   String user_type = "";
 
   @override
