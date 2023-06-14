@@ -142,14 +142,18 @@ class _ItemState extends State<Item> {
                       fontSize: 17.0,
                       fontWeight: FontWeight.w600,
                     ),
-                     hintStyle: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 17.0,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    hintStyle: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 17.0,
+                      fontWeight: FontWeight.w600,
+                    ),
                     contentPadding: const EdgeInsets.symmetric(
                         vertical: 10.0, horizontal: 12.0),
-                    enabledBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.white, style: BorderStyle.solid, width: 3)),
+                    enabledBorder: const UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors.white,
+                            style: BorderStyle.solid,
+                            width: 3)),
                   ), // Enable/disable editing based on isEditing flag
                   controller: maxTenantsController,
                   style: const TextStyle(
@@ -177,7 +181,11 @@ class _ItemState extends State<Item> {
                         fontSize: 17.0,
                         fontWeight: FontWeight.w600,
                       ),
-                      enabledBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.white, style: BorderStyle.solid, width: 3)),
+                      enabledBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Colors.white,
+                              style: BorderStyle.solid,
+                              width: 3)),
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 10.0, horizontal: 12.0),
                     ), // Enable/disable editing based on isEditing flag
@@ -211,7 +219,11 @@ class _ItemState extends State<Item> {
                             fontSize: 17.0,
                             fontWeight: FontWeight.w600,
                           ),
-                          enabledBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.white, style: BorderStyle.solid, width: 3)),
+                          enabledBorder: const UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Colors.white,
+                                  style: BorderStyle.solid,
+                                  width: 3)),
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 10.0, horizontal: 12.0),
                         ), // Enable/disable editing based on isEditing flag
@@ -241,7 +253,11 @@ class _ItemState extends State<Item> {
                             fontSize: 17.0,
                             fontWeight: FontWeight.w600,
                           ),
-                          enabledBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.white, style: BorderStyle.solid, width: 3)),
+                          enabledBorder: const UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Colors.white,
+                                  style: BorderStyle.solid,
+                                  width: 3)),
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 10.0, horizontal: 12.0),
                         ), // Enable/disable editing based on isEditing flag
@@ -333,47 +349,58 @@ class _ItemState extends State<Item> {
 //Changes here
 List<DropdownMenuItem<String>> get dropdownEstab {
   List<DropdownMenuItem<String>> esType = [
-    DropdownMenuItem(child: 
-                    Text(
-                      "House",
-                        style: TextStyle(
-                        fontSize: 15, // Adjust the text size as desired
-                        fontWeight: FontWeight.normal, // Customize the font weight
-                        color: Colors.grey, // Customize the text color
-                      ),
-                    ), 
-                    value: "house"),
-    DropdownMenuItem(child: Text(
-                      "Dormitory", 
-                        style: TextStyle(
-                        fontSize: 15, // Adjust the text size as desired
-                        fontWeight: FontWeight.normal, // Customize the font weight
-                        color: Colors.grey, // Customize the text color
-                      ),
-                    ), value: "dormitory"),
-    DropdownMenuItem(child: Text(
-                      "Apartment", 
-                        style: TextStyle(
-                        fontSize: 15, // Adjust the text size as desired
-                        fontWeight: FontWeight.normal, // Customize the font weight
-                        color: Colors.grey, // Customize the text color
-                      ),), value: "apartment"),
-    DropdownMenuItem(child: Text(
-                      "Transient", 
-                        style: TextStyle(
-                        fontSize: 15, // Adjust the text size as desired
-                        fontWeight: FontWeight.normal, // Customize the font weight
-                        color: Colors.grey, // Customize the text color
-                      ),), value: "transient"),
-    DropdownMenuItem(child: Text(
-                      "Hotel", 
-                        style: TextStyle(
-                        fontSize: 15, // Adjust the text size as desired
-                        fontWeight: FontWeight.normal, // Customize the font weight
-                        color: Colors.grey, // Customize the text color
-                      ),), value: "hotel"),
+    DropdownMenuItem(
+        child: Text(
+          "House",
+          style: TextStyle(
+            fontSize: 15, // Adjust the text size as desired
+            fontWeight: FontWeight.normal, // Customize the font weight
+            color: Colors.grey, // Customize the text color
+          ),
+        ),
+        value: "house"),
+    DropdownMenuItem(
+        child: Text(
+          "Dormitory",
+          style: TextStyle(
+            fontSize: 15, // Adjust the text size as desired
+            fontWeight: FontWeight.normal, // Customize the font weight
+            color: Colors.grey, // Customize the text color
+          ),
+        ),
+        value: "dormitory"),
+    DropdownMenuItem(
+        child: Text(
+          "Apartment",
+          style: TextStyle(
+            fontSize: 15, // Adjust the text size as desired
+            fontWeight: FontWeight.normal, // Customize the font weight
+            color: Colors.grey, // Customize the text color
+          ),
+        ),
+        value: "apartment"),
+    DropdownMenuItem(
+        child: Text(
+          "Transient",
+          style: TextStyle(
+            fontSize: 15, // Adjust the text size as desired
+            fontWeight: FontWeight.normal, // Customize the font weight
+            color: Colors.grey, // Customize the text color
+          ),
+        ),
+        value: "transient"),
+    DropdownMenuItem(
+        child: Text(
+          "Hotel",
+          style: TextStyle(
+            fontSize: 15, // Adjust the text size as desired
+            fontWeight: FontWeight.normal, // Customize the font weight
+            color: Colors.grey, // Customize the text color
+          ),
+        ),
+        value: "hotel"),
   ];
-  
+
   return esType;
 }
 
@@ -595,39 +622,46 @@ class _EditAccommState extends State<EditAccomm> {
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            ElevatedButton(
+                                    children: [
+                                      ElevatedButton(
                                           style: ElevatedButton.styleFrom(
                                             minimumSize: const Size(150, 50),
                                             maximumSize: const Size(150, 50),
                                             elevation: 0,
                                             backgroundColor:
-                                                const Color.fromARGB(255, 25, 83, 95),
+                                                const Color.fromARGB(
+                                                    255, 25, 83, 95),
                                             shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(10),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
                                             ),
                                           ),
                                           onPressed: () {
                                             // _chooseImage();
                                           },
-                                          child: const Text("Upload image")
-                                        ),
-                                       ElevatedButton(
+                                          child: const Text("Upload image")),
+                                      ElevatedButton(
                                         onPressed: () async {
                                           //on button pushed it saves the editted details and routes back the owned accoms page
                                           //setState(() {});
-                                          if (_newEstablishmentNameController.text == "") {
-                                            _newEstablishmentNameController.text =
-                                                responseData['name'];
-                                          }
-                                          if (_newEstablishmentLocationController.text ==
+                                          if (_newEstablishmentNameController
+                                                  .text ==
                                               "") {
-                                            _newEstablishmentLocationController.text =
+                                            _newEstablishmentNameController
+                                                .text = responseData['name'];
+                                          }
+                                          if (_newEstablishmentLocationController
+                                                  .text ==
+                                              "") {
+                                            _newEstablishmentLocationController
+                                                    .text =
                                                 responseData['location_exact'];
                                           }
-                                          if (_newEstablishmentDescriptionController.text ==
+                                          if (_newEstablishmentDescriptionController
+                                                  .text ==
                                               "") {
-                                            _newEstablishmentDescriptionController.text =
+                                            _newEstablishmentDescriptionController
+                                                    .text =
                                                 responseData['description'];
                                           }
                                           ;
@@ -635,44 +669,60 @@ class _EditAccommState extends State<EditAccomm> {
                                               "http://127.0.0.1:8000/edit-establishment/" +
                                                   id +
                                                   "/";
-                                          final Map<String, dynamic> requestBody = {
+                                          final Map<String, dynamic>
+                                              requestBody = {
                                             "owner": owner_id,
-                                            "name": _newEstablishmentNameController.text,
+                                            "name":
+                                                _newEstablishmentNameController
+                                                    .text,
                                             "location_exact":
-                                                _newEstablishmentLocationController.text,
+                                                _newEstablishmentLocationController
+                                                    .text,
                                             "location_approx":
                                                 responseData['location_approx'],
-                                            "establishment_type":
-                                                responseData['establishment_type'],
-                                            "tenant_type": responseData['tenant_type'],
+                                            "establishment_type": responseData[
+                                                'establishment_type'],
+                                            "tenant_type":
+                                                responseData['tenant_type'],
                                             "utilities": [],
                                             "description":
-                                                _newEstablishmentDescriptionController.text,
+                                                _newEstablishmentDescriptionController
+                                                    .text,
                                             "photos": [],
-                                            "proof_type": responseData['proof_type'],
-                                            "proof_number": responseData['proof_number'],
-                                            "loc_picture": responseData['loc_picture'],
-                                            "proof_picture": responseData['loc_picture'],
+                                            "proof_type":
+                                                responseData['proof_type'],
+                                            "proof_number":
+                                                responseData['proof_number'],
+                                            "loc_picture":
+                                                responseData['loc_picture'],
+                                            "proof_picture":
+                                                responseData['loc_picture'],
                                             "reviews": responseData['reviews'],
-                                            "verified": responseData['verified'],
-                                            "archived": responseData['archived'],
-                                            "accommodations": responseData['accommodations']
+                                            "verified":
+                                                responseData['verified'],
+                                            "archived":
+                                                responseData['archived'],
+                                            "accommodations":
+                                                responseData['accommodations']
                                           };
                                           final headers = {
                                             'Content-Type': 'application/json',
                                           };
-                                          final response = await http.put(Uri.parse(url),
+                                          final response = await http.put(
+                                              Uri.parse(url),
                                               headers: headers,
                                               body: json.encode(requestBody));
                                           // final decodedResponse = json.decode(response.body);
                                           // Navigator.pop(context);
-                                          Navigator.pushNamed(context, '/view_owned_accomms');
+                                          Navigator.pushNamed(
+                                              context, '/view_owned_accomms');
                                         },
                                         style: ElevatedButton.styleFrom(
                                             shape: const CircleBorder(),
                                             backgroundColor: Colors.white,
                                             foregroundColor:
-                                                const Color.fromARGB(255, 25, 83, 95)),
+                                                const Color.fromARGB(
+                                                    255, 25, 83, 95)),
                                         child: const Icon(
                                           Icons.save_as,
                                           size: 20,
@@ -693,30 +743,32 @@ class _EditAccommState extends State<EditAccomm> {
                         //Reviews
                         Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 30),
-                            child: Column(
-                              children: [
-                        Row(
-                            //optional
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                            child: Column(children: [
+                              Row(
+                                //optional
                                 children: [
-                                   SizedBox(
-                                      height: 50,
-                                      width: 200,
-                                      child: TextFormField(
-                                        controller: _newEstablishmentNameController,
-                                        decoration: InputDecoration(
-                                            hintText: response_Name,
-                                            //label text should be the value before editting
-                                            labelText: 'Edit Establishment Name'),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        height: 50,
+                                        width: 200,
+                                        child: TextFormField(
+                                          controller:
+                                              _newEstablishmentNameController,
+                                          decoration: InputDecoration(
+                                              hintText: response_Name,
+                                              //label text should be the value before editting
+                                              labelText:
+                                                  'Edit Establishment Name'),
+                                        ),
                                       ),
-                                    ),
-                                  const SizedBox(height: 5),
-                                  SizedBox(
-                                      height: 45,
-                                      width: 150,
-                                      child:  Row(
+                                      const SizedBox(height: 5),
+                                      SizedBox(
+                                        height: 45,
+                                        width: 150,
+                                        child: Row(
                                           children: <Widget>[
                                             const SizedBox(
                                               width: 5,
@@ -731,162 +783,167 @@ class _EditAccommState extends State<EditAccomm> {
                                                 child: DropdownButton(
                                                   value: selectedValueEsType,
                                                   items: dropdownEstab,
-                                                  onChanged: (String? newEstab) {
-
-                                                  },
+                                                  onChanged:
+                                                      (String? newEstab) {},
                                                 )),
                                           ],
                                         ),
                                       ),
                                     ],
                                   ),
-                            ],
-                          ),
-                          
-                        Row(
-                          //optional
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              width: 35,
-                            ),
-                            const SizedBox(
-                              width: 35,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        const Divider(
-                          color: Colors.black,
-                        ),
+                                ],
+                              ),
 
-                        //Contact Information Box
-                        Column(
-                          children: [
-                            const SizedBox(
-                              height: 3,
-                            ),
-                            //Profile icon and name of owner
-                            Row( 
-                              children: <Widget>[
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                const CircleAvatar(
-                                  radius: 10,
-                                  backgroundImage: AssetImage(
-                                      "assets/images/room_stock.jpg"),
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  username,
-                                  style: const TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xff1F2421)),
-                                ),
-                                const Text(
-                                  " owns this place",
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      color: Color(0xff1F2421)),
-                                )
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ), 
-                            Row(
-                              children: <Widget>[
-                                const SizedBox(
-                                  width: 9,
-                                ),
-                                const Icon(
-                                  Icons.phone_in_talk_rounded,
-                                  color: Color(0xff0B7A75),
-                                  size: 20,
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  response_phoneNo,
-                                  style: const TextStyle(
-                                    fontSize: 15,
-                                    color: Color(0xff1F2421),
+                              Row(
+                                //optional
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                    width: 35,
                                   ),
-                                ),
-                              ],
-                            ),
-                            //Location Details
+                                  const SizedBox(
+                                    width: 35,
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              const Divider(
+                                color: Colors.black,
+                              ),
 
-                            Row(
-                              children: [
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                const Icon(
-                                  Icons.location_pin,
-                                  color: Color(0xff0B7A75),
-                                  size: 25,
-                                ),
-                                SizedBox(
-                                  height: 50,
-                                  width: 350,
-                                  child: TextFormField(
-                                    controller:
-                                        _newEstablishmentLocationController,
-                                    decoration: InputDecoration(
-                                        hintText: response_Address,
-                                        labelText: 'Edit Location Details'),
+                              //Contact Information Box
+                              Column(
+                                children: [
+                                  const SizedBox(
+                                    height: 3,
                                   ),
-                                ),
-                              ],
-                            ),
-                            //Contact Info
-                          
-                            //Changes here
-                            //Establishment Type
-                            //Tenant Type
-                            Row(
-                              children: <Widget>[
-                                const SizedBox(
-                                  width: 8,
-                                ),
-                                const Icon(
-                                  Icons.room_preferences_outlined,
-                                  color: Color(0xff0B7A75),
-                                  size: 20,
-                                ),
-                                Padding(
-                                    padding: EdgeInsets.all(1),
-                                    child: DropdownButton(
-                                      value: selectedValueTenant,
-                                      items: dropdownTenant,
-                                      onChanged: (String? newTenant) {
-                                        setState(() {
-                                          selectedValueTenant = newTenant!;
-                                        });
-                                      },
-                                    )),
-                              ],
-                            ),
-                          ],
-                        )])),
-                        
+                                  //Profile icon and name of owner
+                                  Row(
+                                    children: <Widget>[
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      const CircleAvatar(
+                                        radius: 10,
+                                        backgroundImage: AssetImage(
+                                            "assets/images/room_stock.jpg"),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        username,
+                                        style: const TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color(0xff1F2421)),
+                                      ),
+                                      const Text(
+                                        " owns this place",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            color: Color(0xff1F2421)),
+                                      )
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      const SizedBox(
+                                        width: 9,
+                                      ),
+                                      const Icon(
+                                        Icons.phone_in_talk_rounded,
+                                        color: Color(0xff0B7A75),
+                                        size: 20,
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        response_phoneNo,
+                                        style: const TextStyle(
+                                          fontSize: 15,
+                                          color: Color(0xff1F2421),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  //Location Details
+
+                                  Row(
+                                    children: [
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      const Icon(
+                                        Icons.location_pin,
+                                        color: Color(0xff0B7A75),
+                                        size: 25,
+                                      ),
+                                      SizedBox(
+                                        height: 50,
+                                        width: 350,
+                                        child: TextFormField(
+                                          controller:
+                                              _newEstablishmentLocationController,
+                                          decoration: InputDecoration(
+                                              hintText: response_Address,
+                                              labelText:
+                                                  'Edit Location Details'),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  //Contact Info
+
+                                  //Changes here
+                                  //Establishment Type
+                                  //Tenant Type
+                                  Row(
+                                    children: <Widget>[
+                                      const SizedBox(
+                                        width: 8,
+                                      ),
+                                      const Icon(
+                                        Icons.room_preferences_outlined,
+                                        color: Color(0xff0B7A75),
+                                        size: 20,
+                                      ),
+                                      Padding(
+                                          padding: EdgeInsets.all(1),
+                                          child: DropdownButton(
+                                            value: selectedValueTenant,
+                                            items: dropdownTenant,
+                                            onChanged: (String? newTenant) {
+                                              setState(() {
+                                                selectedValueTenant =
+                                                    newTenant!;
+                                              });
+                                            },
+                                          )),
+                                    ],
+                                  ),
+                                ],
+                              )
+                            ])),
+
                         //end of Owner Information
-
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        const Divider(
-                          color: Colors.black,
-                        ),
+                        Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 30),
+                            child: Column(children: [
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              const Divider(
+                                color: Colors.black,
+                              ),
+                            ])),
 
                         //Cards information
                         //Alternative Cards
@@ -927,14 +984,16 @@ class _EditAccommState extends State<EditAccomm> {
                           ],
                         ),
                         //End of Cards
-
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        const Divider(
-                          color: Colors.black,
-                        ),
-
+                        Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 30),
+                            child: Column(children: [
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              const Divider(
+                                color: Colors.black,
+                              ),
+                            ])),
                         //Description
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
