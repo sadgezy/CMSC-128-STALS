@@ -44,24 +44,20 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
 
   Future<void> disapproveAccommodation(String id) async {
     print(id);
-    
+
     final response = await http.put(
       Uri.parse('http://127.0.0.1:8000/archive-establishment/$id/'),
     );
 
     String url2 = "http://127.0.0.1:8000/set-reject-establishment/";
-      final response2 =
-          await json.decode((await http.post(Uri.parse(url2), body: {
-        '_id': id,
-        'rejected': "True"
-      }))
-              .body);
+    final response2 = await json.decode((await http
+            .post(Uri.parse(url2), body: {'_id': id, 'rejected': "True"}))
+        .body);
 
     if (response.statusCode != 200) {
       throw Exception('Failed to archive accommodation');
     }
   }
-
 
   Future<List<AccomCardDetails>> fetchPendingAccommodations() async {
     final response = await http
@@ -129,39 +125,45 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
                   child: InkWell(
                     onTap: () {
                       Navigator.pushNamed(context, '/admin/verify_accomm',
-                            arguments: details.ID);
+                          arguments: details.ID);
                     },
                     child: PendingAccomCard(
                       accomName: details.name,
                       ownerName: details.name,
                       verified: details.verified,
                       ID: details.ID,
-                    onApproved: () async {
-                      try {
-                        await approveAccommodation(details.ID);
-                        print("Approved accommodation with ID: ${details.ID}");
-                        // Refresh the list of pending and approved accommodations
-                        setState(() {
-                          _accommodationsPendingFuture = fetchPendingAccommodations();
-                          _accommodationsFuture = fetchApprovedAccommodations();
-                        });
-                      } catch (e) {
-                        print("Error approving accommodation: $e");
-                      }
-                    },
-                    onDisapproved: () async {
-                      try {
-                        await disapproveAccommodation(details.ID);
-                        print("Disapproved and archived accommodation with ID: ${details.ID}");
-                        // Refresh the list of pending and approved accommodations
-                        setState(() {
-                          _accommodationsPendingFuture = fetchPendingAccommodations();
-                          _accommodationsFuture = fetchApprovedAccommodations();
-                        });
-                      } catch (e) {
-                        print("Error disapproving accommodation: $e");
-                      }
-                    },
+                      onApproved: () async {
+                        try {
+                          await approveAccommodation(details.ID);
+                          print(
+                              "Approved accommodation with ID: ${details.ID}");
+                          // Refresh the list of pending and approved accommodations
+                          setState(() {
+                            _accommodationsPendingFuture =
+                                fetchPendingAccommodations();
+                            _accommodationsFuture =
+                                fetchApprovedAccommodations();
+                          });
+                        } catch (e) {
+                          print("Error approving accommodation: $e");
+                        }
+                      },
+                      onDisapproved: () async {
+                        try {
+                          await disapproveAccommodation(details.ID);
+                          print(
+                              "Disapproved and archived accommodation with ID: ${details.ID}");
+                          // Refresh the list of pending and approved accommodations
+                          setState(() {
+                            _accommodationsPendingFuture =
+                                fetchPendingAccommodations();
+                            _accommodationsFuture =
+                                fetchApprovedAccommodations();
+                          });
+                        } catch (e) {
+                          print("Error disapproving accommodation: $e");
+                        }
+                      },
                     ),
                   ),
                 );
@@ -173,14 +175,12 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   children: [
-                    const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 20)),
+                    const Padding(padding: EdgeInsets.symmetric(vertical: 20)),
                     Image.asset(
                       'assets/images/no_pending.png',
                       height: 70,
                     ),
-                    const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10)),
+                    const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
                     Text("No Pending Accommodations")
                   ],
                 ),
@@ -194,65 +194,60 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
       },
     );
 
-
-  Widget approvedAccomms = FutureBuilder<List<AccomCardDetails>>(
-    future: _accommodationsFuture,
-    builder: (context, snapshot) {
-      if (snapshot.hasData) {
-        if (snapshot.data!.length > 0) {
-          return Column(
-            children: [
-              const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 5)),
-              const Padding(
+    Widget approvedAccomms = FutureBuilder<List<AccomCardDetails>>(
+      future: _accommodationsFuture,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          if (snapshot.data!.length > 0) {
+            return Column(
+              children: [
+                const Padding(padding: EdgeInsets.symmetric(vertical: 5)),
+                const Padding(
                   padding: EdgeInsets.only(left: 10),
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: Text("Approved", style: TextStyle(fontSize: 18)),
                   ),
+                ),
+                const Padding(padding: EdgeInsets.symmetric(vertical: 7)),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    AccomCardDetails details = snapshot.data![index];
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 7),
+                      child: AccomCard(details: details),
+                    );
+                  },
+                ),
+              ],
+            );
+          } else {
+            return Center(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  children: [
+                    const Padding(padding: EdgeInsets.symmetric(vertical: 20)),
+                    Image.asset(
+                      'assets/images/no_pending.png',
+                      height: 70,
+                    ),
+                    const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+                    Text("No Approved Accommodations"),
+                  ],
+                ),
               ),
-              const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 7)),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: snapshot.data!.length,
-                itemBuilder: (context, index) {
-                  AccomCardDetails details = snapshot.data![index];
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 7),
-                    child: AccomCard(details: details),
-                  );
-                },
-              ),
-            ],
-          );
-        } else {
-          return Center(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                children: [
-                  const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 20)),
-                  Image.asset(
-                    'assets/images/no_pending.png',
-                    height: 70,
-                  ),
-                  const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10)),
-                  Text("No Approved Accommodations"),
-                ],
-              ),
-            ),
-          );
+            );
+          }
+        } else if (snapshot.hasError) {
+          return Text("${snapshot.error}");
         }
-      } else if (snapshot.hasError) {
-        return Text("${snapshot.error}");
-      }
-      return CircularProgressIndicator();
-    },
-  );
+        return CircularProgressIndicator();
+      },
+    );
 
     FutureBuilder<List<AccomCardDetails>>(
       future: _accommodationsPendingFuture,
@@ -277,7 +272,8 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
                       print("Approved accommodation with ID: ${details.ID}");
                       // Refresh the list of pending and approved accommodations
                       setState(() {
-                        _accommodationsPendingFuture = fetchPendingAccommodations();
+                        _accommodationsPendingFuture =
+                            fetchPendingAccommodations();
                         _accommodationsFuture = fetchApprovedAccommodations();
                       });
                     } catch (e) {
@@ -287,10 +283,12 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
                   onDisapproved: () async {
                     try {
                       await disapproveAccommodation(details.ID);
-                      print("Disapproved and archived accommodation with ID: ${details.ID}");
+                      print(
+                          "Disapproved and archived accommodation with ID: ${details.ID}");
                       // Refresh the list of pending and approved accommodations
                       setState(() {
-                        _accommodationsPendingFuture = fetchPendingAccommodations();
+                        _accommodationsPendingFuture =
+                            fetchPendingAccommodations();
                         _accommodationsFuture = fetchApprovedAccommodations();
                       });
                     } catch (e) {
@@ -331,7 +329,8 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
                       print("Approved accommodation with ID: ${details.ID}");
                       // Refresh the list of pending and approved accommodations
                       setState(() {
-                        _accommodationsPendingFuture = fetchPendingAccommodations();
+                        _accommodationsPendingFuture =
+                            fetchPendingAccommodations();
                         _accommodationsFuture = fetchApprovedAccommodations();
                       });
                     } catch (e) {
@@ -341,10 +340,12 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
                   onDisapproved: () async {
                     try {
                       await disapproveAccommodation(details.ID);
-                      print("Disapproved and archived accommodation with ID: ${details.ID}");
+                      print(
+                          "Disapproved and archived accommodation with ID: ${details.ID}");
                       // Refresh the list of pending and approved accommodations
                       setState(() {
-                        _accommodationsPendingFuture = fetchPendingAccommodations();
+                        _accommodationsPendingFuture =
+                            fetchPendingAccommodations();
                         _accommodationsFuture = fetchApprovedAccommodations();
                       });
                     } catch (e) {
@@ -364,15 +365,16 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
 
     // see code below for when there are no pending and archived accommodations
     return Scaffold(
-      
-      body: SingleChildScrollView(
+        body: SingleChildScrollView(
+            child: Center(
+      child: ConstrainedBox(
+        constraints: new BoxConstraints(maxWidth: 550),
         child: Column(
           children: [
             Container(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-              color: UIParameter.WHITE,
               child: SingleChildScrollView(
                 child: Column(children: [
                   pendingAccomms,
@@ -394,6 +396,6 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
           ],
         ),
       ),
-    );
+    )));
   }
 }
