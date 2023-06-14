@@ -228,9 +228,14 @@ def get_one_user_using_id(request, pk):
 @api_view(['GET'])
 def view_all_establishment(request):
     establishments = Establishment.objects.all()
-    serializer = EstablishmentSerializer(establishments, many=True)
+    serializer = EstablishmentWithoutImagesSerializer(establishments, many=True)
     return Response(serializer.data)
 
+@api_view(['POST'])
+def get_loc_picture(request):
+    establishments = Establishment.objects.get(pk=ObjectId(request.data['_id']))
+    serializer = EstablishmentLocPictureSerializer(establishments)
+    return Response(serializer.data)
 
 @api_view(['GET'])
 def view_establishment(request, pk):

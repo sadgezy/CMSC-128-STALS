@@ -332,7 +332,7 @@ class _UnregisteredHomepageState extends State<UnregisteredHomepage> {
         body: SingleChildScrollView(
             child: Center(
                 child: ConstrainedBox(
-                    constraints: new BoxConstraints(maxWidth: 550),
+                    constraints: new BoxConstraints(maxWidth: 550,),
                     child: FittedBox(
                       child: Column(
                         children: [
@@ -368,17 +368,24 @@ class _UnregisteredHomepageState extends State<UnregisteredHomepage> {
                                             horizontal: 20),
                                         child: Column(
                                           children: [
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.waiting)
+                                              CircularProgressIndicator(),
                                             const Padding(
                                                 padding: EdgeInsets.symmetric(
                                                     vertical: 20)),
-                                            Image.asset(
-                                              'assets/images/no_archived.png',
-                                              height: 70,
-                                            ),
-                                            const Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    vertical: 10)),
-                                            Text(
+                                            if (snapshot.connectionState !=
+                                                ConnectionState.waiting)
+                                              Image.asset(
+                                                'assets/images/no_archived.png',
+                                                height: 70,
+                                              ),
+                                            if (snapshot.connectionState !=
+                                                ConnectionState.waiting)
+                                              const Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 10)),
+                                            const Text(
                                                 "No Accommodations Available! ")
                                           ],
                                         ),
@@ -406,7 +413,6 @@ class _UnregisteredHomepageState extends State<UnregisteredHomepage> {
                                             accommodation["name"],
                                             accommodation["owner"],
                                             accommodation["description"],
-                                            accommodation["loc_picture"],
                                             4.0,
                                             accommodation["archived"],
                                             accommodation["verified"])),

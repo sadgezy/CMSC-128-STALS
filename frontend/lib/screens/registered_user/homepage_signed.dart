@@ -204,21 +204,13 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
     DUMMY OBJECT
     <Object will come from database fetch later>
     */
-    var accom = AccomCardDetails(
-        "jk23fvgw23",
-        "Centtro Residences",
-        "6437e2f6fe3f89a27b315950",
-        "Example Description",
-        "assets/images/room_stock.jpg",
-        3,
-        false,
-        true);
+    var accom = AccomCardDetails("jk23fvgw23", "Centtro Residences",
+        "6437e2f6fe3f89a27b315950", "Example Description", 3, false, true);
     var accom2 = AccomCardDetails(
         'test1234',
         'Casa Del Mar',
         "6437e2f6fe3f89a27b315950",
         'Casa Del Mar is located at Sapphire street.',
-        "assets/images/room_stock.jpg",
         5,
         true,
         false);
@@ -235,7 +227,6 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
     //     ? ''
     //     : 'Your account’s verification is under review. Please wait.';
     //: 'Your account’s verification was declined. Please resubmit your details by editing your profile';
-
 
     Color banner =
         context.watch<UserProvider>().isVerified ? Colors.green : Colors.red;
@@ -371,7 +362,8 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
               ListTile(
                 title: const Text('View Profile'),
                 onTap: () {
-                  String userId = Provider.of<UserProvider>(context, listen: false).getID;
+                  String userId =
+                      Provider.of<UserProvider>(context, listen: false).getID;
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -469,6 +461,7 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                             //print(accommodations);
                             return Column(
                               children: accommodations.map((accommodation) {
+                                //print(accommodation);
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 7, horizontal: 15),
@@ -485,16 +478,25 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                                     const EdgeInsets.symmetric(horizontal: 20),
                                 child: Column(
                                   children: [
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting)
+                                      CircularProgressIndicator(),
                                     const Padding(
                                         padding:
                                             EdgeInsets.symmetric(vertical: 20)),
-                                    Image.asset(
-                                      'assets/images/no_archived.png',
-                                      height: 70,
-                                    ),
-                                    const Padding(
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 10)),
+                                    if (snapshot.connectionState !=
+                                        ConnectionState.waiting)
+                                      Image.asset(
+                                        'assets/images/no_archived.png',
+                                        height: 70,
+                                      ),
+                                    if (snapshot.connectionState !=
+                                        ConnectionState.waiting)
+                                      const Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 10)),
+                                    if (snapshot.connectionState !=
+                                        ConnectionState.waiting)
                                     const Text("No Accommodations Available! ")
                                   ],
                                 ),
@@ -522,7 +524,6 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                                     accommodation["name"],
                                     accommodation["owner"],
                                     accommodation["description"],
-                                    accommodation["loc_picture"],
                                     4.0,
                                     accommodation["archived"],
                                     accommodation["verified"])),
