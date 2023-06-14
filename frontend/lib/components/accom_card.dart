@@ -305,7 +305,7 @@ class _AccomCardState extends State<AccomCard> {
                                       )
                                     : Container(),
                                 // if admin only display rating
-                                isAdmin || user_type == "owner"
+                                user_type == "admin" || user_type == "owner" || user_type == "guest"
                                     ? Container()
                                     // ? RatingBar.builder(
                                     //     minRating: 0,
