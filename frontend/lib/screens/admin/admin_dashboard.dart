@@ -30,16 +30,15 @@ class _AdminDashBoardState extends State<AdminDashBoard> {
 
   fetchData() async {
     String url1 = "http://127.0.0.1:8000/get-num-users/";
-      final response = await http.get(Uri.parse(url1));
+    final response = await http.get(Uri.parse(url1));
 
     String url2 = "http://127.0.0.1:8000/get-total-login/";
-      final response2 = await http.get(Uri.parse(url2));
+    final response2 = await http.get(Uri.parse(url2));
 
-      setState(() {
-        responseData = json.decode(response.body)["count"]; 
-        responseData2 = json.decode(response2.body)["count"];
-      });
-      
+    setState(() {
+      responseData = json.decode(response.body)["count"];
+      responseData2 = json.decode(response2.body)["count"];
+    });
   }
 
   @override
@@ -139,59 +138,66 @@ class _AdminDashBoardState extends State<AdminDashBoard> {
         ListTile(
           title: const Text('Logout'),
           leading: const Icon(Icons.logout),
-            onTap: () async {
-              await Provider.of<TokenProvider>(context, listen: false)
-                  .removeToken("DO NOT REMOVE THIS PARAM");
-              await Provider.of<UserProvider>(context, listen: false)
-                  .removeUser("DO NOT REMOVE THIS PARAM");
+          onTap: () async {
+            await Provider.of<TokenProvider>(context, listen: false)
+                .removeToken("DO NOT REMOVE THIS PARAM");
+            await Provider.of<UserProvider>(context, listen: false)
+                .removeUser("DO NOT REMOVE THIS PARAM");
 
-              Navigator.pop(context);
-              Navigator.pop(context);
+            Navigator.pop(context);
+            Navigator.pop(context);
 
-              Navigator.pop(context);
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const UnregisteredHomepage()));
-            },
+            Navigator.pop(context);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const UnregisteredHomepage()));
+          },
         ),
       ])),
       body: SingleChildScrollView(
-          child: Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              padding: const EdgeInsets.all(20),
-              color: UIParameter.WHITE,
-              child: Center(
-                  child: Column(children: [
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: RichText(
-                      text: const TextSpan(
-                          text: 'Hello, ',
-                          style: TextStyle(
-                            fontSize: 36,
-                            color: Colors.black,
-                          ),
-                          children: <TextSpan>[
-                        TextSpan(
-                            text: 'Admin',
-                            style: TextStyle(fontWeight: FontWeight.bold)),
-                        TextSpan(text: "!"),
-                      ])),
-                ),
-                const SizedBox(height: 20),
-                StatCard(
-                    title: "Registered Users",
-                    icon: Icons.person_outline_sharp,
-                    value: responseData),
-                const SizedBox(height: 10),
-                StatCard(
-                    title: "Total Logins", icon: Icons.bar_chart, value: responseData2),
-                const SizedBox(
-                  height: 10,
-                ),
-              ])))),
+          child: Center(
+              child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 550),
+        child: FittedBox(
+            child: Container(
+                height: MediaQuery.of(context).size.height,
+                width: 550,
+                padding: const EdgeInsets.all(20),
+                color: UIParameter.WHITE,
+                child: Center(
+                    child: Column(children: [
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: RichText(
+                        text: const TextSpan(
+                            text: 'Hello, ',
+                            style: TextStyle(
+                              fontSize: 36,
+                              color: Colors.black,
+                            ),
+                            children: <TextSpan>[
+                          TextSpan(
+                              text: 'Admin',
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          TextSpan(text: "!"),
+                        ])),
+                  ),
+                  const SizedBox(height: 20),
+                  StatCard(
+                      title: "Registered Users",
+                      icon: Icons.person_outline_sharp,
+                      value: responseData),
+                  const SizedBox(height: 10),
+                  StatCard(
+                      title: "Total Logins",
+                      icon: Icons.bar_chart,
+                      value: responseData2),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ])))),
+      ))),
     );
   }
 }
@@ -212,19 +218,19 @@ class _StatCardState extends State<StatCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: (MediaQuery.of(context).size.width),
+      width: 550,
       height: 100,
       color: UIParameter.LIGHT_TEAL,
       child: Row(children: [
         SizedBox(
-            width: (MediaQuery.of(context).size.width - 40) / 3,
+            width: (550 - 40) / 3,
             child: Icon(
               widget.icon,
               size: 50,
               color: UIParameter.WHITE,
             )),
         SizedBox(
-            width: (MediaQuery.of(context).size.width - 40) * 2 / 3,
+            width: (550 - 40) * 2 / 3,
             child: Align(
                 alignment: Alignment.center,
                 child: Column(
