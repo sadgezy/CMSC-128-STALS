@@ -661,6 +661,13 @@ def view_all_users(request):
 
 @api_view(['GET'])
 # @permission_classes([IsAuthenticated])
+def view_all_users_verification_status(request):
+    user = User.objects.all()
+    serializer = userVerifiedStatusSerializer(user, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+# @permission_classes([IsAuthenticated])
 def view_all_verified_users(request):                                         
 
     user = User.objects.all()

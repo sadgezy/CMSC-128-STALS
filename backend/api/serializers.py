@@ -82,6 +82,11 @@ class userWithoutImageSerializer(serializers.ModelSerializer):
         model = User
         exclude = ('id_picture',)
 
+class userVerifiedStatusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('_id', 'verified',)
+
 class LimitedUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
