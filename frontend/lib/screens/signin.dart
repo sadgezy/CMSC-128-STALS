@@ -16,6 +16,7 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends State<SignInPage> {
   final GlobalKey<FormState> emailKey = GlobalKey<FormState>();
   final GlobalKey<FormState> passKey = GlobalKey<FormState>();
+
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   String user_type = "";
@@ -98,7 +99,7 @@ class _SignInPageState extends State<SignInPage> {
                 response2[0]["user_type"],
                 response2[0]["verified"],
                 response2[0]["rejected"]);
-            
+
             String url3 = "http://127.0.0.1:8000/add-login-count/";
             final response3 = await http.get(Uri.parse(url3));
           } else {
@@ -215,16 +216,20 @@ class _SignInPageState extends State<SignInPage> {
                               ),
                             ),
                           ),
-                          ListView(
-                            shrinkWrap: true,
-                            padding:
-                                const EdgeInsets.only(left: 40.0, right: 40.0),
-                            children: <Widget>[
-                              // Image.asset('assets/images/stals_logo.png', fit: BoxFit.fill),
-                              const Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 10)),
-                              loginFields
-                            ],
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 40),
+                            child: ListView(
+                              shrinkWrap: true,
+                              padding: const EdgeInsets.only(
+                                  left: 40.0, right: 40.0),
+                              children: <Widget>[
+                                // Image.asset('assets/images/stals_logo.png', fit: BoxFit.fill),
+                                const Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 10)),
+                                loginFields
+                              ],
+                            ),
                           ),
                         ],
                       ))
