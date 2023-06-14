@@ -10,6 +10,7 @@ urlpatterns = [
     path('admin-details/', views.getadmindetails),
     path('user-details/', views.getuserdetails),
     path('get-one-user/', views.get_one_user),
+    path('resubmit-verification-data/<str:pk>/', views.resubmit_verification_data),
     path('review-details/', views.getreviewdetails),
     path('delete-review/<str:pk>/', views.admindeletereview),
     path('ticket-details/', views.getticketdetails),

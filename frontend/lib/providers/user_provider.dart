@@ -95,4 +95,8 @@ class UserProvider with ChangeNotifier {
   bool get isRejected {
     return this._rejected;
   }
+
+  String get getID {
+    return this._id;
+  }
 }
