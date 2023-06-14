@@ -95,75 +95,89 @@ class _AdminDashBoardState extends State<AdminDashBoard> {
                           )
                         ]),
                   ))))),
-      drawer: Drawer(
-          child: ListView(padding: EdgeInsets.zero, children: [
-        ListTile(
-          title: const Text('Home'),
-          leading: const Icon(Icons.home),
-          onTap: () {
-            if (ModalRoute.of(context)?.settings.name != '/admin') {
-              Navigator.pushNamed(context, '/admin');
-            } else {
-              Navigator.pop(context);
-            }
-          },
-        ),
-        ListTile(
-          title: const Text('Users'),
-          leading: const Icon(Icons.account_box),
-          onTap: () {
-            if (ModalRoute.of(context)?.settings.name != '/admin/view_users') {
-              Navigator.pushNamed(context, '/admin/view_users');
-            } else {
-              Navigator.pop(context);
-            }
-          },
-        ),
-        ListTile(
-          title: const Text('Accommodations'),
-          leading: const Icon(Icons.apartment),
-          onTap: () {
-            if (ModalRoute.of(context)?.settings.name !=
-                '/admin/view_accomms') {
-              Navigator.pushNamed(context, '/admin/view_accomms');
-            } else {
-              Navigator.pop(context);
-            }
-          },
-        ),
-        ListTile(
-          title: const Text('Reports'),
-          leading: const Icon(Icons.flag),
-          onTap: () {
-            // TODO
-            if (ModalRoute.of(context)?.settings.name !=
-                '/admin/view_reports') {
-              Navigator.pushNamed(context, '/admin/view_reports');
-            } else {
-              Navigator.pop(context);
-            }
-          },
-        ),
-        ListTile(
-          title: const Text('Logout'),
-          leading: const Icon(Icons.logout),
-          onTap: () async {
-            await Provider.of<TokenProvider>(context, listen: false)
-                .removeToken("DO NOT REMOVE THIS PARAM");
-            await Provider.of<UserProvider>(context, listen: false)
-                .removeUser("DO NOT REMOVE THIS PARAM");
+      drawer: Container(
+          // child: ConstrainedBox(
+          //     constraints: const BoxConstraints(maxWidth: 550),
+          //     child: FittedBox(
+                  padding: EdgeInsets.only(left: (MediaQuery.of(context).size.width/2)-275),
+                  child: SizedBox(
+                      width: 300,
+                      child: Drawer(
+                          child: ListView(padding: EdgeInsets.zero, children: [
+                        ListTile(
+                          title: const Text('Home'),
+                          leading: const Icon(Icons.home),
+                          onTap: () {
+                            if (ModalRoute.of(context)?.settings.name !=
+                                '/admin') {
+                              Navigator.pushNamed(context, '/admin');
+                            } else {
+                              Navigator.pop(context);
+                            }
+                          },
+                        ),
+                        ListTile(
+                          title: const Text('Users'),
+                          leading: const Icon(Icons.account_box),
+                          onTap: () {
+                            if (ModalRoute.of(context)?.settings.name !=
+                                '/admin/view_users') {
+                              Navigator.pushNamed(context, '/admin/view_users');
+                            } else {
+                              Navigator.pop(context);
+                            }
+                          },
+                        ),
+                        ListTile(
+                          title: const Text('Accommodations'),
+                          leading: const Icon(Icons.apartment),
+                          onTap: () {
+                            if (ModalRoute.of(context)?.settings.name !=
+                                '/admin/view_accomms') {
+                              Navigator.pushNamed(
+                                  context, '/admin/view_accomms');
+                            } else {
+                              Navigator.pop(context);
+                            }
+                          },
+                        ),
+                        ListTile(
+                          title: const Text('Reports'),
+                          leading: const Icon(Icons.flag),
+                          onTap: () {
+                            // TODO
+                            if (ModalRoute.of(context)?.settings.name !=
+                                '/admin/view_reports') {
+                              Navigator.pushNamed(
+                                  context, '/admin/view_reports');
+                            } else {
+                              Navigator.pop(context);
+                            }
+                          },
+                        ),
+                        ListTile(
+                          title: const Text('Logout'),
+                          leading: const Icon(Icons.logout),
+                          onTap: () async {
+                            await Provider.of<TokenProvider>(context,
+                                    listen: false)
+                                .removeToken("DO NOT REMOVE THIS PARAM");
+                            await Provider.of<UserProvider>(context,
+                                    listen: false)
+                                .removeUser("DO NOT REMOVE THIS PARAM");
 
-            Navigator.pop(context);
-            Navigator.pop(context);
+                            Navigator.pop(context);
+                            Navigator.pop(context);
 
-            Navigator.pop(context);
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const UnregisteredHomepage()));
-          },
-        ),
-      ])),
+                            Navigator.pop(context);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const UnregisteredHomepage()));
+                          },
+                        ),
+                      ])))),
       body: SingleChildScrollView(
           child: Center(
               child: ConstrainedBox(
