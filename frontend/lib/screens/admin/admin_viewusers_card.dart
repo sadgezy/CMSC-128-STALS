@@ -31,7 +31,7 @@ class _PendingUserCardState extends State<PendingUserCard> {
           .put('http://127.0.0.1:8000/archive-user/${widget.userId}/');
 
       if (response.statusCode == 200) {
-        print('User archived successfully!');
+        // print('User archived successfully!');
 
         widget.fetchUnverifiedAndUnarchivedUsers();
       } else {
@@ -48,7 +48,7 @@ class _PendingUserCardState extends State<PendingUserCard> {
           .put('http://127.0.0.1:8000/verify-user/${widget.userId}/');
 
       if (response.statusCode == 200) {
-        print('User approved successfully!');
+        // print('User approved successfully!');
 
         widget.fetchUnverifiedAndUnarchivedUsers();
       } else {
@@ -74,7 +74,7 @@ class _PendingUserCardState extends State<PendingUserCard> {
           .delete('http://127.0.0.1:8000/delete-user/${widget.userId}/');
 
       if (response_user.statusCode == 200) {
-        print('User was deleted successfully!');
+        // print('User was deleted successfully!');
 
         widget.fetchUnverifiedAndUnarchivedUsers();
       } else {
@@ -333,7 +333,7 @@ class _VerifiedUserCardState extends State<VerifiedUserCard> {
           .put('http://127.0.0.1:8000/archive-user/${widget.userId}/');
 
       if (response.statusCode == 200) {
-        print('User archived successfully!');
+        // print('User archived successfully!');
 
         widget.fetchVerifiedUsers();
       } else {
@@ -453,7 +453,7 @@ class _ArchiveUserCardState extends State<ArchiveUserCard> {
           .put('http://127.0.0.1:8000/unarchive-user/${widget.userId}/');
 
       if (response.statusCode == 200) {
-        print('User unarchived successfully!');
+        // print('User unarchived successfully!');
 
         widget.fetchArchivedUsers();
       } else {
@@ -472,7 +472,7 @@ class _ArchiveUserCardState extends State<ArchiveUserCard> {
           .delete('http://127.0.0.1:8000/delete-user/${widget.userId}/');
 
       if (response_user.statusCode == 200 && response_estab.statusCode == 200) {
-        print('User\'s owned establishment(s) was deleted successfully!');
+        // print('User\'s owned establishment(s) was deleted successfully!');
       } else {
         print('Failed to unarchived user');
       }

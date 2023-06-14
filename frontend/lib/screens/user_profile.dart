@@ -185,7 +185,7 @@ class UserProfileState extends State<UserProfile> {
                   proofPic = base64Image;
                   verificationStatus = "pending";
                 });
-                print("verification status: ${verificationStatus}"); //must be pending after resubmission
+                // print("verification status: ${verificationStatus}"); //must be pending after resubmission
                 // Send the updated verification data to the backend
                 Map<String, dynamic> updatedData = {
                   'userId': widget.userId,
@@ -196,7 +196,7 @@ class UserProfileState extends State<UserProfile> {
 
                 resubmitVerificationData(updatedData,widget.userId).then((_) {
                   // Handle successful resubmission
-                  print('Verification data resubmitted successfully');
+                  // print('Verification data resubmitted successfully');
                 }).catchError((error) {
                   // Handle error
                   print('Failed to resubmit verification data: $error');
@@ -591,7 +591,7 @@ class UserProfileState extends State<UserProfile> {
             isRejected = userData['rejected'] ?? false;
             proofPic = userData['id_picture'] ?? "";
             checkVerification();
-            print("verification status: ${verificationStatus}");
+            // print("verification status: ${verificationStatus}");
 
             // Return the original body with the updated data
             return SingleChildScrollView(

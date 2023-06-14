@@ -189,8 +189,8 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
     String verified;
     bool isVerified = context.watch<UserProvider>().isVerified;
     bool isRejected = context.watch<UserProvider>().isRejected;
-    print(isVerified);
-    print(isRejected);
+    // print(isVerified);
+    // print(isRejected);
 
     if (!isVerified && !isRejected) {
       verified = 'Your account’s verification is under review. Please wait.';
@@ -270,7 +270,7 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                       onPressed: () async {
                         // print(searchVal);
                         // print(filterTitleList);
-                        print(filterValueList);
+                        // print(filterValueList);
 
                         String url =
                             "http://127.0.0.1:8000/search-establishment/";
