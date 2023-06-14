@@ -100,6 +100,16 @@ class EstablishmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Establishment
         fields = '__all__'
+
+class EstablishmentWithoutImagesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Establishment
+        exclude = ('loc_picture', 'proof_picture',)
+
+class EstablishmentLocPictureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Establishment
+        fields = ('loc_picture',)
         
 class RoomSerializer(serializers.ModelSerializer):
     class Meta:

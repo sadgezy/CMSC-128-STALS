@@ -77,6 +77,8 @@ urlpatterns = [
 
     path('get-num-users/', views.get_num_users),
     path('get-total-login/', views.get_total_login),
-    path('add-login-count/', views.add_login)
+    path('add-login-count/', views.add_login),
+
+    path('get-loc-picture/', views.get_loc_picture),
 
  ]
