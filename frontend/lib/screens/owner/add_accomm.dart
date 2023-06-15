@@ -169,7 +169,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
         double fileSize = (bytes.lengthInBytes / (1024 * 1024));
         //print(bytes.lengthInBytes);
         //print(fileSize);
-        if (fileSize > 4) {
+        if (fileSize > 1) {
           setState(() {
             _imageFile = null;
           });
@@ -1060,7 +1060,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
                       //         ),
                       // ),
                       // const Text(
-                      //   'Only photos 4mb and below are allowed.',
+                      //   'Only photos below 1MB are allowed.',
                       //   style: TextStyle(color: Colors.red),
                       // ),
                       Padding(
@@ -1286,7 +1286,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
                         ),
                       ),
                       const Text(
-                        'Only photos 4mb and below are allowed.',
+                        'Only photos below 1MB are allowed.',
                         style: TextStyle(
                           color: Color.fromARGB(255, 25, 83, 95),
                         ),
@@ -1481,6 +1481,20 @@ class _AddAccommPageState extends State<AddAccommPage> {
     }
 
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          color: Colors.black,
+        ),
+        title: Text(
+          "",
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.white,
+      ),
       backgroundColor: const Color(0xffF0F3F5),
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(

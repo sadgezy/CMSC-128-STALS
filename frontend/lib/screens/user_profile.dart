@@ -441,7 +441,7 @@ class UserProfileState extends State<UserProfile> {
                 ),
                 const SizedBox(height: 5),
                 const Text(
-                  'Only photos 4mb and below are allowed.',
+                  'Only photos below 1MB are allowed.',
                   style: TextStyle(
                     color: const Color.fromARGB(255, 25, 83, 95),
                   ),
@@ -625,6 +625,8 @@ class UserProfileState extends State<UserProfile> {
               });
               // fullname = nameController.text;
               //TODO: reflect name change to database
+              
+
             }
           },
           style: TextButton.styleFrom(
