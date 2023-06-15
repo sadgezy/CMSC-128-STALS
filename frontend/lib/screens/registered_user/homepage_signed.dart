@@ -259,6 +259,8 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
 
     IconButton searchButton = IconButton(
         onPressed: () async {
+          getFavorites();
+          accommList.clear();
           // print(searchVal);
           // print(filterTitleList);
           // print(filterValueList);
