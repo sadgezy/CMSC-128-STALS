@@ -6,6 +6,7 @@ urlpatterns = [
     path("login/", views.login),
     path("signup/", views.signup),
     path("check/", views.check_authenticated),
+    path("get-all-user-info/", views.get_all_user_info),
 
     path('admin-details/', views.getadmindetails),
     path('user-details/', views.getuserdetails),
@@ -42,6 +43,7 @@ urlpatterns = [
     path('view-all-verified-users/', views.view_all_verified_users),
     path('view-all-unverified-users/', views.view_all_unverified_users),
     path('view-all-archived-users/', views.view_all_archived_users),
+    path('view-all-verify-status/', views.view_all_users_verification_status),
 
     path('view-all-modifUnverified-users/', views.view_all_modifUnverified_users),
     path('view-all-modifVerified-users/', views.view_all_modifVerified_users),
@@ -72,11 +74,12 @@ urlpatterns = [
     path('resolve-report/', views.resolve_ticket),
     path('delete-report/', views.delete_ticket),
 
-
     path('get-one-user-using-id/<str:pk>/', views.get_one_user_using_id),
 
     path('get-num-users/', views.get_num_users),
     path('get-total-login/', views.get_total_login),
-    path('add-login-count/', views.add_login)
+    path('add-login-count/', views.add_login),
+
+    path('get-loc-picture/', views.get_loc_picture),
 
  ]

@@ -18,10 +18,9 @@ class AccomCardDetails {
   double rating;
   bool archived;
   bool verified;
-  String loc_picture;
 
   AccomCardDetails(
-      this.ID, this.name, this.owner, this.description, this.loc_picture ,this.rating, this.archived, this.verified);
+      this.ID, this.name, this.owner, this.description, this.rating, this.archived, this.verified);
 
   getName() {
     return name;
@@ -29,10 +28,6 @@ class AccomCardDetails {
 
   getDescription() {
     return description;
-  }
-
-  getImage() {
-    return loc_picture;
   }
 
   getID() {
@@ -49,7 +44,6 @@ class AccomCardDetails {
       json['name'] ?? '',
       json['owner'] ?? '',
       json['description'] ?? '',
-      json['loc_picture'] ?? '',
       json['rating'] ?? 0.0,
       json['archived'] ?? false,
       json['verified'] ?? false,

@@ -77,6 +77,21 @@ class userSerializer(serializers.ModelSerializer):
         model = User
         fields = '__all__'
 
+class userWithoutImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        exclude = ('id_picture',)
+
+class userFavoritesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('favorites',)
+
+class userVerifiedStatusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('_id', 'verified',)
+
 class LimitedUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -100,6 +115,16 @@ class EstablishmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Establishment
         fields = '__all__'
+
+class EstablishmentWithoutImagesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Establishment
+        exclude = ('loc_picture', 'proof_picture',)
+
+class EstablishmentLocPictureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Establishment
+        fields = ('loc_picture',)
         
 class RoomSerializer(serializers.ModelSerializer):
     class Meta:

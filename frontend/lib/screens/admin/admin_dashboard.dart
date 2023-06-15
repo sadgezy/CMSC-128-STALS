@@ -147,6 +147,7 @@ class _AdminDashBoardState extends State<AdminDashBoard> {
             Navigator.pop(context);
             Navigator.pop(context);
 
+
             Navigator.pop(context);
             Navigator.push(
                 context,

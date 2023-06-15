@@ -22,15 +22,16 @@ class PDFViewScreen extends StatelessWidget {
       theme: ThemeData(primaryColor: UIParameter.MAROON, fontFamily: 'Georgia'),
       home: Scaffold(
         appBar: AppBar(
-            title: const Text("PDFavorites."),
-            backgroundColor: UIParameter.MAROON,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              color: UIParameter.WHITE,
-              onPressed: () async {
-                Navigator.pop(context);
-              },
-            )),
+          title: const Text("PDFavorites."),
+          backgroundColor: UIParameter.MAROON,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            color: Colors.black,
+          ),
+        ),
         body: PdfPreview(
           maxPageWidth: 700,
           build: (format) => _generatePdf(format),
@@ -98,7 +99,8 @@ class PDFViewScreen extends StatelessWidget {
                                           fontWeight: pw.FontWeight.bold)),
                               pw.Text(estab.exactLoc),
                               pw.Text(
-                                  estab.estabType + " for " + estab.tenantType),
+                                estab.estabType[0].toUpperCase() + estab.estabType.substring(1).toLowerCase()
+                                   + " for " +  estab.tenantType[0].toUpperCase() + estab.tenantType.substring(1).toLowerCase()),
                               // pw.Text(estab.tenantType),
                               //pw.SizedBox(height: 10),
                               //pw.Text(estab.utilities),

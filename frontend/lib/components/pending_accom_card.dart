@@ -7,6 +7,7 @@ class PendingAccomCard extends StatefulWidget {
   final String ID;
   final VoidCallback onApproved;
   final VoidCallback onDisapproved;
+  final bool canApprove;
 
   PendingAccomCard({
     Key? key,
@@ -16,6 +17,7 @@ class PendingAccomCard extends StatefulWidget {
     required this.ID,
     required this.onApproved,
     required this.onDisapproved,
+    required this.canApprove,
   }) : super(key: key);
 
   @override
@@ -29,6 +31,7 @@ class PendingAccomCard extends StatefulWidget {
       ID: json['_id'] ?? '',
       onApproved: onApprovedCallback,
       onDisapproved: onDisapprovedCallback,
+      canApprove: json['canApprove'] ?? false,
     );
   }
 }
@@ -54,7 +57,7 @@ class _PendingAccomCardState extends State<PendingAccomCard> {
                 ),
               ),
               subtitle: Text(
-                widget.ownerName,
+                "Tap to view proof",
                 style: const TextStyle(fontSize: 14),
               ),
               trailing: Row(
@@ -80,7 +83,7 @@ class _PendingAccomCardState extends State<PendingAccomCard> {
                           color: Color(0xff19535F),
                         ),
                       ),
-                      onPressed: () {widget.onApproved();},
+                      onPressed: widget.canApprove ? () {widget.onApproved();} : null,
                     ),
                   ),
                   const SizedBox(

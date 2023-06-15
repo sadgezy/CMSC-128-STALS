@@ -99,4 +99,8 @@ class UserProvider with ChangeNotifier {
   String get getID {
     return this._id;
   }
+
+  String get getEmail {
+    return this._email;
+  }
 }

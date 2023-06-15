@@ -25,6 +25,7 @@ class _UnregisteredHomepageState extends State<UnregisteredHomepage> {
   Filter accomFilter = Filter(null, null, null, null, null, null);
   String searchVal = '';
   bool fetchedAll = false;
+  bool showNotFoundText = false;
 
   @override
   void initState() {
@@ -77,6 +78,25 @@ class _UnregisteredHomepageState extends State<UnregisteredHomepage> {
       filterTitleList.add(filterRaw[i][1]);
     }
 
+    void performSearch() async {
+      String url = "http://127.0.0.1:8000/search-establishment/";
+      final response = await json.decode((await http.post(Uri.parse(url), body: {
+        'name': searchVal,
+        'location_exact': filterValueList[1] ?? "",
+        'establishment_type': filterValueList[2] ?? "",
+        'tenant_type': filterValueList[3] ?? "",
+        'price_lower': filterValueList[4] == null ? "" : "int(${filterValueList[4]})",
+        'price_upper': filterValueList[5] == null ? "" : "int(${filterValueList[5]})",
+      }))
+          .body);
+
+      setState(() {
+        accommList = response;
+        showNotFoundText = accommList.isEmpty;
+      });
+  }
+
+
     return Scaffold(
         key: scaffoldKey,
         appBar: AppBar(
@@ -108,44 +128,16 @@ class _UnregisteredHomepageState extends State<UnregisteredHomepage> {
                       /* PUT SEARCH FUNCTION HERE */
                       searchVal = value;
                     },
-                  ),
+                    onSubmitted: (value) { // Add this property
+                      performSearch();
+                    },
+                  )
                 ),
                 Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
                 Expanded(
                     flex: 2,
                     child: IconButton(
-                        onPressed: () async {
-                          // print(searchVal);
-                          // print(filterTitleList);
-                          // print(filterValueList);
-
-                          String url =
-                              "http://127.0.0.1:8000/search-establishment/";
-                          final response = await json
-                              .decode((await http.post(Uri.parse(url), body: {
-                            'name': searchVal,
-                            'location_exact': filterValueList[1] ?? "",
-                            //'location_approx': args.middleName,
-                            'establishment_type': filterValueList[2] ?? "",
-                            'tenant_type': filterValueList[3] ?? "",
-                            'price_lower': filterValueList[4] == null
-                                ? ""
-                                : "int(${filterValueList[4]})",
-                            'price_upper': filterValueList[5] == null
-                                ? ""
-                                : "int(${filterValueList[5]})",
-                            //'capacity': args.userType,
-                          }))
-                                  .body);
-                          //print(response);
-
-                          setState(() {
-                            // for (int i = 0; i < response.length; i++) {
-                            //   accommList.add(response[i]);
-                            // }
-                            accommList = response;
-                          });
-                        },
+                        onPressed: performSearch,
                         icon: const Icon(
                           Icons.search,
                           color: Color.fromARGB(255, 0, 0, 0),
@@ -332,7 +324,7 @@ class _UnregisteredHomepageState extends State<UnregisteredHomepage> {
         body: SingleChildScrollView(
             child: Center(
                 child: ConstrainedBox(
-                    constraints: new BoxConstraints(maxWidth: 550),
+                    constraints: new BoxConstraints(maxWidth: 550,),
                     child: FittedBox(
                       child: Column(
                         children: [
@@ -355,7 +347,8 @@ class _UnregisteredHomepageState extends State<UnregisteredHomepage> {
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 7, horizontal: 15),
                                           child:
-                                              AccomCard(details: accommodation),
+                                              AccomCard(details: accommodation, isFavorite: false,
+                                                  func: () {},),
                                         );
                                       }).toList(),
                                     );
@@ -368,17 +361,26 @@ class _UnregisteredHomepageState extends State<UnregisteredHomepage> {
                                             horizontal: 20),
                                         child: Column(
                                           children: [
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.waiting)
+                                              CircularProgressIndicator(),
                                             const Padding(
                                                 padding: EdgeInsets.symmetric(
                                                     vertical: 20)),
-                                            Image.asset(
-                                              'assets/images/no_archived.png',
-                                              height: 70,
-                                            ),
-                                            const Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    vertical: 10)),
-                                            Text(
+                                            if (snapshot.connectionState !=
+                                                ConnectionState.waiting)
+                                              Image.asset(
+                                                'assets/images/no_archived.png',
+                                                height: 70,
+                                              ),
+                                            if (snapshot.connectionState !=
+                                                ConnectionState.waiting)
+                                              const Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 10)),
+                                            if (snapshot.connectionState !=
+                                                ConnectionState.waiting)
+                                            const Text(
                                                 "No Accommodations Available! ")
                                           ],
                                         ),
@@ -393,7 +395,22 @@ class _UnregisteredHomepageState extends State<UnregisteredHomepage> {
                             ),
                           if (fetchedAll)
                             SingleChildScrollView(
-                              child: Column(
+                              child: showNotFoundText
+                                ? Center(
+                                  child: Column(
+                                    children: [
+                                      const Padding(
+                                          padding: EdgeInsets.symmetric(vertical: 20)),
+                                      Image.asset(
+                                        'assets/images/no_pending.png',
+                                        height: 70,
+                                      ),
+                                      const Padding(
+                                          padding: EdgeInsets.symmetric(vertical: 10)),
+                                      Text("No Accommodations Found")
+                                    ],
+                                  ),)
+                              : Column(
                                 children: accommList.map((accommodation) {
                                   //print(accommodation);
                                   //print(accommodation["name"]);
@@ -406,10 +423,10 @@ class _UnregisteredHomepageState extends State<UnregisteredHomepage> {
                                             accommodation["name"],
                                             accommodation["owner"],
                                             accommodation["description"],
-                                            accommodation["loc_picture"],
                                             4.0,
                                             accommodation["archived"],
-                                            accommodation["verified"])),
+                                            accommodation["verified"]), isFavorite: false,
+                                                  func: () {},),
                                   );
                                 }).toList(),
                               ),
