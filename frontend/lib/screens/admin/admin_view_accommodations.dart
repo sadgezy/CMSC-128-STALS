@@ -146,7 +146,7 @@ class _AdminViewAccommodationsState extends State<AdminViewAccommodations> {
               Navigator.pop(context);
               Navigator.pop(context);
 
-              Navigator.pop(context);
+              //Navigator.pop(context);
               Navigator.push(
                   context,
                   MaterialPageRoute(

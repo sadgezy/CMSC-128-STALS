@@ -27,7 +27,7 @@ class UserProfileState extends State<UserProfile> {
   String proofNum = '';
   String proofPic = '';
 
-  String _idType = ''; //proofType
+  String _idType = 'Select a proof type'; //proofType
   String _idNumber = ''; //proofNum
   XFile? _idImage;
   PlatformFile? _imageFile;
@@ -37,7 +37,10 @@ class UserProfileState extends State<UserProfile> {
 
   GlobalKey<FormState> _editNameFormKey = GlobalKey<FormState>();
   GlobalKey<FormState> _resubmitIdFormKey = GlobalKey<FormState>();
-  TextEditingController nameController = TextEditingController();
+  TextEditingController fnameController = TextEditingController();
+  TextEditingController mnameController = TextEditingController();
+  TextEditingController lnameController = TextEditingController();
+  TextEditingController suffixController = TextEditingController();
   TextEditingController idNumController = TextEditingController();
 
   bool isVerified = false;
@@ -200,6 +203,8 @@ class UserProfileState extends State<UserProfile> {
                   // Handle error
                   print('Failed to resubmit verification data: $error');
                 });
+
+                setState(() {});
               }
             }
           },
@@ -263,8 +268,13 @@ class UserProfileState extends State<UserProfile> {
                     ),
                     const SizedBox(height: 5),
                     DropdownButtonFormField(
+                      value: _idType,
                       isExpanded: true,
                       items: const [
+                        DropdownMenuItem(
+                          value: 'Select a proof type',
+                          child: Text('Select a proof type'),
+                        ),
                         DropdownMenuItem(
                           value: 'UMID',
                           child: Text('UMID'),
@@ -337,9 +347,15 @@ class UserProfileState extends State<UserProfile> {
                         if (value?.isEmpty ?? true) {
                           return 'Please select a proof type';
                         }
+
+                        if (value == "Select a proof type") {
+                          return 'Please select a proof type';
+                        }
                       }),
                       onChanged: (value) {
-                        _idType = value!;
+                        setState(() {
+                          _idType = value!;
+                        });
                       },
                     ),
                   ],
@@ -480,68 +496,6 @@ class UserProfileState extends State<UserProfile> {
       }
     }
 
-    AlertDialog editNamePopup = AlertDialog(
-      title: const Text('Edit Name'),
-      backgroundColor: const Color(0xffF0F3F5),
-      content: Form(
-        key: _editNameFormKey,
-        child: TextFormField(
-          controller: nameController,
-          decoration: InputDecoration(
-            contentPadding: const EdgeInsets.fromLTRB(25, 10, 10, 10),
-            fillColor: Colors.white,
-            filled: true,
-            border: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(18)),
-                borderSide: BorderSide(width: 0, style: BorderStyle.none)),
-            focusedErrorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(18),
-                borderSide: const BorderSide(
-                  color: Color.fromARGB(255, 175, 31, 18),
-                  width: 2,
-                )),
-            errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(18),
-                borderSide: const BorderSide(
-                  color: Color.fromARGB(255, 175, 31, 18),
-                  width: 1,
-                )),
-          ),
-          validator: ((value) {
-            if (value != null && value.trim().isEmpty) {
-              return "Name cannot be empty.";
-            }
-          }),
-        ),
-      ),
-      actions: <Widget>[
-        TextButton(
-          onPressed: () {
-            if (_editNameFormKey.currentState!.validate()) {
-              Navigator.of(context).pop();
-              fullname = nameController.text;
-              //TODO: reflect name change to database
-              
-
-            }
-          },
-          style: TextButton.styleFrom(
-            textStyle: Theme.of(context).textTheme.labelLarge,
-          ),
-          child: const Text("Save"),
-        ),
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          style: TextButton.styleFrom(
-            textStyle: Theme.of(context).textTheme.labelLarge,
-          ),
-          child: const Text("Cancel"),
-        ),
-      ],
-    );
-
     return Scaffold(
       backgroundColor: Color(0xffF0F3F5),
       // appBar: AppBar(
@@ -596,7 +550,6 @@ class UserProfileState extends State<UserProfile> {
             fullname =
                 "${userData['first_name']} ${userData['middle_initial']} ${userData['last_name']} ${userData['suffix']}";
             // "${response['first_name']} ${response['middle_initial']} ${response['last_name']} ${response['suffix']}"
-            fullname = userData['first_name'] ?? "";
             username = userData['username'] ?? "";
             email = userData['email'] ?? "";
             phone = userData['phone_no'] ?? "";
@@ -635,28 +588,6 @@ class UserProfileState extends State<UserProfile> {
                                               fontSize: 28,
                                               fontWeight: FontWeight.bold,
                                               color: Color(0xff1F2421))),
-                                      // SizedBox(
-                                      //   width: 15,
-                                      //   child: IconButton(
-                                      //     style: IconButton.styleFrom(
-                                      //       splashFactory:
-                                      //           NoSplash.splashFactory,
-                                      //     ),
-                                      //     icon: const Icon(
-                                      //       Icons.edit,
-                                      //       size: 13,
-                                      //       color: Colors.grey,
-                                      //     ),
-                                      //     onPressed: () {
-                                      //       nameController.text = fullname;
-                                      //       showDialog(
-                                      //           context: context,
-                                      //           builder:
-                                      //               (BuildContext context) =>
-                                      //                   editNamePopup);
-                                      //     },
-                                      //   ),
-                                      // )
                                     ],
                                   ),
                                   Padding(

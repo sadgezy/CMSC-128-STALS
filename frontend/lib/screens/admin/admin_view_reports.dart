@@ -169,7 +169,7 @@ class _ViewReportsPageState extends State<ViewReportsPage> {
               Navigator.pop(context);
               Navigator.pop(context);
 
-              Navigator.pop(context);
+              //Navigator.pop(context);
               Navigator.push(
                   context,
                   MaterialPageRoute(
