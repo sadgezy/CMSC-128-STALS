@@ -146,7 +146,7 @@ class _FavoritesState extends State<Favorites> {
                         children: accommodations.map((accommodation) {
                           return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 7),
-                            child: AccomCard(details: accommodation),
+                            child: AccomCard(details: accommodation, isFavorite: true,),
                           );
                         }).toList(),
                       ))));
