@@ -18,9 +18,10 @@ class AccomCard extends StatefulWidget {
     - Accom rating
   */
 
-  const AccomCard({Key? key, required this.details, required this.isFavorite}) : super(key: key);
+  const AccomCard({Key? key, required this.details, required this.isFavorite, required this.func}) : super(key: key);
   final AccomCardDetails details;
   final bool isFavorite;
+  final VoidCallback func;
 
   @override
   State<AccomCard> createState() => _AccomCardState();
@@ -34,6 +35,8 @@ class _AccomCardState extends State<AccomCard> {
   bool isFavorite = false;
   bool loading = true;
   bool checked = false;
+  bool currFavorite = false;
+  bool appliedBool = false;
 
   List<dynamic> user = [];
   String id = '';
@@ -119,6 +122,12 @@ class _AccomCardState extends State<AccomCard> {
   Widget build(BuildContext context) {
     getUserInfo();
     Future<String> imageStr = getImage();
+    if (!appliedBool) {
+      currFavorite = widget.isFavorite;
+      appliedBool = true;  
+    }
+    
+    
     return FutureBuilder(
       future: imageStr,
       builder: (context, snapshot) {
@@ -356,12 +365,15 @@ class _AccomCardState extends State<AccomCard> {
                                               onTap: () {
                                                 setState(() {
                                                   isFavorite = !isFavorite;
+                                                  currFavorite = !currFavorite;
                                                 });
                                                 addAccommodationToFavorites(
                                                     widget.details.getID());
+                                                widget.func();
+                                                //print(currFavorite);
                                               },
                                               // check if part of favorite accomms
-                                              child: widget.isFavorite
+                                              child: currFavorite
                                                   ? Icon(
                                                       Icons.favorite,
                                                       color: UIParameter.MAROON,

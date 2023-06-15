@@ -259,6 +259,8 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
 
     IconButton searchButton = IconButton(
         onPressed: () async {
+          getFavorites();
+          accommList.clear();
           // print(searchVal);
           // print(filterTitleList);
           // print(filterValueList);
@@ -509,6 +511,7 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                                                   details:
                                                       accommodations[index],
                                                   isFavorite: isFavorite,
+                                                  func: () {},
                                                 ),
                                               );
                                             }),
@@ -588,6 +591,7 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                                 accommodation["archived"],
                                 accommodation["verified"]),
                             isFavorite: isFavorite,
+                            func: () {},
                           ),
                         );
                       }).toList(),
