@@ -190,8 +190,8 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
     String verified;
     bool isVerified = context.watch<UserProvider>().isVerified;
     bool isRejected = context.watch<UserProvider>().isRejected;
-    print(isVerified);
-    print(isRejected);
+    // print(isVerified);
+    // print(isRejected);
 
     if (!isVerified && !isRejected) {
       verified = 'pending';
@@ -261,7 +261,7 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                       onPressed: () async {
                         // print(searchVal);
                         // print(filterTitleList);
-                        print(filterValueList);
+                        // print(filterValueList);
 
                         String url =
                             "http://127.0.0.1:8000/search-establishment/";
@@ -437,6 +437,7 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                             //print(accommodations);
                             return Column(
                               children: accommodations.map((accommodation) {
+                                //print(accommodation);
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 7, horizontal: 15),
@@ -453,16 +454,25 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                                     const EdgeInsets.symmetric(horizontal: 20),
                                 child: Column(
                                   children: [
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting)
+                                      CircularProgressIndicator(),
                                     const Padding(
                                         padding:
                                             EdgeInsets.symmetric(vertical: 20)),
-                                    Image.asset(
-                                      'assets/images/no_archived.png',
-                                      height: 70,
-                                    ),
-                                    const Padding(
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 10)),
+                                    if (snapshot.connectionState !=
+                                        ConnectionState.waiting)
+                                      Image.asset(
+                                        'assets/images/no_archived.png',
+                                        height: 70,
+                                      ),
+                                    if (snapshot.connectionState !=
+                                        ConnectionState.waiting)
+                                      const Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 10)),
+                                    if (snapshot.connectionState !=
+                                        ConnectionState.waiting)
                                     const Text("No Accommodations Available! ")
                                   ],
                                 ),
@@ -490,7 +500,6 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                                     accommodation["name"],
                                     accommodation["owner"],
                                     accommodation["description"],
-                                    accommodation["loc_picture"],
                                     4.0,
                                     accommodation["archived"],
                                     accommodation["verified"])),

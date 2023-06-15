@@ -131,7 +131,7 @@ def deleteuser(request, pk):
 
 @api_view(['POST'])
 def signup(request):
-    print(request.user)
+    # print(request.user)
     
     serializer = SignUpSerializer(data=request.data, many=False)
     
@@ -168,7 +168,7 @@ def login(request):
             "message": "Login Successful",
             "token": user.auth_token.key
         }
-        print("Login Successful")
+        # print("Login Successful")
 
         return Response(data=response, status=HTTPStatus.OK)
 
@@ -228,9 +228,14 @@ def get_one_user_using_id(request, pk):
 @api_view(['GET'])
 def view_all_establishment(request):
     establishments = Establishment.objects.all()
-    serializer = EstablishmentSerializer(establishments, many=True)
+    serializer = EstablishmentWithoutImagesSerializer(establishments, many=True)
     return Response(serializer.data)
 
+@api_view(['POST'])
+def get_loc_picture(request):
+    establishments = Establishment.objects.get(pk=ObjectId(request.data['_id']))
+    serializer = EstablishmentLocPictureSerializer(establishments)
+    return Response(serializer.data)
 
 @api_view(['GET'])
 def view_establishment(request, pk):
@@ -427,7 +432,7 @@ def delete_room(request, pk):
 def getticketdetails(request):
     ticket = Ticket.objects.all()
     serializer = ticketSerializer(ticket, many=True)
-    print(serializer.data)
+    # print(serializer.data)
     return Response(serializer.data)
 
 @api_view(['POST'])
@@ -567,7 +572,7 @@ def search_room(request):
 #----------------------------------------------------------------------------------------------
 @api_view(['POST'])
 def search_establishment(request):
-    print(request.data)
+    # print(request.data)
     name = request.data.get('name', None)
     location_exact = request.data.get('location_exact', None)
     location_approx = request.data.get('location_approx')
@@ -590,7 +595,7 @@ def search_establishment(request):
 
     if name:
         establishments = establishments.filter(name__icontains=name)
-    print(establishments)
+    # print(establishments)
     if location_approx:
         establishments = establishments.filter(location_approx=location_approx)
 
@@ -651,7 +656,14 @@ def search_establishment(request):
 # @permission_classes([IsAuthenticated])
 def view_all_users(request):
     user = User.objects.all()
-    serializer = userSerializer(user, many=True)
+    serializer = userWithoutImageSerializer(user, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+def view_all_users_verification_status(request):
+    user = User.objects.all()
+    serializer = userVerifiedStatusSerializer(user, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
@@ -659,7 +671,7 @@ def view_all_users(request):
 def view_all_verified_users(request):                                         
 
     user = User.objects.all()
-    serializer = userSerializer(user, many=True)
+    serializer = userWithoutImageSerializer(user, many=True)
     query = [d for d in serializer.data if d['verified'] == True]
     return Response (query)
 
@@ -668,7 +680,7 @@ def view_all_verified_users(request):
 def view_all_unverified_users(request):                                         
 
     user = User.objects.all()
-    serializer = userSerializer(user, many=True)
+    serializer = userWithoutImageSerializer(user, many=True)
     query = [d for d in serializer.data if d['verified'] == False]
     return Response (query)
 
@@ -677,7 +689,7 @@ def view_all_unverified_users(request):
 def view_all_archived_users(request):                                         
 
     user = User.objects.all()
-    serializer = userSerializer(user, many=True)
+    serializer = userWithoutImageSerializer(user, many=True)
     query = [d for d in serializer.data if d['archived'] == True]
     return Response (query)
 
@@ -685,21 +697,21 @@ def view_all_archived_users(request):
 @api_view(['GET'])
 def view_all_modifUnverified_users(request):
     user = User.objects.all()
-    serializer = userSerializer(user, many=True)
+    serializer = userWithoutImageSerializer(user, many=True)
     query = [d for d in serializer.data if d['verified'] == False and d['archived'] == False and d['user_type'] !="admin"]
     return Response(query)
 
 @api_view(['GET'])
 def view_all_modifVerified_users(request):
     user = User.objects.all()
-    serializer = userSerializer(user, many=True)
+    serializer = userWithoutImageSerializer(user, many=True)
     query = [d for d in serializer.data if d['verified'] == True and d['archived'] == False and d['user_type'] !="admin"]
     return Response(query)
 
 @api_view(['GET'])
 def view_all_modifArchived_users(request):
     user = User.objects.all()
-    serializer = userSerializer(user, many=True)
+    serializer = userWithoutImageSerializer(user, many=True)
     #query = [d for d in serializer.data if d['archived'] == True and d['verified'] == True and d['user_type'] !="admin"]
     query = [d for d in serializer.data if d['archived'] == True and d['user_type'] !="admin"]
     return Response(query)
@@ -707,7 +719,7 @@ def view_all_modifArchived_users(request):
 @api_view(['GET'])
 def view_all_un_users(request):
     user = User.objects.all()
-    serializer = userSerializer(user, many=True)
+    serializer = userWithoutImageSerializer(user, many=True)
     query = [d for d in serializer.data if d['archived'] == False and d['verified'] == False and d['user_type'] !="admin"]
     return Response(query)
 
@@ -717,7 +729,7 @@ def view_all_un_users(request):
 def view_all_verified_establishments(request):
 
     establishment = Establishment.objects.all()
-    serializer = EstablishmentSerializer(establishment, many=True)
+    serializer = EstablishmentWithoutImagesSerializer(establishment, many=True)
     query = [d for d in serializer.data if d['verified'] == True]
     return Response (query)
 
@@ -726,7 +738,7 @@ def view_all_verified_establishments(request):
 def view_all_archived_establishments(request):                                  
     
     establishment = Establishment.objects.all()
-    serializer = EstablishmentSerializer(establishment, many=True)
+    serializer = EstablishmentWithoutImagesSerializer(establishment, many=True)
     query = [d for d in serializer.data if d['archived'] == True]
     return Response (query)
 
@@ -777,8 +789,8 @@ def view_one_user(request, pk):
 def view_userOwned_establishments(request, pk):
     try:
         user = User.objects.get(pk=ObjectId(pk))
-        print('hi2')
-        print(user._id)
+        # print('hi2')
+        # print(user._id)
     except User.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND, data={"message": "User not found"})
 
@@ -861,7 +873,7 @@ def set_reject_user(request):
 @api_view(['POST'])
 # @permission_classes([IsAuthenticated])
 def set_reject_estab(request):   
-    print(request.data)
+    # print(request.data)
     try:
         estab = Establishment.objects.get(pk=ObjectId(request.data["_id"]))
 

@@ -31,7 +31,7 @@ class _PendingUserCardState extends State<PendingUserCard> {
           .put('http://127.0.0.1:8000/archive-user/${widget.userId}/');
 
       if (response.statusCode == 200) {
-        print('User archived successfully!');
+        // print('User archived successfully!');
 
         widget.fetchUnverifiedAndUnarchivedUsers();
       } else {
@@ -48,7 +48,7 @@ class _PendingUserCardState extends State<PendingUserCard> {
           .put('http://127.0.0.1:8000/verify-user/${widget.userId}/');
 
       if (response.statusCode == 200) {
-        print('User approved successfully!');
+        // print('User approved successfully!');
 
         widget.fetchUnverifiedAndUnarchivedUsers();
       } else {
@@ -74,7 +74,7 @@ class _PendingUserCardState extends State<PendingUserCard> {
           .delete('http://127.0.0.1:8000/delete-user/${widget.userId}/');
 
       if (response_user.statusCode == 200) {
-        print('User was deleted successfully!');
+        // print('User was deleted successfully!');
 
         widget.fetchUnverifiedAndUnarchivedUsers();
       } else {
@@ -333,7 +333,7 @@ class _VerifiedUserCardState extends State<VerifiedUserCard> {
           .put('http://127.0.0.1:8000/archive-user/${widget.userId}/');
 
       if (response.statusCode == 200) {
-        print('User archived successfully!');
+        // print('User archived successfully!');
 
         widget.fetchVerifiedUsers();
       } else {
@@ -346,75 +346,86 @@ class _VerifiedUserCardState extends State<VerifiedUserCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        decoration: BoxDecoration(
-            color: UIParameter.WHITE,
-            borderRadius: UIParameter.CARD_BORDER_RADIUS),
-        width: (MediaQuery.of(context).size.width),
-        height: 58,
-        child: Row(children: [
-          SizedBox(
-            width: (MediaQuery.of(context).size.width - 40) / 7,
-            child: const Icon(Icons.person_pin_sharp,
-                size: 34, color: Colors.black87),
-          ),
-          SizedBox(
-              width: (MediaQuery.of(context).size.width - 40) * 4 / 7,
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(widget.name,
-                            softWrap: false,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                                fontSize: UIParameter.FONT_HEADING_SIZE,
-                                fontFamily: UIParameter.FONT_REGULAR,
-                                fontWeight: FontWeight.w600))),
-                    const Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text("Tap to know more",
-                            style: TextStyle(
-                                fontSize: UIParameter.FONT_BODY_SIZE,
-                                fontFamily: UIParameter.FONT_REGULAR)))
-                  ],
-                ),
-              )),
-          SizedBox(
-            width: (MediaQuery.of(context).size.width - 40) * 2 / 7,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: UIParameter.MAROON,
-                    shape: RoundedRectangleBorder(
-                      // borderRadius: BorderRadius.circular(UIParameter.CARD_BORDER_RADIUS),
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                  ),
-                  onPressed: () {
-                    archiveUser();
-                  },
-                  child: Text(
-                    "ARCHIVE",
-                    style: TextStyle(
-                      color: UIParameter.WHITE,
-                      fontSize: UIParameter.FONT_BODY_SIZE,
-                      fontFamily: UIParameter.FONT_REGULAR,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-
-                const SizedBox(width: 10),
-              ],
+    return InkWell(
+      onTap: () {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return Profile(
+                userId: widget.userId,
+              );
+            });
+      },
+      child: Container(
+          decoration: BoxDecoration(
+              color: UIParameter.WHITE,
+              borderRadius: UIParameter.CARD_BORDER_RADIUS),
+          width: (MediaQuery.of(context).size.width),
+          height: 58,
+          child: Row(children: [
+            SizedBox(
+              width: (MediaQuery.of(context).size.width - 40) / 7,
+              child: const Icon(Icons.person_pin_sharp,
+                  size: 34, color: Colors.black87),
             ),
-          ),
-        ]));
+            SizedBox(
+                width: (MediaQuery.of(context).size.width - 40) * 4 / 7,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(widget.name,
+                              softWrap: false,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  fontSize: UIParameter.FONT_HEADING_SIZE,
+                                  fontFamily: UIParameter.FONT_REGULAR,
+                                  fontWeight: FontWeight.w600))),
+                      const Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text("Tap to know more",
+                              style: TextStyle(
+                                  fontSize: UIParameter.FONT_BODY_SIZE,
+                                  fontFamily: UIParameter.FONT_REGULAR)))
+                    ],
+                  ),
+                )),
+            SizedBox(
+              width: (MediaQuery.of(context).size.width - 40) * 2 / 7,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: UIParameter.MAROON,
+                      shape: RoundedRectangleBorder(
+                        // borderRadius: BorderRadius.circular(UIParameter.CARD_BORDER_RADIUS),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    onPressed: () {
+                      archiveUser();
+                    },
+                    child: Text(
+                      "ARCHIVE",
+                      style: TextStyle(
+                        color: UIParameter.WHITE,
+                        fontSize: UIParameter.FONT_BODY_SIZE,
+                        fontFamily: UIParameter.FONT_REGULAR,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+    
+                  const SizedBox(width: 10),
+                ],
+              ),
+            ),
+          ])),
+    );
   }
 }
 
@@ -442,7 +453,7 @@ class _ArchiveUserCardState extends State<ArchiveUserCard> {
           .put('http://127.0.0.1:8000/unarchive-user/${widget.userId}/');
 
       if (response.statusCode == 200) {
-        print('User unarchived successfully!');
+        // print('User unarchived successfully!');
 
         widget.fetchArchivedUsers();
       } else {
@@ -461,7 +472,7 @@ class _ArchiveUserCardState extends State<ArchiveUserCard> {
           .delete('http://127.0.0.1:8000/delete-user/${widget.userId}/');
 
       if (response_user.statusCode == 200 && response_estab.statusCode == 200) {
-        print('User\'s owned establishment(s) was deleted successfully!');
+        // print('User\'s owned establishment(s) was deleted successfully!');
       } else {
         print('Failed to unarchived user');
       }
@@ -474,96 +485,107 @@ class _ArchiveUserCardState extends State<ArchiveUserCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        decoration: BoxDecoration(
-            color: UIParameter.WHITE,
-            borderRadius: UIParameter.CARD_BORDER_RADIUS),
-        width: (MediaQuery.of(context).size.width),
-        height: 58,
-        child: Row(children: [
-          SizedBox(
-            width: (MediaQuery.of(context).size.width - 40) / 7,
-            child: const Icon(Icons.person_pin_sharp,
-                size: 34, color: Colors.black87),
-          ),
-          SizedBox(
-              width: (MediaQuery.of(context).size.width - 40) * 2 / 7,
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(widget.name,
-                            softWrap: false,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                                fontSize: UIParameter.FONT_HEADING_SIZE,
-                                fontFamily: UIParameter.FONT_REGULAR,
-                                fontWeight: FontWeight.w600))),
-                    const Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text("Tap to know more",
-                            style: TextStyle(
-                                fontSize: UIParameter.FONT_BODY_SIZE,
-                                fontFamily: UIParameter.FONT_REGULAR)))
-                  ],
-                ),
-              )),
-          SizedBox(
-            width: (MediaQuery.of(context).size.width - 40) * 4 / 7,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: UIParameter.DARK_TEAL,
-                    shape: RoundedRectangleBorder(
-                      // borderRadius: BorderRadius.circular(UIParameter.CARD_BORDER_RADIUS),
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                  ),
-                  onPressed: () {
-                    resolveReport();
-                  },
-                  child: Text(
-                    "RESTORE",
-                    style: TextStyle(
-                      color: UIParameter.WHITE,
-                      fontSize: UIParameter.FONT_BODY_SIZE,
-                      fontFamily: UIParameter.FONT_REGULAR,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: UIParameter.MAROON,
-                    shape: RoundedRectangleBorder(
-                      // borderRadius: BorderRadius.circular(UIParameter.CARD_BORDER_RADIUS),
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                  ),
-                  onPressed: () {
-                    deleteUser();
-                  },
-                  child: Text(
-                    "DELETE",
-                    style: TextStyle(
-                      color: UIParameter.WHITE,
-                      fontSize: UIParameter.FONT_BODY_SIZE,
-                      fontFamily: UIParameter.FONT_REGULAR,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10),
-              ],
+    return InkWell(
+      onTap: () {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return Profile(
+                userId: widget.userId,
+              );
+            });
+      },
+      child: Container(
+          decoration: BoxDecoration(
+              color: UIParameter.WHITE,
+              borderRadius: UIParameter.CARD_BORDER_RADIUS),
+          width: (MediaQuery.of(context).size.width),
+          height: 58,
+          child: Row(children: [
+            SizedBox(
+              width: (MediaQuery.of(context).size.width - 40) / 7,
+              child: const Icon(Icons.person_pin_sharp,
+                  size: 34, color: Colors.black87),
             ),
-          ),
-        ]));
+            SizedBox(
+                width: (MediaQuery.of(context).size.width - 40) * 2 / 7,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(widget.name,
+                              softWrap: false,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  fontSize: UIParameter.FONT_HEADING_SIZE,
+                                  fontFamily: UIParameter.FONT_REGULAR,
+                                  fontWeight: FontWeight.w600))),
+                      const Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text("Tap to know more",
+                              style: TextStyle(
+                                  fontSize: UIParameter.FONT_BODY_SIZE,
+                                  fontFamily: UIParameter.FONT_REGULAR)))
+                    ],
+                  ),
+                )),
+            SizedBox(
+              width: (MediaQuery.of(context).size.width - 40) * 4 / 7,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: UIParameter.DARK_TEAL,
+                      shape: RoundedRectangleBorder(
+                        // borderRadius: BorderRadius.circular(UIParameter.CARD_BORDER_RADIUS),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    onPressed: () {
+                      resolveReport();
+                    },
+                    child: Text(
+                      "RESTORE",
+                      style: TextStyle(
+                        color: UIParameter.WHITE,
+                        fontSize: UIParameter.FONT_BODY_SIZE,
+                        fontFamily: UIParameter.FONT_REGULAR,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: UIParameter.MAROON,
+                      shape: RoundedRectangleBorder(
+                        // borderRadius: BorderRadius.circular(UIParameter.CARD_BORDER_RADIUS),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    onPressed: () {
+                      deleteUser();
+                    },
+                    child: Text(
+                      "DELETE",
+                      style: TextStyle(
+                        color: UIParameter.WHITE,
+                        fontSize: UIParameter.FONT_BODY_SIZE,
+                        fontFamily: UIParameter.FONT_REGULAR,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                ],
+              ),
+            ),
+          ])),
+    );
   }
 }
 
