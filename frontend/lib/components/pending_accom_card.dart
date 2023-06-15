@@ -57,7 +57,7 @@ class _PendingAccomCardState extends State<PendingAccomCard> {
                 ),
               ),
               subtitle: Text(
-                widget.ownerName,
+                "Tap to view proof",
                 style: const TextStyle(fontSize: 14),
               ),
               trailing: Row(

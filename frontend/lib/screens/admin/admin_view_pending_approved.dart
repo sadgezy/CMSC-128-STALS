@@ -125,7 +125,7 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 AccomCardDetails details = snapshot.data![index];
-                print(details.verified);
+                //print(details.verified);
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 7),
                   child: InkWell(
