@@ -30,33 +30,33 @@ class _ViewArchivedAccommodationsState
   }
 
   Future<void> deleteAccommodation(String id) async {
-  final response = await http.delete(
-    Uri.parse('http://127.0.0.1:8000/delete-establishment/$id/'),
-  );
+    final response = await http.delete(
+      Uri.parse('http://127.0.0.1:8000/delete-establishment/$id/'),
+    );
 
-  if (response.statusCode == 200) {
-    setState(() {
-      _accommodationsFuture = fetchAccommodations();
-    });
-  } else {
+    if (response.statusCode == 200) {
+      setState(() {
+        _accommodationsFuture = fetchAccommodations();
+      });
+    } else {
       // print('Status code: ${response.statusCode}');
       // print('Response body: ${response.body}');
-    throw Exception('Failed to delete accommodation');
-  }
+      throw Exception('Failed to delete accommodation');
+    }
   }
 
   Future<void> unarchiveAccommodation(String id) async {
-  final response = await http.put(
-    Uri.parse('http://127.0.0.1:8000/unarchive-establishment/$id/'),
-  );
+    final response = await http.put(
+      Uri.parse('http://127.0.0.1:8000/unarchive-establishment/$id/'),
+    );
 
-  if (response.statusCode == 200) {
-    setState(() {
-      _accommodationsFuture = fetchAccommodations();
-    });
-  } else {
-    throw Exception('Failed to archive accommodation');
-  }
+    if (response.statusCode == 200) {
+      setState(() {
+        _accommodationsFuture = fetchAccommodations();
+      });
+    } else {
+      throw Exception('Failed to archive accommodation');
+    }
   }
 
   Future<List<AccomCardDetails>> fetchAccommodations() async {
@@ -79,16 +79,19 @@ class _ViewArchivedAccommodationsState
 
   @override
   Widget build(BuildContext context) {
-     if (!context.watch<UserProvider>().isAdmin) {
-       //Navigator.pop(context);
-       WidgetsBinding.instance?.addPostFrameCallback((_) {
-         Navigator.of(context).pushReplacementNamed('/');
-       });
+    if (!context.watch<UserProvider>().isAdmin) {
+      //Navigator.pop(context);
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        Navigator.of(context).pushReplacementNamed('/');
+      });
 
-       return const CircularProgressIndicator();
+      return const CircularProgressIndicator();
     }
     return Scaffold(
-      body: SingleChildScrollView(
+        body: Center(
+            child: ConstrainedBox(
+      constraints: new BoxConstraints(maxWidth: 550),
+      child: SingleChildScrollView(
         child: FutureBuilder<List<AccomCardDetails>>(
           future: _accommodationsFuture,
           builder: (context, snapshot) {
@@ -129,7 +132,9 @@ class _ViewArchivedAccommodationsState
                                             BorderRadius.circular(10.0),
                                       ),
                                     ),
-                                    onPressed: () {unarchiveAccommodation(accommodation.ID);},
+                                    onPressed: () {
+                                      unarchiveAccommodation(accommodation.ID);
+                                    },
                                     child: Text(
                                       "RESTORE",
                                       style: TextStyle(
@@ -150,7 +155,9 @@ class _ViewArchivedAccommodationsState
                                             BorderRadius.circular(10.0),
                                       ),
                                     ),
-                                    onPressed: () {deleteAccommodation(accommodation.ID);},
+                                    onPressed: () {
+                                      deleteAccommodation(accommodation.ID);
+                                    },
                                     child: Text(
                                       "DELETE",
                                       style: TextStyle(
@@ -203,6 +210,6 @@ class _ViewArchivedAccommodationsState
           },
         ),
       ),
-    );
+    )));
   }
 }
