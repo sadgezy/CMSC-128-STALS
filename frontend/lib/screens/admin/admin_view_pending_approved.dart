@@ -49,9 +49,7 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
     }
   }
 
-  Future<void> disapproveAccommodation(String id) async {
-    //print(id);
-    
+  Future<void> disapproveAccommodation(String id) async {    
     final response = await http.put(
       Uri.parse('http://127.0.0.1:8000/archive-establishment/$id/'),
     );
@@ -147,7 +145,7 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
                     onApproved: () async {
                       try {
                         await approveAccommodation(details.ID);
-                        print("Approved accommodation with ID: ${details.ID}");
+                        // print("Approved accommodation with ID: ${details.ID}");
                         // Refresh the list of pending and approved accommodations
                         setState(() {
                           _accommodationsPendingFuture = fetchPendingAccommodations();
@@ -160,7 +158,7 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
                     onDisapproved: () async {
                       try {
                         await disapproveAccommodation(details.ID);
-                        print("Disapproved and archived accommodation with ID: ${details.ID}");
+                        // print("Disapproved and archived accommodation with ID: ${details.ID}");
                         // Refresh the list of pending and approved accommodations
                         setState(() {
                           _accommodationsPendingFuture = fetchPendingAccommodations();
@@ -283,7 +281,7 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
                   onApproved: () async {
                     try {
                       await approveAccommodation(details.ID);
-                      print("Approved accommodation with ID: ${details.ID}");
+                      // print("Approved accommodation with ID: ${details.ID}");
                       // Refresh the list of pending and approved accommodations
                       setState(() {
                         _accommodationsPendingFuture = fetchPendingAccommodations();
@@ -296,7 +294,7 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
                   onDisapproved: () async {
                     try {
                       await disapproveAccommodation(details.ID);
-                      print("Disapproved and archived accommodation with ID: ${details.ID}");
+                      // print("Disapproved and archived accommodation with ID: ${details.ID}");
                       // Refresh the list of pending and approved accommodations
                       setState(() {
                         _accommodationsPendingFuture = fetchPendingAccommodations();
@@ -338,7 +336,7 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
                   onApproved: () async {
                     try {
                       await approveAccommodation(details.ID);
-                      print("Approved accommodation with ID: ${details.ID}");
+                      // print("Approved accommodation with ID: ${details.ID}");
                       // Refresh the list of pending and approved accommodations
                       setState(() {
                         _accommodationsPendingFuture = fetchPendingAccommodations();
@@ -351,7 +349,7 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
                   onDisapproved: () async {
                     try {
                       await disapproveAccommodation(details.ID);
-                      print("Disapproved and archived accommodation with ID: ${details.ID}");
+                      // print("Disapproved and archived accommodation with ID: ${details.ID}");
                       // Refresh the list of pending and approved accommodations
                       setState(() {
                         _accommodationsPendingFuture = fetchPendingAccommodations();

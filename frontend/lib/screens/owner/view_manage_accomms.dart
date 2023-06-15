@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../classes.dart';
 import '../../UI_parameters.dart' as UIParameter;
+import 'package:stals_frontend/screens/user_profile.dart';
 import 'package:stals_frontend/providers/token_provider.dart';
 import 'package:stals_frontend/providers/user_provider.dart';
 import 'package:provider/provider.dart';
@@ -117,8 +118,21 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
                   decoration: BoxDecoration(
                     color: UIParameter.LIGHT_TEAL,
                   ),
-                  child: const Text('PROFILE'),
+                  child: const Text(''),
                 ),
+              ),
+              ListTile(
+                title: const Text('View Profile'),
+                onTap: () {
+                  String userId =
+                      Provider.of<UserProvider>(context, listen: false).getID;
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => UserProfile(userId: userId),
+                    ),
+                  );
+                },
               ),
               // ListTile(
               //   title: const Text('Edit Accommodationomm'),
@@ -163,7 +177,7 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
             future: _accommodationsFuture,
             builder: (context, snapshot) {
               if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                print("RAN");
+                // print("RAN");
                 List<AccomCardDetails> accommodations = snapshot.data!;
                 // print(accommodations[0].getImage());
                 return Center(

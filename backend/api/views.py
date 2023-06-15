@@ -131,7 +131,7 @@ def deleteuser(request, pk):
 
 @api_view(['POST'])
 def signup(request):
-    print(request.user)
+    # print(request.user)
     
     serializer = SignUpSerializer(data=request.data, many=False)
     
@@ -168,7 +168,7 @@ def login(request):
             "message": "Login Successful",
             "token": user.auth_token.key
         }
-        print("Login Successful")
+        # print("Login Successful")
 
         return Response(data=response, status=HTTPStatus.OK)
 
@@ -432,7 +432,7 @@ def delete_room(request, pk):
 def getticketdetails(request):
     ticket = Ticket.objects.all()
     serializer = ticketSerializer(ticket, many=True)
-    print(serializer.data)
+    # print(serializer.data)
     return Response(serializer.data)
 
 @api_view(['POST'])
@@ -572,7 +572,7 @@ def search_room(request):
 #----------------------------------------------------------------------------------------------
 @api_view(['POST'])
 def search_establishment(request):
-    print(request.data)
+    # print(request.data)
     name = request.data.get('name', None)
     location_exact = request.data.get('location_exact', None)
     location_approx = request.data.get('location_approx')
@@ -595,7 +595,7 @@ def search_establishment(request):
 
     if name:
         establishments = establishments.filter(name__icontains=name)
-    print(establishments)
+    # print(establishments)
     if location_approx:
         establishments = establishments.filter(location_approx=location_approx)
 
@@ -789,8 +789,8 @@ def view_one_user(request, pk):
 def view_userOwned_establishments(request, pk):
     try:
         user = User.objects.get(pk=ObjectId(pk))
-        print('hi2')
-        print(user._id)
+        # print('hi2')
+        # print(user._id)
     except User.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND, data={"message": "User not found"})
 
@@ -873,7 +873,7 @@ def set_reject_user(request):
 @api_view(['POST'])
 # @permission_classes([IsAuthenticated])
 def set_reject_estab(request):   
-    print(request.data)
+    # print(request.data)
     try:
         estab = Establishment.objects.get(pk=ObjectId(request.data["_id"]))
 

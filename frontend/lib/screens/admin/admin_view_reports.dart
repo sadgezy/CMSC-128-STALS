@@ -48,7 +48,7 @@ class _ViewReportsPageState extends State<ViewReportsPage> {
       setState(() {
         allTickets = responseData;
       });
-      print(responseData);
+      // print(responseData);
     } catch (error) {
       print(error.toString());
     }
