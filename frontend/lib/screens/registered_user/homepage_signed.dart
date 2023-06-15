@@ -32,6 +32,8 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
   bool fetchedAll = false;
   List userFavorites = [];
   late Future<bool> checkedFavorites;
+  bool checkedFavorites2 = false;
+  bool loading = false;
 
   @override
   void initState() {
@@ -50,11 +52,16 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
     ))
         .body);
 
+    //print(response);
     if (response.runtimeType.toString() == "String") {
       userFavorites = response
           .toString()
           .substring(1, response.toString().length - 1)
           .split(", ");
+      
+      setState(() {
+        checkedFavorites2 = true;
+      });
       return true;
     }
     return false;
@@ -198,6 +205,9 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
     );
   }
 
+  var filterTitleList = [];
+  var filterValueList = [];
+
   /*
   TO-DO: GET LIST OF ACCOMMODATIONS FROM DATABASE AND FILTER ACCORDING TO `accomFilter`
   initally, the homepage `accomFilter` will all be set to null, meaning all accomms will be displayed since all filter parameters are null
@@ -231,8 +241,8 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
     <Object will come from database fetch later>
     */
 
-    var filterTitleList = [];
-    var filterValueList = [];
+    filterTitleList = [];
+    filterValueList = [];
     var filterRaw = accomFilter.getFiltersApplied();
     for (int i = 0; i < filterRaw.length; i++) {
       filterValueList.add(filterRaw[i][0]);
@@ -246,6 +256,53 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
 
     Color banner =
         context.watch<UserProvider>().isVerified ? Colors.green : Colors.red;
+
+    IconButton searchButton = IconButton(
+        onPressed: () async {
+          // print(searchVal);
+          // print(filterTitleList);
+          // print(filterValueList);
+          String url = "http://127.0.0.1:8000/search-establishment/";
+          final response =
+              await json.decode((await http.post(Uri.parse(url), body: {
+            'name': searchVal,
+            'location_exact': filterValueList[1] ?? "",
+            //'location_approx': args.middleName,
+            'establishment_type': filterValueList[2] ?? "",
+            'tenant_type': filterValueList[3] ?? "",
+            'price_lower':
+                filterValueList[4] == null ? "" : "int(${filterValueList[4]})",
+            'price_upper':
+                filterValueList[5] == null ? "" : "int(${filterValueList[5]})",
+            //'capacity': args.userType,
+          }))
+                  .body);
+          //print("GGG");
+          //print(response);
+
+          setState(() {
+            // for (int i = 0; i < response.length; i++) {
+            //   accommList.add(response[i]);
+            // }
+            accommList = response;
+          });
+        },
+        icon: const Icon(
+          Icons.search,
+          color: Color.fromARGB(255, 0, 0, 0),
+        ));
+
+    if (!loading && !checkedFavorites2) {
+      getFavorites();
+      searchButton.onPressed!.call();
+    }
+
+    if (!loading && checkedFavorites2) {
+      getFavorites();
+      searchButton.onPressed!.call();
+      loading = true;
+    }
+    
 
     return Scaffold(
         key: scaffoldKey,
@@ -282,44 +339,7 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                 ),
                 Expanded(
                   flex: 2,
-                  child: IconButton(
-                      onPressed: () async {
-                        // print(searchVal);
-                        // print(filterTitleList);
-                        // print(filterValueList);
-                        getFavorites();
-                        String url =
-                            "http://127.0.0.1:8000/search-establishment/";
-                        final response = await json
-                            .decode((await http.post(Uri.parse(url), body: {
-                          'name': searchVal,
-                          'location_exact': filterValueList[1] ?? "",
-                          //'location_approx': args.middleName,
-                          'establishment_type': filterValueList[2] ?? "",
-                          'tenant_type': filterValueList[3] ?? "",
-                          'price_lower': filterValueList[4] == null
-                              ? ""
-                              : "int(${filterValueList[4]})",
-                          'price_upper': filterValueList[5] == null
-                              ? ""
-                              : "int(${filterValueList[5]})",
-                          //'capacity': args.userType,
-                        }))
-                                .body);
-                        //print("GGG");
-                        //print(response);
-
-                        setState(() {
-                          // for (int i = 0; i < response.length; i++) {
-                          //   accommList.add(response[i]);
-                          // }
-                          accommList = response;
-                        });
-                      },
-                      icon: const Icon(
-                        Icons.search,
-                        color: Color.fromARGB(255, 0, 0, 0),
-                      )),
+                  child: searchButton,
                 )
               ],
             ),
@@ -462,44 +482,45 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                           return FutureBuilder(
                               future: checkedFavorites,
                               builder: (context, snapshot2) {
-                                return Column(
-                                  children: [
-                                SizedBox(
-                                  width: MediaQuery.of(context).size.width,
-                                  child: Column(children: [
-                                    if (snapshot2.hasData && snapshot2.data!)
-                                    ListView.builder(
-                                      shrinkWrap: true,
-                                      itemCount: accommodations.length,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        bool isFavorite;
-                                        if (userFavorites.contains(
-                                            "'${accommodations[index].getID()}'")) {
-                                          isFavorite = true;
-                                        } else {
-                                          //print(userFavorites.contains("'${accommodation.getID()}'"));
-                                          isFavorite = false;
-                                        }
-                                        return Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 7, horizontal: 15),
-                                          child: AccomCard(
-                                            details: accommodations[index],
-                                            isFavorite: isFavorite,
-                                          ),
-                                        );
-                                      }),
+                                return Column(children: [
+                                  SizedBox(
+                                    width: MediaQuery.of(context).size.width,
+                                    child: Column(children: [
+                                      if (snapshot2.hasData && snapshot2.data!)
+                                        ListView.builder(
+                                            shrinkWrap: true,
+                                            itemCount: accommodations.length,
+                                            itemBuilder: (BuildContext context,
+                                                int index) {
+                                              bool isFavorite;
+                                              if (userFavorites.contains(
+                                                  "'${accommodations[index].getID()}'")) {
+                                                isFavorite = true;
+                                              } else {
+                                                //print(userFavorites.contains("'${accommodation.getID()}'"));
+                                                isFavorite = false;
+                                              }
+                                              return Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 7,
+                                                        horizontal: 15),
+                                                child: AccomCard(
+                                                  details:
+                                                      accommodations[index],
+                                                  isFavorite: isFavorite,
+                                                ),
+                                              );
+                                            }),
                                       if (snapshot2.hasData && !snapshot2.data!)
-                                      CircularProgressIndicator()
-                                  ]),
-                                ),
-                                if (!snapshot2.hasData)
-                                  CircularProgressIndicator()
-                                  ]);
+                                        CircularProgressIndicator()
+                                    ]),
+                                  ),
+                                  if (!snapshot2.hasData)
+                                    CircularProgressIndicator()
+                                ]);
                               });
-                        } else if (snapshot.hasData &&
-                                snapshot.data!.isEmpty ||
+                        } else if (snapshot.hasData && snapshot.data!.isEmpty ||
                             !snapshot.hasData) {
                           return Center(
                             child: Container(
@@ -522,12 +543,11 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                                   if (snapshot.connectionState !=
                                       ConnectionState.waiting)
                                     const Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 10)),
+                                        padding:
+                                            EdgeInsets.symmetric(vertical: 10)),
                                   if (snapshot.connectionState !=
                                       ConnectionState.waiting)
-                                    const Text(
-                                        "No Accommodations Available! ")
+                                    const Text("No Accommodations Available! ")
                                 ],
                               ),
                             ),
@@ -546,7 +566,8 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                         //print(accommodation);
                         //print(accommodation["name"]);
                         bool isFavorite;
-                        if (userFavorites.contains("'${accommodation["_id"]}'")) {
+                        if (userFavorites
+                            .contains("'${accommodation["_id"]}'")) {
                           isFavorite = true;
                         } else {
                           isFavorite = false;
