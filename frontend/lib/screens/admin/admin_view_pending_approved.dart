@@ -20,6 +20,7 @@ class AdminViewPendingApproved extends StatefulWidget {
 class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
   Future<List<AccomCardDetails>>? _accommodationsPendingFuture;
   Future<List<AccomCardDetails>>? _accommodationsFuture;
+  Map<String,dynamic> verifyStatuses = {}; 
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   // int _selectedIndex = 1;
@@ -29,10 +30,16 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
     super.initState();
     _accommodationsPendingFuture = fetchPendingAccommodations();
     _accommodationsFuture = fetchApprovedAccommodations();
+    fetchVerificationStatuses();
+  }
+
+  Future<void> fetchVerificationStatuses() async {
+    final response = jsonDecode((await http.get(Uri.parse('http://127.0.0.1:8000/view-all-verify-status/'))).body);
+    
+    verifyStatuses = {for (var v in response) v["_id"]: v["verified"]};
   }
 
   Future<void> approveAccommodation(String id) async {
-    // print(id);
     final response = await http.put(
       Uri.parse('http://127.0.0.1:8000/verify-establishment/$id/'),
     );
@@ -42,9 +49,7 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
     }
   }
 
-  Future<void> disapproveAccommodation(String id) async {
-    // print(id);
-    
+  Future<void> disapproveAccommodation(String id) async {    
     final response = await http.put(
       Uri.parse('http://127.0.0.1:8000/archive-establishment/$id/'),
     );
@@ -136,6 +141,7 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
                       ownerName: details.name,
                       verified: details.verified,
                       ID: details.ID,
+                      canApprove: verifyStatuses[details.owner],
                     onApproved: () async {
                       try {
                         await approveAccommodation(details.ID);
@@ -271,6 +277,7 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
                   ownerName: details.name,
                   verified: details.verified,
                   ID: details.ID,
+                  canApprove: verifyStatuses[details.owner],
                   onApproved: () async {
                     try {
                       await approveAccommodation(details.ID);
@@ -325,6 +332,7 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
                   ownerName: details.name,
                   verified: details.verified,
                   ID: details.ID,
+                  canApprove: verifyStatuses[details.owner],
                   onApproved: () async {
                     try {
                       await approveAccommodation(details.ID);
