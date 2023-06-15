@@ -210,6 +210,19 @@ class _SignInPageState extends State<SignInPage> {
     if (Provider.of<TokenProvider>(context, listen: false).currToken == "") {
       return Scaffold(
           resizeToAvoidBottomInset: false,
+          appBar: AppBar(
+            centerTitle: true,
+            title: const Text('Leave a Review'),
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              color: Colors.black,
+            ),
+          ),
           body: SingleChildScrollView(
               child: Center(
                   child: ConstrainedBox(
