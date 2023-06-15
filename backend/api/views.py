@@ -611,8 +611,8 @@ def search_establishment(request):
     if tenant_type:
         establishments = establishments.filter(tenant_type__icontains=tenant_type)
 
-    serializer_estab = EstablishmentSerializer(establishments, many=True)
-    serializer_estab_full = EstablishmentSerializer(establishments_copy, many=True)
+    serializer_estab = EstablishmentWithoutImagesSerializer(establishments, many=True)
+    serializer_estab_full = EstablishmentWithoutImagesSerializer(establishments_copy, many=True)
 
     not_archived = [d for d in serializer_estab.data if d['archived'] == False]
     verified = [d for d in not_archived if d['verified'] == True]
