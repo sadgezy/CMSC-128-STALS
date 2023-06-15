@@ -510,10 +510,13 @@ def review_establishment(request):
 @api_view(['POST'])
 def view_all_user_favorites(request):
     try:
-        user = User.objects.filter(email=request.data['email'])
-        serializer = userSerializer(user, many=True)
-        return Response(serializer.data[0]['favorites'])
-    except:
+        print(request.data['email'])
+        user = User.objects.get(email=request.data['email'])
+        serializer = userFavoritesSerializer(user)
+        print(serializer.data["favorites"])
+        return Response(serializer.data["favorites"])
+    except Exception as e:
+        print('%s' % type(e))
         return Response(data={"message": "Failed getting user favorites"})
 
 @api_view(['POST'])

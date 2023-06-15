@@ -189,7 +189,7 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
                             return Padding(
                               padding: const EdgeInsets.symmetric(
                                   vertical: 7, horizontal: 15),
-                              child: AccomCard(details: accommodation),
+                              child: AccomCard(details: accommodation, isFavorite: false,),
                             );
                           }).toList(),
                         ))));

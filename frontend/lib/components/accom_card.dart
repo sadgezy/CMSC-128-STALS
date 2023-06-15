@@ -18,8 +18,9 @@ class AccomCard extends StatefulWidget {
     - Accom rating
   */
 
-  const AccomCard({Key? key, required this.details}) : super(key: key);
+  const AccomCard({Key? key, required this.details, required this.isFavorite}) : super(key: key);
   final AccomCardDetails details;
+  final bool isFavorite;
 
   @override
   State<AccomCard> createState() => _AccomCardState();
@@ -122,13 +123,13 @@ class _AccomCardState extends State<AccomCard> {
       future: imageStr,
       builder: (context, snapshot) {
         
-        if (user_type == "user" && !checked) {
-          checkIfAccommodationIsFavorite(widget.details.getID(), email);
-        }
-        else {
-          loading = false;
-        }
-        if (loading) return CircularProgressIndicator();
+        // if (user_type == "user" && !checked) {
+        //   checkIfAccommodationIsFavorite(widget.details.getID(), email);
+        // }
+        // else {
+        //   loading = false;
+        // }
+        // if (loading) return CircularProgressIndicator();
 
         return ConstrainedBox(
             constraints: new BoxConstraints(maxWidth: 550),
@@ -360,7 +361,7 @@ class _AccomCardState extends State<AccomCard> {
                                                     widget.details.getID());
                                               },
                                               // check if part of favorite accomms
-                                              child: isFavorite
+                                              child: widget.isFavorite
                                                   ? Icon(
                                                       Icons.favorite,
                                                       color: UIParameter.MAROON,
