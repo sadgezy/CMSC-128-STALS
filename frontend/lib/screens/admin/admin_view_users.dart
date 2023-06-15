@@ -235,7 +235,6 @@ class _ViewAllUsersPageState extends State<ViewUsersPage> {
               onTap: () {
                 if (ModalRoute.of(context)?.settings.name != '/admin') {
                   Navigator.pop(context);
-                  Navigator.pop(context);
                   Navigator.pushNamed(context, '/admin');
                 } else {
                   scaffoldKey.currentState!.closeDrawer();
@@ -248,7 +247,6 @@ class _ViewAllUsersPageState extends State<ViewUsersPage> {
               onTap: () {
                 if (ModalRoute.of(context)?.settings.name !=
                     '/admin/view_users') {
-                  Navigator.pop(context);
                   Navigator.pop(context);
                   Navigator.pushNamed(context, '/admin/view_users');
                 } else {
@@ -263,7 +261,6 @@ class _ViewAllUsersPageState extends State<ViewUsersPage> {
                 if (ModalRoute.of(context)?.settings.name !=
                     '/admin/view_accomms') {
                   Navigator.pop(context);
-                  Navigator.pop(context);
                   Navigator.pushNamed(context, '/admin/view_accomms');
                 } else {
                   scaffoldKey.currentState!.closeDrawer();
@@ -277,7 +274,6 @@ class _ViewAllUsersPageState extends State<ViewUsersPage> {
                 // TODO
                 if (ModalRoute.of(context)?.settings.name !=
                     '/admin/view_reports') {
-                  Navigator.pop(context);
                   Navigator.pop(context);
                   Navigator.pushNamed(context, '/admin/view_reports');
                 } else {
