@@ -48,6 +48,13 @@ class _ReviewState extends State<Review> {
           title: const Text('Leave a Review'),
           backgroundColor: UIParameter.LIGHT_TEAL,
           elevation: 0,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            color: Colors.black,
+          ),
         ),
         body: SingleChildScrollView(
             child: Center(

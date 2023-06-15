@@ -1481,6 +1481,20 @@ class _AddAccommPageState extends State<AddAccommPage> {
     }
 
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          color: Colors.black,
+        ),
+        title: Text(
+          "",
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.white,
+      ),
       backgroundColor: const Color(0xffF0F3F5),
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(

@@ -56,8 +56,9 @@ class UserProfileState extends State<UserProfile> {
     }
   }
 
-  Future<void> resubmitVerificationData(Map<String, dynamic> updatedData, String userId) async {
-    String url = 'http://127.0.0.1:8000/resubmit-verification-data/$userId/'; 
+  Future<void> resubmitVerificationData(
+      Map<String, dynamic> updatedData, String userId) async {
+    String url = 'http://127.0.0.1:8000/resubmit-verification-data/$userId/';
     final response = await http.put(
       Uri.parse(url),
       body: updatedData,
@@ -68,10 +69,8 @@ class UserProfileState extends State<UserProfile> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
 
@@ -194,7 +193,7 @@ class UserProfileState extends State<UserProfile> {
                   'id_picture': base64Image,
                 };
 
-                resubmitVerificationData(updatedData,widget.userId).then((_) {
+                resubmitVerificationData(updatedData, widget.userId).then((_) {
                   // Handle successful resubmission
                   // print('Verification data resubmitted successfully');
                 }).catchError((error) {
@@ -204,7 +203,6 @@ class UserProfileState extends State<UserProfile> {
               }
             }
           },
-
           style: ElevatedButton.styleFrom(
             elevation: 0,
             backgroundColor: const Color(0xff0B7A75),
@@ -546,6 +544,21 @@ class UserProfileState extends State<UserProfile> {
 
     return Scaffold(
       backgroundColor: Color(0xffF0F3F5),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          color: Colors.black,
+        ),
+        title: Text(
+          "",
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.white,
+      ),
+
       // appBar: AppBar(
       //   title: Center(
       //     child: Text(

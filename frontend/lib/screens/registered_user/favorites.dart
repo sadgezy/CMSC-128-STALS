@@ -113,14 +113,15 @@ class _FavoritesState extends State<Favorites> {
           backgroundColor: UIParameter.MAROON,
           elevation: 0,
           leading: IconButton(
-          icon: Icon( Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-            Navigator.pop(context);
-            Navigator.pop(context);
-            Navigator.pushNamed(context, '/signed_homepage');
-          } ,
-        ) ,
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.pop(context);
+              Navigator.pop(context);
+              Navigator.pushNamed(context, '/signed_homepage');
+            },
+            color: Colors.black,
+          ),
           actions: <Widget>[
             Builder(
               builder: (context) {

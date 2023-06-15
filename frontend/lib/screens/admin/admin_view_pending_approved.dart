@@ -366,6 +366,20 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
 
     // see code below for when there are no pending and archived accommodations
     return Scaffold(
+       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          color: Colors.black,
+        ),
+        title: Text(
+          "",
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.white,
+      ),
         body: SingleChildScrollView(
             child: Center(
       child: ConstrainedBox(
