@@ -311,7 +311,7 @@ class _VerificationPageState extends State<VerificationPage> {
                     ),
                     const SizedBox(height: 5),
                     const Text(
-                      'Only photos 4mb and below are allowed.',
+                      'Only photos below 1MB are allowed.',
                       style: TextStyle(
                         color: const Color.fromARGB(255, 25, 83, 95),
                       ),
@@ -413,7 +413,7 @@ class _VerificationPageState extends State<VerificationPage> {
       double fileSize = (bytes.lengthInBytes / (1024 * 1024));
       //print(bytes.lengthInBytes);
       //print(fileSize);
-      if (fileSize > 4) {
+      if (fileSize > 1) {
         setState(() {
           _imageFile = null;
         });
