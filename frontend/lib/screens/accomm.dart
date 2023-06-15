@@ -208,6 +208,8 @@ class _AccommPageState extends State<AccommPage> {
   String base64Image2 = '';
 
   final TextEditingController idnoController = TextEditingController();
+  ValueNotifier<String?> idTypeNotifier = ValueNotifier<String?>(null);
+
 
   @override
   Widget build(BuildContext context) {
@@ -1275,37 +1277,43 @@ class _AccommPageState extends State<AccommPage> {
                                     const SizedBox(
                                       height: 5,
                                     ),
-                                    DropdownButtonFormField(
-                                      isExpanded: true,
-                                      items: const [
-                                        DropdownMenuItem(
-                                          value: 'Business Permit',
-                                          child: Text('Business Permit'),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: 'BIR',
-                                          child: Text('BIR'),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: 'Proof of Land Ownership',
-                                          child:
-                                              Text('Proof of Land Ownership'),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: 'Building Permit',
-                                          child: Text('Building Permit'),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: 'Others',
-                                          child: Text('Others'),
-                                        ),
-                                      ],
-                                      onChanged: (value) => _idType = value!,
-                                      validator: ((value) {
-                                        if (value?.isEmpty ?? true) {
-                                          return 'Please select a proof type';
-                                        }
-                                      }),
+                                    ValueListenableBuilder<String?>(
+                                      valueListenable: idTypeNotifier,
+                                      builder: (context, value, child) {
+                                        return DropdownButton<String>(
+                                          value: value,
+                                          hint: const Text('Select Proof Type'),
+                                          isExpanded: true,
+                                          items: const [
+                                            DropdownMenuItem(
+                                              value: 'Business Permit',
+                                              child: Text('Business Permit'),
+                                            ),
+                                            DropdownMenuItem(
+                                              value: 'BIR',
+                                              child: Text('BIR'),
+                                            ),
+                                            DropdownMenuItem(
+                                              value: 'Proof of Land Ownership',
+                                              child: Text('Proof of Land Ownership'),
+                                            ),
+                                            DropdownMenuItem(
+                                              value: 'Building Permit',
+                                              child: Text('Building Permit'),
+                                            ),
+                                            DropdownMenuItem(
+                                              value: 'Others',
+                                              child: Text('Others'),
+                                            ),
+                                          ],
+                                          onChanged: (String? newValue) {
+                                            idTypeNotifier.value = newValue;
+                                            if (newValue == null || newValue.isEmpty) {
+                                              // Show error message or handle the empty value case
+                                            }
+                                          },
+                                        );
+                                      },
                                     ),
                                   ],
                                 ),
@@ -1411,18 +1419,14 @@ class _AccommPageState extends State<AccommPage> {
                                 onPressed: () async {
                                   if (user_type == "owner") {
                                     if (base64Image2 == '') {
-                                      setState(
-                                          () => showProofUploadError = true);
+                                      setState(() => showProofUploadError = true);
                                     } else {
-                                      // print("Add accommodation complete.");
-
                                       String url2 =
                                           "http://127.0.0.1:8000/add-new-proof-establishment/";
                                       final response2 = await json.decode(
-                                          (await http
-                                                  .post(Uri.parse(url2), body: {
+                                          (await http.post(Uri.parse(url2), body: {
                                         "_id": id,
-                                        "proof_type": _idType,
+                                        "proof_type": idTypeNotifier.value, // Updated to use idTypeNotifier.value
                                         "proof_number": idnoController.text,
                                         "proof_picture": base64Image2,
                                       }))
