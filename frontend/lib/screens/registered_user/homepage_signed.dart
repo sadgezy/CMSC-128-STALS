@@ -450,7 +450,7 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
         body: SingleChildScrollView(
             child: Center(
                 child: Column(children: [
-          if (!context.watch<UserProvider>().isVerified)
+          if (!context.watch<UserProvider>().isVerified && checkedFavorites2)
             ConstrainedBox(
                 constraints: new BoxConstraints(maxWidth: 550),
                 child: VerificationBanner(
