@@ -327,6 +327,9 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                       searchVal = value;
                     },
                     onSubmitted: (value) { // Add this property
+                      setState(() {
+                        accommList = [];
+                      });
                       performSearch();
                     },
                   )
