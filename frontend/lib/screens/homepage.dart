@@ -78,6 +78,25 @@ class _UnregisteredHomepageState extends State<UnregisteredHomepage> {
       filterTitleList.add(filterRaw[i][1]);
     }
 
+    void performSearch() async {
+      String url = "http://127.0.0.1:8000/search-establishment/";
+      final response = await json.decode((await http.post(Uri.parse(url), body: {
+        'name': searchVal,
+        'location_exact': filterValueList[1] ?? "",
+        'establishment_type': filterValueList[2] ?? "",
+        'tenant_type': filterValueList[3] ?? "",
+        'price_lower': filterValueList[4] == null ? "" : "int(${filterValueList[4]})",
+        'price_upper': filterValueList[5] == null ? "" : "int(${filterValueList[5]})",
+      }))
+          .body);
+
+      setState(() {
+        accommList = response;
+        showNotFoundText = accommList.isEmpty;
+      });
+  }
+
+
     return Scaffold(
         key: scaffoldKey,
         appBar: AppBar(
@@ -109,45 +128,16 @@ class _UnregisteredHomepageState extends State<UnregisteredHomepage> {
                       /* PUT SEARCH FUNCTION HERE */
                       searchVal = value;
                     },
-                  ),
+                    onSubmitted: (value) { // Add this property
+                      performSearch();
+                    },
+                  )
                 ),
                 Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
                 Expanded(
                     flex: 2,
                     child: IconButton(
-                        onPressed: () async {
-                          // print(searchVal);
-                          // print(filterTitleList);
-                          // print(filterValueList);
-
-                          String url =
-                              "http://127.0.0.1:8000/search-establishment/";
-                          final response = await json
-                              .decode((await http.post(Uri.parse(url), body: {
-                            'name': searchVal,
-                            'location_exact': filterValueList[1] ?? "",
-                            //'location_approx': args.middleName,
-                            'establishment_type': filterValueList[2] ?? "",
-                            'tenant_type': filterValueList[3] ?? "",
-                            'price_lower': filterValueList[4] == null
-                                ? ""
-                                : "int(${filterValueList[4]})",
-                            'price_upper': filterValueList[5] == null
-                                ? ""
-                                : "int(${filterValueList[5]})",
-                            //'capacity': args.userType,
-                          }))
-                                  .body);
-                          //print(response);
-
-                          setState(() {
-                            // for (int i = 0; i < response.length; i++) {
-                            //   accommList.add(response[i]);
-                            // }
-                            accommList = response;
-                            showNotFoundText = accommList.isEmpty;
-                          });
-                        },
+                        onPressed: performSearch,
                         icon: const Icon(
                           Icons.search,
                           color: Color.fromARGB(255, 0, 0, 0),

@@ -5,10 +5,13 @@ import '../UI_parameters.dart' as UIParameter;
 class CustomSearchBar extends StatelessWidget {
   final String hintText;
   final ValueChanged<String> onChanged;
+  final ValueChanged<String> onSubmitted;
   const CustomSearchBar({
     Key? key,
     required this.hintText,
     required this.onChanged,
+    required this.onSubmitted,
+    
   }) : super(key: key);
 
   @override
@@ -21,6 +24,7 @@ class CustomSearchBar extends StatelessWidget {
         ),
         child: TextField(
           onChanged: onChanged,
+          onSubmitted: onSubmitted,
           cursorColor: UIParameter.LIGHT_TEAL,
           style: const TextStyle(
               fontSize: 18, fontFamily: UIParameter.FONT_REGULAR),
