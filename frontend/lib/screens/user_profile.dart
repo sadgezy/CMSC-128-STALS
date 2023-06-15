@@ -523,6 +523,8 @@ class UserProfileState extends State<UserProfile> {
               Navigator.of(context).pop();
               fullname = nameController.text;
               //TODO: reflect name change to database
+              
+
             }
           },
           style: TextButton.styleFrom(
@@ -620,28 +622,28 @@ class UserProfileState extends State<UserProfile> {
                                               fontSize: 28,
                                               fontWeight: FontWeight.bold,
                                               color: Color(0xff1F2421))),
-                                      SizedBox(
-                                        width: 15,
-                                        child: IconButton(
-                                          style: IconButton.styleFrom(
-                                            splashFactory:
-                                                NoSplash.splashFactory,
-                                          ),
-                                          icon: const Icon(
-                                            Icons.edit,
-                                            size: 13,
-                                            color: Colors.grey,
-                                          ),
-                                          onPressed: () {
-                                            nameController.text = fullname;
-                                            showDialog(
-                                                context: context,
-                                                builder:
-                                                    (BuildContext context) =>
-                                                        editNamePopup);
-                                          },
-                                        ),
-                                      )
+                                      // SizedBox(
+                                      //   width: 15,
+                                      //   child: IconButton(
+                                      //     style: IconButton.styleFrom(
+                                      //       splashFactory:
+                                      //           NoSplash.splashFactory,
+                                      //     ),
+                                      //     icon: const Icon(
+                                      //       Icons.edit,
+                                      //       size: 13,
+                                      //       color: Colors.grey,
+                                      //     ),
+                                      //     onPressed: () {
+                                      //       nameController.text = fullname;
+                                      //       showDialog(
+                                      //           context: context,
+                                      //           builder:
+                                      //               (BuildContext context) =>
+                                      //                   editNamePopup);
+                                      //     },
+                                      //   ),
+                                      // )
                                     ],
                                   ),
                                   Padding(
