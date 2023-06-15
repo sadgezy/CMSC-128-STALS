@@ -147,23 +147,11 @@ def signup(request):
     
     return Response(data=serializer.errors, status=HTTPStatus.BAD_REQUEST)
 
-@api_view(['POST'])
-def check_user_username(request):
-    user = User.objects.filter(username=request.data['username'])
-
-    if len(user) == 1:
-        return Response(False)
-    # serializer = userSerializer(user, many=True)
-    return Response(True)
-
-@api_view(['POST'])
-def check_user_email(request):
-    user = User.objects.filter(email=request.data['email'])
-
-    if len(user) == 1:
-        return Response(False)
-    # serializer = userSerializer(user, many=True)
-    return Response(True)
+@api_view(['GET'])
+def get_all_user_info(request):
+    user = User.objects.all()
+    serializer = userSerializer(user, many=True)
+    return Response(serializer.data)
 
 @api_view(['POST'])
 def login(request):
@@ -178,7 +166,6 @@ def login(request):
     #if (user.password != password):
     #    user = None
     
-  
     if user is not None:
         
         #Token.objects.create(user=user)
