@@ -695,6 +695,7 @@ class UserProfileState extends State<UserProfile> {
             lastname = userData['last_name'] ?? "";
             suffix = userData['suffix'] ?? "";
             fullname = "$firstname $middleinitial $lastname $suffix";
+
             username = userData['username'] ?? "";
             email = userData['email'] ?? "";
             phone = userData['phone_no'] ?? "";
@@ -759,6 +760,7 @@ class UserProfileState extends State<UserProfile> {
                                           },
                                         ),
                                       )
+
                                     ],
                                   ),
                                   Padding(

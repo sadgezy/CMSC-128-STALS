@@ -6,6 +6,7 @@ urlpatterns = [
     path("login/", views.login),
     path("signup/", views.signup),
     path("check/", views.check_authenticated),
+    path("get-all-user-info/", views.get_all_user_info),
 
     path('admin-details/', views.getadmindetails),
     path('user-details/', views.getuserdetails),
@@ -72,7 +73,6 @@ urlpatterns = [
 
     path('resolve-report/', views.resolve_ticket),
     path('delete-report/', views.delete_ticket),
-
 
     path('get-one-user-using-id/<str:pk>/', views.get_one_user_using_id),
 

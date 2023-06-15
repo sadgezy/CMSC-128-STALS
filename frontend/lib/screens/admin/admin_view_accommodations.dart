@@ -88,7 +88,6 @@ class _AdminViewAccommodationsState extends State<AdminViewAccommodations> {
             onTap: () {
               if (ModalRoute.of(context)?.settings.name != '/admin') {
                 Navigator.pop(context);
-                Navigator.pop(context);
                 Navigator.pushNamed(context, '/admin');
               } else {
                 scaffoldKey.currentState!.closeDrawer();
@@ -101,7 +100,6 @@ class _AdminViewAccommodationsState extends State<AdminViewAccommodations> {
             onTap: () {
               if (ModalRoute.of(context)?.settings.name !=
                   '/admin/view_users') {
-                Navigator.pop(context);
                 Navigator.pop(context);
                 Navigator.pushNamed(context, '/admin/view_users');
               } else {
@@ -116,7 +114,6 @@ class _AdminViewAccommodationsState extends State<AdminViewAccommodations> {
               if (ModalRoute.of(context)?.settings.name !=
                   '/admin/view_accomms') {
                 Navigator.pop(context);
-                Navigator.pop(context);
                 Navigator.pushNamed(context, '/admin/view_accomms');
               } else {
                 scaffoldKey.currentState!.closeDrawer();
@@ -130,7 +127,6 @@ class _AdminViewAccommodationsState extends State<AdminViewAccommodations> {
               // TODO
               if (ModalRoute.of(context)?.settings.name !=
                 '/admin/view_reports') {
-              Navigator.pop(context);
               Navigator.pop(context);
               Navigator.pushNamed(context, '/admin/view_reports');
             } else {
@@ -150,7 +146,7 @@ class _AdminViewAccommodationsState extends State<AdminViewAccommodations> {
               Navigator.pop(context);
               Navigator.pop(context);
 
-              Navigator.pop(context);
+              //Navigator.pop(context);
               Navigator.push(
                   context,
                   MaterialPageRoute(

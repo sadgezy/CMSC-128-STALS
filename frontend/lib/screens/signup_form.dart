@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stals_frontend/screens/verify_user.dart';
 import '../models/signup_arguments.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class SignUpForm extends StatefulWidget {
   @override
   _SignUpFormState createState() => _SignUpFormState();
 }
+
+
 
 class _SignUpFormState extends State<SignUpForm> {
   TextEditingController firstNameController = TextEditingController();
@@ -18,6 +22,15 @@ class _SignUpFormState extends State<SignUpForm> {
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
 
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      // Perform your asynchronous data fetching or any other operations here
+      fetchAllUsernamesEmails();
+        // Update the state and trigger a rebuild
+    });
+  }
+
   String _firstName = '';
   String _lastName = '';
   String _middleName = '';
@@ -26,9 +39,28 @@ class _SignUpFormState extends State<SignUpForm> {
   String _password = '';
   String _email = '';
   String _phone = '';
+  bool _emailExists = false;
+  List<String> listOfEmails = [];
+  List<String> listOfUsernames = [];
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isPasswordVisible = false;
+
+   Future<void> fetchAllUsernamesEmails() async {
+    String url = "http://127.0.0.1:8000/get-all-user-info/";
+
+    final response = await http.get(Uri.parse(url));
+    var responseData = json.decode(response.body);
+
+    for (var i in responseData){
+      listOfEmails.add(i['email']);
+    }
+
+    for (var i in responseData){
+      listOfUsernames.add(i['username']);
+    }
+  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +86,7 @@ class _SignUpFormState extends State<SignUpForm> {
       ),
       ElevatedButton(
         onPressed: () {
+        
           if (_formKey.currentState!.validate()) {
             Navigator.pushNamed(context, '/verify_user',
                 arguments: SignupArguments(
@@ -246,6 +279,9 @@ class _SignUpFormState extends State<SignUpForm> {
                             if (value!.isEmpty) {
                               return 'Please enter a username';
                             }
+                            if (listOfUsernames.contains(value)) {
+                              return 'Please enter an unused username';
+                            }
                             return null;
                           },
                         ),
@@ -343,6 +379,10 @@ class _SignUpFormState extends State<SignUpForm> {
                                 .hasMatch(value)) {
                               return 'Please enter a valid email address';
                             }
+                            if(listOfEmails.contains(value)){
+                              return 'Please enter an unused email';
+                            }
+                            
                             return null;
                           },
                         ),
@@ -397,6 +437,8 @@ class _SignUpFormState extends State<SignUpForm> {
               ),
             ),
           ),
-        )));
+        ),
+      ),
+    );
   }
 }

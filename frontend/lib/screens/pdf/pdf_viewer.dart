@@ -99,7 +99,8 @@ class PDFViewScreen extends StatelessWidget {
                                           fontWeight: pw.FontWeight.bold)),
                               pw.Text(estab.exactLoc),
                               pw.Text(
-                                  estab.estabType + " for " + estab.tenantType),
+                                estab.estabType[0].toUpperCase() + estab.estabType.substring(1).toLowerCase()
+                                   + " for " +  estab.tenantType[0].toUpperCase() + estab.tenantType.substring(1).toLowerCase()),
                               // pw.Text(estab.tenantType),
                               //pw.SizedBox(height: 10),
                               //pw.Text(estab.utilities),

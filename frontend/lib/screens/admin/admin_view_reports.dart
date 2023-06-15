@@ -111,7 +111,6 @@ class _ViewReportsPageState extends State<ViewReportsPage> {
             onTap: () {
               if (ModalRoute.of(context)?.settings.name != '/admin') {
                 Navigator.pop(context);
-                Navigator.pop(context);
                 Navigator.pushNamed(context, '/admin');
               } else {
                 scaffoldKey.currentState!.closeDrawer();
@@ -124,7 +123,6 @@ class _ViewReportsPageState extends State<ViewReportsPage> {
             onTap: () {
               if (ModalRoute.of(context)?.settings.name !=
                   '/admin/view_users') {
-                Navigator.pop(context);
                 Navigator.pop(context);
                 Navigator.pushNamed(context, '/admin/view_users');
               } else {
@@ -139,7 +137,6 @@ class _ViewReportsPageState extends State<ViewReportsPage> {
               if (ModalRoute.of(context)?.settings.name !=
                   '/admin/view_accomms') {
                 Navigator.pop(context);
-                Navigator.pop(context);
                 Navigator.pushNamed(context, '/admin/view_accomms');
               } else {
                 scaffoldKey.currentState!.closeDrawer();
@@ -153,7 +150,6 @@ class _ViewReportsPageState extends State<ViewReportsPage> {
               // TODO
               if (ModalRoute.of(context)?.settings.name !=
                 '/admin/view_reports') {
-              Navigator.pop(context);
               Navigator.pop(context);
               Navigator.pushNamed(context, '/admin/view_reports');
             } else {
@@ -173,7 +169,7 @@ class _ViewReportsPageState extends State<ViewReportsPage> {
               Navigator.pop(context);
               Navigator.pop(context);
 
-              Navigator.pop(context);
+              //Navigator.pop(context);
               Navigator.push(
                   context,
                   MaterialPageRoute(
