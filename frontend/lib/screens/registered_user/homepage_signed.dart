@@ -287,7 +287,7 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                         // print(searchVal);
                         // print(filterTitleList);
                         // print(filterValueList);
-
+                        getFavorites();
                         String url =
                             "http://127.0.0.1:8000/search-establishment/";
                         final response = await json
