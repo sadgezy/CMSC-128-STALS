@@ -34,6 +34,7 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
   late Future<bool> checkedFavorites;
   bool checkedFavorites2 = false;
   bool loading = false;
+  bool showNotFoundText = false;
 
   @override
   void initState() {
@@ -287,6 +288,7 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
             //   accommList.add(response[i]);
             // }
             accommList = response;
+            showNotFoundText = accommList.isEmpty;
           });
         },
         icon: const Icon(
@@ -564,7 +566,22 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                   ),
                 if (fetchedAll)
                   SingleChildScrollView(
-                    child: Column(
+                    child: showNotFoundText
+                          ? Center(
+                            child: Column(
+                              children: [
+                                const Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 20)),
+                                Image.asset(
+                                  'assets/images/no_pending.png',
+                                  height: 70,
+                                ),
+                                const Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 10)),
+                                Text("No Accommodations Found")
+                              ],
+                            ),)
+                    : Column(
                       children: accommList.map((accommodation) {
                         //print(accommodation);
                         //print(accommodation["name"]);

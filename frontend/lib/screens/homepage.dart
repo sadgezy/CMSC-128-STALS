@@ -25,6 +25,7 @@ class _UnregisteredHomepageState extends State<UnregisteredHomepage> {
   Filter accomFilter = Filter(null, null, null, null, null, null);
   String searchVal = '';
   bool fetchedAll = false;
+  bool showNotFoundText = false;
 
   @override
   void initState() {
@@ -144,6 +145,7 @@ class _UnregisteredHomepageState extends State<UnregisteredHomepage> {
                             //   accommList.add(response[i]);
                             // }
                             accommList = response;
+                            showNotFoundText = accommList.isEmpty;
                           });
                         },
                         icon: const Icon(
@@ -403,7 +405,22 @@ class _UnregisteredHomepageState extends State<UnregisteredHomepage> {
                             ),
                           if (fetchedAll)
                             SingleChildScrollView(
-                              child: Column(
+                              child: showNotFoundText
+                                ? Center(
+                                  child: Column(
+                                    children: [
+                                      const Padding(
+                                          padding: EdgeInsets.symmetric(vertical: 20)),
+                                      Image.asset(
+                                        'assets/images/no_pending.png',
+                                        height: 70,
+                                      ),
+                                      const Padding(
+                                          padding: EdgeInsets.symmetric(vertical: 10)),
+                                      Text("No Accommodations Found")
+                                    ],
+                                  ),)
+                              : Column(
                                 children: accommList.map((accommodation) {
                                   //print(accommodation);
                                   //print(accommodation["name"]);
