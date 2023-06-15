@@ -909,30 +909,24 @@ class _AccommPageState extends State<AccommPage> {
                                                                   ];
                                                                   break;
                                                               }
-                                                              String url5 =
+                                                              print(selectedReason.toString());
+                                                              if(selectedReason.toString() != "[]"){
+                                                                  String url5 =
                                                                   "http://127.0.0.1:8000/report-establishment/";
                                                               final response5 = await json.decode(
-                                                                  (await http.post(
-                                                                          Uri.parse(
-                                                                              url5),
-                                                                          body: {
-                                                                    "establishment_id":
-                                                                        id,
-                                                                    "user_id":
-                                                                        user_id,
-                                                                    "tags":
-                                                                        "'${selectedReason.toString()}'",
-                                                                    "description":
-                                                                        reportController
-                                                                            .text
+                                                                  (await http.post(Uri.parse(url5),
+                                                                    body: {
+                                                                    "establishment_id": id,
+                                                                    "user_id":user_id,
+                                                                    "tags":"'${selectedReason.toString()}'",
+                                                                    "description": reportController.text
                                                                   }))
                                                                       .body);
-
+                                                              
                                                               reportController
                                                                   .clear();
                                                               Navigator.pop(
                                                                   context);
-
                                                               ScaffoldMessenger
                                                                       .of(
                                                                           context)
@@ -940,6 +934,21 @@ class _AccommPageState extends State<AccommPage> {
                                                                       const SnackBar(
                                                                           content:
                                                                               Text("You have reported this accommodation. Thank you for helping us!")));
+                                                              }
+                                                              else{
+                                                                showDialog(
+                                                                  context: context,
+                                                                  builder: (BuildContext context) {
+                                                                    // print(user_type);
+                                                                    return const AlertDialog(
+                                                                        content: Padding(
+                                                                      padding: EdgeInsets.all(8),
+                                                                      child: Text(
+                                                                          "Please select a reason for reporting"),
+                                                                    ));
+                                                                  },
+                                                                );
+                                                              } 
                                                             },
                                                             style: ElevatedButton
                                                                 .styleFrom(
