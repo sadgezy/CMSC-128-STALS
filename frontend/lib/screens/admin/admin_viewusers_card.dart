@@ -117,7 +117,7 @@ class _PendingUserCardState extends State<PendingUserCard> {
                   borderRadius: UIParameter.CARD_BORDER_RADIUS,
                 ),
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.width / 10,
+                height: MediaQuery.of(context).size.width / 8,
                 child: Row(
                   children: [
                     SizedBox(
@@ -141,7 +141,7 @@ class _PendingUserCardState extends State<PendingUserCard> {
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   fontSize:
-                                      MediaQuery.of(context).size.width * 0.03,
+                                      MediaQuery.of(context).size.width * 0.05,
                                   fontFamily: UIParameter.FONT_REGULAR,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -153,7 +153,7 @@ class _PendingUserCardState extends State<PendingUserCard> {
                                 "Tap to know more",
                                 style: TextStyle(
                                   fontSize:
-                                      MediaQuery.of(context).size.width * 0.02,
+                                      MediaQuery.of(context).size.width * 0.03,
                                   fontFamily: UIParameter.FONT_REGULAR,
                                 ),
                               ),
@@ -163,7 +163,7 @@ class _PendingUserCardState extends State<PendingUserCard> {
                       ),
                     ),
                     SizedBox(
-                      width: (MediaQuery.of(context).size.width - 40) * 4 / 7,
+                      width: MediaQuery.of(context).size.width > 400 ? (MediaQuery.of(context).size.width - 40) * 4 / 7 : (MediaQuery.of(context).size.width - 40) * 4 / 6,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -365,7 +365,7 @@ class _VerifiedUserCardState extends State<VerifiedUserCard> {
                       color: UIParameter.WHITE,
                       borderRadius: UIParameter.CARD_BORDER_RADIUS),
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.width / 10,
+                  height: MediaQuery.of(context).size.width / 8,
                   child: Row(children: [
                     SizedBox(
                       width: (MediaQuery.of(context).size.width - 40) / 7,
@@ -374,7 +374,7 @@ class _VerifiedUserCardState extends State<VerifiedUserCard> {
                           color: Colors.black87),
                     ),
                     SizedBox(
-                        width: (MediaQuery.of(context).size.width - 40) * 4 / 7,
+                        width: MediaQuery.of(context).size.width > 400 ? (MediaQuery.of(context).size.width - 40) * 4 / 8 : (MediaQuery.of(context).size.width - 40) * 4 / 7,
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Column(
@@ -389,7 +389,7 @@ class _VerifiedUserCardState extends State<VerifiedUserCard> {
                                           fontSize: MediaQuery.of(context)
                                                   .size
                                                   .width *
-                                              0.03,
+                                              0.05,
                                           fontFamily: UIParameter.FONT_REGULAR,
                                           fontWeight: FontWeight.w600))),
                               Align(
@@ -399,14 +399,14 @@ class _VerifiedUserCardState extends State<VerifiedUserCard> {
                                           fontSize: MediaQuery.of(context)
                                                   .size
                                                   .width *
-                                              0.02,
+                                              0.03,
                                           fontFamily:
                                               UIParameter.FONT_REGULAR)))
                             ],
                           ),
                         )),
                     SizedBox(
-                      width: (MediaQuery.of(context).size.width - 40) * 2 / 7,
+                      width: (MediaQuery.of(context).size.width - 40) * 2 / 6,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -517,7 +517,7 @@ class _ArchiveUserCardState extends State<ArchiveUserCard> {
                       color: UIParameter.WHITE,
                       borderRadius: UIParameter.CARD_BORDER_RADIUS),
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.width / 10,
+                  height: MediaQuery.of(context).size.width / 8,
                   child: Row(children: [
                     SizedBox(
                       width: (MediaQuery.of(context).size.width - 40) / 7,
@@ -541,7 +541,7 @@ class _ArchiveUserCardState extends State<ArchiveUserCard> {
                                           fontSize: MediaQuery.of(context)
                                                   .size
                                                   .width *
-                                              0.03,
+                                              0.05,
                                           fontFamily: UIParameter.FONT_REGULAR,
                                           fontWeight: FontWeight.w600))),
                               Align(
@@ -551,14 +551,14 @@ class _ArchiveUserCardState extends State<ArchiveUserCard> {
                                           fontSize: MediaQuery.of(context)
                                                   .size
                                                   .width *
-                                              0.02,
+                                              0.03,
                                           fontFamily:
                                               UIParameter.FONT_REGULAR)))
                             ],
                           ),
                         )),
                     SizedBox(
-                      width: (MediaQuery.of(context).size.width - 40) * 4 / 7,
+                      width: MediaQuery.of(context).size.width > 400 ? (MediaQuery.of(context).size.width - 40) * 4 / 7 : (MediaQuery.of(context).size.width - 40) * 4 / 6,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [

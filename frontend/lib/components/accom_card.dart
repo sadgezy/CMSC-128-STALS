@@ -18,7 +18,12 @@ class AccomCard extends StatefulWidget {
     - Accom rating
   */
 
-  const AccomCard({Key? key, required this.details, required this.isFavorite, required this.func}) : super(key: key);
+  const AccomCard(
+      {Key? key,
+      required this.details,
+      required this.isFavorite,
+      required this.func})
+      : super(key: key);
   final AccomCardDetails details;
   final bool isFavorite;
   final VoidCallback func;
@@ -66,9 +71,7 @@ class _AccomCardState extends State<AccomCard> {
   // check if accommodation is part of user's favorites
   Future<void> checkIfAccommodationIsFavorite(String id, String email) async {
     String url = "http://127.0.0.1:8000/view-all-user-favorites/";
-    final Map<String, dynamic> requestBody = {
-      "email": email
-    };
+    final Map<String, dynamic> requestBody = {"email": email};
     final headers = {
       'Content-Type': 'application/json',
     };
@@ -78,19 +81,18 @@ class _AccomCardState extends State<AccomCard> {
       headers: headers,
       body: json.encode(requestBody),
     );
-    
+
     var decodedResponse = json.decode(response.body);
 
     decodedResponse = decodedResponse.replaceAll("[", "");
     decodedResponse = decodedResponse.replaceAll("]", "");
     decodedResponse = decodedResponse.replaceAll("'", "");
     decodedResponse = decodedResponse.split(",");
-    
+
     // check if id is in the list of user's favorites
     if (decodedResponse.contains(id)) {
       isFavorite = true;
-    }
-    else {
+    } else {
       isFavorite = false;
     }
     setState(() {
@@ -98,8 +100,6 @@ class _AccomCardState extends State<AccomCard> {
       checked = true;
     });
   }
-
-
 
   Future<void> getUserInfo() async {
     user = Provider.of<UserProvider>(context, listen: false).userInfo;
@@ -124,14 +124,12 @@ class _AccomCardState extends State<AccomCard> {
     Future<String> imageStr = getImage();
     if (!appliedBool) {
       currFavorite = widget.isFavorite;
-      appliedBool = true;  
+      appliedBool = true;
     }
-    
-    
+
     return FutureBuilder(
       future: imageStr,
       builder: (context, snapshot) {
-        
         // if (user_type == "user" && !checked) {
         //   checkIfAccommodationIsFavorite(widget.details.getID(), email);
         // }
@@ -196,13 +194,16 @@ class _AccomCardState extends State<AccomCard> {
                                       children: [
                                         Column(
                                           children: [
-                                            if (snapshot.hasError) Text('Error = ${snapshot.error}'),
+                                            if (snapshot.hasError)
+                                              Text('Error = ${snapshot.error}'),
                                             if (snapshot.connectionState ==
                                                 ConnectionState.waiting)
                                               SizedBox(
-                                                width: (300),
-                                                height: (200),
-                                                child: Center(child: CircularProgressIndicator())),
+                                                  width: (300),
+                                                  height: (200),
+                                                  child: Center(
+                                                      child:
+                                                          CircularProgressIndicator())),
                                             if (snapshot.connectionState !=
                                                 ConnectionState.waiting)
                                               Image.memory(
@@ -241,13 +242,16 @@ class _AccomCardState extends State<AccomCard> {
                                         fit: BoxFit.fill,
                                         child: Column(
                                           children: [
-                                            if (snapshot.hasError) Text('Error = ${snapshot.error}'),
+                                            if (snapshot.hasError)
+                                              Text('Error = ${snapshot.error}'),
                                             if (snapshot.connectionState ==
                                                 ConnectionState.waiting)
                                               SizedBox(
-                                                width: (300),
-                                                height: (200),
-                                                child: Center(child: CircularProgressIndicator())),
+                                                  width: (300),
+                                                  height: (200),
+                                                  child: Center(
+                                                      child:
+                                                          CircularProgressIndicator())),
                                             if (snapshot.connectionState !=
                                                 ConnectionState.waiting)
                                               Image.memory(
@@ -288,7 +292,7 @@ class _AccomCardState extends State<AccomCard> {
                                         overflow: TextOverflow.fade,
                                         fontSize:
                                             MediaQuery.of(context).size.width *
-                                                0.027,
+                                                0.04,
                                         fontFamily: UIParameter.FONT_REGULAR),
                                   ),
                                 ),
@@ -315,7 +319,9 @@ class _AccomCardState extends State<AccomCard> {
                                       )
                                     : Container(),
                                 // if admin only display rating
-                                user_type == "admin" || user_type == "owner" || user_type == "guest"
+                                user_type == "admin" ||
+                                        user_type == "owner" ||
+                                        user_type == "guest"
                                     ? Container()
                                     // ? RatingBar.builder(
                                     //     minRating: 0,
