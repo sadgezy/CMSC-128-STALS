@@ -648,7 +648,7 @@ class UserProfileState extends State<UserProfile> {
               // Call the editUserProfile function with the updated data and user ID
               try {
                 await editUserProfile(updatedData, widget.userId);
-                print('User data updated successfully');
+                // print('User data updated successfully');
               } catch (e) {
                 print('Failed to update user data: $e');
               }
