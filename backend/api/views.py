@@ -144,8 +144,26 @@ def signup(request):
         response = {"message": "User Created Successfully", "data": serializer.data}
 
         return Response(data=response, status=HTTPStatus.CREATED)
-
+    
     return Response(data=serializer.errors, status=HTTPStatus.BAD_REQUEST)
+
+@api_view(['POST'])
+def check_user_username(request):
+    user = User.objects.filter(username=request.data['username'])
+
+    if len(user) == 1:
+        return Response(False)
+    # serializer = userSerializer(user, many=True)
+    return Response(True)
+
+@api_view(['POST'])
+def check_user_email(request):
+    user = User.objects.filter(email=request.data['email'])
+
+    if len(user) == 1:
+        return Response(False)
+    # serializer = userSerializer(user, many=True)
+    return Response(True)
 
 @api_view(['POST'])
 def login(request):
@@ -611,8 +629,8 @@ def search_establishment(request):
     if tenant_type:
         establishments = establishments.filter(tenant_type__icontains=tenant_type)
 
-    serializer_estab = EstablishmentSerializer(establishments, many=True)
-    serializer_estab_full = EstablishmentSerializer(establishments_copy, many=True)
+    serializer_estab = EstablishmentWithoutImagesSerializer(establishments, many=True)
+    serializer_estab_full = EstablishmentWithoutImagesSerializer(establishments_copy, many=True)
 
     not_archived = [d for d in serializer_estab.data if d['archived'] == False]
     verified = [d for d in not_archived if d['verified'] == True]

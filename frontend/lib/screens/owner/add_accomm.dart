@@ -35,6 +35,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
   bool uploadedImage = false;
   String base64Image1 = '';
   String base64Image2 = '';
+  bool setInitialVal = false;
 
   final GlobalKey<FormState> _formKey1 = GlobalKey<FormState>();
   final GlobalKey<FormState> _formKey2 = GlobalKey<FormState>();
@@ -50,6 +51,16 @@ class _AddAccommPageState extends State<AddAccommPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (!setInitialVal) {
+      countryController.value = TextEditingValue(
+        text: "Philippines",
+        selection: TextSelection.fromPosition(
+          TextPosition(offset: 0),
+        ),
+      );
+      setInitialVal = true;
+    }
+
     if (!context.watch<UserProvider>().isOwner) {
       //Navigator.pop(context);
       WidgetsBinding.instance?.addPostFrameCallback((_) {
@@ -233,7 +244,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
     }
 
     Widget navigationButtons = Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 40),
+      padding: const EdgeInsets.fromLTRB(40, 0, 40, 50),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         ElevatedButton(
           onPressed: () {
@@ -303,7 +314,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           const SizedBox(
-            height: 70,
+            height: 30,
           ),
           const Text(
             "Which of these best\ndescribes your place?",
@@ -311,7 +322,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
             textAlign: TextAlign.center,
           ),
           const SizedBox(
-            height: 50,
+            height: 20,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 85),
@@ -533,7 +544,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             const SizedBox(
-              height: 100,
+              height: 30,
             ),
             const Text(
               "Who can stay at\nyour place?",
@@ -541,7 +552,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(
-              height: 75,
+              height: 40,
             ),
             Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 85),
@@ -666,7 +677,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
                       )
                     ]))),
             showGuestTypeError ? guestTypeError : const SizedBox(height: 16),
-            const SizedBox(height: 75),
+            const SizedBox(height: 30),
             navigationButtons
           ]));
     }
@@ -676,7 +687,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             const SizedBox(
-              height: 100,
+              height: 30,
             ),
             const Text(
               "Where are you located?",
@@ -684,7 +695,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(
-              height: 50,
+              height: 30,
             ),
             Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 40),
@@ -918,7 +929,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
                   ]),
                 )),
             const SizedBox(
-              height: 166,
+              height: 80,
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(40, 0, 40, 50),
@@ -979,7 +990,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             const SizedBox(
-              height: 70,
+              height: 30,
             ),
             const Text(
               "Tell us about your place",
@@ -1365,7 +1376,7 @@ class _AddAccommPageState extends State<AddAccommPage> {
                       //             ))),
                     ]))),
             const SizedBox(
-              height: 70,
+              height: 30,
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(40, 0, 40, 50),

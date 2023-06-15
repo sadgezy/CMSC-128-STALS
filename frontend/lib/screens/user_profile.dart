@@ -498,6 +498,41 @@ class UserProfileState extends State<UserProfile> {
 
     return Scaffold(
       backgroundColor: Color(0xffF0F3F5),
+      // appBar: AppBar(
+      //   leading: IconButton(
+      //     icon: Icon(Icons.arrow_back_ios),
+      //     onPressed: () {
+      //       Navigator.pop(context);
+      //     },
+      //     color: Colors.black,
+      //   ),
+      //   title: Text(
+      //     "",
+      //     style: TextStyle(color: Colors.black),
+      //   ),
+      //   backgroundColor: Colors.white,
+      // ),
+
+      // appBar: AppBar(
+      //   title: Center(
+      //     child: Text(
+      //       verificationStatus == "rejected"
+      //           ? "Sorry, your account's verification was declined. Please resubmit your ID."
+      //           : verificationStatus == "accepted"
+      //               ? "Your identity has been verified."
+      //               : "Your account's verification is under review. Please wait.",
+      //       style: const TextStyle(
+      //           fontSize: 14,
+      //           color: Colors.white,
+      //           overflow: TextOverflow.ellipsis),
+      //     ),
+      //   ),
+      //   backgroundColor: verificationStatus == "rejected"
+      //       ? Colors.red
+      //       : verificationStatus == "accepted"
+      //           ? Colors.blue
+      //           : Colors.green,
+      // ),
       body: FutureBuilder<Map<String, dynamic>>(
         future: fetchUserData(widget.userId),
         builder: (BuildContext context,

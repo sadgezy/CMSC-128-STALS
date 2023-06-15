@@ -1,28 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:stals_frontend/screens/admin/admin_dashboard.dart';
-import 'package:stals_frontend/screens/admin/admin_view_accommodations.dart';
-import 'package:stals_frontend/screens/admin/admin_view_pending_approved.dart';
-import 'package:stals_frontend/screens/admin/admin_view_users.dart';
-import 'package:stals_frontend/screens/admin/admin_verify_accomm.dart';
-import 'package:stals_frontend/screens/admin/admin_view_reports.dart';
-import 'package:stals_frontend/screens/owner/add_accomm.dart';
 import 'package:stals_frontend/screens/owner/edit_accomm.dart';
-// import 'package:stals_frontend/screens/owner/owned_accomm.dart';
-import 'package:stals_frontend/screens/signin.dart';
-import 'package:stals_frontend/screens/signup.dart';
-import 'package:stals_frontend/screens/homepage.dart';
-import 'package:stals_frontend/screens/registered_user/homepage_signed.dart';
 import 'package:stals_frontend/screens/accomm.dart';
-import 'package:stals_frontend/screens/owner/view_manage_accomms.dart';
-import 'package:stals_frontend/screens/signup_form.dart';
-import 'package:provider/provider.dart';
-import 'package:stals_frontend/providers/token_provider.dart';
-import 'package:stals_frontend/providers/user_provider.dart';
-import 'package:stals_frontend/screens/verify_user.dart';
 import 'package:stals_frontend/screens/user_profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:stals_frontend/utils/export_screens.dart';
 
 void main() {
   runApp(
@@ -212,8 +194,10 @@ class _AuthWrapperState extends State<AuthWrapper> {
         }
 
         if (context.watch<UserProvider>().isAuthenticated) {
-          if(context.watch<UserProvider>().isAdmin) return const AdminDashBoard();
-          if(context.watch<UserProvider>().isOwner) return const ViewOwnedAccomms();
+          if (context.watch<UserProvider>().isAdmin)
+            return const AdminDashBoard();
+          if (context.watch<UserProvider>().isOwner)
+            return const ViewOwnedAccomms();
           return const RegisteredHomepage();
         } else {
           return const UnregisteredHomepage();
@@ -222,4 +206,3 @@ class _AuthWrapperState extends State<AuthWrapper> {
     );
   }
 }
-
