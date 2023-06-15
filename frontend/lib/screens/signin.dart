@@ -83,6 +83,7 @@ class _SignInPageState extends State<SignInPage> {
                 showCloseIcon: true,
                 closeIconColor: UIParam.WHITE,
                 content: Text("Logging in...")));
+
             String url = "http://127.0.0.1:8000/login/";
             final response = await json.decode((await http.post(Uri.parse(url),
                     body: {
@@ -113,8 +114,14 @@ class _SignInPageState extends State<SignInPage> {
 
               String url3 = "http://127.0.0.1:8000/add-login-count/";
               final response3 = await http.get(Uri.parse(url3));
+
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  showCloseIcon: true,
+                  closeIconColor: UIParam.WHITE,
+                  content: const Text("Logged in!")));
             } else {
-              print("test");
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                   content: Text(
                       "Password is incorrect or account does not exist!")));
