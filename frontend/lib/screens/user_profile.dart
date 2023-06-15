@@ -544,20 +544,20 @@ class UserProfileState extends State<UserProfile> {
 
     return Scaffold(
       backgroundColor: Color(0xffF0F3F5),
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          color: Colors.black,
-        ),
-        title: Text(
-          "",
-          style: TextStyle(color: Colors.black),
-        ),
-        backgroundColor: Colors.white,
-      ),
+      // appBar: AppBar(
+      //   leading: IconButton(
+      //     icon: Icon(Icons.arrow_back_ios),
+      //     onPressed: () {
+      //       Navigator.pop(context);
+      //     },
+      //     color: Colors.black,
+      //   ),
+      //   title: Text(
+      //     "",
+      //     style: TextStyle(color: Colors.black),
+      //   ),
+      //   backgroundColor: Colors.white,
+      // ),
 
       // appBar: AppBar(
       //   title: Center(
