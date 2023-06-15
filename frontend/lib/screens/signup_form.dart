@@ -241,6 +241,7 @@ class _SignUpFormState extends State<SignUpForm> {
                               labelText: "Username"),
                           onChanged: (value) => _username = value,
                           controller: usernameController,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'Please enter a username';
@@ -292,6 +293,7 @@ class _SignUpFormState extends State<SignUpForm> {
                           obscureText: !_isPasswordVisible,
                           onChanged: (value) => _password = value,
                           controller: passwordController,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'Please enter a password';
@@ -299,7 +301,7 @@ class _SignUpFormState extends State<SignUpForm> {
                             if (!RegExp(
                                     r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*(),.?:{}|<>]).{8,}$')
                                 .hasMatch(value)) {
-                              return 'Password must have at least 1 uppercase letter, 1 lowercase letter, \n1 number, and 1 special character';
+                              return 'Password must have at least 8 characters, 1 uppercase letter, \n1 lowercase letter, 1 number, and 1 special character';
                             }
                             return null;
                           },
@@ -331,6 +333,7 @@ class _SignUpFormState extends State<SignUpForm> {
                               labelText: "E-mail"),
                           onChanged: (value) => _email = value,
                           controller: emailController,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'Please enter your email';
@@ -370,6 +373,7 @@ class _SignUpFormState extends State<SignUpForm> {
                                 labelText: "Phone Number"),
                             onChanged: (value) => _phone = value,
                             controller: phoneController,
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Please enter your phone number';
