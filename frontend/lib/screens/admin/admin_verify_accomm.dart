@@ -598,7 +598,7 @@ class _AccommPageProofState extends State<AccommPageProof> {
                                 showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
-                                    print(user_type);
+                                    // print(user_type);
                                     if (user_type == "guest") {
                                       return AlertDialog(
                                           content: Padding(
@@ -647,7 +647,7 @@ class _AccommPageProofState extends State<AccommPageProof> {
                                               ),
                                               ElevatedButton(
                                                 onPressed: () async {
-                                                  print(tagsController.text);
+                                                  // print(tagsController.text);
                                                   switch (tagsController.text) {
                                                     case "1":
                                                       selectedReason = [
@@ -723,7 +723,7 @@ class _AccommPageProofState extends State<AccommPageProof> {
                                 showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
-                                    print(user_type);
+                                    // print(user_type);
                                     if (user_type == "guest") {
                                       return AlertDialog(
                                           content: Padding(
@@ -772,7 +772,7 @@ class _AccommPageProofState extends State<AccommPageProof> {
                             aspectRatio: 2.0,
                             onPageChanged: (index, reason) {
                               _currentIndex = index;
-                              print(index);
+                              // print(index);
                             },
                           ),
                           items: cardList.map((card) {
