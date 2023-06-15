@@ -209,6 +209,24 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
   var filterTitleList = [];
   var filterValueList = [];
 
+  void performSearch() async {
+      String url = "http://127.0.0.1:8000/search-establishment/";
+      final response = await json.decode((await http.post(Uri.parse(url), body: {
+        'name': searchVal,
+        'location_exact': filterValueList[1] ?? "",
+        'establishment_type': filterValueList[2] ?? "",
+        'tenant_type': filterValueList[3] ?? "",
+        'price_lower': filterValueList[4] == null ? "" : "int(${filterValueList[4]})",
+        'price_upper': filterValueList[5] == null ? "" : "int(${filterValueList[5]})",
+      }))
+          .body);
+
+      setState(() {
+        accommList = response;
+        showNotFoundText = accommList.isEmpty;
+      });
+  }
+
   /*
   TO-DO: GET LIST OF ACCOMMODATIONS FROM DATABASE AND FILTER ACCORDING TO `accomFilter`
   initally, the homepage `accomFilter` will all be set to null, meaning all accomms will be displayed since all filter parameters are null
@@ -259,38 +277,7 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
         context.watch<UserProvider>().isVerified ? Colors.green : Colors.red;
 
     IconButton searchButton = IconButton(
-        onPressed: () async {
-          getFavorites();
-          accommList.clear();
-          // print(searchVal);
-          // print(filterTitleList);
-          // print(filterValueList);
-          String url = "http://127.0.0.1:8000/search-establishment/";
-          final response =
-              await json.decode((await http.post(Uri.parse(url), body: {
-            'name': searchVal,
-            'location_exact': filterValueList[1] ?? "",
-            //'location_approx': args.middleName,
-            'establishment_type': filterValueList[2] ?? "",
-            'tenant_type': filterValueList[3] ?? "",
-            'price_lower':
-                filterValueList[4] == null ? "" : "int(${filterValueList[4]})",
-            'price_upper':
-                filterValueList[5] == null ? "" : "int(${filterValueList[5]})",
-            //'capacity': args.userType,
-          }))
-                  .body);
-          //print("GGG");
-          //print(response);
-
-          setState(() {
-            // for (int i = 0; i < response.length; i++) {
-            //   accommList.add(response[i]);
-            // }
-            accommList = response;
-            showNotFoundText = accommList.isEmpty;
-          });
-        },
+        onPressed: performSearch,
         icon: const Icon(
           Icons.search,
           color: Color.fromARGB(255, 0, 0, 0),
@@ -339,7 +326,10 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                       /* PUT SEARCH FUNCTION HERE */
                       searchVal = value;
                     },
-                  ),
+                    onSubmitted: (value) { // Add this property
+                      performSearch();
+                    },
+                  )
                 ),
                 Expanded(
                   flex: 2,
