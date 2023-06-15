@@ -60,7 +60,7 @@ class _AccomCardState extends State<AccomCard> {
   }
 
   // check if accommodation is part of user's favorites
-  Future<void> checkIfAccommodationIsFavorite(String id, String email) async {
+  Future<bool> checkIfAccommodationIsFavorite(String id, String email) async {
     String url = "http://127.0.0.1:8000/view-all-user-favorites/";
     final Map<String, dynamic> requestBody = {
       "email": email
@@ -83,16 +83,8 @@ class _AccomCardState extends State<AccomCard> {
     decodedResponse = decodedResponse.split(",");
     
     // check if id is in the list of user's favorites
-    if (decodedResponse.contains(id)) {
-      isFavorite = true;
-    }
-    else {
-      isFavorite = false;
-    }
-    setState(() {
-      loading = false;
-      checked = true;
-    });
+
+    return Future.value(decodedResponse.contains(id));
   }
 
 
@@ -108,13 +100,6 @@ class _AccomCardState extends State<AccomCard> {
   @override
   Widget build(BuildContext context) {
     getUserInfo();
-    if (user_type == "user" && !checked) {
-      checkIfAccommodationIsFavorite(widget.details.getID(), email);
-    }
-    else {
-      loading = false;
-    }
-    if (loading) return CircularProgressIndicator();
     return ConstrainedBox(
         constraints: new BoxConstraints(maxWidth: 550),
         child: FittedBox(
@@ -268,17 +253,55 @@ class _AccomCardState extends State<AccomCard> {
                                             addAccommodationToFavorites(
                                                 widget.details.getID());
                                           },
+                                          // OLD FAVORITE ICON
                                           // check if part of favorite accomms
-                                          child: isFavorite
-                                              ? Icon(
-                                                  Icons.favorite,
-                                                  color: UIParameter.MAROON,
-                                                  size: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.05,
-                                                )
-                                              : Icon(
+                                          // child: isFavorite
+                                          //     ? Icon(
+                                          //         Icons.favorite,
+                                          //         color: UIParameter.MAROON,
+                                          //         size: MediaQuery.of(context)
+                                          //                 .size
+                                          //                 .width *
+                                          //             0.05,
+                                          //       )
+                                          //     : Icon(
+                                          //         Icons
+                                          //             .favorite_outline_rounded,
+                                          //         color: Colors.grey,
+                                          //         size: MediaQuery.of(context)
+                                          //                 .size
+                                          //                 .width *
+                                          //             0.05,
+                                          //       ))
+
+                                          // ISSUE: FUTURE BUILDER IS STILL NOT WORKING
+                                          child: FutureBuilder(
+                                            future: checkIfAccommodationIsFavorite(widget.details.getID(), email),
+                                            builder: (context, snapshot) {
+                                              print("$isFavorite " + snapshot.data.toString());
+                                              if (snapshot.hasData) {
+                                                if (snapshot.data!) {
+                                                  return Icon(
+                                                    Icons.favorite,
+                                                    color: UIParameter.MAROON,
+                                                    size: MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.05,
+                                                  );
+                                                } else {
+                                                  return Icon(
+                                                    Icons
+                                                        .favorite_outline_rounded,
+                                                    color: Colors.grey,
+                                                    size: MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.05,
+                                                  );
+                                                }
+                                              } else {
+                                                return Icon(
                                                   Icons
                                                       .favorite_outline_rounded,
                                                   color: Colors.grey,
@@ -286,7 +309,10 @@ class _AccomCardState extends State<AccomCard> {
                                                           .size
                                                           .width *
                                                       0.05,
-                                                ))
+                                                );
+                                              }
+                                            },
+                                            )),
                                     ],
                                   )
                           ],
