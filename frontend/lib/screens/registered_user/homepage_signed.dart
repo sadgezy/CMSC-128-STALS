@@ -546,11 +546,14 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                         //print(accommodation);
                         //print(accommodation["name"]);
                         bool isFavorite;
-                        if (userFavorites.contains(accommodation["_id"])) {
+                        if (userFavorites.contains("'${accommodation["_id"]}'")) {
                           isFavorite = true;
                         } else {
                           isFavorite = false;
                         }
+                        //print(userFavorites);
+                        //print(accommodation["_id"]);
+                        //print(isFavorite);
                         return Padding(
                           padding: const EdgeInsets.symmetric(
                               vertical: 7, horizontal: 15),
