@@ -14,7 +14,7 @@ class VerificationPage extends StatefulWidget {
 }
 
 class _VerificationPageState extends State<VerificationPage> {
-  String _idType = '';
+  String _idType = "Select a proof type";
   String _idNumber = '';
   XFile? _idImage;
   PlatformFile? _imageFile;
@@ -23,38 +23,12 @@ class _VerificationPageState extends State<VerificationPage> {
   bool showImageUploadError = false;
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  TextEditingController idNumController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as SignupArguments;
     final double height = MediaQuery.of(context).size.height;
-
-    Future<void> _showDialog(BuildContext context, String message) async {
-      return showDialog<void>(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Signup Status'),
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: <Widget>[
-                  Text(message),
-                ],
-              ),
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: Text('OK'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
-    }
 
     const imageUploadError = Padding(
       padding: EdgeInsets.only(top: 10),
@@ -93,7 +67,8 @@ class _VerificationPageState extends State<VerificationPage> {
               final response;
               if (args.suffix == null) {
                 String url = "http://127.0.0.1:8000/signup/";
-                response = await http.post(Uri.parse(url), body: {
+                response =
+                    await json.decode((await http.post(Uri.parse(url), body: {
                   'first_name': args.firstName,
                   'last_name': args.lastName,
                   'middle_initial': args.middleName,
@@ -105,10 +80,12 @@ class _VerificationPageState extends State<VerificationPage> {
                   'id_type': _idType,
                   'id_number': _idNumber,
                   'id_picture': base64Image
-                });
+                }))
+                        .body);
               } else {
                 String url = "http://127.0.0.1:8000/signup/";
-                response = await http.post(Uri.parse(url), body: {
+                response =
+                    await json.decode((await http.post(Uri.parse(url), body: {
                   'first_name': args.firstName,
                   'last_name': args.lastName,
                   'middle_initial': args.middleName,
@@ -121,27 +98,20 @@ class _VerificationPageState extends State<VerificationPage> {
                   'id_type': _idType,
                   'id_number': _idNumber,
                   'id_picture': base64Image
-                });
+                }))
+                        .body);
               }
 
-              // print(response.statusCode);
-              if (response.statusCode == 201) {
-                //200 is successful but 201 means successful AND created
-                // Signup successful
-                var responseBody = json.decode(response.body);
-                base64Image = responseBody['data']['id_picture'];
-                uploadedImage = true;
-                setState(() {});
+              //print(response);
+              base64Image = response['data']['id_picture'];
+              //print(base64Image);
+              uploadedImage = true;
+              setState(() {});
 
-                await _showDialog(context, 'Signup complete, please login');
-                // Navigate to the login screen
-                Navigator.pop(context);
-                Navigator.pop(context);
-                Navigator.pop(context);
-              } else {
-                // Signup failed, display an error message
-                await _showDialog(context, 'Error: Signup failed');
-              }
+              if (!context.mounted) return;
+              Navigator.pop(context);
+              Navigator.pop(context);
+              Navigator.pop(context);
             }
           }
         },
@@ -158,20 +128,6 @@ class _VerificationPageState extends State<VerificationPage> {
     ]);
 
     return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            color: Colors.black,
-          ),
-          title: Text(
-            "",
-            style: TextStyle(color: Colors.black),
-          ),
-          backgroundColor: Colors.white,
-        ),
         backgroundColor: const Color(0xffF0F3F5),
         body: SingleChildScrollView(
             child: Center(
@@ -200,7 +156,12 @@ class _VerificationPageState extends State<VerificationPage> {
                         ),
                         const SizedBox(height: 5),
                         DropdownButtonFormField(
+                          value: _idType,
                           items: const [
+                            DropdownMenuItem(
+                              value: 'Select a proof type',
+                              child: Text('Select a proof type'),
+                            ),
                             DropdownMenuItem(
                               value: 'UMID',
                               child: Text('UMID'),
@@ -273,6 +234,9 @@ class _VerificationPageState extends State<VerificationPage> {
                             if (value?.isEmpty ?? true) {
                               return 'Please select a proof type';
                             }
+                            if (value == "Select a proof type") {
+                              return 'Please select a proof type';
+                            }
                           }),
                           onChanged: (value) {
                             _idType = value!;
@@ -290,6 +254,7 @@ class _VerificationPageState extends State<VerificationPage> {
                           height: 5,
                         ),
                         TextFormField(
+                          controller: idNumController,
                           decoration: InputDecoration(
                             contentPadding:
                                 const EdgeInsets.fromLTRB(25, 10, 10, 10),
@@ -356,7 +321,7 @@ class _VerificationPageState extends State<VerificationPage> {
                     ),
                     const SizedBox(height: 5),
                     const Text(
-                      'Only photos below 1MB are allowed.',
+                      'Only photos 4mb and below are allowed.',
                       style: TextStyle(
                         color: const Color.fromARGB(255, 25, 83, 95),
                       ),
@@ -458,7 +423,7 @@ class _VerificationPageState extends State<VerificationPage> {
       double fileSize = (bytes.lengthInBytes / (1024 * 1024));
       //print(bytes.lengthInBytes);
       //print(fileSize);
-      if (fileSize > 1) {
+      if (fileSize > 4) {
         setState(() {
           _imageFile = null;
         });
