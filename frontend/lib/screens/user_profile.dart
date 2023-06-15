@@ -76,6 +76,19 @@ class UserProfileState extends State<UserProfile> {
     }
   }
 
+  Future<void> editUserProfile(
+    Map<String, dynamic> updatedData, String userId) async {
+    String url = 'http://127.0.0.1:8000/edit-profile/$userId/';
+    final response = await http.post(
+      Uri.parse(url),
+      body: updatedData,
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to edit user data');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
@@ -613,7 +626,7 @@ class UserProfileState extends State<UserProfile> {
       ),
       actions: <Widget>[
         TextButton(
-          onPressed: () {
+          onPressed: () async {
             if (_editNameFormKey.currentState!.validate()) {
               Navigator.of(context).pop();
               setState(() {
@@ -623,10 +636,22 @@ class UserProfileState extends State<UserProfile> {
                 suffix = suffixController.text;
                 fullname = "$firstname $middleinitial $lastname $suffix";
               });
-              // fullname = nameController.text;
-              //TODO: reflect name change to database
-              
 
+              // Prepare the updated data for the user profile
+              Map<String, dynamic> updatedData = {
+                'first_name': firstname,
+                'middle_initial': middleinitial,
+                'last_name': lastname,
+                'suffix': suffix,
+              };
+
+              // Call the editUserProfile function with the updated data and user ID
+              try {
+                await editUserProfile(updatedData, widget.userId);
+                print('User data updated successfully');
+              } catch (e) {
+                print('Failed to update user data: $e');
+              }
             }
           },
           style: TextButton.styleFrom(
