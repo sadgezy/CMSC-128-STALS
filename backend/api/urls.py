@@ -6,6 +6,8 @@ urlpatterns = [
     path("login/", views.login),
     path("signup/", views.signup),
     path("check/", views.check_authenticated),
+    path("check-user-email/", views.check_user_email),
+    path("check-user-username/", views.check_user_username),
 
     path('admin-details/', views.getadmindetails),
     path('user-details/', views.getuserdetails),

@@ -33,6 +33,7 @@ Edit Accom: Basically the same as Accom page but
 
 const _checkurl = 'https://img.icons8.com/?size=512&id=11695&format=png';
 const _noturl = 'https://img.icons8.com/?size=512&id=TfRrgMHDWJk3&format=png';
+String id = "";
 
 class Item extends StatefulWidget {
   const Item(
@@ -322,14 +323,14 @@ class _ItemState extends State<Item> {
                           .text ==
                       "") {
                     priceUpperController
-                        .text = widget.priceLower.toString();
+                        .text = widget.priceUpper.toString();
                 }
                 if (maxTenantsController
                         .text ==
                     "") {
                   maxTenantsController
                           .text =
-                      widget.availability.toString();
+                      widget.capacity.toString();
                 }
                 String url =
                     "http://127.0.0.1:8000/edit-room/" + widget.id + "/";
@@ -358,10 +359,11 @@ class _ItemState extends State<Item> {
                   final response = await http.put(Uri.parse(url),
                       headers: headers, body: json.encode(requestBody));
                 }
-                Navigator.pushNamed(context, '/view_owned_accomms');
+                Navigator.pushNamed(context, '/owned/accomm/edit', arguments: id);
+                
               },
               child: const Icon(
-                Icons.edit,
+                Icons.save_as,
                 color: Colors.white,
                 size: 24,
               ),
@@ -445,8 +447,6 @@ List<DropdownMenuItem<String>> get dropdownTenant {
 String? response_tenant_type = "";
 String? response_estab_type = "";
 
-
-
 class MyDropdownButtonEstate extends StatefulWidget {
   @override
   _MyDropdownButtonEstateState createState() => _MyDropdownButtonEstateState();
@@ -522,7 +522,6 @@ class _EditAccommState extends State<EditAccomm> {
   String response_Name = "";
   String owner_id = "";
   String loc_picture = "";
-  String id = "";
   String response_Description = "";
   //Changes here
   PlatformFile? _imageFile;
