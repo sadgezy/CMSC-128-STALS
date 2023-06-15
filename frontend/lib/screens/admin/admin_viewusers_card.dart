@@ -56,13 +56,9 @@ class _PendingUserCardState extends State<PendingUserCard> {
       }
 
       String url2 = "http://127.0.0.1:8000/set-reject-user/";
-      final response2 =
-          await json.decode((await http.post(Uri.parse(url2), body: {
-        '_id': widget.userId,
-        'rejected': "False"
-      }))
-              .body);
-
+      final response2 = await json.decode((await http.post(Uri.parse(url2),
+              body: {'_id': widget.userId, 'rejected': "False"}))
+          .body);
     } catch (error) {
       print(error.toString());
     }
@@ -87,16 +83,10 @@ class _PendingUserCardState extends State<PendingUserCard> {
 
   void reject() async {
     try {
-
       String url = "http://127.0.0.1:8000/set-reject-user/";
-      final response =
-          await json.decode((await http.post(Uri.parse(url), body: {
-        '_id': widget.userId,
-        'rejected': "True"
-      }))
-              .body);
-
-      
+      final response = await json.decode((await http.post(Uri.parse(url),
+              body: {'_id': widget.userId, 'rejected': "True"}))
+          .body);
 
       //widget.fetchUnverifiedUsers();
     } catch (error) {
@@ -108,121 +98,131 @@ class _PendingUserCardState extends State<PendingUserCard> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        showDialog(
-            context: context,
-            builder: (context) {
-              return Profile(
-                userId: widget.userId,
-              );
-            });
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          color: UIParameter.WHITE,
-          borderRadius: UIParameter.CARD_BORDER_RADIUS,
-        ),
-        width: MediaQuery.of(context).size.width,
-        height: 58,
-        child: Row(
-          children: [
-            SizedBox(
-              width: (MediaQuery.of(context).size.width - 40) / 7,
-              child: const Icon(Icons.person_pin_sharp,
-                  size: 34, color: Colors.black87),
-            ),
-            SizedBox(
-              width: (MediaQuery.of(context).size.width - 40) * 2 / 7,
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+        onTap: () {
+          showDialog(
+              context: context,
+              builder: (context) {
+                return Profile(
+                  userId: widget.userId,
+                );
+              });
+        },
+        child: ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 1000),
+            child: FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: UIParameter.WHITE,
+                  borderRadius: UIParameter.CARD_BORDER_RADIUS,
+                ),
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.width / 10,
+                child: Row(
                   children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        widget.name,
-                        softWrap: false,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontSize: UIParameter.FONT_HEADING_SIZE,
-                          fontFamily: UIParameter.FONT_REGULAR,
-                          fontWeight: FontWeight.w600,
+                    SizedBox(
+                      width: (MediaQuery.of(context).size.width - 40) / 7,
+                      child: Icon(Icons.person_pin_sharp,
+                          size: MediaQuery.of(context).size.width * 0.05,
+                          color: Colors.black87),
+                    ),
+                    SizedBox(
+                      width: (MediaQuery.of(context).size.width - 40) * 2 / 7,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                widget.name,
+                                softWrap: false,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize:
+                                      MediaQuery.of(context).size.width * 0.03,
+                                  fontFamily: UIParameter.FONT_REGULAR,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "Tap to know more",
+                                style: TextStyle(
+                                  fontSize:
+                                      MediaQuery.of(context).size.width * 0.02,
+                                  fontFamily: UIParameter.FONT_REGULAR,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                    const Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Tap to know more",
-                        style: TextStyle(
-                          fontSize: UIParameter.FONT_BODY_SIZE,
-                          fontFamily: UIParameter.FONT_REGULAR,
-                        ),
+                    SizedBox(
+                      width: (MediaQuery.of(context).size.width - 40) * 4 / 7,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: UIParameter.DARK_TEAL,
+                              shape: RoundedRectangleBorder(
+                                // borderRadius: BorderRadius.circular(UIParameter.CARD_BORDER_RADIUS),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                            ),
+                            onPressed: () {
+                              verifyUser();
+                            },
+                            child: Text(
+                              "APPROVE",
+                              style: TextStyle(
+                                color: UIParameter.WHITE,
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.025,
+                                fontFamily: UIParameter.FONT_REGULAR,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.01),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: UIParameter.MAROON,
+                              shape: RoundedRectangleBorder(
+                                // borderRadius: BorderRadius.circular(UIParameter.CARD_BORDER_RADIUS),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                            ),
+                            onPressed: () {
+                              //deleteUser();
+                              reject();
+                              archiveUser();
+                            },
+                            child: Text(
+                              "REJECT",
+                              style: TextStyle(
+                                color: UIParameter.WHITE,
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.025,
+                                fontFamily: UIParameter.FONT_REGULAR,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                        ],
                       ),
                     ),
                   ],
                 ),
               ),
-            ),
-            SizedBox(
-              width: (MediaQuery.of(context).size.width - 40) * 4 / 7,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: UIParameter.DARK_TEAL,
-                      shape: RoundedRectangleBorder(
-                        // borderRadius: BorderRadius.circular(UIParameter.CARD_BORDER_RADIUS),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                    onPressed: () {
-                      verifyUser();
-                    },
-                    child: Text(
-                      "APPROVE",
-                      style: TextStyle(
-                        color: UIParameter.WHITE,
-                        fontSize: UIParameter.FONT_BODY_SIZE,
-                        fontFamily: UIParameter.FONT_REGULAR,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: UIParameter.MAROON,
-                      shape: RoundedRectangleBorder(
-                        // borderRadius: BorderRadius.circular(UIParameter.CARD_BORDER_RADIUS),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                    onPressed: () {
-                      //deleteUser();
-                      reject();
-                      archiveUser();
-                    },
-                    child: Text(
-                      "REJECT",
-                      style: TextStyle(
-                        color: UIParameter.WHITE,
-                        fontSize: UIParameter.FONT_BODY_SIZE,
-                        fontFamily: UIParameter.FONT_REGULAR,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+            )));
   }
 }
 
@@ -347,85 +347,98 @@ class _VerifiedUserCardState extends State<VerifiedUserCard> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        showDialog(
-            context: context,
-            builder: (context) {
-              return Profile(
-                userId: widget.userId,
-              );
-            });
-      },
-      child: Container(
-          decoration: BoxDecoration(
-              color: UIParameter.WHITE,
-              borderRadius: UIParameter.CARD_BORDER_RADIUS),
-          width: (MediaQuery.of(context).size.width),
-          height: 58,
-          child: Row(children: [
-            SizedBox(
-              width: (MediaQuery.of(context).size.width - 40) / 7,
-              child: const Icon(Icons.person_pin_sharp,
-                  size: 34, color: Colors.black87),
-            ),
-            SizedBox(
-                width: (MediaQuery.of(context).size.width - 40) * 4 / 7,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Align(
+        onTap: () {
+          showDialog(
+              context: context,
+              builder: (context) {
+                return Profile(
+                  userId: widget.userId,
+                );
+              });
+        },
+        child: ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 1000),
+            child: FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Container(
+                  decoration: BoxDecoration(
+                      color: UIParameter.WHITE,
+                      borderRadius: UIParameter.CARD_BORDER_RADIUS),
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.width / 10,
+                  child: Row(children: [
+                    SizedBox(
+                      width: (MediaQuery.of(context).size.width - 40) / 7,
+                      child: Icon(Icons.person_pin_sharp,
+                          size: MediaQuery.of(context).size.width * 0.05,
+                          color: Colors.black87),
+                    ),
+                    SizedBox(
+                        width: (MediaQuery.of(context).size.width - 40) * 4 / 7,
+                        child: Align(
                           alignment: Alignment.centerLeft,
-                          child: Text(widget.name,
-                              softWrap: false,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                  fontSize: UIParameter.FONT_HEADING_SIZE,
-                                  fontFamily: UIParameter.FONT_REGULAR,
-                                  fontWeight: FontWeight.w600))),
-                      const Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text("Tap to know more",
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(widget.name,
+                                      softWrap: false,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.03,
+                                          fontFamily: UIParameter.FONT_REGULAR,
+                                          fontWeight: FontWeight.w600))),
+                              Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text("Tap to know more",
+                                      style: TextStyle(
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.02,
+                                          fontFamily:
+                                              UIParameter.FONT_REGULAR)))
+                            ],
+                          ),
+                        )),
+                    SizedBox(
+                      width: (MediaQuery.of(context).size.width - 40) * 2 / 7,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: UIParameter.MAROON,
+                              shape: RoundedRectangleBorder(
+                                // borderRadius: BorderRadius.circular(UIParameter.CARD_BORDER_RADIUS),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                            ),
+                            onPressed: () {
+                              archiveUser();
+                            },
+                            child: Text(
+                              "ARCHIVE",
                               style: TextStyle(
-                                  fontSize: UIParameter.FONT_BODY_SIZE,
-                                  fontFamily: UIParameter.FONT_REGULAR)))
-                    ],
-                  ),
-                )),
-            SizedBox(
-              width: (MediaQuery.of(context).size.width - 40) * 2 / 7,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: UIParameter.MAROON,
-                      shape: RoundedRectangleBorder(
-                        // borderRadius: BorderRadius.circular(UIParameter.CARD_BORDER_RADIUS),
-                        borderRadius: BorderRadius.circular(10.0),
+                                color: UIParameter.WHITE,
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.025,
+                                fontFamily: UIParameter.FONT_REGULAR,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.01),
+                        ],
                       ),
                     ),
-                    onPressed: () {
-                      archiveUser();
-                    },
-                    child: Text(
-                      "ARCHIVE",
-                      style: TextStyle(
-                        color: UIParameter.WHITE,
-                        fontSize: UIParameter.FONT_BODY_SIZE,
-                        fontFamily: UIParameter.FONT_REGULAR,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-    
-                  const SizedBox(width: 10),
-                ],
-              ),
-            ),
-          ])),
-    );
+                  ])),
+            )));
   }
 }
 
@@ -486,106 +499,122 @@ class _ArchiveUserCardState extends State<ArchiveUserCard> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        showDialog(
-            context: context,
-            builder: (context) {
-              return Profile(
-                userId: widget.userId,
-              );
-            });
-      },
-      child: Container(
-          decoration: BoxDecoration(
-              color: UIParameter.WHITE,
-              borderRadius: UIParameter.CARD_BORDER_RADIUS),
-          width: (MediaQuery.of(context).size.width),
-          height: 58,
-          child: Row(children: [
-            SizedBox(
-              width: (MediaQuery.of(context).size.width - 40) / 7,
-              child: const Icon(Icons.person_pin_sharp,
-                  size: 34, color: Colors.black87),
-            ),
-            SizedBox(
-                width: (MediaQuery.of(context).size.width - 40) * 2 / 7,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Align(
+        onTap: () {
+          showDialog(
+              context: context,
+              builder: (context) {
+                return Profile(
+                  userId: widget.userId,
+                );
+              });
+        },
+        child: ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 1000),
+            child: FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Container(
+                  decoration: BoxDecoration(
+                      color: UIParameter.WHITE,
+                      borderRadius: UIParameter.CARD_BORDER_RADIUS),
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.width / 10,
+                  child: Row(children: [
+                    SizedBox(
+                      width: (MediaQuery.of(context).size.width - 40) / 7,
+                      child: Icon(Icons.person_pin_sharp,
+                          size: MediaQuery.of(context).size.width * 0.05,
+                          color: Colors.black87),
+                    ),
+                    SizedBox(
+                        width: (MediaQuery.of(context).size.width - 40) * 2 / 7,
+                        child: Align(
                           alignment: Alignment.centerLeft,
-                          child: Text(widget.name,
-                              softWrap: false,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                  fontSize: UIParameter.FONT_HEADING_SIZE,
-                                  fontFamily: UIParameter.FONT_REGULAR,
-                                  fontWeight: FontWeight.w600))),
-                      const Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text("Tap to know more",
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(widget.name,
+                                      softWrap: false,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.03,
+                                          fontFamily: UIParameter.FONT_REGULAR,
+                                          fontWeight: FontWeight.w600))),
+                              Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text("Tap to know more",
+                                      style: TextStyle(
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.02,
+                                          fontFamily:
+                                              UIParameter.FONT_REGULAR)))
+                            ],
+                          ),
+                        )),
+                    SizedBox(
+                      width: (MediaQuery.of(context).size.width - 40) * 4 / 7,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: UIParameter.DARK_TEAL,
+                              shape: RoundedRectangleBorder(
+                                // borderRadius: BorderRadius.circular(UIParameter.CARD_BORDER_RADIUS),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                            ),
+                            onPressed: () {
+                              resolveReport();
+                            },
+                            child: Text(
+                              "RESTORE",
                               style: TextStyle(
-                                  fontSize: UIParameter.FONT_BODY_SIZE,
-                                  fontFamily: UIParameter.FONT_REGULAR)))
-                    ],
-                  ),
-                )),
-            SizedBox(
-              width: (MediaQuery.of(context).size.width - 40) * 4 / 7,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: UIParameter.DARK_TEAL,
-                      shape: RoundedRectangleBorder(
-                        // borderRadius: BorderRadius.circular(UIParameter.CARD_BORDER_RADIUS),
-                        borderRadius: BorderRadius.circular(10.0),
+                                color: UIParameter.WHITE,
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.025,
+                                fontFamily: UIParameter.FONT_REGULAR,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.01),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: UIParameter.MAROON,
+                              shape: RoundedRectangleBorder(
+                                // borderRadius: BorderRadius.circular(UIParameter.CARD_BORDER_RADIUS),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                            ),
+                            onPressed: () {
+                              deleteUser();
+                            },
+                            child: Text(
+                              "DELETE",
+                              style: TextStyle(
+                                color: UIParameter.WHITE,
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.025,
+                                fontFamily: UIParameter.FONT_REGULAR,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.01),
+                        ],
                       ),
                     ),
-                    onPressed: () {
-                      resolveReport();
-                    },
-                    child: Text(
-                      "RESTORE",
-                      style: TextStyle(
-                        color: UIParameter.WHITE,
-                        fontSize: UIParameter.FONT_BODY_SIZE,
-                        fontFamily: UIParameter.FONT_REGULAR,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: UIParameter.MAROON,
-                      shape: RoundedRectangleBorder(
-                        // borderRadius: BorderRadius.circular(UIParameter.CARD_BORDER_RADIUS),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                    onPressed: () {
-                      deleteUser();
-                    },
-                    child: Text(
-                      "DELETE",
-                      style: TextStyle(
-                        color: UIParameter.WHITE,
-                        fontSize: UIParameter.FONT_BODY_SIZE,
-                        fontFamily: UIParameter.FONT_REGULAR,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                ],
-              ),
-            ),
-          ])),
-    );
+                  ])),
+            )));
   }
 }
 
