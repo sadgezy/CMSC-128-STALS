@@ -180,7 +180,7 @@ def login(request):
     else:
         return Response(data=request.data)
     
-@api_view(['PUT'])
+@api_view(['POST'])
 def editProfile(request, pk):
 
     user = User.objects.get(pk=ObjectId(pk))
@@ -188,8 +188,6 @@ def editProfile(request, pk):
     user.last_name = request.data['last_name']
     user.middle_initial = request.data['middle_initial']
     user.suffix = request.data['suffix']
-    user.phone_no = request.data['phone_no']
-    user.username = request.data['username'] # Set the is_verified field to True
     user.save()
 
     return Response(data={"message": "Successfully edited user profile"}) 
