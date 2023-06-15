@@ -14,7 +14,7 @@ class VerificationPage extends StatefulWidget {
 }
 
 class _VerificationPageState extends State<VerificationPage> {
-  String _idType = '';
+  String _idType = "Select a proof type";
   String _idNumber = '';
   XFile? _idImage;
   PlatformFile? _imageFile;
@@ -23,6 +23,7 @@ class _VerificationPageState extends State<VerificationPage> {
   bool showImageUploadError = false;
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  TextEditingController idNumController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -200,7 +201,12 @@ class _VerificationPageState extends State<VerificationPage> {
                         ),
                         const SizedBox(height: 5),
                         DropdownButtonFormField(
+                          value: _idType,
                           items: const [
+                            DropdownMenuItem(
+                              value: 'Select a proof type',
+                              child: Text('Select a proof type'),
+                            ),
                             DropdownMenuItem(
                               value: 'UMID',
                               child: Text('UMID'),
@@ -273,6 +279,9 @@ class _VerificationPageState extends State<VerificationPage> {
                             if (value?.isEmpty ?? true) {
                               return 'Please select a proof type';
                             }
+                            if (value == "Select a proof type") {
+                              return 'Please select a proof type';
+                            }
                           }),
                           onChanged: (value) {
                             _idType = value!;
@@ -290,6 +299,7 @@ class _VerificationPageState extends State<VerificationPage> {
                           height: 5,
                         ),
                         TextFormField(
+                          controller: idNumController,
                           decoration: InputDecoration(
                             contentPadding:
                                 const EdgeInsets.fromLTRB(25, 10, 10, 10),
