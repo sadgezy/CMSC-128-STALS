@@ -29,6 +29,33 @@ class _VerificationPageState extends State<VerificationPage> {
     final args = ModalRoute.of(context)!.settings.arguments as SignupArguments;
     final double height = MediaQuery.of(context).size.height;
 
+    Future<void> _showDialog(BuildContext context, String message) async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Signup Status'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text(message),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     const imageUploadError = Padding(
       padding: EdgeInsets.only(top: 10),
       child: SizedBox(
@@ -66,8 +93,7 @@ class _VerificationPageState extends State<VerificationPage> {
               final response;
               if (args.suffix == null) {
                 String url = "http://127.0.0.1:8000/signup/";
-                response =
-                    await json.decode((await http.post(Uri.parse(url), body: {
+                response = await http.post(Uri.parse(url), body: {
                   'first_name': args.firstName,
                   'last_name': args.lastName,
                   'middle_initial': args.middleName,
@@ -79,12 +105,10 @@ class _VerificationPageState extends State<VerificationPage> {
                   'id_type': _idType,
                   'id_number': _idNumber,
                   'id_picture': base64Image
-                }))
-                        .body);
+                });
               } else {
                 String url = "http://127.0.0.1:8000/signup/";
-                response =
-                    await json.decode((await http.post(Uri.parse(url), body: {
+                response = await http.post(Uri.parse(url), body: {
                   'first_name': args.firstName,
                   'last_name': args.lastName,
                   'middle_initial': args.middleName,
@@ -97,20 +121,27 @@ class _VerificationPageState extends State<VerificationPage> {
                   'id_type': _idType,
                   'id_number': _idNumber,
                   'id_picture': base64Image
-                }))
-                        .body);
+                });
               }
 
-              //print(response);
-              base64Image = response['data']['id_picture'];
-              //print(base64Image);
-              uploadedImage = true;
-              setState(() {});
+              // print(response.statusCode);
+              if (response.statusCode == 201) {
+                //200 is successful but 201 means successful AND created
+                // Signup successful
+                var responseBody = json.decode(response.body);
+                base64Image = responseBody['data']['id_picture'];
+                uploadedImage = true;
+                setState(() {});
 
-              if (!context.mounted) return;
-              Navigator.pop(context);
-              Navigator.pop(context);
-              Navigator.pop(context);
+                await _showDialog(context, 'Signup complete, please login');
+                // Navigate to the login screen
+                Navigator.pop(context);
+                Navigator.pop(context);
+                Navigator.pop(context);
+              } else {
+                // Signup failed, display an error message
+                await _showDialog(context, 'Error: Signup failed');
+              }
             }
           }
         },
