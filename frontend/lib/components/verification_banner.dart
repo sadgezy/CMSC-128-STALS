@@ -16,12 +16,11 @@ class VerificationBanner extends StatelessWidget {
       height: height * 0.08,
       width: width,
       decoration: BoxDecoration(
-        color:
-            verificationStatus == "rejected" || verificationStatus == "pending"
-                ? Colors.red
-                : verificationStatus == "accepted"
-                    ? Colors.blue
-                    : Colors.green,
+        color: verificationStatus == "rejected"
+            ? Colors.red
+            : verificationStatus == "accepted"
+                ? Colors.blue
+                : Colors.green,
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.4),

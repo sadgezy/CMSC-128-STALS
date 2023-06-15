@@ -3,6 +3,7 @@ import 'package:stals_frontend/screens/signup.dart';
 import 'package:provider/provider.dart';
 import 'package:stals_frontend/providers/token_provider.dart';
 import 'package:stals_frontend/providers/user_provider.dart';
+import 'package:stals_frontend/UI_parameters.dart' as UIParam;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
@@ -23,14 +24,17 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
     final email = Form(
         key: emailKey,
         child: TextFormField(
           controller: emailController,
           validator: (value) {
-            if (value == null || value.isEmpty) {
+            if (value!.isEmpty) {
               return 'This field cannot be empty!';
+            }
+            if (!RegExp(r'^[\w-]+(\.[\w-]+)*@([a-zA-Z0-9-]+\.)*[a-zA-Z]{2,7}$')
+                .hasMatch(value)) {
+              return 'Please enter a valid email address!';
             }
             return null;
           },
@@ -73,40 +77,55 @@ class _SignInPageState extends State<SignInPage> {
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: ElevatedButton(
         onPressed: () async {
-          String url = "http://127.0.0.1:8000/login/";
-          final response = await json.decode((await http.post(Uri.parse(url),
-                  body: {
-                'email': emailController.text,
-                'password': passwordController.text
-              }))
-              .body);
-          if (response['message'] == "Login Successful") {
-            String token = response['token'];
-            Provider.of<TokenProvider>(context, listen: false).setToken(token);
-            setState(() {});
-            String url = "http://127.0.0.1:8000/get-one-user/";
-            final response2 =
-                await json.decode((await http.post(Uri.parse(url), body: {
-              'email': emailController.text,
-            }))
-                    .body);
-            //print(response2);
-            user_type = response2[0]["user_type"];
-            Provider.of<UserProvider>(context, listen: false).setUser(
-                response2[0]["_id"],
-                response2[0]["email"],
-                response2[0]["username"],
-                response2[0]["user_type"],
-                response2[0]["verified"],
-                response2[0]["rejected"]);
+          if (emailKey.currentState!.validate() &&
+              passKey.currentState!.validate()) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                showCloseIcon: true,
+                closeIconColor: UIParam.WHITE,
+                content: Text("Logging in...")));
 
-            String url3 = "http://127.0.0.1:8000/add-login-count/";
-            final response3 = await http.get(Uri.parse(url3));
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                content:
-                    Text("Password is incorrect or account does not exist!")));
-            print("Unsuccesful login!");
+            String url = "http://127.0.0.1:8000/login/";
+            final response = await json.decode((await http.post(Uri.parse(url),
+                    body: {
+                  'email': emailController.text,
+                  'password': passwordController.text
+                }))
+                .body);
+            if (response['message'] == "Login Successful") {
+              String token = response['token'];
+              Provider.of<TokenProvider>(context, listen: false)
+                  .setToken(token);
+              setState(() {});
+              String url = "http://127.0.0.1:8000/get-one-user/";
+              final response2 =
+                  await json.decode((await http.post(Uri.parse(url), body: {
+                'email': emailController.text,
+              }))
+                      .body);
+              //print(response2);
+              user_type = response2[0]["user_type"];
+              Provider.of<UserProvider>(context, listen: false).setUser(
+                  response2[0]["_id"],
+                  response2[0]["email"],
+                  response2[0]["username"],
+                  response2[0]["user_type"],
+                  response2[0]["verified"],
+                  response2[0]["rejected"]);
+
+              String url3 = "http://127.0.0.1:8000/add-login-count/";
+              final response3 = await http.get(Uri.parse(url3));
+
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  showCloseIcon: true,
+                  closeIconColor: UIParam.WHITE,
+                  content: const Text("Logged in!")));
+            } else {
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text(
+                      "Password is incorrect or account does not exist!")));
+            }
           }
 
           if (user_type == "user") {
@@ -232,19 +251,7 @@ class _SignInPageState extends State<SignInPage> {
                             ),
                           ),
                         ],
-                      ))
-                  // decoration: const BoxDecoration(
-                  //     gradient: LinearGradient(
-                  //   begin: Alignment.topCenter,
-                  //   end: Alignment.bottomCenter,
-                  //   colors: [
-                  //     Color.fromARGB(255, 240, 243, 245),
-                  //     Color.fromARGB(255, 25, 83, 95)
-                  //   ],
-                  //   stops: [0.35, 0.95],
-                  // )),
-
-                  )));
+                      )))));
     } else {
       // print(Provider.of<UserProvider>(context, listen: false).userInfo);
       // Timer(const Duration(milliseconds: 500), () {
@@ -252,7 +259,10 @@ class _SignInPageState extends State<SignInPage> {
       //   Provider.of<UserProvider>(context, listen: false).removeUser("");
       // });
 
-      return Center(child: CircularProgressIndicator());
+      return Center(
+          child: CircularProgressIndicator(
+        color: UIParam.MAROON,
+      ));
     }
   }
 }
