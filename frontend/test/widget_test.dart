@@ -9,22 +9,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:stals_frontend/main.dart';
+import 'package:stals_frontend/utils/export_screens.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('Sign In', (WidgetTester signInTester) async {
+    final emailField = find.byKey(ValueKey("emailKey"));
+    final passField = find.byKey(ValueKey("passKey"));
+    final submitBtn = find.byKey(ValueKey("SubmitBtn"));
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
-
+    await signInTester.pumpWidget(const MyApp());
+    await signInTester.pumpWidget(const SignInPage());
+    await signInTester.enterText(emailField, "customer@test.com");
+    await signInTester.enterText(passField, "customerA1");
+    await signInTester.tap(submitBtn);
+    await signInTester.pump();
     // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.text('customer@test.com'), findsOneWidget);
+    expect(find.text('customer@test.com'), findsOneWidget);
   });
 }
