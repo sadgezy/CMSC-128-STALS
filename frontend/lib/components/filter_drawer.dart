@@ -109,52 +109,20 @@ class _FilterDrawerState extends State<FilterDrawer> {
               Column(
                 children: [
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.7,
+                    margin: EdgeInsets.symmetric(horizontal: 10),
+                    //width: MediaQuery.of(context).size.width * 0.7,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: RadioListTile(
                         activeColor: UIParameter.LIGHT_TEAL,
-                        title: radioTitle == 'Rating'
-                            ? Row(
-                                children: [
-                                  Text(
-                                    choices[i].toString(),
-                                    style: const TextStyle(
-                                        fontFamily: UIParameter.FONT_REGULAR,
-                                        fontSize: UIParameter.FONT_BODY_SIZE),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  RatingBar.builder(
-                                      minRating: 0,
-                                      maxRating: 5,
-                                      initialRating: choices[i],
-                                      direction: Axis.horizontal,
-                                      allowHalfRating: false,
-
-                                      // ignore gestures to make rating un-editable
-                                      ignoreGestures: true,
-                                      onRatingUpdate: (rating) {
-                                        /* CANNOT RATE HERE */
-                                      },
-                                      itemSize: 18,
-                                      itemBuilder:
-                                          (BuildContext context, int index) =>
-                                              const Icon(
-                                                Icons.star,
-                                                color: Colors.amber,
-                                              ))
-                                ],
-                              )
-                            : Text(
-                                choices[i].toString(),
-                                style: const TextStyle(
-                                    fontFamily: UIParameter.FONT_REGULAR,
-                                    fontSize: UIParameter.FONT_BODY_SIZE),
-                              ),
+                        title: Text(
+                          choices[i].toString(),
+                          style: const TextStyle(
+                              fontFamily: UIParameter.FONT_REGULAR,
+                              fontSize: UIParameter.FONT_BODY_SIZE),
+                        ),
                         // so the user can choose to select one or select none
                         toggleable: true,
                         value: choices[i],
@@ -191,32 +159,29 @@ class _FilterDrawerState extends State<FilterDrawer> {
   }
 
   // builds the textboxes for location, min price, and max price
-  Widget _buildTextBoxes(String displayText, double widthMultiplier,
-      TextEditingController controller, String input_type) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      child: Container(
-        width: MediaQuery.of(context).size.width * widthMultiplier,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: TextField(
-          controller: controller,
-          keyboardType: input_type == 'number'
-              ? TextInputType.number
-              : TextInputType.text,
-          cursorColor: UIParameter.LIGHT_TEAL,
-          style: const TextStyle(
-              fontSize: UIParameter.FONT_BODY_SIZE,
-              fontFamily: UIParameter.FONT_REGULAR),
-          decoration: InputDecoration(
-            isDense: true,
-            hintText: displayText,
-            hintMaxLines: 1,
-            border: InputBorder.none,
-          ),
+  Widget _buildTextBoxes(
+      String displayText, TextEditingController controller, String input_type) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      //width: MediaQuery.of(context).size.width * widthMultiplier,
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: TextField(
+        controller: controller,
+        keyboardType:
+            input_type == 'number' ? TextInputType.number : TextInputType.text,
+        cursorColor: UIParameter.LIGHT_TEAL,
+        style: const TextStyle(
+            fontSize: UIParameter.FONT_BODY_SIZE,
+            fontFamily: UIParameter.FONT_REGULAR),
+        decoration: InputDecoration(
+          isDense: true,
+          hintText: displayText,
+          hintMaxLines: 1,
+          border: InputBorder.none,
         ),
       ),
     );
@@ -224,7 +189,12 @@ class _FilterDrawerState extends State<FilterDrawer> {
 
   @override
   Widget build(BuildContext context) {
+    final drawerWidth = MediaQuery.of(context).size.width * 0.25;
+    const double drawerWidthMin = 200;
     return Drawer(
+        // if screen is small, drawer width stays at 200
+        // else if screen is large, draer takes up 25% of screen width
+        width: drawerWidth < drawerWidthMin ? drawerWidthMin : drawerWidth,
         backgroundColor: UIParameter.WHITE,
         child: SingleChildScrollView(
           child: Column(
@@ -255,10 +225,7 @@ class _FilterDrawerState extends State<FilterDrawer> {
                       fontSize: UIParameter.FONT_HEADING_SIZE),
                 ),
               ),
-              Center(
-                child: _buildTextBoxes(
-                    "Enter Location", 0.7, locationTextController, 'text'),
-              ),
+              _buildTextBoxes("Enter Location", locationTextController, 'text'),
               _customDivider(),
               const Padding(
                 padding: EdgeInsets.only(top: 20),
@@ -270,38 +237,47 @@ class _FilterDrawerState extends State<FilterDrawer> {
                 ),
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Row(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(right: 3),
-                        child: const Text("PHP",
-                            style: TextStyle(
-                                fontFamily: UIParameter.FONT_REGULAR,
-                                fontSize: UIParameter.FONT_BODY_SIZE)),
-                      ),
-                      _buildTextBoxes(
-                          "Min Price", 0.25, minPriceTextController, 'number'),
-                    ],
+                  Container(
+                    margin: const EdgeInsets.only(left: 10),
+                    child: Text("MIN",
+                        style: TextStyle(
+                            fontFamily: UIParameter.FONT_REGULAR,
+                            fontWeight: FontWeight.bold,
+                            color: UIParameter.MAROON,
+                            fontSize: UIParameter.FONT_BODY_SIZE)),
                   ),
-                  Row(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(right: 3),
-                        child: const Text("PHP",
-                            style: TextStyle(
-                                fontFamily: UIParameter.FONT_REGULAR,
-                                fontSize: UIParameter.FONT_BODY_SIZE)),
-                      ),
-                      _buildTextBoxes(
-                          "Max Price", 0.25, maxPriceTextController, 'number'),
-                    ],
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      maxWidth: 150,
+                    ),
+                    child: _buildTextBoxes(
+                        "Php", minPriceTextController, 'number'),
                   ),
                 ],
               ),
-              //_customDivider(),
-              //_buildRadios("Rating", ratingChoices),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(left: 10),
+                    child: Text("MAX",
+                        style: TextStyle(
+                            fontFamily: UIParameter.FONT_REGULAR,
+                            fontWeight: FontWeight.bold,
+                            color: UIParameter.LIGHT_TEAL,
+                            fontSize: UIParameter.FONT_BODY_SIZE)),
+                  ),
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      maxWidth: 150,
+                    ),
+                    child: _buildTextBoxes(
+                        "Php", maxPriceTextController, 'number'),
+                  ),
+                ],
+              ),
               _customDivider(),
               _buildRadios("Establishment Type", establishmentChoices),
               _customDivider(),
@@ -360,9 +336,12 @@ class _FilterDrawerState extends State<FilterDrawer> {
                               fontSize: UIParameter.FONT_BODY_SIZE,
                               fontFamily: UIParameter.FONT_REGULAR),
                         ),
-                        child: const Text('Apply'))
+                        child: const Text('Apply')),
                   ],
                 ),
+              ),
+              const SizedBox(
+                height: 10,
               )
             ],
           ),
