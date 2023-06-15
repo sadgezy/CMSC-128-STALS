@@ -20,10 +20,6 @@ class UserProfile extends StatefulWidget {
 
 class UserProfileState extends State<UserProfile> {
   String username = '';
-  String firstname = '';
-  String middleinitial = '';
-  String lastname = '';
-  String suffix = '';
   String fullname = '';
   String email = '';
   String phone = '';
@@ -80,8 +76,6 @@ class UserProfileState extends State<UserProfile> {
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
-
-    // fullname = "$firstname $middleinitial $lastname $suffix";
 
     Widget buildInfo(String label, String info) {
       return Column(
@@ -441,7 +435,7 @@ class UserProfileState extends State<UserProfile> {
                 ),
                 const SizedBox(height: 5),
                 const Text(
-                  'Only photos 4mb and below are allowed.',
+                  'Only photos below 1MB are allowed.',
                   style: TextStyle(
                     color: const Color.fromARGB(255, 25, 83, 95),
                   ),
@@ -502,148 +496,6 @@ class UserProfileState extends State<UserProfile> {
       }
     }
 
-    AlertDialog editNamePopup = AlertDialog(
-      title: const Text('Edit Name'),
-      backgroundColor: const Color(0xffF0F3F5),
-      content: Form(
-        key: _editNameFormKey,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              TextFormField(
-                controller: fnameController,
-                decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.fromLTRB(25, 10, 10, 10),
-                    fillColor: Colors.white,
-                    filled: true,
-                    border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(18)),
-                        borderSide:
-                            BorderSide(width: 0, style: BorderStyle.none)),
-                    focusedErrorBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(18),
-                        borderSide: const BorderSide(
-                          color: Color.fromARGB(255, 175, 31, 18),
-                          width: 2,
-                        )),
-                    errorBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(18),
-                        borderSide: const BorderSide(
-                          color: Color.fromARGB(255, 175, 31, 18),
-                          width: 1,
-                        )),
-                    labelText: "First Name"),
-                validator: ((value) {
-                  if (value != null && value.trim().isEmpty) {
-                    return "First name required";
-                  }
-                }),
-              ),
-              const SizedBox(height: 10),
-              TextFormField(
-                controller: mnameController,
-                decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.fromLTRB(25, 10, 10, 10),
-                    fillColor: Colors.white,
-                    filled: true,
-                    border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(18)),
-                        borderSide:
-                            BorderSide(width: 0, style: BorderStyle.none)),
-                    focusedErrorBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(18),
-                        borderSide: const BorderSide(
-                          color: Color.fromARGB(255, 175, 31, 18),
-                          width: 2,
-                        )),
-                    labelText: "Middle Initial"),
-              ),
-              const SizedBox(height: 10),
-              TextFormField(
-                controller: lnameController,
-                decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.fromLTRB(25, 10, 10, 10),
-                    fillColor: Colors.white,
-                    filled: true,
-                    border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(18)),
-                        borderSide:
-                            BorderSide(width: 0, style: BorderStyle.none)),
-                    focusedErrorBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(18),
-                        borderSide: const BorderSide(
-                          color: Color.fromARGB(255, 175, 31, 18),
-                          width: 2,
-                        )),
-                    errorBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(18),
-                        borderSide: const BorderSide(
-                          color: Color.fromARGB(255, 175, 31, 18),
-                          width: 1,
-                        )),
-                    labelText: "Last Name"),
-                validator: ((value) {
-                  if (value != null && value.trim().isEmpty) {
-                    return "Last name required";
-                  }
-                }),
-              ),
-              const SizedBox(height: 10),
-              TextFormField(
-                controller: suffixController,
-                decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.fromLTRB(25, 10, 10, 10),
-                    fillColor: Colors.white,
-                    filled: true,
-                    border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(18)),
-                        borderSide:
-                            BorderSide(width: 0, style: BorderStyle.none)),
-                    focusedErrorBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(18),
-                        borderSide: const BorderSide(
-                          color: Color.fromARGB(255, 175, 31, 18),
-                          width: 2,
-                        )),
-                    labelText: "Suffix"),
-              ),
-            ],
-          ),
-        ),
-      ),
-      actions: <Widget>[
-        TextButton(
-          onPressed: () {
-            if (_editNameFormKey.currentState!.validate()) {
-              Navigator.of(context).pop();
-              setState(() {
-                firstname = fnameController.text;
-                middleinitial = mnameController.text;
-                lastname = lnameController.text;
-                suffix = suffixController.text;
-                fullname = "$firstname $middleinitial $lastname $suffix";
-              });
-              // fullname = nameController.text;
-              //TODO: reflect name change to database
-            }
-          },
-          style: TextButton.styleFrom(
-            textStyle: Theme.of(context).textTheme.labelLarge,
-          ),
-          child: const Text("Save"),
-        ),
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          style: TextButton.styleFrom(
-            textStyle: Theme.of(context).textTheme.labelLarge,
-          ),
-          child: const Text("Cancel"),
-        ),
-      ],
-    );
-
     return Scaffold(
       backgroundColor: Color(0xffF0F3F5),
       body: FutureBuilder<Map<String, dynamic>>(
@@ -660,14 +512,9 @@ class UserProfileState extends State<UserProfile> {
             Map<String, dynamic> userData = snapshot.data!;
 
             // Assign the values from the fetched data to the respective variables
-            // fullname =
-            //     "${userData['first_name']} ${userData['middle_initial']} ${userData['last_name']} ${userData['suffix']}";
+            fullname =
+                "${userData['first_name']} ${userData['middle_initial']} ${userData['last_name']} ${userData['suffix']}";
             // "${response['first_name']} ${response['middle_initial']} ${response['last_name']} ${response['suffix']}"
-            firstname = userData['first_name'] ?? "";
-            middleinitial = userData['middle_initial'] ?? "";
-            lastname = userData['last_name'] ?? "";
-            suffix = userData['suffix'] ?? "";
-            fullname = "$firstname $middleinitial $lastname $suffix";
             username = userData['username'] ?? "";
             email = userData['email'] ?? "";
             phone = userData['phone_no'] ?? "";
@@ -706,32 +553,6 @@ class UserProfileState extends State<UserProfile> {
                                               fontSize: 28,
                                               fontWeight: FontWeight.bold,
                                               color: Color(0xff1F2421))),
-                                      SizedBox(
-                                        width: 15,
-                                        child: IconButton(
-                                          style: IconButton.styleFrom(
-                                            splashFactory:
-                                                NoSplash.splashFactory,
-                                          ),
-                                          icon: const Icon(
-                                            Icons.edit,
-                                            size: 13,
-                                            color: Colors.grey,
-                                          ),
-                                          onPressed: () {
-                                            fnameController.text = firstname;
-                                            mnameController.text =
-                                                middleinitial;
-                                            lnameController.text = lastname;
-                                            suffixController.text = suffix;
-                                            showDialog(
-                                                context: context,
-                                                builder:
-                                                    (BuildContext context) =>
-                                                        editNamePopup);
-                                          },
-                                        ),
-                                      )
                                     ],
                                   ),
                                   Padding(
