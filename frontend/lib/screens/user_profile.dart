@@ -20,6 +20,10 @@ class UserProfile extends StatefulWidget {
 
 class UserProfileState extends State<UserProfile> {
   String username = '';
+  String firstname = '';
+  String middleinitial = '';
+  String lastname = '';
+  String suffix = '';
   String fullname = '';
   String email = '';
   String phone = '';
@@ -27,7 +31,7 @@ class UserProfileState extends State<UserProfile> {
   String proofNum = '';
   String proofPic = '';
 
-  String _idType = ''; //proofType
+  String _idType = 'Select a proof type'; //proofType
   String _idNumber = ''; //proofNum
   XFile? _idImage;
   PlatformFile? _imageFile;
@@ -37,7 +41,10 @@ class UserProfileState extends State<UserProfile> {
 
   GlobalKey<FormState> _editNameFormKey = GlobalKey<FormState>();
   GlobalKey<FormState> _resubmitIdFormKey = GlobalKey<FormState>();
-  TextEditingController nameController = TextEditingController();
+  TextEditingController fnameController = TextEditingController();
+  TextEditingController mnameController = TextEditingController();
+  TextEditingController lnameController = TextEditingController();
+  TextEditingController suffixController = TextEditingController();
   TextEditingController idNumController = TextEditingController();
 
   bool isVerified = false;
@@ -56,8 +63,9 @@ class UserProfileState extends State<UserProfile> {
     }
   }
 
-  Future<void> resubmitVerificationData(Map<String, dynamic> updatedData, String userId) async {
-    String url = 'http://127.0.0.1:8000/resubmit-verification-data/$userId/'; 
+  Future<void> resubmitVerificationData(
+      Map<String, dynamic> updatedData, String userId) async {
+    String url = 'http://127.0.0.1:8000/resubmit-verification-data/$userId/';
     final response = await http.put(
       Uri.parse(url),
       body: updatedData,
@@ -68,12 +76,12 @@ class UserProfileState extends State<UserProfile> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
+
+    // fullname = "$firstname $middleinitial $lastname $suffix";
 
     Widget buildInfo(String label, String info) {
       return Column(
@@ -194,17 +202,18 @@ class UserProfileState extends State<UserProfile> {
                   'id_picture': base64Image,
                 };
 
-                resubmitVerificationData(updatedData,widget.userId).then((_) {
+                resubmitVerificationData(updatedData, widget.userId).then((_) {
                   // Handle successful resubmission
                   // print('Verification data resubmitted successfully');
                 }).catchError((error) {
                   // Handle error
                   print('Failed to resubmit verification data: $error');
                 });
+
+                setState(() {});
               }
             }
           },
-
           style: ElevatedButton.styleFrom(
             elevation: 0,
             backgroundColor: const Color(0xff0B7A75),
@@ -265,8 +274,13 @@ class UserProfileState extends State<UserProfile> {
                     ),
                     const SizedBox(height: 5),
                     DropdownButtonFormField(
+                      value: _idType,
                       isExpanded: true,
                       items: const [
+                        DropdownMenuItem(
+                          value: 'Select a proof type',
+                          child: Text('Select a proof type'),
+                        ),
                         DropdownMenuItem(
                           value: 'UMID',
                           child: Text('UMID'),
@@ -339,9 +353,15 @@ class UserProfileState extends State<UserProfile> {
                         if (value?.isEmpty ?? true) {
                           return 'Please select a proof type';
                         }
+
+                        if (value == "Select a proof type") {
+                          return 'Please select a proof type';
+                        }
                       }),
                       onChanged: (value) {
-                        _idType = value!;
+                        setState(() {
+                          _idType = value!;
+                        });
                       },
                     ),
                   ],
@@ -487,33 +507,108 @@ class UserProfileState extends State<UserProfile> {
       backgroundColor: const Color(0xffF0F3F5),
       content: Form(
         key: _editNameFormKey,
-        child: TextFormField(
-          controller: nameController,
-          decoration: InputDecoration(
-            contentPadding: const EdgeInsets.fromLTRB(25, 10, 10, 10),
-            fillColor: Colors.white,
-            filled: true,
-            border: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(18)),
-                borderSide: BorderSide(width: 0, style: BorderStyle.none)),
-            focusedErrorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(18),
-                borderSide: const BorderSide(
-                  color: Color.fromARGB(255, 175, 31, 18),
-                  width: 2,
-                )),
-            errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(18),
-                borderSide: const BorderSide(
-                  color: Color.fromARGB(255, 175, 31, 18),
-                  width: 1,
-                )),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              TextFormField(
+                controller: fnameController,
+                decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.fromLTRB(25, 10, 10, 10),
+                    fillColor: Colors.white,
+                    filled: true,
+                    border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(18)),
+                        borderSide:
+                            BorderSide(width: 0, style: BorderStyle.none)),
+                    focusedErrorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                        borderSide: const BorderSide(
+                          color: Color.fromARGB(255, 175, 31, 18),
+                          width: 2,
+                        )),
+                    errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                        borderSide: const BorderSide(
+                          color: Color.fromARGB(255, 175, 31, 18),
+                          width: 1,
+                        )),
+                    labelText: "First Name"),
+                validator: ((value) {
+                  if (value != null && value.trim().isEmpty) {
+                    return "First name required";
+                  }
+                }),
+              ),
+              const SizedBox(height: 10),
+              TextFormField(
+                controller: mnameController,
+                decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.fromLTRB(25, 10, 10, 10),
+                    fillColor: Colors.white,
+                    filled: true,
+                    border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(18)),
+                        borderSide:
+                            BorderSide(width: 0, style: BorderStyle.none)),
+                    focusedErrorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                        borderSide: const BorderSide(
+                          color: Color.fromARGB(255, 175, 31, 18),
+                          width: 2,
+                        )),
+                    labelText: "Middle Initial"),
+              ),
+              const SizedBox(height: 10),
+              TextFormField(
+                controller: lnameController,
+                decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.fromLTRB(25, 10, 10, 10),
+                    fillColor: Colors.white,
+                    filled: true,
+                    border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(18)),
+                        borderSide:
+                            BorderSide(width: 0, style: BorderStyle.none)),
+                    focusedErrorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                        borderSide: const BorderSide(
+                          color: Color.fromARGB(255, 175, 31, 18),
+                          width: 2,
+                        )),
+                    errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                        borderSide: const BorderSide(
+                          color: Color.fromARGB(255, 175, 31, 18),
+                          width: 1,
+                        )),
+                    labelText: "Last Name"),
+                validator: ((value) {
+                  if (value != null && value.trim().isEmpty) {
+                    return "Last name required";
+                  }
+                }),
+              ),
+              const SizedBox(height: 10),
+              TextFormField(
+                controller: suffixController,
+                decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.fromLTRB(25, 10, 10, 10),
+                    fillColor: Colors.white,
+                    filled: true,
+                    border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(18)),
+                        borderSide:
+                            BorderSide(width: 0, style: BorderStyle.none)),
+                    focusedErrorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                        borderSide: const BorderSide(
+                          color: Color.fromARGB(255, 175, 31, 18),
+                          width: 2,
+                        )),
+                    labelText: "Suffix"),
+              ),
+            ],
           ),
-          validator: ((value) {
-            if (value != null && value.trim().isEmpty) {
-              return "Name cannot be empty.";
-            }
-          }),
         ),
       ),
       actions: <Widget>[
@@ -521,7 +616,14 @@ class UserProfileState extends State<UserProfile> {
           onPressed: () {
             if (_editNameFormKey.currentState!.validate()) {
               Navigator.of(context).pop();
-              fullname = nameController.text;
+              setState(() {
+                firstname = fnameController.text;
+                middleinitial = mnameController.text;
+                lastname = lnameController.text;
+                suffix = suffixController.text;
+                fullname = "$firstname $middleinitial $lastname $suffix";
+              });
+              // fullname = nameController.text;
               //TODO: reflect name change to database
             }
           },
@@ -544,26 +646,6 @@ class UserProfileState extends State<UserProfile> {
 
     return Scaffold(
       backgroundColor: Color(0xffF0F3F5),
-      // appBar: AppBar(
-      //   title: Center(
-      //     child: Text(
-      //       verificationStatus == "rejected"
-      //           ? "Sorry, your account's verification was declined. Please resubmit your ID."
-      //           : verificationStatus == "accepted"
-      //               ? "Your identity has been verified."
-      //               : "Your account's verification is under review. Please wait.",
-      //       style: const TextStyle(
-      //           fontSize: 14,
-      //           color: Colors.white,
-      //           overflow: TextOverflow.ellipsis),
-      //     ),
-      //   ),
-      //   backgroundColor: verificationStatus == "rejected"
-      //       ? Colors.red
-      //       : verificationStatus == "accepted"
-      //           ? Colors.blue
-      //           : Colors.green,
-      // ),
       body: FutureBuilder<Map<String, dynamic>>(
         future: fetchUserData(widget.userId),
         builder: (BuildContext context,
@@ -578,10 +660,14 @@ class UserProfileState extends State<UserProfile> {
             Map<String, dynamic> userData = snapshot.data!;
 
             // Assign the values from the fetched data to the respective variables
-            fullname =
-                "${userData['first_name']} ${userData['middle_initial']} ${userData['last_name']} ${userData['suffix']}";
+            // fullname =
+            //     "${userData['first_name']} ${userData['middle_initial']} ${userData['last_name']} ${userData['suffix']}";
             // "${response['first_name']} ${response['middle_initial']} ${response['last_name']} ${response['suffix']}"
-            fullname = userData['first_name'] ?? "";
+            firstname = userData['first_name'] ?? "";
+            middleinitial = userData['middle_initial'] ?? "";
+            lastname = userData['last_name'] ?? "";
+            suffix = userData['suffix'] ?? "";
+            fullname = "$firstname $middleinitial $lastname $suffix";
             username = userData['username'] ?? "";
             email = userData['email'] ?? "";
             phone = userData['phone_no'] ?? "";
@@ -633,7 +719,11 @@ class UserProfileState extends State<UserProfile> {
                                             color: Colors.grey,
                                           ),
                                           onPressed: () {
-                                            nameController.text = fullname;
+                                            fnameController.text = firstname;
+                                            mnameController.text =
+                                                middleinitial;
+                                            lnameController.text = lastname;
+                                            suffixController.text = suffix;
                                             showDialog(
                                                 context: context,
                                                 builder:
