@@ -106,7 +106,7 @@ class _VerificationPageState extends State<VerificationPage> {
               //print(base64Image);
               uploadedImage = true;
               setState(() {});
-              
+
               if (!context.mounted) return;
               Navigator.pop(context);
               Navigator.pop(context);
@@ -127,6 +127,20 @@ class _VerificationPageState extends State<VerificationPage> {
     ]);
 
     return Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            color: Colors.black,
+          ),
+          title: Text(
+            "",
+            style: TextStyle(color: Colors.black),
+          ),
+          backgroundColor: Colors.white,
+        ),
         backgroundColor: const Color(0xffF0F3F5),
         body: SingleChildScrollView(
             child: Center(

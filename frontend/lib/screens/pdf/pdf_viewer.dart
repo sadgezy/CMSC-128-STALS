@@ -22,15 +22,16 @@ class PDFViewScreen extends StatelessWidget {
       theme: ThemeData(primaryColor: UIParameter.MAROON, fontFamily: 'Georgia'),
       home: Scaffold(
         appBar: AppBar(
-            title: const Text("PDFavorites."),
-            backgroundColor: UIParameter.MAROON,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              color: UIParameter.WHITE,
-              onPressed: () async {
-                Navigator.pop(context);
-              },
-            )),
+          title: const Text("PDFavorites."),
+          backgroundColor: UIParameter.MAROON,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            color: Colors.black,
+          ),
+        ),
         body: PdfPreview(
           maxPageWidth: 700,
           build: (format) => _generatePdf(format),
