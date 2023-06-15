@@ -161,7 +161,7 @@ class _ViewOwnedAccommsState extends State<ViewOwnedAccomms> {
                   Navigator.pop(context);
                   Navigator.pop(context);
 
-                  Navigator.pop(context);
+                  //Navigator.pop(context);
                   Navigator.push(
                       context,
                       MaterialPageRoute(

@@ -476,7 +476,7 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                   Navigator.pop(context);
                   Navigator.pop(context);
 
-                  Navigator.pop(context);
+                  //Navigator.pop(context);
                   Navigator.push(
                       context,
                       MaterialPageRoute(

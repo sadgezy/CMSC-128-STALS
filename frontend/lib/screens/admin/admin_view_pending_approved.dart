@@ -28,9 +28,9 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
   @override
   void initState() {
     super.initState();
-    _accommodationsPendingFuture = fetchPendingAccommodations();
-    _accommodationsFuture = fetchApprovedAccommodations();
     fetchVerificationStatuses();
+    _accommodationsFuture = fetchApprovedAccommodations();
+    _accommodationsPendingFuture = fetchPendingAccommodations();
   }
 
   Future<void> fetchVerificationStatuses() async {
@@ -125,6 +125,7 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 AccomCardDetails details = snapshot.data![index];
+                print(details.verified);
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 7),
                   child: InkWell(
@@ -138,6 +139,10 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
                       verified: details.verified,
                       ID: details.ID,
                       canApprove: verifyStatuses[details.owner],
+
+
+
+
                     onApproved: () async {
                       try {
                         await approveAccommodation(details.ID);
@@ -366,20 +371,20 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
 
     // see code below for when there are no pending and archived accommodations
     return Scaffold(
-       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          color: Colors.black,
-        ),
-        title: Text(
-          "",
-          style: TextStyle(color: Colors.black),
-        ),
-        backgroundColor: Colors.white,
-      ),
+      //  appBar: AppBar(
+      //   leading: IconButton(
+      //     icon: Icon(Icons.arrow_back_ios),
+      //     onPressed: () {
+      //       Navigator.pop(context);
+      //     },
+      //     color: Colors.black,
+      //   ),
+      //   title: Text(
+      //     "",
+      //     style: TextStyle(color: Colors.black),
+      //   ),
+      //   backgroundColor: Colors.white,
+      // ),
         body: SingleChildScrollView(
             child: Center(
       child: ConstrainedBox(
