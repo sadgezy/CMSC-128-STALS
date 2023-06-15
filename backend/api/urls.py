@@ -20,6 +20,7 @@ urlpatterns = [
     path('verify-user/<str:pk>/', views.adminverifyuser),
     path('view-all-user-favorites/', views.view_all_user_favorites),
     path('add-room-to-user-favorites/', views.add_room_to_user_favorites),
+    path('remove-from-user-favorites/', views.remove_from_user_favorites),
 
     path('create-establishment/', views.create_establishment),
     path('view-all-establishment/', views.view_all_establishment),

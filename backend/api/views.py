@@ -517,6 +517,22 @@ def add_room_to_user_favorites(request):
         # Handle the case when the user doesn't exist
         return Response("User not found", status=status.HTTP_404_NOT_FOUND)
     
+    
+@api_view(['POST'])
+def remove_from_user_favorites(request):
+    try:
+        user = User.objects.get(email=request.data['email'])
+        User_serializer = userSerializer(user)
+        # check if room is already in favorites
+        if request.data['ticket_id'] not in user.favorites:
+            return Response(data={"message": "Room not in user favorites"})
+        user.favorites.remove(request.data['ticket_id'])
+        user.save()
+        return Response(data={"message": "Successfully removed from user favorites"})
+    except User.DoesNotExist:
+        # Handle the case when the user doesn't exist
+        return Response("User not found", status=status.HTTP_404_NOT_FOUND)
+    
     # return Response(user)
     # except:
     #     return Response(data={"message": "Error adding to user favorites"})
