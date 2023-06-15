@@ -9,6 +9,8 @@ import 'dart:convert';
 import 'dart:async';
 import 'dart:io';
 import 'package:toggle_switch/toggle_switch.dart';
+import 'package:file_picker/file_picker.dart';
+
 
 import '../../classes.dart';
 
@@ -414,7 +416,59 @@ List<DropdownMenuItem<String>> get dropdownTenant {
   return tenantItems;
 }
 
+// String? selectedValueEsType = "dormitory";
+String? response_tenant_type = "";
+String? response_estab_type = "";
+
+
+
+class MyDropdownButtonEstate extends StatefulWidget {
+  @override
+  _MyDropdownButtonEstateState createState() => _MyDropdownButtonEstateState();
+}
+
+class _MyDropdownButtonEstateState extends State<MyDropdownButtonEstate> {
+  void updateSelectedValue(String? newValue) {
+    setState(() {
+      response_estab_type = newValue;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButton(
+      value: response_estab_type,
+      items: dropdownEstab,
+      onChanged: updateSelectedValue,
+    );
+  }
+}
+
+class MyDropdownButtonTenant extends StatefulWidget {
+  @override
+  _MyDropdownButtonTenantState createState() => _MyDropdownButtonTenantState();
+}
+
+class _MyDropdownButtonTenantState extends State<MyDropdownButtonTenant> {
+  void updateSelectedValue(String? newValue) {
+    setState(() {
+      response_tenant_type = newValue;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButton(
+      value: response_tenant_type,
+      items: dropdownTenant,
+      onChanged: updateSelectedValue,
+    );
+  }
+}
+
+
 class _EditAccommState extends State<EditAccomm> {
+  
   double rating = 4.0;
   int _index = 1;
   bool favorite = false;
@@ -446,10 +500,11 @@ class _EditAccommState extends State<EditAccomm> {
   String id = "";
   String response_Description = "";
   //Changes here
-  String selectedValueEsType = "apartment";
-  String selectedValueTenant = "students";
+  PlatformFile? _imageFile;
+  bool uploadedImage = false;
+  String base64Image = ''; //proofPic
+  bool showImageUploadError = false;
 
-  String response_estab_type = "";
 
   @override
   void initState() {
@@ -487,6 +542,9 @@ class _EditAccommState extends State<EditAccomm> {
     owner_id = responseData['owner'];
     response_Description = responseData['description'];
     response_estab_type = responseData["establishment_type"];
+    response_tenant_type = responseData["tenant_type"];
+    // selectedValueEsType
+    // print(selectedValueTenant);
 
     String url2 =
         "http://127.0.0.1:8000/get-one-user-using-id/" + owner_id + "/";
@@ -538,6 +596,58 @@ class _EditAccommState extends State<EditAccomm> {
 
   @override
   Widget build(BuildContext context) {
+
+    
+    void _chooseImage() async {
+      
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+          withData: true,
+          type: FileType.custom,
+          allowedExtensions: ['jpg', 'png']);
+
+      if (result != null) {
+        var bytes = result.files.first.bytes;
+        bytes ??= File(result.files.single.path!).readAsBytesSync();
+        double fileSize = (bytes.lengthInBytes / (1024 * 1024));
+        if (fileSize > 1) {
+          setState(() {
+            _imageFile = null;
+          });
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Image too large'),
+            ),
+          );
+        } else {
+          // loc_picture = base64Image;
+          setState(() {
+            _imageFile = result.files.first;
+            showImageUploadError = false;
+            uploadedImage = true;
+            loc_picture = base64Image;
+          });
+          String extn = result.files.first.name.split('.').last;
+          if (extn == 'png' || extn == 'PNG') {
+            base64Image =
+                "data:image/png;base64," + base64Encode(bytes!.toList());
+          } else {
+            base64Image =
+                "data:image/jpeg;base64," + base64Encode(bytes!.toList());
+          }
+        }
+      } else {
+        setState(() {
+          _imageFile = null;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('No image selected'),
+          ),
+        );
+      }
+    }
+
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     if (!context.watch<UserProvider>().isOwner) {
@@ -637,7 +747,7 @@ class _EditAccommState extends State<EditAccomm> {
                                             ),
                                           ),
                                           onPressed: () {
-                                            // _chooseImage();
+                                            _chooseImage();
                                           },
                                           child: const Text("Upload image")),
                                       ElevatedButton(
@@ -680,10 +790,9 @@ class _EditAccommState extends State<EditAccomm> {
                                                     .text,
                                             "location_approx":
                                                 responseData['location_approx'],
-                                            "establishment_type": responseData[
-                                                'establishment_type'],
+                                            "establishment_type": response_estab_type,
                                             "tenant_type":
-                                                responseData['tenant_type'],
+                                                response_tenant_type,
                                             "utilities": [],
                                             "description":
                                                 _newEstablishmentDescriptionController
@@ -694,7 +803,7 @@ class _EditAccommState extends State<EditAccomm> {
                                             "proof_number":
                                                 responseData['proof_number'],
                                             "loc_picture":
-                                                responseData['loc_picture'],
+                                                loc_picture,
                                             "proof_picture":
                                                 responseData['loc_picture'],
                                             "reviews": responseData['reviews'],
@@ -780,12 +889,8 @@ class _EditAccommState extends State<EditAccomm> {
                                             ),
                                             Padding(
                                                 padding: EdgeInsets.all(5),
-                                                child: DropdownButton(
-                                                  value: selectedValueEsType,
-                                                  items: dropdownEstab,
-                                                  onChanged:
-                                                      (String? newEstab) {},
-                                                )),
+                                                child: MyDropdownButtonEstate(),
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -911,27 +1016,21 @@ class _EditAccommState extends State<EditAccomm> {
                                         width: 8,
                                       ),
                                       const Icon(
-                                        Icons.room_preferences_outlined,
+                                        Icons.groups,
                                         color: Color(0xff0B7A75),
                                         size: 20,
                                       ),
                                       Padding(
-                                          padding: EdgeInsets.all(1),
-                                          child: DropdownButton(
-                                            value: selectedValueTenant,
-                                            items: dropdownTenant,
-                                            onChanged: (String? newTenant) {
-                                              setState(() {
-                                                selectedValueTenant =
-                                                    newTenant!;
-                                              });
-                                            },
-                                          )),
-                                    ],
-                                  ),
-                                ],
-                              )
-                            ])),
+                                         padding: EdgeInsets.all(5),
+                                                child: MyDropdownButtonTenant(),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ),
 
                         //end of Owner Information
                         Padding(

@@ -180,6 +180,7 @@ class _AccommPageState extends State<AccommPage> {
   bool? response_verified;
   bool? response_rejected;
   String response_estab_type = "";
+  String response_Tenant_type = "";
   String owner_id = "";
   String response2_ownerName = "";
   String response2_phone_no = "";
@@ -244,6 +245,7 @@ class _AccommPageState extends State<AccommPage> {
       response_verified = responseData["verified"];
       response_rejected = responseData["rejected"];
       response_estab_type = responseData["establishment_type"];
+      response_Tenant_type = responseData["tenant_type"];
       owner_id = responseData['owner'];
       // print(owner_id);
       // print("http://127.0.0.1:8000/get-one-user-using-id/" + owner_id + "/");
@@ -763,8 +765,39 @@ class _AccommPageState extends State<AccommPage> {
                                       // ),
                                     ],
                                   ),
-                                  const SizedBox(height: 5),
                                   //Contact Info
+                                  Row(
+                                    children: <Widget>[
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      const Icon(
+                                        Icons.group,
+                                        color: Color(0xff0B7A75),
+                                        size: 25,
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Flexible(
+                                        child: Text(
+                                          response_Tenant_type,
+                                          style: const TextStyle(
+                                              fontSize: 15,
+                                              color: Color(0xff1F2421)),
+                                        ),
+                                      )
+                                      // FittedBox(
+                                      //   fit: BoxFit.fill,
+                                      //   child: Text(
+                                      //     response_Address,
+                                      //     style: const TextStyle(
+                                      //         fontSize: 15,
+                                      //         fontWeight: FontWeight.normal),
+                                      //   ),
+                                      // ),
+                                    ],
+                                  ),
                                  
 
                                   if (user_type == "user" ||
