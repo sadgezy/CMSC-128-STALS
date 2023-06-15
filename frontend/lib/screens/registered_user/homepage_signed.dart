@@ -240,6 +240,9 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
   var filterValueList = [];
 
   void performSearch() async {
+    setState(() {
+      accommList.clear();
+    });
     String url = "http://127.0.0.1:8000/search-establishment/";
     final response = await json.decode((await http.post(Uri.parse(url), body: {
       'name': searchVal,
@@ -373,7 +376,7 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                       onSubmitted: (value) {
                         // Add this property
                         setState(() {
-                          accommList = [];
+                          accommList.clear();
                         });
                         performSearch();
                       },
