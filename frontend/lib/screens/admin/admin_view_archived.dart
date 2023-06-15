@@ -88,6 +88,20 @@ class _ViewArchivedAccommodationsState
       return const CircularProgressIndicator();
     }
     return Scaffold(
+       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          color: Colors.black,
+        ),
+        title: Text(
+          "",
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.white,
+      ),
         body: Center(
             child: ConstrainedBox(
       constraints: new BoxConstraints(maxWidth: 550),
@@ -117,7 +131,8 @@ class _ViewArchivedAccommodationsState
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 7),
                           child: Column(children: [
-                            AccomCard(details: accommodation),
+                            AccomCard(details: accommodation, isFavorite: false,
+                                                  func: () {},),
                             Padding(
                               padding: EdgeInsets.symmetric(vertical: 7),
                               child: Row(

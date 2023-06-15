@@ -65,6 +65,13 @@ class _ProfileState extends State<Profile> {
       appBar: AppBar(
         backgroundColor: UIParameter.MAROON,
         title: Text("$username's Profile"),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          color: Colors.black,
+        ),
       ),
       body: buildPanel(),
     );

@@ -33,6 +33,7 @@ Edit Accom: Basically the same as Accom page but
 
 const _checkurl = 'https://img.icons8.com/?size=512&id=11695&format=png';
 const _noturl = 'https://img.icons8.com/?size=512&id=TfRrgMHDWJk3&format=png';
+String id = "";
 
 class Item extends StatefulWidget {
   const Item(
@@ -306,6 +307,31 @@ class _ItemState extends State<Item> {
             right: 10,
             child: ElevatedButton(
               onPressed: () async {
+                if (priceController
+                          .text ==
+                      "") {
+                    priceController
+                        .text = widget.priceLower.toString();
+                }
+                if (priceLowerController
+                          .text ==
+                      "") {
+                    priceLowerController
+                        .text = widget.priceLower.toString();
+                }
+                if (priceUpperController
+                          .text ==
+                      "") {
+                    priceUpperController
+                        .text = widget.priceUpper.toString();
+                }
+                if (maxTenantsController
+                        .text ==
+                    "") {
+                  maxTenantsController
+                          .text =
+                      widget.capacity.toString();
+                }
                 String url =
                     "http://127.0.0.1:8000/edit-room/" + widget.id + "/";
                 if (widget.priceLower == widget.priceUpper) {
@@ -333,10 +359,11 @@ class _ItemState extends State<Item> {
                   final response = await http.put(Uri.parse(url),
                       headers: headers, body: json.encode(requestBody));
                 }
-                Navigator.pushNamed(context, '/view_owned_accomms');
+                Navigator.pushNamed(context, '/owned/accomm/edit', arguments: id);
+                
               },
               child: const Icon(
-                Icons.edit,
+                Icons.save_as,
                 color: Colors.white,
                 size: 24,
               ),
@@ -420,8 +447,6 @@ List<DropdownMenuItem<String>> get dropdownTenant {
 String? response_tenant_type = "";
 String? response_estab_type = "";
 
-
-
 class MyDropdownButtonEstate extends StatefulWidget {
   @override
   _MyDropdownButtonEstateState createState() => _MyDropdownButtonEstateState();
@@ -497,7 +522,6 @@ class _EditAccommState extends State<EditAccomm> {
   String response_Name = "";
   String owner_id = "";
   String loc_picture = "";
-  String id = "";
   String response_Description = "";
   //Changes here
   PlatformFile? _imageFile;
@@ -596,57 +620,56 @@ class _EditAccommState extends State<EditAccomm> {
 
   @override
   Widget build(BuildContext context) {
-
     
-    void _chooseImage() async {
+    // void _chooseImage() async {
       
-      FilePickerResult? result = await FilePicker.platform.pickFiles(
-          withData: true,
-          type: FileType.custom,
-          allowedExtensions: ['jpg', 'png']);
+    //   FilePickerResult? result = await FilePicker.platform.pickFiles(
+    //       withData: true,
+    //       type: FileType.custom,
+    //       allowedExtensions: ['jpg', 'png']);
 
-      if (result != null) {
-        var bytes = result.files.first.bytes;
-        bytes ??= File(result.files.single.path!).readAsBytesSync();
-        double fileSize = (bytes.lengthInBytes / (1024 * 1024));
-        if (fileSize > 1) {
-          setState(() {
-            _imageFile = null;
-          });
+    //   if (result != null) {
+    //     var bytes = result.files.first.bytes;
+    //     bytes ??= File(result.files.single.path!).readAsBytesSync();
+    //     double fileSize = (bytes.lengthInBytes / (1024 * 1024));
+    //     if (fileSize > 1) {
+    //       setState(() {
+    //         _imageFile = null;
+    //       });
 
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Image too large'),
-            ),
-          );
-        } else {
-          // loc_picture = base64Image;
-          setState(() {
-            _imageFile = result.files.first;
-            showImageUploadError = false;
-            uploadedImage = true;
-            loc_picture = base64Image;
-          });
-          String extn = result.files.first.name.split('.').last;
-          if (extn == 'png' || extn == 'PNG') {
-            base64Image =
-                "data:image/png;base64," + base64Encode(bytes!.toList());
-          } else {
-            base64Image =
-                "data:image/jpeg;base64," + base64Encode(bytes!.toList());
-          }
-        }
-      } else {
-        setState(() {
-          _imageFile = null;
-        });
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('No image selected'),
-          ),
-        );
-      }
-    }
+    //       ScaffoldMessenger.of(context).showSnackBar(
+    //         const SnackBar(
+    //           content: Text('Image too large'),
+    //         ),
+    //       );
+    //     } else {
+    //       // loc_picture = base64Image;
+    //       setState(() {
+    //         _imageFile = result.files.first;
+    //         showImageUploadError = false;
+    //         uploadedImage = true;
+    //         loc_picture = base64Image;
+    //       });
+    //       String extn = result.files.first.name.split('.').last;
+    //       if (extn == 'png' || extn == 'PNG') {
+    //         base64Image =
+    //             "data:image/png;base64," + base64Encode(bytes!.toList());
+    //       } else {
+    //         base64Image =
+    //             "data:image/jpeg;base64," + base64Encode(bytes!.toList());
+    //       }
+    //     }
+    //   } else {
+    //     setState(() {
+    //       _imageFile = null;
+    //     });
+    //     ScaffoldMessenger.of(context).showSnackBar(
+    //       const SnackBar(
+    //         content: Text('No image selected'),
+    //       ),
+    //     );
+    //   }
+    // }
 
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
@@ -733,23 +756,23 @@ class _EditAccommState extends State<EditAccomm> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
-                                      ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                            minimumSize: const Size(150, 50),
-                                            maximumSize: const Size(150, 50),
-                                            elevation: 0,
-                                            backgroundColor:
-                                                const Color.fromARGB(
-                                                    255, 25, 83, 95),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                          ),
-                                          onPressed: () {
-                                            _chooseImage();
-                                          },
-                                          child: const Text("Upload image")),
+                                      // ElevatedButton(
+                                      //     style: ElevatedButton.styleFrom(
+                                      //       minimumSize: const Size(150, 50),
+                                      //       maximumSize: const Size(150, 50),
+                                      //       elevation: 0,
+                                      //       backgroundColor:
+                                      //           const Color.fromARGB(
+                                      //               255, 25, 83, 95),
+                                      //       shape: RoundedRectangleBorder(
+                                      //         borderRadius:
+                                      //             BorderRadius.circular(10),
+                                      //       ),
+                                      //     ),
+                                      //     onPressed: () {
+                                      //       _chooseImage();
+                                      //     },
+                                      //     child: const Text("Upload image")),
                                       ElevatedButton(
                                         onPressed: () async {
                                           //on button pushed it saves the editted details and routes back the owned accoms page
@@ -774,7 +797,7 @@ class _EditAccommState extends State<EditAccomm> {
                                                     .text =
                                                 responseData['description'];
                                           }
-                                          ;
+                                          
                                           String url =
                                               "http://127.0.0.1:8000/edit-establishment/" +
                                                   id +
