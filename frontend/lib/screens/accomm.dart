@@ -818,6 +818,14 @@ class _AccommPageState extends State<AccommPage> {
                                                         "Sign in to file a report!"),
                                                   ));
                                                 }
+                                                if (!verified) {
+                                                  return const AlertDialog(
+                                                      content: Padding(
+                                                    padding: EdgeInsets.all(8),
+                                                    child: Text(
+                                                        "Be verified to file a report!"),
+                                                  ));
+                                                }
                                                 return AlertDialog(
                                                   scrollable: true,
                                                   title: const Text(
@@ -990,7 +998,15 @@ class _AccommPageState extends State<AccommPage> {
                                                       content: Padding(
                                                     padding: EdgeInsets.all(8),
                                                     child: Text(
-                                                        "Sign in to post a review"),
+                                                        "Sign in to post a review!"),
+                                                  ));
+                                                }
+                                                if (!verified) {
+                                                  return const AlertDialog(
+                                                      content: Padding(
+                                                    padding: EdgeInsets.all(8),
+                                                    child: Text(
+                                                        "Be verified to post a review!"),
                                                   ));
                                                 }
                                                 return Review(
