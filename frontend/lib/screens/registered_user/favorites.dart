@@ -112,6 +112,15 @@ class _FavoritesState extends State<Favorites> {
           title: const Text('Favorites'),
           backgroundColor: UIParameter.MAROON,
           elevation: 0,
+          leading: IconButton(
+          icon: Icon( Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+            Navigator.pop(context);
+            Navigator.pop(context);
+            Navigator.pushNamed(context, '/signed_homepage');
+          } ,
+        ) ,
           actions: <Widget>[
             Builder(
               builder: (context) {
@@ -146,7 +155,21 @@ class _FavoritesState extends State<Favorites> {
                         children: accommodations.map((accommodation) {
                           return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 7),
-                            child: AccomCard(details: accommodation, isFavorite: true,),
+                            child: AccomCard(
+                              details: accommodation,
+                              isFavorite: true,
+                              func: () {
+                                Navigator.pop(context);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return Favorites();
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
                           );
                         }).toList(),
                       ))));

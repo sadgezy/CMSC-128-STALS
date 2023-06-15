@@ -355,7 +355,8 @@ class _UnregisteredHomepageState extends State<UnregisteredHomepage> {
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 7, horizontal: 15),
                                           child:
-                                              AccomCard(details: accommodation, isFavorite: false,),
+                                              AccomCard(details: accommodation, isFavorite: false,
+                                                  func: () {},),
                                         );
                                       }).toList(),
                                     );
@@ -417,7 +418,8 @@ class _UnregisteredHomepageState extends State<UnregisteredHomepage> {
                                             accommodation["description"],
                                             4.0,
                                             accommodation["archived"],
-                                            accommodation["verified"]), isFavorite: false,),
+                                            accommodation["verified"]), isFavorite: false,
+                                                  func: () {},),
                                   );
                                 }).toList(),
                               ),

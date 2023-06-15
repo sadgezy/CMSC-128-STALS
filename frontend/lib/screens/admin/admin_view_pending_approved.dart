@@ -218,7 +218,8 @@ class _AdminViewPendingApprovedState extends State<AdminViewPendingApproved> {
                     AccomCardDetails details = snapshot.data![index];
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 7),
-                      child: AccomCard(details: details, isFavorite: false,),
+                      child: AccomCard(details: details, isFavorite: false,
+                                                  func: () {},),
                     );
                   },
                 ),

@@ -509,6 +509,7 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                                                   details:
                                                       accommodations[index],
                                                   isFavorite: isFavorite,
+                                                  func: () {},
                                                 ),
                                               );
                                             }),
@@ -588,6 +589,7 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
                                 accommodation["archived"],
                                 accommodation["verified"]),
                             isFavorite: isFavorite,
+                            func: () {},
                           ),
                         );
                       }).toList(),

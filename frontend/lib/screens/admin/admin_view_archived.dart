@@ -117,7 +117,8 @@ class _ViewArchivedAccommodationsState
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 7),
                           child: Column(children: [
-                            AccomCard(details: accommodation, isFavorite: false,),
+                            AccomCard(details: accommodation, isFavorite: false,
+                                                  func: () {},),
                             Padding(
                               padding: EdgeInsets.symmetric(vertical: 7),
                               child: Row(

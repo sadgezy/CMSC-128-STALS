@@ -18,9 +18,10 @@ class AccomCard extends StatefulWidget {
     - Accom rating
   */
 
-  const AccomCard({Key? key, required this.details, required this.isFavorite}) : super(key: key);
+  const AccomCard({Key? key, required this.details, required this.isFavorite, required this.func}) : super(key: key);
   final AccomCardDetails details;
   final bool isFavorite;
+  final VoidCallback func;
 
   @override
   State<AccomCard> createState() => _AccomCardState();
@@ -359,6 +360,7 @@ class _AccomCardState extends State<AccomCard> {
                                                 });
                                                 addAccommodationToFavorites(
                                                     widget.details.getID());
+                                                widget.func();
                                               },
                                               // check if part of favorite accomms
                                               child: widget.isFavorite
