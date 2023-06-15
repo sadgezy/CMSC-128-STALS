@@ -25,6 +25,6 @@ void main() {
     await signInTester.pump();
     // Verify that our counter starts at 0.
     expect(find.text('customer@test.com'), findsOneWidget);
-    expect(find.text('customer@test.com'), findsOneWidget);
+    expect(find.text('customerA1'), findsOneWidget);
   });
 }
