@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class TokenProvider with ChangeNotifier {
   String _token = "";
 
-  String get getCurrToken {
+  String get currToken {
     return _token;
   }
 
@@ -12,8 +12,9 @@ class TokenProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void removeToken(String x) {
+  Future<void> removeToken(String x) async {
     _token = "";
     notifyListeners();
   }
+
 }

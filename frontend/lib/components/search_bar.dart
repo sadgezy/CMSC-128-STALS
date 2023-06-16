@@ -2,28 +2,32 @@
 import 'package:flutter/material.dart';
 import '../UI_parameters.dart' as UIParameter;
 
-class SearchBar extends StatelessWidget {
+class CustomSearchBar extends StatelessWidget {
   final String hintText;
   final ValueChanged<String> onChanged;
-  const SearchBar({
+  final ValueChanged<String> onSubmitted;
+  const CustomSearchBar({
     Key? key,
     required this.hintText,
     required this.onChanged,
+    required this.onSubmitted,
+    
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        //margin: const EdgeInsets.symmetric(vertical: 10),
         padding: const EdgeInsets.symmetric(horizontal: 20),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(18),
         ),
         child: TextField(
           onChanged: onChanged,
-          cursorColor: Colors.green,
-          style: const TextStyle(fontSize: UIParameter.FONT_BODY_SIZE),
+          onSubmitted: onSubmitted,
+          cursorColor: UIParameter.LIGHT_TEAL,
+          style: const TextStyle(
+              fontSize: 18, fontFamily: UIParameter.FONT_REGULAR),
           decoration: InputDecoration(
             isDense: true,
             hintText: hintText,
