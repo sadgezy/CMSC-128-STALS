@@ -53,7 +53,7 @@ class _RegisteredHomepageState extends State<RegisteredHomepage> {
   void pref() async {
     prefs = await SharedPreferences.getInstance();
 
-    if (prefs.getBool("reload_reghome").isNull) {
+    if (prefs.getBool("reload_reghome") == null) {
       prefs.setBool("reload_reghome", false);
     } else {
       if (prefs.getBool("reload_reghome")!) {
